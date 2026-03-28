@@ -132,7 +132,7 @@ export function DashboardSidebar() {
                             }}
                           />
                         )}
-                        <div className="relative z-10 flex items-center gap-3 w-full">
+                        <div className={`relative z-10 flex items-center w-full ${collapsed ? 'justify-center' : 'gap-3'}`}>
                           <item.icon className={`h-4 w-4 shrink-0 transition-colors duration-300 ${
                             isActive ? "text-violet-400" : ""
                           }`} />

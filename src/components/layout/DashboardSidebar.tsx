@@ -74,12 +74,12 @@ export function DashboardSidebar() {
         <div className="absolute inset-0 bg-gradient-to-b from-violet-500/[0.06] to-transparent pointer-events-none" />
         <div className="relative flex items-center gap-3">
           <div className="relative">
-            <Globe className="h-7 w-7 text-violet-400 shrink-0" />
+            <img src={darkpoolLogo} alt="DARKPOOL" className="h-7 w-7 object-contain shrink-0" />
             <div className="absolute inset-0 blur-xl bg-violet-500/40 rounded-full" />
           </div>
           {!collapsed && (
             <span className="font-mono text-[11px] font-semibold tracking-[0.15em] uppercase text-white/80">
-              Agentic Dark Pool
+              DARKPOOL
             </span>
           )}
         </div>

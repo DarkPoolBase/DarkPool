@@ -2676,7 +2676,7 @@ gtag('config', 'G-2M6V79H761');
             </div>
           </div>
         </div>
-      </section><section class="flex flex-col gap-12 z-10 w-full mt-32 mb-12 relative gap-x-12 gap-y-12 group/pricing" id="pricing">
+      </section><section class="flex flex-col gap-12 z-10 w-full mt-32 mb-12 relative gap-x-12 gap-y-12" id="faq">
   <!-- Decorative Glow -->
   <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] rounded-full blur-[120px] pointer-events-none bg-violet-500/10"></div>
 
@@ -2684,146 +2684,155 @@ gtag('config', 'G-2M6V79H761');
   <div class="flex flex-col gap-4 z-10 text-center pr-6 pl-6 relative gap-x-4 gap-y-4 items-center justify-center">
     <div class="flex items-center gap-3 text-xs font-['JetBrains_Mono'] text-white/40 uppercase tracking-widest">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-violet-400/80">
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path>
+        <circle cx="12" cy="12" r="10"></circle>
+        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+        <path d="M12 17h.01"></path>
       </svg>
-      <span>Licensing</span>
+      <span>FAQ // PROTOCOL</span>
     </div>
     <h2 class="text-4xl md:text-6xl font-thin tracking-tight text-white">
-      Compute Pricing
+      Frequently Asked Questions
     </h2>
     <p class="text-sm md:text-base font-extralight text-white/40 max-w-lg mx-auto">
-      70% cheaper than AWS. Fair batch auction pricing for AI agents, developers, and enterprises.
+      Everything you need to know about the agentic dark pool protocol.
     </p>
   </div>
 
-  <!-- Custom Toggle -->
-  <div class="flex justify-center items-center mt-2 relative z-10">
-    <label class="flex items-center cursor-pointer p-1 bg-[#050508] border border-white/10 rounded-full group/toggle relative shadow-inner">
-      <input type="checkbox" class="sr-only peer">
-      <div class="w-1/2 h-[calc(100%-8px)] absolute left-1 top-1 bg-white/10 border border-white/5 rounded-full transition-transform duration-300 peer-checked:translate-x-full shadow-sm"></div>
-      <span class="px-6 py-2 text-xs font-['JetBrains_Mono'] text-white relative z-10 transition-colors peer-checked:text-white/40">Monthly</span>
-      <span class="px-6 py-2 text-xs font-['JetBrains_Mono'] text-white/40 relative z-10 transition-colors peer-checked:text-white">Annually</span>
-    </label>
-  </div>
+  <!-- FAQ Accordion -->
+  <div class="flex flex-col gap-3 max-w-3xl mx-auto w-full relative z-10 px-6 lg:px-0" id="faq-accordion">
 
-  <!-- Pricing Cards -->
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto w-full mt-4 relative z-10 px-6 lg:px-0">
-    
-    <!-- Starter Plan -->
-    <div class="flex flex-col p-8 rounded-3xl bg-gradient-to-br from-white/[0.03] to-transparent hover:from-white/[0.06] border border-white/5 transition-colors duration-500 backdrop-blur-md">
-      <div class="flex flex-col gap-2 mb-8">
-        <h3 class="text-xl font-light text-white">Explorer</h3>
-        <p class="text-sm font-extralight text-white/40 h-10">For solo AI developers and small inference workloads.</p>
-        <div class="mt-4 relative h-12 w-full">
-          <div class="flex items-baseline gap-1 absolute top-0 left-0">
-            <span class="text-5xl font-thin tracking-tight text-white font-['JetBrains_Mono']">$0</span>
-            <span class="text-xs font-['JetBrains_Mono'] text-white/40">/mo</span>
-          </div>
-        </div>
+    <!-- FAQ 1 -->
+    <div class="faq-item rounded-2xl bg-gradient-to-br from-white/[0.03] to-transparent border border-white/5 backdrop-blur-md transition-all duration-500 overflow-hidden cursor-pointer" onclick="toggleFaq(this)">
+      <div class="flex items-center justify-between p-6">
+        <span class="text-sm md:text-base font-light text-white/90">What is an agentic dark pool?</span>
+        <svg class="faq-chevron w-5 h-5 text-white/30 transition-transform duration-500 shrink-0 ml-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
       </div>
-      <a href="/dashboard" class="w-full py-3 rounded-full border border-white/10 bg-white/5 text-white text-sm font-medium hover:bg-white/10 transition-colors mb-8 shadow-inner text-center block">
-        Start Free
-      </a>
-      <div class="flex flex-col gap-4">
-        <span class="text-[10px] font-['JetBrains_Mono'] uppercase tracking-widest text-white/40 mb-2">Included:</span>
-        <div class="flex items-center gap-3">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-white/30"><path d="M20 6 9 17l-5-5"></path></svg>
-          <span class="text-sm font-extralight text-white/70">$50 free compute credits</span>
-        </div>
-        <div class="flex items-center gap-3">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-white/30"><path d="M20 6 9 17l-5-5"></path></svg>
-          <span class="text-sm font-extralight text-white/70">REST API access</span>
-        </div>
-        <div class="flex items-center gap-3">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-white/30"><path d="M20 6 9 17l-5-5"></path></svg>
-          <span class="text-sm font-extralight text-white/70">Standard batch matching</span>
-        </div>
-        <div class="flex items-center gap-3">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-white/30"><path d="M20 6 9 17l-5-5"></path></svg>
-          <span class="text-sm font-extralight text-white/70">Community Discord</span>
+      <div class="faq-answer max-h-0 transition-all duration-500 ease-in-out overflow-hidden">
+        <div class="px-6 pb-6 pt-0">
+          <p class="text-sm font-extralight text-white/50 leading-relaxed">A private exchange where AI agents trade GPU compute resources without exposing order details. The protocol uses commit-reveal encryption and batch auctions to prevent MEV extraction and ensure fair, uniform pricing for all participants.</p>
         </div>
       </div>
     </div>
 
-    <!-- Pro Plan -->
-    <div class="flex flex-col p-8 rounded-3xl bg-[#050508]/90 border relative transition-colors duration-500 backdrop-blur-xl shadow-2xl border-violet-500/30 hover:border-violet-500/50 shadow-violet-500/10">
-      <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-4 py-1.5 rounded-full text-[9px] font-['JetBrains_Mono'] uppercase tracking-widest text-[#050508] font-bold border shadow-[0_0_12px_rgba(6,182,212,0.6)] bg-violet-400 border-violet-300">Recommended</div>
-      <div class="absolute inset-0 rounded-3xl pointer-events-none bg-violet-500/5"></div>
-      
-      <div class="flex flex-col gap-2 mb-8 relative z-10">
-        <h3 class="text-xl font-light text-white">Pro</h3>
-        <p class="text-sm font-extralight text-white/40 h-10">For teams and AI agents running production workloads.</p>
-        <div class="mt-4 relative h-12 w-full">
-          <div class="flex items-baseline gap-1 absolute top-0 left-0">
-            <span class="text-5xl font-thin tracking-tight text-white font-['JetBrains_Mono']">$99</span>
-            <span class="text-xs font-['JetBrains_Mono'] text-white/40">/mo</span>
-          </div>
-        </div>
+    <!-- FAQ 2 -->
+    <div class="faq-item rounded-2xl bg-gradient-to-br from-white/[0.03] to-transparent border border-white/5 backdrop-blur-md transition-all duration-500 overflow-hidden cursor-pointer" onclick="toggleFaq(this)">
+      <div class="flex items-center justify-between p-6">
+        <span class="text-sm md:text-base font-light text-white/90">How does the batch auction work?</span>
+        <svg class="faq-chevron w-5 h-5 text-white/30 transition-transform duration-500 shrink-0 ml-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
       </div>
-      <a href="/dashboard" class="w-full py-3 rounded-full bg-white text-black text-sm font-medium hover:bg-white/90 transition-colors mb-8 relative z-10 shadow-[0_0_15px_rgba(255,255,255,0.2)] text-center block">
-        Start Pro Trial
-      </a>
-      <div class="flex flex-col gap-4 relative z-10">
-        <span class="text-[10px] font-['JetBrains_Mono'] uppercase tracking-widest text-white/40 mb-2">Everything in Explorer, plus:</span>
-        <div class="flex items-center gap-3">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-violet-400"><path d="M20 6 9 17l-5-5"></path></svg>
-          <span class="text-sm font-extralight text-white/90">Priority batch matching</span>
-        </div>
-        <div class="flex items-center gap-3">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-violet-400"><path d="M20 6 9 17l-5-5"></path></svg>
-          <span class="text-sm font-extralight text-white/90">Advanced analytics dashboard</span>
-        </div>
-        <div class="flex items-center gap-3">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-violet-400"><path d="M20 6 9 17l-5-5"></path></svg>
-          <span class="text-sm font-extralight text-white/90">Higher API rate limits</span>
-        </div>
-        <div class="flex items-center gap-3">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-violet-400"><path d="M20 6 9 17l-5-5"></path></svg>
-          <span class="text-sm font-extralight text-white/90">x402 agent payments</span>
-        </div>
-        <div class="flex items-center gap-3">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-violet-400"><path d="M20 6 9 17l-5-5"></path></svg>
-          <span class="text-sm font-extralight text-white/90">Dedicated support</span>
+      <div class="faq-answer max-h-0 transition-all duration-500 ease-in-out overflow-hidden">
+        <div class="px-6 pb-6 pt-0">
+          <p class="text-sm font-extralight text-white/50 leading-relaxed">Orders accumulate in 30–60 second windows. A uniform clearing price algorithm matches all compatible orders simultaneously — every participant gets the same price, eliminating frontrunning, sandwich attacks, and information leakage.</p>
         </div>
       </div>
     </div>
 
-    <!-- Enterprise Plan -->
-    <div class="flex flex-col p-8 rounded-3xl bg-gradient-to-br from-white/[0.03] to-transparent hover:from-white/[0.06] border border-white/5 transition-colors duration-500 backdrop-blur-md">
-      <div class="flex flex-col gap-2 mb-8">
-        <h3 class="text-xl font-light text-white">Enterprise</h3>
-        <p class="text-sm font-extralight text-white/40 h-10">Dedicated compute, SLA guarantees, and institutional block trading.</p>
-        <div class="mt-4 relative h-12 w-full">
-          <div class="flex items-baseline gap-1 absolute top-0 left-0">
-            <span class="text-5xl font-thin tracking-tight text-white font-['JetBrains_Mono']">Custom</span>
-          </div>
+    <!-- FAQ 3 -->
+    <div class="faq-item rounded-2xl bg-gradient-to-br from-white/[0.03] to-transparent border border-white/5 backdrop-blur-md transition-all duration-500 overflow-hidden cursor-pointer" onclick="toggleFaq(this)">
+      <div class="flex items-center justify-between p-6">
+        <span class="text-sm md:text-base font-light text-white/90">What is commit-reveal and why does it matter?</span>
+        <svg class="faq-chevron w-5 h-5 text-white/30 transition-transform duration-500 shrink-0 ml-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="faq-answer max-h-0 transition-all duration-500 ease-in-out overflow-hidden">
+        <div class="px-6 pb-6 pt-0">
+          <p class="text-sm font-extralight text-white/50 leading-relaxed">Orders are encrypted client-side using Pedersen commitments before submission. No one — including the protocol itself — can see price, quantity, or direction until the batch clears. This cryptographic guarantee ensures true pre-trade privacy.</p>
         </div>
       </div>
-      <button class="w-full py-3 rounded-full border border-white/10 bg-white/5 text-white text-sm font-medium hover:bg-white/10 transition-colors mb-8 shadow-inner">
-        Contact Sales
-      </button>
-      <div class="flex flex-col gap-4">
-        <span class="text-[10px] font-['JetBrains_Mono'] uppercase tracking-widest text-white/40 mb-2">Everything in Pro, plus:</span>
-        <div class="flex items-center gap-3">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-white/30"><path d="M20 6 9 17l-5-5"></path></svg>
-          <span class="text-sm font-extralight text-white/70">1000+ GPU-hour block trading</span>
+    </div>
+
+    <!-- FAQ 4 -->
+    <div class="faq-item rounded-2xl bg-gradient-to-br from-white/[0.03] to-transparent border border-white/5 backdrop-blur-md transition-all duration-500 overflow-hidden cursor-pointer" onclick="toggleFaq(this)">
+      <div class="flex items-center justify-between p-6">
+        <span class="text-sm md:text-base font-light text-white/90">How does settlement work?</span>
+        <svg class="faq-chevron w-5 h-5 text-white/30 transition-transform duration-500 shrink-0 ml-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="faq-answer max-h-0 transition-all duration-500 ease-in-out overflow-hidden">
+        <div class="px-6 pb-6 pt-0">
+          <p class="text-sm font-extralight text-white/50 leading-relaxed">Matched orders settle atomically on Base L2 using USDC. ZK proofs verify fair execution without revealing individual order details. Typical settlement finality: under 2 seconds.</p>
         </div>
-        <div class="flex items-center gap-3">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-white/30"><path d="M20 6 9 17l-5-5"></path></svg>
-          <span class="text-sm font-extralight text-white/70">99.9% uptime SLA</span>
+      </div>
+    </div>
+
+    <!-- FAQ 5 -->
+    <div class="faq-item rounded-2xl bg-gradient-to-br from-white/[0.03] to-transparent border border-white/5 backdrop-blur-md transition-all duration-500 overflow-hidden cursor-pointer" onclick="toggleFaq(this)">
+      <div class="flex items-center justify-between p-6">
+        <span class="text-sm md:text-base font-light text-white/90">What is the x402 payment protocol?</span>
+        <svg class="faq-chevron w-5 h-5 text-white/30 transition-transform duration-500 shrink-0 ml-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="faq-answer max-h-0 transition-all duration-500 ease-in-out overflow-hidden">
+        <div class="px-6 pb-6 pt-0">
+          <p class="text-sm font-extralight text-white/50 leading-relaxed">An HTTP-native payment standard that lets AI agents pay per-request using USDC on Base. Agents include payment directly in HTTP headers — no wallets, no bridging, no human approval needed. Autonomous commerce at machine speed.</p>
         </div>
-        <div class="flex items-center gap-3">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-white/30"><path d="M20 6 9 17l-5-5"></path></svg>
-          <span class="text-sm font-extralight text-white/70">Stripe MPP fiat payments</span>
+      </div>
+    </div>
+
+    <!-- FAQ 6 -->
+    <div class="faq-item rounded-2xl bg-gradient-to-br from-white/[0.03] to-transparent border border-white/5 backdrop-blur-md transition-all duration-500 overflow-hidden cursor-pointer" onclick="toggleFaq(this)">
+      <div class="flex items-center justify-between p-6">
+        <span class="text-sm md:text-base font-light text-white/90">How much cheaper is this than AWS / cloud providers?</span>
+        <svg class="faq-chevron w-5 h-5 text-white/30 transition-transform duration-500 shrink-0 ml-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="faq-answer max-h-0 transition-all duration-500 ease-in-out overflow-hidden">
+        <div class="px-6 pb-6 pt-0">
+          <p class="text-sm font-extralight text-white/50 leading-relaxed">Batch auction pricing typically yields 60–80% savings vs. on-demand cloud rates by aggregating supply from independent GPU operators and eliminating intermediary margins. No reserved instances, no lock-in.</p>
         </div>
-        <div class="flex items-center gap-3">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-white/30"><path d="M20 6 9 17l-5-5"></path></svg>
-          <span class="text-sm font-extralight text-white/70">Compute futures contracts</span>
+      </div>
+    </div>
+
+    <!-- FAQ 7 -->
+    <div class="faq-item rounded-2xl bg-gradient-to-br from-white/[0.03] to-transparent border border-white/5 backdrop-blur-md transition-all duration-500 overflow-hidden cursor-pointer" onclick="toggleFaq(this)">
+      <div class="flex items-center justify-between p-6">
+        <span class="text-sm md:text-base font-light text-white/90">Is my order data private?</span>
+        <svg class="faq-chevron w-5 h-5 text-white/30 transition-transform duration-500 shrink-0 ml-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="faq-answer max-h-0 transition-all duration-500 ease-in-out overflow-hidden">
+        <div class="px-6 pb-6 pt-0">
+          <p class="text-sm font-extralight text-white/50 leading-relaxed">Yes. Orders are encrypted before submission using Pedersen commitments. The protocol uses zero-knowledge proofs to verify execution fairness without exposing any individual trade details. Full auditability, complete privacy.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ 8 -->
+    <div class="faq-item rounded-2xl bg-gradient-to-br from-white/[0.03] to-transparent border border-white/5 backdrop-blur-md transition-all duration-500 overflow-hidden cursor-pointer" onclick="toggleFaq(this)">
+      <div class="flex items-center justify-between p-6">
+        <span class="text-sm md:text-base font-light text-white/90">What GPU types are supported?</span>
+        <svg class="faq-chevron w-5 h-5 text-white/30 transition-transform duration-500 shrink-0 ml-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="faq-answer max-h-0 transition-all duration-500 ease-in-out overflow-hidden">
+        <div class="px-6 pb-6 pt-0">
+          <p class="text-sm font-extralight text-white/50 leading-relaxed">H100, A100, L40S, and RTX 4090 clusters. Providers list available capacity with verifiable hardware attestations. The protocol supports both spot and reserved compute across all listed GPU classes.</p>
         </div>
       </div>
     </div>
 
   </div>
+
+  <!-- FAQ Toggle Script -->
+  <script>
+    function toggleFaq(el) {
+      const accordion = document.getElementById('faq-accordion');
+      const allItems = accordion.querySelectorAll('.faq-item');
+      const answer = el.querySelector('.faq-answer');
+      const chevron = el.querySelector('.faq-chevron');
+      const isOpen = answer.style.maxHeight && answer.style.maxHeight !== '0px';
+
+      // Close all
+      allItems.forEach(item => {
+        item.querySelector('.faq-answer').style.maxHeight = '0px';
+        item.querySelector('.faq-chevron').style.transform = 'rotate(0deg)';
+        item.style.borderColor = 'rgba(255,255,255,0.05)';
+        item.style.borderLeftWidth = '1px';
+      });
+
+      // Open clicked if it was closed
+      if (!isOpen) {
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+        chevron.style.transform = 'rotate(180deg)';
+        el.style.borderLeftColor = 'rgba(139,92,246,0.5)';
+        el.style.borderLeftWidth = '2px';
+      }
+    }
+  </script>
 </section>
       
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

@@ -1,51 +1,27 @@
 
 
-## Replace "Visual Component Architecture" with Protocol Telemetry Dashboard
+## Plan: Revert Font & Restore Original 3-Tier Section
 
-### Problem
-Lines 1494-1801 in `public/aero.html` show a generic design-tool section ("Visual Component Architecture") with irrelevant metrics (Components: 1,024, Lighthouse: 100%, Variants: 256, TTFB: 45ms) and a placeholder chart. This has no relevance to the GPU dark pool protocol.
+### 1. Revert font to Inter across the entire project
 
-### Replacement: "Dark Pool Telemetry"
+**Files to change:**
+- **`src/index.css`**: Remove the `@font-face` for Kavo Sans. Change body font-family back to `'Inter', sans-serif`. Keep the existing JetBrains Mono import, add Inter import.
+- **`tailwind.config.ts`**: Change `sans` font stack from `['Kavo Sans', 'cursive']` back to `['Inter', 'sans-serif']`.
+- **`public/aero.html`**: Remove the Kavo Sans `@font-face` block. Replace all `font-['Kavo_Sans']` classes with `font-['Inter']`. The Inter font link is already loaded (line 22).
 
-**Header area:**
-- Pulsing dot label: `Protocol Live` (replaces "Node Sync Active")
-- Title: `Dark Pool Telemetry` (replaces "Visual Component Architecture")
+### 2. Replace the "How it works for buyers & sellers" sidebar accordion section with the original 3-tier layout
 
-**Stats bar** (4 metrics, same layout):
-| Old | New | Value |
-|-----|-----|-------|
-| Components: 1,024 | Orders Matched | 12,847 |
-| Lighthouse: 100% | Fill Rate | 94% |
-| Variants: 256 | Active Agents | 1,892 |
-| TTFB: 45ms | Settlement | 1.2s |
+The current section (lines ~246-780) uses a sticky sidebar with accordion navigation + large content panels. This will be replaced with the original simple 3-column grid layout featuring three cards:
 
-**Description banner:**
-- Text: "Real-time protocol telemetry across all active batch windows. Monitoring order flow, fill rates, and settlement performance on Base L2."
-- Button: "Launch Terminal" (replaces "Start Building"), links to `/dashboard`
+- **AGENTS** — AI agents submit encrypted GPU orders
+- **AUCTIONS** — Batch auctions find fair clearing prices  
+- **ON-CHAIN** — Instant settlement on Base L2
 
-**Legend labels** (below chart):
-- Layouts → Order Flow
-- Interactions → Fill Rate  
-- Styles → Settlement
+The replacement will be a clean 3-column grid section matching the dark glassmorphic design system, with each card containing an icon, title, and description. The premium glassmorphic "Buyers & Sellers" section below (lines ~2258-2496) will remain unchanged as it is a separate section.
 
-**Dropdown buttons:**
-- "Project: Alpha" → "Network: Base L2"
-- "Auto-saved" → "Live Sync"
+### Technical details
 
-**Timeline labels:**
-- Keep the T-12:00 through PRESNT format — works well for protocol telemetry
-
-**Chart colors:** Change from cyan/blue to violet/emerald to match the site's accent palette:
-- Line 1: `rgba(139, 92, 246, 0.9)` (violet) with violet gradient fill
-- Line 2: `rgba(34, 197, 94, 0.6)` (emerald) with emerald gradient fill
-- Line 3: Keep the subtle gray line
-
-### Files changed
-
-| Action | File |
-|--------|------|
-| Edit | `public/aero.html` (lines 1494-1801) — Replace text content and chart colors, preserve structure and animations |
-
-### Approach
-Text-only replacements plus chart color updates. The section structure, canvas animation logic, GSAP scroll triggers, and glassmorphic styling all remain intact.
+- The Inter font is already loaded via Google Fonts link on line 22 of `aero.html`
+- The `@font-face` block for Kavo Sans (lines 8-14) and the `public/fonts/Kavo-Sans.woff2` file will no longer be needed
+- The sidebar accordion section spans roughly lines 246-780 in `aero.html` and will be replaced with a compact 3-column grid
 

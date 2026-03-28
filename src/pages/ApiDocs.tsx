@@ -1,6 +1,8 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { GlassCard } from "@/components/ui/glass-card";
 import { SectionLabel } from "@/components/ui/section-label";
+import { motion } from "framer-motion";
+import { pageHeader } from "@/lib/animations";
 
 const endpoints = [
   { path: "/api/v1/orders", method: "POST", desc: "Submit encrypted order" },
@@ -19,13 +21,13 @@ const methodColor: Record<string, string> = {
 const ApiDocs = () => {
   return (
     <div className="space-y-8 max-w-[900px]">
-      <div>
+      <motion.div {...pageHeader}>
         <h1 className="text-2xl font-semibold text-gradient">API Documentation</h1>
         <p className="text-sm text-white/40 mt-1">For AI agents and developers</p>
-      </div>
+      </motion.div>
 
       {/* Quick Start */}
-      <GlassCard delay={0.1} corners className="p-6 space-y-4">
+      <GlassCard delay={0.08} corners className="p-6 space-y-4">
         <SectionLabel>Quick Start for AI Agents</SectionLabel>
         <ol className="list-decimal list-inside text-sm text-white/50 space-y-2.5 ml-1">
           <li>Generate API Key from <span className="text-primary">Settings</span></li>
@@ -35,7 +37,7 @@ const ApiDocs = () => {
       </GlassCard>
 
       {/* Code Example */}
-      <GlassCard delay={0.2} gradient className="overflow-hidden">
+      <GlassCard delay={0.16} gradient className="overflow-hidden">
         <div className="px-5 py-3 border-b border-white/[0.04] flex items-center gap-2">
           <div className="flex gap-1.5">
             <span className="w-2.5 h-2.5 rounded-full bg-destructive/40" />
@@ -59,7 +61,7 @@ const ApiDocs = () => {
       </GlassCard>
 
       {/* Endpoints */}
-      <GlassCard delay={0.3} corners className="overflow-hidden">
+      <GlassCard delay={0.24} corners className="overflow-hidden">
         <div className="px-5 py-4">
           <SectionLabel>REST API Endpoints</SectionLabel>
         </div>

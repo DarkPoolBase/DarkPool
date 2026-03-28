@@ -1,23 +1,25 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Play, Pause, Settings as SettingsIcon, Plus, BarChart3, Cpu, MapPin, Wifi } from "lucide-react";
+import { Play, Pause, Settings as SettingsIcon, Plus, BarChart3, Cpu } from "lucide-react";
 import { GlassCard } from "@/components/ui/glass-card";
 import { SectionLabel } from "@/components/ui/section-label";
+import { motion } from "framer-motion";
+import { pageHeader, ease } from "@/lib/animations";
 
 const Provider = () => {
   return (
     <div className="space-y-6 max-w-[1400px]">
-      <div>
+      <motion.div {...pageHeader}>
         <h1 className="text-2xl font-semibold text-gradient">Provider Panel</h1>
         <p className="text-sm text-white/40 mt-1">Register and manage your GPU resources</p>
-      </div>
+      </motion.div>
 
       {/* Top Row: Registration + GPU Fleet Card */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
         {/* Registration Form */}
         <div className="lg:col-span-4">
-          <GlassCard delay={0.1} className="p-6 space-y-4 h-full">
+          <GlassCard delay={0.08} className="p-6 space-y-4 h-full">
             <SectionLabel>Register Your GPUs</SectionLabel>
 
             <div className="space-y-1.5">
@@ -78,7 +80,7 @@ const Provider = () => {
         {/* GPU Fleet + Stats */}
         <div className="lg:col-span-8 flex flex-col gap-4">
           {/* GPU Card */}
-          <GlassCard delay={0.15} corners className="p-6 space-y-5 flex-1">
+          <GlassCard delay={0.16} corners className="p-6 space-y-5 flex-1">
             <div className="flex items-center justify-between">
               <SectionLabel>Your GPU Fleet</SectionLabel>
               <Button variant="outline" size="sm" className="gap-1.5 text-[10px] font-mono border-white/[0.06] bg-transparent hover:bg-white/[0.04] text-white/50">
@@ -142,7 +144,7 @@ const Provider = () => {
               { label: "This Month", value: "$234.50" },
               { label: "Pending", value: "$45.00" },
             ].map(({ label, value }, i) => (
-              <GlassCard key={label} delay={0.2 + i * 0.05} className="p-5">
+              <GlassCard key={label} delay={0.24 + i * 0.08} className="p-5">
                 <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/30 block">{label}</span>
                 <p className="font-mono text-xl font-semibold mt-2 text-white tabular-nums">{value}</p>
               </GlassCard>
@@ -150,7 +152,7 @@ const Provider = () => {
           </div>
 
           {/* Withdraw */}
-          <GlassCard delay={0.35} glow className="p-5 flex items-center justify-between">
+          <GlassCard delay={0.48} glow className="p-5 flex items-center justify-between">
             <div>
               <SectionLabel pulse>Withdraw Earnings</SectionLabel>
               <p className="text-xs text-white/30 mt-1">Available: <span className="text-white/60 font-mono">$1,245.67 USDC</span></p>

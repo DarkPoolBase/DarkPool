@@ -1,6 +1,6 @@
-<html lang="en"><head><meta charset="UTF-8">
+<html lang="en" style="scroll-behavior: smooth;"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Agentic Dark Pool | The Private GPU Marketplace on Base</title>
+<title>DARKPOOL | The Private GPU Marketplace on Base</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -24,12 +24,12 @@ gtag('config', 'G-2M6V79H761');
         <img src="/images/darkpool-logo.png" alt="DARKPOOL" class="w-8 h-8 object-contain" />
         <span class="font-['JetBrains_Mono'] text-[11px] font-semibold tracking-[0.15em] uppercase text-white/80">DARKPOOL</span>
       </a>
-      <div class="hidden md:flex items-center gap-8 text-sm text-white/60 font-light">
-        <a href="#diagnostics-section" class="hover:text-white transition-colors">How It Works</a>
-        <a href="#quant-analytics" class="hover:text-white transition-colors">Technology</a>
-        <a href="#" class="hover:text-white transition-colors">Docs</a>
-        <a href="#" class="hover:text-white transition-colors">Pricing</a>
-      </div>
+       <div class="hidden md:flex items-center gap-8 text-sm text-white/60 font-light">
+         <a href="#how-it-works" class="hover:text-white transition-colors">How It Works</a>
+         <a href="#quant-analytics" class="hover:text-white transition-colors">Protocol</a>
+         <a href="#telemetry" class="hover:text-white transition-colors">Telemetry</a>
+         <a href="#faq" class="hover:text-white transition-colors">FAQ</a>
+       </div>
       <div class="flex items-center gap-4">
         <button onclick="document.getElementById('wallet-modal').classList.remove('hidden')" class="px-5 py-2.5 text-sm rounded-full font-medium transition-all flex items-center gap-2" style="background: rgba(255,255,255,0.06); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.15); box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-violet-400"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2.5"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg>
@@ -113,7 +113,7 @@ gtag('config', 'G-2M6V79H761');
   </article>
 </section>
 
-      <section class="z-10 w-full pt-32 pb-20 relative" id="diagnostics-section">
+      <section class="z-10 w-full pt-32 pb-20 relative" id="how-it-works">
   <div class="md:px-10 flex flex-col md:flex-row gap-12 lg:gap-24 max-w-screen-2xl mr-auto ml-auto pr-6 pl-6 gap-x-12 gap-y-12">
     <!-- Left Sidebar (Sticky) -->
     <aside class="md:w-1/3 lg:w-1/4 flex-shrink-0 z-20 relative">
@@ -1492,7 +1492,7 @@ gtag('config', 'G-2M6V79H761');
         });
 </script>
 </section>
-      <section class="text-neutral-400 font-['Inter'] w-full max-w-6xl rounded-[25px] mt-12 mr-auto ml-auto pt-[1px] pr-[1px] pb-[1px] pl-[1px] relative shadow-[0_0_120px_rgba(6,182,212,0.03)]" style="background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.01) 100%); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale">
+      <section id="telemetry" class="text-neutral-400 font-['Inter'] w-full max-w-6xl rounded-[25px] mt-12 mr-auto ml-auto pt-[1px] pr-[1px] pb-[1px] pl-[1px] relative shadow-[0_0_120px_rgba(6,182,212,0.03)]" style="background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.01) 100%); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale">
         <div class="overflow-hidden bg-[#050505] w-full rounded-[24px] shadow-inner" style="box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.05)">
           <div class="flex flex-col md:p-10 lg:p-12 pt-6 pr-6 pb-6 pl-6 gap-x-10 gap-y-10">
             <header class="flex flex-col gap-10 xl:flex-row xl:items-end xl:justify-between">
@@ -2938,32 +2938,30 @@ gtag('config', 'G-2M6V79H761');
             </a>
             <p class="font-light">The private GPU marketplace for AI agents on Base.</p>
           </div>
-          <div class="flex flex-col gap-3">
-            <h4 class="text-white/80 font-medium mb-1">Product</h4>
-            <a href="/marketplace" class="hover:text-white transition-colors">Marketplace</a>
-            <a href="/dashboard" class="hover:text-white transition-colors">Dashboard</a>
-            <a href="/provider" class="hover:text-white transition-colors">Provide GPUs</a>
-            <a href="/analytics" class="hover:text-white transition-colors">Analytics</a>
-          </div>
-          <div class="flex flex-col gap-3">
-            <h4 class="text-white/80 font-medium mb-1">Developers</h4>
-            <a href="/api-docs" class="hover:text-white transition-colors">
-              API Documentation
-            </a>
-            <a href="#" class="hover:text-white transition-colors">SDK</a>
-            <a href="#" class="hover:text-white transition-colors">x402 Integration</a>
-            <a href="#" class="hover:text-white transition-colors">GitHub</a>
-          </div>
-          <div class="flex flex-col gap-3">
-            <h4 class="text-white/80 font-medium mb-1">Company</h4>
-            <a href="#" class="hover:text-white transition-colors">About</a>
-            <a href="#" class="hover:text-white transition-colors">Blog</a>
-            <a href="#" class="hover:text-white transition-colors">Terms</a>
-            <a href="#" class="hover:text-white transition-colors">Privacy</a>
-          </div>
+           <div class="flex flex-col gap-3">
+             <h4 class="text-white/80 font-medium mb-1">Product</h4>
+             <a href="#how-it-works" class="hover:text-white transition-colors">How It Works</a>
+             <a href="#quant-analytics" class="hover:text-white transition-colors">Protocol</a>
+             <a href="#telemetry" class="hover:text-white transition-colors">Telemetry</a>
+             <a href="#faq" class="hover:text-white transition-colors">FAQ</a>
+           </div>
+           <div class="flex flex-col gap-3">
+             <h4 class="text-white/80 font-medium mb-1">Platform</h4>
+             <a href="/dashboard" class="hover:text-white transition-colors">Dashboard</a>
+             <a href="/marketplace" class="hover:text-white transition-colors">Marketplace</a>
+             <a href="/provider" class="hover:text-white transition-colors">Provide GPUs</a>
+             <a href="/analytics" class="hover:text-white transition-colors">Analytics</a>
+           </div>
+           <div class="flex flex-col gap-3">
+             <h4 class="text-white/80 font-medium mb-1">Developers</h4>
+             <a href="/api-docs" class="hover:text-white transition-colors">API Documentation</a>
+             <a href="#security-subsystems" class="hover:text-white transition-colors">Market Intelligence</a>
+             <a href="#" class="hover:text-white transition-colors">GitHub</a>
+             <a href="#" class="hover:text-white transition-colors">Discord</a>
+           </div>
         </div>
         <div class="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/5 text-xs gap-4 px-6 md:px-12 max-w-6xl mx-auto w-full">
-          <span class="">© 2026 Agentic Dark Pool. Built on Base.</span>
+          <span class="">© 2026 DARKPOOL. Built on Base.</span>
           <div class="flex gap-4">
             <a href="#" class="hover:text-white transition-colors">Twitter</a>
             <a href="#" class="hover:text-white transition-colors">GitHub</a>

@@ -1,45 +1,51 @@
 
 
-## Replace Compute Pricing with FAQ Section
+## Replace "Visual Component Architecture" with Protocol Telemetry Dashboard
 
-### What changes
-Replace the entire pricing section (lines 2679-2827 in `public/aero.html`) — the 3-column pricing cards with monthly/annual toggle — with a premium glassmorphic FAQ accordion section.
+### Problem
+Lines 1494-1801 in `public/aero.html` show a generic design-tool section ("Visual Component Architecture") with irrelevant metrics (Components: 1,024, Lighthouse: 100%, Variants: 256, TTFB: 45ms) and a placeholder chart. This has no relevance to the GPU dark pool protocol.
 
-### New section: Frequently Asked Questions
+### Replacement: "Dark Pool Telemetry"
 
-**Header area** (same pattern as other sections):
-- Tag: `FAQ // PROTOCOL`
-- Title: "Frequently Asked Questions"
-- Subtitle: "Everything you need to know about the agentic dark pool protocol."
+**Header area:**
+- Pulsing dot label: `Protocol Live` (replaces "Node Sync Active")
+- Title: `Dark Pool Telemetry` (replaces "Visual Component Architecture")
 
-**FAQ items** (glassmorphic accordion — each item is a `glass-card` style panel):
-Each FAQ is a clickable row with a question, plus/minus toggle icon, and expandable answer. Uses the existing design system: `bg-gradient-to-br from-white/[0.03] to-transparent`, `border border-white/5`, `backdrop-blur-md`, `rounded-2xl`, JetBrains Mono labels, violet accents.
+**Stats bar** (4 metrics, same layout):
+| Old | New | Value |
+|-----|-----|-------|
+| Components: 1,024 | Orders Matched | 12,847 |
+| Lighthouse: 100% | Fill Rate | 94% |
+| Variants: 256 | Active Agents | 1,892 |
+| TTFB: 45ms | Settlement | 1.2s |
 
-**Questions sourced from the PDF research:**
+**Description banner:**
+- Text: "Real-time protocol telemetry across all active batch windows. Monitoring order flow, fill rates, and settlement performance on Base L2."
+- Button: "Launch Terminal" (replaces "Start Building"), links to `/dashboard`
 
-1. **What is an agentic dark pool?** — A private exchange where AI agents trade GPU compute resources without exposing order details. Uses commit-reveal encryption and batch auctions to prevent MEV and ensure fair pricing.
+**Legend labels** (below chart):
+- Layouts → Order Flow
+- Interactions → Fill Rate  
+- Styles → Settlement
 
-2. **How does the batch auction work?** — Orders accumulate in 30-60 second windows. A uniform clearing price algorithm matches all compatible orders simultaneously — every participant gets the same price, eliminating frontrunning.
+**Dropdown buttons:**
+- "Project: Alpha" → "Network: Base L2"
+- "Auto-saved" → "Live Sync"
 
-3. **What is commit-reveal and why does it matter?** — Orders are encrypted client-side using Pedersen commitments before submission. No one — including the protocol — can see price, quantity, or direction until the batch clears.
+**Timeline labels:**
+- Keep the T-12:00 through PRESNT format — works well for protocol telemetry
 
-4. **How does settlement work?** — Matched orders settle atomically on Base L2 using USDC. ZK proofs verify fair execution without revealing individual order details. Typical settlement: under 2 seconds.
-
-5. **What is the x402 payment protocol?** — An HTTP-native payment standard that lets AI agents pay per-request using USDC on Base. Agents include payment in HTTP headers — no wallets, no bridging, no human approval needed.
-
-6. **How much cheaper is this than AWS/cloud providers?** — Batch auction pricing typically yields 60-80% savings vs. on-demand cloud rates by aggregating supply from independent GPU operators and eliminating intermediary margins.
-
-7. **Is my order data private?** — Yes. Orders are encrypted before submission. The protocol uses zero-knowledge proofs to verify execution fairness without exposing any trade details.
-
-8. **What GPU types are supported?** — H100, A100, L40S, and RTX 4090 clusters. Providers list capacity with verifiable hardware attestations.
-
-**Interaction:** Vanilla JS click handlers toggle `max-height` and rotate the chevron icon. Smooth CSS transitions (`transition-all duration-500`). Only one item open at a time (accordion behavior).
-
-**Decorative elements:** Keep the existing violet glow blob behind the section. Add subtle left-border accent on the active/open item (`border-l-2 border-violet-500/50`).
+**Chart colors:** Change from cyan/blue to violet/emerald to match the site's accent palette:
+- Line 1: `rgba(139, 92, 246, 0.9)` (violet) with violet gradient fill
+- Line 2: `rgba(34, 197, 94, 0.6)` (emerald) with emerald gradient fill
+- Line 3: Keep the subtle gray line
 
 ### Files changed
 
 | Action | File |
 |--------|------|
-| Edit | `public/aero.html` (lines 2679-2827) — Replace pricing section with FAQ accordion + inline JS toggle logic |
+| Edit | `public/aero.html` (lines 1494-1801) — Replace text content and chart colors, preserve structure and animations |
+
+### Approach
+Text-only replacements plus chart color updates. The section structure, canvas animation logic, GSAP scroll triggers, and glassmorphic styling all remain intact.
 

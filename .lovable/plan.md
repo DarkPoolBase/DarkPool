@@ -1,51 +1,37 @@
 
 
-## Replace "Visual Component Architecture" with Protocol Telemetry Dashboard
+## Add "About Us" Section Below Hero with GSAP Scroll Reveals
 
-### Problem
-Lines 1494-1801 in `public/aero.html` show a generic design-tool section ("Visual Component Architecture") with irrelevant metrics (Components: 1,024, Lighthouse: 100%, Variants: 256, TTFB: 45ms) and a placeholder chart. This has no relevance to the GPU dark pool protocol.
+### What We're Building
+A full-width "About Us" section inserted between the hero (line 117) and the "How It Works" section (line 119) in `public/aero.html`. Content is sourced from the uploaded PDF research document. The section uses GSAP ScrollTrigger animations for progressive reveal as the user scrolls.
 
-### Replacement: "Dark Pool Telemetry"
+### Content (from PDF)
+Three content blocks with staggered reveals:
 
-**Header area:**
-- Pulsing dot label: `Protocol Live` (replaces "Node Sync Active")
-- Title: `Dark Pool Telemetry` (replaces "Visual Component Architecture")
+1. **The Problem** — AI companies need massive GPU compute but current options are either expensive (AWS at $6+/hr), fully transparent (competitors see your orders), or slow private deals.
 
-**Stats bar** (4 metrics, same layout):
-| Old | New | Value |
-|-----|-----|-------|
-| Components: 1,024 | Orders Matched | 12,847 |
-| Lighthouse: 100% | Fill Rate | 94% |
-| Variants: 256 | Active Agents | 1,892 |
-| TTFB: 45ms | Settlement | 1.2s |
+2. **Our Solution** — A "dark pool" for compute: encrypted bids, batch auctions every 30-60s, ZK proofs verify fairness, settlement in USDC on Base. Nobody — not even the platform — sees raw order data.
 
-**Description banner:**
-- Text: "Real-time protocol telemetry across all active batch windows. Monitoring order flow, fill rates, and settlement performance on Base L2."
-- Button: "Launch Terminal" (replaces "Start Building"), links to `/dashboard`
+3. **Why It Matters** — $5.7B GPU-as-a-Service market growing 35.8%/yr. Nobody combines privacy + compute + AI agents. The intersection is completely greenfield.
 
-**Legend labels** (below chart):
-- Layouts → Order Flow
-- Interactions → Fill Rate  
-- Styles → Settlement
+### Design
+- Matches the existing glassmorphic dark aesthetic (bg-[#030303], white/50 text, JetBrains Mono labels)
+- Section header with uppercase tracking label ("ABOUT THE PROTOCOL") and large light headline
+- Three glass cards in a row (lg:grid-cols-3) with subtle borders (white/[0.06]) and backdrop-blur
+- Each card has a monospace category label, heading, and body text
+- Optional: a key stats strip below (market size, growth rate, competitors)
 
-**Dropdown buttons:**
-- "Project: Alpha" → "Network: Base L2"
-- "Auto-saved" → "Live Sync"
+### GSAP Animations
+- Section headline: fade-up with `ScrollTrigger` (start: "top 85%")
+- Cards: staggered fade-up (0.15s stagger, power3.out easing)
+- Stats strip: counter animation on scroll entry
+- All using the existing GSAP + ScrollTrigger already loaded in the page
 
-**Timeline labels:**
-- Keep the T-12:00 through PRESNT format — works well for protocol telemetry
+### Technical Details
 
-**Chart colors:** Change from cyan/blue to violet/emerald to match the site's accent palette:
-- Line 1: `rgba(139, 92, 246, 0.9)` (violet) with violet gradient fill
-- Line 2: `rgba(34, 197, 94, 0.6)` (emerald) with emerald gradient fill
-- Line 3: Keep the subtle gray line
+| Action | File | Details |
+|--------|------|---------|
+| Edit | `public/aero.html` (after line 117) | Insert ~80 lines of HTML for the About Us section + GSAP scroll animation script block |
 
-### Files changed
-
-| Action | File |
-|--------|------|
-| Edit | `public/aero.html` (lines 1494-1801) — Replace text content and chart colors, preserve structure and animations |
-
-### Approach
-Text-only replacements plus chart color updates. The section structure, canvas animation logic, GSAP scroll triggers, and glassmorphic styling all remain intact.
+The section HTML will be inserted between `</section>` (line 117) and `<section ... id="how-it-works">` (line 119). A `<script>` block at the end of the section will initialize GSAP ScrollTrigger animations for the `.about-reveal` elements, using the same pattern as the existing reveal animations.
 

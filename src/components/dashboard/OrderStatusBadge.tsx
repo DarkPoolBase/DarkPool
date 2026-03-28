@@ -4,31 +4,42 @@ type Status = "FILLED" | "ACTIVE" | "PENDING" | "CANCELLED" | "EXPIRED";
 
 const statusStyles: Record<Status, { className: string; label: string }> = {
   FILLED: {
-    className: "bg-success/10 text-success border-success/20 shadow-[0_0_8px_rgba(34,197,94,0.15)]",
-    label: "✅ Filled",
+    className: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+    label: "Filled",
   },
   ACTIVE: {
-    className: "bg-primary/10 text-primary border-primary/20 shadow-[0_0_8px_rgba(108,60,233,0.15)]",
-    label: "⏳ Active",
+    className: "bg-violet-500/10 text-violet-400 border-violet-500/20",
+    label: "Active",
   },
   PENDING: {
-    className: "bg-warning/10 text-warning border-warning/20 shadow-[0_0_8px_rgba(245,158,11,0.15)] animate-pulse-glow",
-    label: "⏳ Pending",
+    className: "bg-amber-500/10 text-amber-400 border-amber-500/20 animate-pulse",
+    label: "Pending",
   },
   CANCELLED: {
-    className: "bg-destructive/10 text-destructive border-destructive/20",
-    label: "❌ Cancelled",
+    className: "bg-rose-500/10 text-rose-400 border-rose-500/20",
+    label: "Cancelled",
   },
   EXPIRED: {
     className: "bg-white/5 text-white/40 border-white/10",
-    label: "⏰ Expired",
+    label: "Expired",
   },
 };
 
 export function OrderStatusBadge({ status }: { status: Status }) {
   const s = statusStyles[status];
   return (
-    <span className={cn("inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium border tracking-wide", s.className)}>
+    <span className={cn(
+      "inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-medium border tracking-wide tabular-nums",
+      s.className
+    )}>
+      <span className={cn(
+        "w-1 h-1 rounded-full",
+        status === "FILLED" && "bg-emerald-400",
+        status === "ACTIVE" && "bg-violet-400",
+        status === "PENDING" && "bg-amber-400",
+        status === "CANCELLED" && "bg-rose-400",
+        status === "EXPIRED" && "bg-white/30",
+      )} />
       {s.label}
     </span>
   );

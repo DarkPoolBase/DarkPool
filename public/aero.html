@@ -2431,19 +2431,41 @@ gtag('config', 'G-2M6V79H761');
 
 <!-- GSAP scroll animations for step cards -->
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
-    gsap.utils.toArray('.step-card-hover').forEach((card, i) => {
-      gsap.from(card, {
-        y: 60,
-        opacity: 0,
-        duration: 0.8,
-        delay: i * 0.15,
-        ease: 'power3.out',
-        scrollTrigger: { trigger: card, start: 'top 85%' }
-      });
-    });
-  });
+  (function() {
+    function initStepCards() {
+      if (typeof gsap === 'undefined') {
+        setTimeout(initStepCards, 200);
+        return;
+      }
+      var cards = document.querySelectorAll('.step-card-hover');
+      if (!cards.length) return;
+      
+      // If ScrollTrigger available, use scroll-based reveal
+      if (typeof ScrollTrigger !== 'undefined') {
+        cards.forEach(function(card, i) {
+          gsap.fromTo(card, 
+            { y: 50, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.8, delay: i * 0.12, ease: 'power3.out',
+              scrollTrigger: { trigger: card, start: 'top 90%', toggleActions: 'play none none none' }
+            }
+          );
+        });
+      } else {
+        // Fallback: simple timed animation
+        cards.forEach(function(card, i) {
+          card.style.opacity = '0';
+          card.style.transform = 'translateY(50px)';
+          setTimeout(function() {
+            card.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+          }, 200 + i * 150);
+        });
+      }
+    }
+    // Try immediately and also on load
+    setTimeout(initStepCards, 300);
+  })();
 </script>
 
 <section class="flex flex-col w-full mt-24 gap-x-8 gap-y-8" id="diagnostics-section">

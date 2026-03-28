@@ -14,7 +14,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
+        sans: ['Zen Dots', 'cursive'],
         mono: ['JetBrains Mono', 'monospace'],
       },
       colors: {

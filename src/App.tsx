@@ -8,6 +8,7 @@ import NotFound from "./pages/NotFound.tsx";
 import { DashboardLayout } from "./components/layout/DashboardLayout";
 import Dashboard from "./pages/Dashboard";
 import Marketplace from "./pages/Marketplace";
+import ProductDetail from "./pages/ProductDetail";
 import Orders from "./pages/Orders";
 import Analytics from "./pages/Analytics";
 import Provider from "./pages/Provider";

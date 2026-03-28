@@ -26,12 +26,10 @@ export function AuctionTimer() {
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
-      className={`group relative overflow-hidden rounded-2xl border border-white/5 bg-white/[0.03] backdrop-blur-xl shadow-2xl p-5 transition-all duration-500 ${
-        isUrgent ? "shadow-[0_0_40px_rgba(245,158,11,0.15)] border-amber-500/20" : ""
+      className={`glass-card group p-5 transition-all duration-500 ${
+        isUrgent ? "shadow-[0_0_40px_rgba(245,158,11,0.15),0_8px_32px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.15),inset_0_0_18px_4px_rgba(255,255,255,0.03)]" : ""
       }`}
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-white/[0.04] to-transparent pointer-events-none" />
-
       <div className="relative z-10 flex items-center gap-4">
         <div className="relative shrink-0">
           <svg width="56" height="56" className="-rotate-90">

@@ -15,10 +15,8 @@ export function LiveFeed() {
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
-      className="relative overflow-hidden rounded-2xl border border-white/5 bg-white/[0.03] backdrop-blur-xl shadow-2xl h-full"
+      className="glass-card h-full"
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent pointer-events-none" />
-
       <div className="relative z-10">
         <div className="flex items-center gap-2.5 p-5 pb-3">
           <span className="relative flex h-1.5 w-1.5">

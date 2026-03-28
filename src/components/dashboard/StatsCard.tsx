@@ -28,16 +28,10 @@ export function StatsCard({ icon: Icon, label, value, change, changeType = "neut
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay, ease: [0.25, 0.46, 0.45, 0.94] }}
-      className={`group relative overflow-hidden rounded-2xl border border-white/5 bg-white/[0.03] backdrop-blur-xl shadow-2xl p-5 transition-all duration-500 hover:border-white/10 hover:bg-white/[0.05] ${
-        glow ? "shadow-[0_0_40px_rgba(139,92,246,0.12)]" : ""
+      className={`glass-card group p-5 transition-all duration-500 hover:border-white/20 ${
+        glow ? "shadow-[0_0_40px_rgba(139,92,246,0.12),0_8px_32px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.15),inset_0_-1px_0_rgba(255,255,255,0.05),inset_0_0_18px_4px_rgba(255,255,255,0.03)]" : ""
       }`}
     >
-      {/* Directional lighting */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white/[0.04] to-transparent pointer-events-none" />
-
-      {/* Top accent line */}
-      <div className="absolute top-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-violet-500/30 to-transparent" />
-
       <div className="relative z-10">
         <div className="flex items-center justify-between mb-4">
           <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">{label}</span>

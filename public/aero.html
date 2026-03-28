@@ -58,7 +58,6 @@ gtag('config', 'G-2M6V79H761');
       <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#030305_100%)]"></div>
     </div>
 
-    
 
     <main class="md:px-12 flex flex-col z-10 w-full max-w-7xl mr-auto ml-auto pr-6 pb-32 pl-6 relative gap-x-4 gap-y-4" id="core-section">
       <header class="grid grid-cols-2 md:grid-cols-3 w-full gap-8 font-['JetBrains_Mono'] font-extralight uppercase text-xs text-white/40 tracking-widest">
@@ -126,6 +125,123 @@ gtag('config', 'G-2M6V79H761');
     </div>
   </article>
 </section>
+<!-- ============ ABOUT US SECTION ============ -->
+<section id="about-us" class="relative w-full py-32 md:py-44 overflow-hidden">
+  <!-- Subtle ambient glow -->
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#6C3CE9]/[0.04] blur-[150px] rounded-full pointer-events-none"></div>
+  <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent"></div>
+  <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent"></div>
+
+  <div class="max-w-5xl mx-auto px-6 text-center relative z-10">
+    <!-- Mono label -->
+    <div class="about-reveal-line mb-8 flex items-center justify-center gap-3">
+      <div class="w-8 h-px bg-gradient-to-r from-transparent to-white/20"></div>
+      <span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.3em] text-[#6C3CE9]">About Darkpool</span>
+      <div class="w-8 h-px bg-gradient-to-l from-transparent to-white/20"></div>
+    </div>
+
+    <!-- Main statement -->
+    <h2 class="about-reveal-line text-3xl md:text-5xl lg:text-6xl font-light text-white tracking-tight leading-[1.15] mb-8">
+      We're building the <br class="hidden md:block"><span class="text-white/30">infrastructure</span> for private<br class="hidden md:block"> AI compute markets.
+    </h2>
+
+    <!-- Body copy -->
+    <p class="about-reveal-line text-sm md:text-base text-white/35 font-light leading-relaxed max-w-2xl mx-auto mb-12">
+      Darkpool is a decentralized exchange where AI agents and developers trade GPU compute resources without exposing their strategies. Our protocol uses commit-reveal encryption and batch auctions to eliminate front-running, ensure uniform pricing, and settle instantly on Base — all at 70% less than centralized cloud providers.
+    </p>
+
+    <!-- Stats row -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 max-w-3xl mx-auto">
+      <div class="about-reveal-stat text-center">
+        <div class="font-['JetBrains_Mono'] text-2xl md:text-3xl font-semibold text-white mb-1 tabular-nums about-counter" data-target="250" data-suffix="K+">0</div>
+        <div class="font-['JetBrains_Mono'] text-[9px] uppercase tracking-[0.2em] text-white/25">AI Agents</div>
+      </div>
+      <div class="about-reveal-stat text-center">
+        <div class="font-['JetBrains_Mono'] text-2xl md:text-3xl font-semibold text-white mb-1 tabular-nums about-counter" data-target="70" data-suffix="%">0</div>
+        <div class="font-['JetBrains_Mono'] text-[9px] uppercase tracking-[0.2em] text-white/25">Cost Savings</div>
+      </div>
+      <div class="about-reveal-stat text-center">
+        <div class="font-['JetBrains_Mono'] text-2xl md:text-3xl font-semibold text-white mb-1 tabular-nums">$0.01</div>
+        <div class="font-['JetBrains_Mono'] text-[9px] uppercase tracking-[0.2em] text-white/25">Gas Per Trade</div>
+      </div>
+      <div class="about-reveal-stat text-center">
+        <div class="font-['JetBrains_Mono'] text-2xl md:text-3xl font-semibold text-white mb-1 tabular-nums about-counter" data-target="30" data-suffix="s">0</div>
+        <div class="font-['JetBrains_Mono'] text-[9px] uppercase tracking-[0.2em] text-white/25">Batch Cycle</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function() {
+  const initAbout = () => {
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+      setTimeout(initAbout, 200);
+      return;
+    }
+
+    gsap.fromTo('.about-reveal-line', 
+      { opacity: 0, y: 60, filter: 'blur(8px)' },
+      {
+        opacity: 1, y: 0, filter: 'blur(0px)',
+        duration: 1,
+        ease: 'power3.out',
+        stagger: 0.2,
+        scrollTrigger: {
+          trigger: '#about-us',
+          start: 'top 75%',
+          end: 'top 25%',
+          toggleActions: 'play none none reverse'
+        }
+      }
+    );
+
+    gsap.fromTo('.about-reveal-stat',
+      { opacity: 0, y: 40, scale: 0.9 },
+      {
+        opacity: 1, y: 0, scale: 1,
+        duration: 0.8,
+        ease: 'back.out(1.4)',
+        stagger: 0.12,
+        scrollTrigger: {
+          trigger: '.about-reveal-stat',
+          start: 'top 85%',
+          toggleActions: 'play none none reverse'
+        }
+      }
+    );
+
+    document.querySelectorAll('.about-counter').forEach(el => {
+      const target = parseInt(el.dataset.target) || 0;
+      const suffix = el.dataset.suffix || '';
+      const prefix = el.dataset.prefix !== undefined ? el.dataset.prefix : '';
+
+      ScrollTrigger.create({
+        trigger: el,
+        start: 'top 85%',
+        onEnter: () => {
+          gsap.to({ val: 0 }, {
+            val: target,
+            duration: 2,
+            ease: 'power2.out',
+            onUpdate: function() {
+              el.textContent = prefix + Math.round(this.targets()[0].val) + suffix;
+            }
+          });
+        },
+        once: true
+      });
+    });
+  };
+
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    setTimeout(initAbout, 300);
+  } else {
+    document.addEventListener('DOMContentLoaded', initAbout);
+  }
+})();
+</script>
+
 
       <section class="z-10 w-full pt-32 pb-20 relative" id="how-it-works">
   <div class="md:px-10 flex flex-col md:flex-row gap-12 lg:gap-24 max-w-screen-2xl mr-auto ml-auto pr-6 pl-6 gap-x-12 gap-y-12">

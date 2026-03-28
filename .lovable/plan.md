@@ -1,71 +1,41 @@
 
 
-## Fix "How It Works" Section: Relevant Panels + Scroll Navigation
+## Replace "Interaction Engine" Section with Protocol Architecture
 
-### Problem 1: Irrelevant right-side panels
-The 4 nav items on the left (Encrypted Orders, Batch Auctions, Instant Settlement, Agent-Native API) scroll through right-side content panels that still show **design tool mockups** (Figma-like layer panels, CMS editors, typography/color panels, mobile phone frames). These need to be replaced with dashboard-like, GPU marketplace-relevant visualizations.
+### What changes
+Replace the 3-panel "Interaction Engine" section (lines 1802-1933 in `public/aero.html`) which currently shows generic design tool content (Scroll Animations, State Transitions, Component Logic) with GPU marketplace protocol architecture content.
 
-### Problem 2: Scroll navigation broken
-The IntersectionObserver script at line 227 queries for a container element `[data-element-id="aura-emn1kp650mbex8x7"]` which **does not exist** in the HTML, so the observer never initializes and clicking the nav items does nothing. Also, there are only 3 `data-scroll-section` elements but 4 nav items.
+### New content
 
----
+**Section header**: "Protocol Architecture" with tag "ZK // COMMIT_REVEAL"
 
-### Plan
+**Panel 01 — COMMIT-REVEAL**
+- Title: "COMMIT-REVEAL" / 01//
+- Description: "Orders are encrypted client-side using commit-reveal schemes. No participant — including the protocol — can see order details until the batch clears."
+- Footer label: "SCHEME: PEDERSEN"
+- Footer text: "Cryptographic commitments bind order parameters without revealing price, quantity, or direction to any party."
+- Keep the existing canvas visualization (topology engine) — it works well as an abstract representation of cryptographic structures
 
-#### Step 1: Fix the scroll observer script (lines 226-289)
-- Remove the `container` query — instead, scope nav items and sections directly from the `#diagnostics-section` parent
-- Ensure all 4 `data-scroll-section` elements are found and mapped to the 4 nav items
+**Panel 02 — BATCH MATCHING**
+- Title: "BATCH MATCHING" / 02//
+- Description: "Orders accumulate in 30-60 second batches. A uniform clearing price algorithm matches all compatible orders simultaneously, eliminating MEV extraction."
+- Footer label: "MODE: UNIFORM_PRICE"
+- Footer text: "Single clearing price per batch ensures fair execution — no frontrunning, no sandwich attacks, no information leakage."
+- Keep existing canvas visualization
 
-#### Step 2: Replace Panel 1 — "Encrypted Orders" (lines 296-602)
-Remove the Figma-like design tool mockup (layers tree, canvas with rulers, right sidebar with Layout/Typography/Fill panels). Replace with a **premium encrypted order submission mockup** showing:
-- A glassmorphic card with a "Submit Encrypted Order" flow
-- Buy/Sell toggle with green/red indicator
-- GPU type selector showing "H100 NVIDIA 80GB"
-- Price field, quantity slider, estimated total
-- A lock icon with "Encrypting..." animation text
-- Commit hash preview (e.g., `0x7a3b...f82c`)
-- JetBrains Mono micro-labels for section headers
-- Animated purple glow on the submit button
+**Panel 03 — ON-CHAIN SETTLEMENT**
+- Title: "ON-CHAIN SETTLEMENT" / 03//
+- Description: "Matched orders settle atomically on Base L2. ZK proofs verify fair execution without revealing individual order details. USDC escrow ensures instant finality."
+- Footer label: "OUTPUT: VERIFIED"
+- Footer text: "Settlement proofs are posted on-chain for full auditability while preserving trader privacy."
+- Keep existing canvas and bar chart visualizations
 
-#### Step 3: Replace Panel 2 — "Batch Auctions" (lines 603-1158)
-Remove the CMS editor mockup and the "Selected Works" grid (Product Design, Design Systems, Mobile Apps, Brand Strategy). Replace with a **batch auction matching engine visualization**:
-- A depth chart mockup showing green buy bids and red sell asks
-- Animated clearing price line at `$0.21/GPU-hr`
-- Stats row: "23 orders matched", "340 GPU-hrs", "Batch #4521"
-- A countdown timer circle showing "Next batch in 00:32"
-- Order queue list showing anonymized orders being matched
-- Corner accents and gradient borders matching the landing page style
-
-#### Step 4: Replace Panel 3 — "Instant Settlement" (lines 1161-1226)
-The "How It Works" table is fine content but it's mapped as the 3rd scroll section. Replace this with a **settlement flow visualization**:
-- An animated transaction pipeline: Order Matched → ZK Proof Generated → On-Chain Settlement → GPU Access Granted
-- Each step shown as a glassmorphic card in a horizontal/vertical flow with connecting lines
-- Real stats: "$0.01 gas", "2 sec finality", "Base L2"
-- A mock transaction receipt showing hash, block number, USDC amount
-- Terminal-style log output: `Generating ZK commitment proofs... verified ✓`
-
-#### Step 5: Add Panel 4 — "Agent-Native API" (new section)
-Add a new `data-scroll-section` panel after the settlement panel:
-- A dark code editor mockup with syntax-highlighted code showing the SDK:
-  ```js
-  import { DarkPoolClient } from '@agentic-darkpool/sdk';
-  const order = await client.submitOrder({ side: 'buy', gpuType: 'H100' });
-  ```
-- Supported framework pills: "LangChain", "AutoGPT", "CrewAI", "x402"
-- API response preview in a terminal: `{ "orderId": "#4521", "status": "encrypted" }`
-- Stats: "< 100ms latency", "99.9% uptime", "REST + WebSocket"
-
-#### Step 6: Keep the "How It Works" table
-Move the existing step-by-step table (Connect Wallet → Submit Order → Batch Auction → Settlement) to appear **after** all 4 scroll-section panels, as standalone content below the sticky sidebar section.
-
----
-
-### Files Changed
+### Files changed
 
 | Action | File |
 |--------|------|
-| Rewrite | `public/aero.html` (lines ~226-1226): Replace 3 design tool panels with 4 GPU marketplace panels, fix observer script, add 4th scroll section |
+| Edit | `public/aero.html` (lines 1802-1933) — Replace text content only, preserve panel structure and canvas elements |
 
-### Visual Style
-All new panels will use the same glassmorphic aesthetic already in the landing page: `bg-[#0E0F11]`, `border-white/[0.06]`, `backdrop-blur-md`, `shadow-2xl`, purple glow blobs, JetBrains Mono labels, corner accents, and hover transitions. CSS-only animations for the pipeline flow and counting numbers (no additional JS libraries needed — GSAP is already loaded).
+### Approach
+Only replace the text strings inside the existing `quant-reveal-inner` spans and plain text nodes. The panel structure, canvas elements, GSAP animations, and visual effects all remain untouched.
 

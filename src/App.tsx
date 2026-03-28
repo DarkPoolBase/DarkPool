@@ -8,6 +8,7 @@ import NotFound from "./pages/NotFound.tsx";
 import { DashboardLayout } from "./components/layout/DashboardLayout";
 import Dashboard from "./pages/Dashboard";
 import Marketplace from "./pages/Marketplace";
+import ProductDetail from "./pages/ProductDetail";
 import Orders from "./pages/Orders";
 import Analytics from "./pages/Analytics";
 import Provider from "./pages/Provider";
@@ -27,6 +28,7 @@ const App = () => (
           <Route element={<DashboardLayout />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/marketplace" element={<Marketplace />} />
+            <Route path="/marketplace/:productId" element={<ProductDetail />} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/analytics" element={<Analytics />} />
             <Route path="/provider" element={<Provider />} />

@@ -3202,4 +3202,87 @@ gtag('config', 'G-2M6V79H761');
       requestAnimationFrame(render);
     </script>
   
+<!-- Wallet Connect Modal -->
+<div id="wallet-modal" class="hidden fixed inset-0 z-[9999] flex items-center justify-center">
+  <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" onclick="document.getElementById('wallet-modal').classList.add('hidden')"></div>
+  <div class="relative z-10 w-full max-w-md mx-4 rounded-2xl overflow-hidden" style="background: rgba(255,255,255,0.08); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.25), inset 0 -1px 0 rgba(255,255,255,0.08), inset 0 0 18px 9px rgba(255,255,255,0.04);">
+    <!-- Top highlight -->
+    <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.6),transparent);z-index:1;"></div>
+    <!-- Left highlight -->
+    <div style="position:absolute;top:0;left:0;width:1px;height:100%;background:linear-gradient(180deg,rgba(255,255,255,0.6),transparent,rgba(255,255,255,0.2));z-index:1;"></div>
+
+    <div class="p-8">
+      <!-- Header -->
+      <div class="flex items-center justify-between mb-8">
+        <div>
+          <h3 class="text-xl font-light text-white tracking-tight">Connect Wallet</h3>
+          <p class="text-xs text-white/30 mt-1 font-['JetBrains_Mono']">Select a wallet to connect</p>
+        </div>
+        <button onclick="document.getElementById('wallet-modal').classList.add('hidden')" class="w-8 h-8 rounded-full flex items-center justify-center transition-all hover:bg-white/10" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-white/50"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+
+      <!-- Wallet Options -->
+      <div class="space-y-3">
+        <!-- MetaMask -->
+        <button onclick="connectMetaMask()" class="w-full flex items-center gap-4 p-4 rounded-xl transition-all duration-300 group cursor-pointer" style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);" onmouseover="this.style.background='rgba(255,255,255,0.08)';this.style.borderColor='rgba(255,255,255,0.15)'" onmouseout="this.style.background='rgba(255,255,255,0.04)';this.style.borderColor='rgba(255,255,255,0.08)'">
+          <img src="/images/metamask-logo.png" alt="MetaMask" class="w-10 h-10 rounded-xl object-contain">
+          <div class="text-left flex-1">
+            <div class="text-sm font-medium text-white/90">MetaMask</div>
+            <div class="text-[10px] text-white/30 font-['JetBrains_Mono'] mt-0.5">Browser Extension</div>
+          </div>
+          <div class="text-[10px] font-['JetBrains_Mono'] text-emerald-400/70 uppercase tracking-wider px-2 py-1 rounded-full" style="background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2);">Popular</div>
+        </button>
+
+        <!-- Phantom -->
+        <button onclick="connectPhantom()" class="w-full flex items-center gap-4 p-4 rounded-xl transition-all duration-300 group cursor-pointer" style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);" onmouseover="this.style.background='rgba(255,255,255,0.08)';this.style.borderColor='rgba(255,255,255,0.15)'" onmouseout="this.style.background='rgba(255,255,255,0.04)';this.style.borderColor='rgba(255,255,255,0.08)'">
+          <img src="/images/phantom-logo.jpg" alt="Phantom" class="w-10 h-10 rounded-xl object-cover">
+          <div class="text-left flex-1">
+            <div class="text-sm font-medium text-white/90">Phantom</div>
+            <div class="text-[10px] text-white/30 font-['JetBrains_Mono'] mt-0.5">Multi-Chain Wallet</div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-white/20"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+      </div>
+
+      <!-- Footer -->
+      <div class="mt-8 pt-4 border-t border-white/[0.06] flex items-center justify-between">
+        <span class="text-[10px] text-white/20 font-['JetBrains_Mono']">Secured by Base L2</span>
+        <div class="flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span class="text-[10px] text-emerald-400/70 font-['JetBrains_Mono']">Network Active</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function connectMetaMask() {
+    if (typeof window.ethereum !== 'undefined') {
+      window.ethereum.request({ method: 'eth_requestAccounts' })
+        .then(accounts => {
+          document.getElementById('wallet-modal').classList.add('hidden');
+          window.location.href = '/dashboard';
+        })
+        .catch(err => console.error('MetaMask error:', err));
+    } else {
+      window.open('https://metamask.io/download/', '_blank');
+    }
+  }
+  function connectPhantom() {
+    if (window.phantom?.ethereum) {
+      window.phantom.ethereum.request({ method: 'eth_requestAccounts' })
+        .then(accounts => {
+          document.getElementById('wallet-modal').classList.add('hidden');
+          window.location.href = '/dashboard';
+        })
+        .catch(err => console.error('Phantom error:', err));
+    } else {
+      window.open('https://phantom.app/download', '_blank');
+    }
+  }
+</script>
+
 </body></html>

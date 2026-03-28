@@ -76,13 +76,5 @@ export function GlassCard({
     </motion.div>
   );
 
-  if (gradient) {
-    return (
-      <div className="p-px rounded-2xl bg-gradient-to-b from-white/[0.06] to-transparent">
-        {content}
-      </div>
-    );
-  }
-
   return content;
 }

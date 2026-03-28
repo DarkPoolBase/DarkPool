@@ -70,9 +70,9 @@ export function DashboardSidebar() {
       />
 
       {/* Logo area */}
-      <div className="relative z-10 px-4 py-5 border-b border-white/[0.06]">
+      <div className={`relative z-10 border-b border-white/[0.06] ${collapsed ? 'px-2 py-5' : 'px-4 py-5'}`}>
         <div className="absolute inset-0 bg-gradient-to-b from-violet-500/[0.06] to-transparent pointer-events-none" />
-        <div className="relative flex items-center gap-3">
+        <div className={`relative flex items-center ${collapsed ? 'justify-center' : 'gap-3'}`}>
           <div className="relative">
             <img src={darkpoolLogo} alt="DARKPOOL" className="h-7 w-7 object-contain shrink-0" />
             <div className="absolute inset-0 blur-xl bg-violet-500/40 rounded-full" />

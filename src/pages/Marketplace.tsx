@@ -8,7 +8,6 @@ import { AuctionTimer } from "@/components/dashboard/AuctionTimer";
 import { GlassCard } from "@/components/ui/glass-card";
 import { SectionLabel } from "@/components/ui/section-label";
 import { motion } from "framer-motion";
-import { ease, pageHeader } from "@/lib/animations";
 
 const gpuTypes = [
   { id: "h100", name: "H100 NVIDIA 80GB", price: "$0.21", providers: 47, utilization: 72 },
@@ -27,15 +26,15 @@ const Marketplace = () => {
 
   return (
     <div className="space-y-8 max-w-[1400px]">
-      <motion.div {...pageHeader}>
+      <div>
         <h1 className="text-2xl font-semibold text-gradient">Marketplace</h1>
         <p className="text-sm text-white/40 mt-1">Place buy/sell orders and view market conditions</p>
-      </motion.div>
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Order Form */}
         <div className="lg:col-span-4">
-          <GlassCard gradient delay={0.08} className="p-6 space-y-5">
+          <GlassCard gradient delay={0.1} className="p-6 space-y-5">
             {/* Buy/Sell Toggle */}
             <div className="flex rounded-xl border border-white/[0.06] overflow-hidden bg-white/[0.02] relative">
               <motion.div
@@ -127,7 +126,7 @@ const Marketplace = () => {
 
         {/* Market Depth */}
         <div className="lg:col-span-5">
-          <GlassCard delay={0.16} corners className="p-6 flex flex-col h-full">
+          <GlassCard delay={0.2} corners className="p-6 flex flex-col h-full">
             <div className="flex items-center justify-between mb-6">
               <SectionLabel>Market Depth (Anonymized)</SectionLabel>
               <span className="font-mono text-[10px] text-white/30 tracking-wider">H100 / USDC</span>
@@ -140,7 +139,7 @@ const Marketplace = () => {
                     <motion.div
                       initial={{ width: 0 }}
                       animate={{ width: `${w}%` }}
-                      transition={{ duration: 0.8, delay: 0.24 + i * 0.08, ease }}
+                      transition={{ duration: 0.8, delay: 0.3 + i * 0.1, ease: "easeOut" }}
                       className="h-7 rounded-md bg-gradient-to-r from-destructive/30 to-destructive/10 hover:from-destructive/40 hover:to-destructive/20 transition-colors duration-300 cursor-crosshair"
                     />
                   </div>
@@ -155,7 +154,7 @@ const Marketplace = () => {
                     <motion.div
                       initial={{ width: 0 }}
                       animate={{ width: `${w}%` }}
-                      transition={{ duration: 0.8, delay: 0.56 + i * 0.08, ease }}
+                      transition={{ duration: 0.8, delay: 0.7 + i * 0.1, ease: "easeOut" }}
                       className="h-7 rounded-md bg-gradient-to-r from-success/30 to-success/10 hover:from-success/40 hover:to-success/20 transition-colors duration-300 cursor-crosshair"
                     />
                   </div>
@@ -171,15 +170,9 @@ const Marketplace = () => {
 
         {/* GPU Overview */}
         <div className="lg:col-span-3 space-y-4">
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.24, ease }}
-          >
-            <SectionLabel className="mb-2">Available GPU Types</SectionLabel>
-          </motion.div>
+          <SectionLabel className="mb-2">Available GPU Types</SectionLabel>
           {gpuTypes.map((gpu, i) => (
-            <GlassCard key={gpu.id} delay={0.32 + i * 0.08} className="p-4 space-y-3 hover:border-white/[0.12] transition-all duration-300 group">
+            <GlassCard key={gpu.id} delay={0.3 + i * 0.1} className="p-4 space-y-3 hover:border-white/[0.12] transition-all duration-300 group">
               <h4 className="text-sm font-medium text-white/80">{gpu.name}</h4>
               <div className="flex justify-between font-mono text-[10px] text-white/40">
                 <span>Est: <span className="text-white/70">{gpu.price}/hr</span></span>
@@ -194,7 +187,7 @@ const Marketplace = () => {
                   <motion.div
                     initial={{ width: 0 }}
                     animate={{ width: `${gpu.utilization}%` }}
-                    transition={{ duration: 0.8, delay: 0.4 + i * 0.08, ease }}
+                    transition={{ duration: 1, delay: 0.5 + i * 0.1 }}
                     className="h-full rounded-full bg-gradient-to-r from-primary to-[hsl(258,78%,70%)]"
                   />
                 </div>

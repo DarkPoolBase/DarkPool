@@ -1,10 +1,6 @@
 <html lang="en" style="scroll-behavior: smooth;"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DARKPOOL | The Private GPU Marketplace on Base</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style></style>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -50,6 +46,7 @@ gtag('config', 'G-2M6V79H761');
       <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#030305_100%)]"></div>
     </div>
 
+    
 
     <main class="md:px-12 flex flex-col z-10 w-full max-w-7xl mr-auto ml-auto pr-6 pb-32 pl-6 relative gap-x-4 gap-y-4" id="core-section">
       <header class="grid grid-cols-2 md:grid-cols-3 w-full gap-8 font-['JetBrains_Mono'] font-extralight uppercase text-xs text-white/40 tracking-widest">
@@ -70,13 +67,14 @@ gtag('config', 'G-2M6V79H761');
       <section class="grid grid-cols-1 lg:grid-cols-12 w-full mt-40 mb-40 gap-x-12 gap-y-12 items-center">
   <div class="lg:col-span-5 flex flex-col gap-8">
     <h1 class="md:text-8xl uppercase leading-none text-5xl font-thin tracking-tight">
-      <div class="overflow-hidden pb-2">
-        <span class="gsap-title-word translate-y-full block" style="translate: none; rotate: none; scale: none; transform: translate(0px, 100%);">
+      <div class="overflow-hidden inline-flex pb-2">
+        <span class="gsap-title-word translate-y-full inline-block" style="translate: none; rotate: none; scale: none; transform: translate(0px, 100%);">
           THE PRIVATE
         </span>
       </div>
-      <div class="overflow-hidden pb-2">
-        <span class="gsap-title-word block italic text-white/40 translate-y-full">
+      <br>
+      <div class="overflow-hidden inline-flex pb-2">
+        <span class="gsap-title-word inline-block md:pl-20 md:pr-4 italic text-white/40 pr-4 pl-0 translate-y-full">
           GPU MARKET
         </span>
       </div>
@@ -86,7 +84,7 @@ gtag('config', 'G-2M6V79H761');
       <a href="/dashboard" class="px-6 py-3 bg-gradient-to-r from-[#6C3CE9] to-[#9D6FFF] text-white text-sm rounded-full font-medium hover:opacity-90 transition-all shadow-[0_0_25px_rgba(108,60,233,0.4)] inline-flex items-center gap-2">
         Launch App →
       </a>
-      <a href="#how-it-works-detail" class="px-6 py-3 border border-white/10 text-white/70 text-sm rounded-full font-light hover:border-white/30 hover:text-white transition-all inline-flex items-center gap-2">
+      <a href="#diagnostics-section" class="px-6 py-3 border border-white/10 text-white/70 text-sm rounded-full font-light hover:border-white/30 hover:text-white transition-all inline-flex items-center gap-2">
         Learn More
       </a>
     </div>
@@ -117,197 +115,719 @@ gtag('config', 'G-2M6V79H761');
     </div>
   </article>
 </section>
-<!-- ============ ABOUT US SECTION ============ -->
-<section id="about-us" class="relative w-full py-32 md:py-44 overflow-hidden">
-  <!-- Subtle ambient glow -->
-  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#6C3CE9]/[0.04] blur-[150px] rounded-full pointer-events-none"></div>
-  <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent"></div>
-  <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent"></div>
-
-  <div class="max-w-5xl mx-auto px-6 text-center relative z-10">
-    <!-- Mono label -->
-    <div class="about-reveal-line mb-8 flex items-center justify-center gap-3">
-      <div class="w-8 h-px bg-gradient-to-r from-transparent to-white/20"></div>
-      <span class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.3em] text-[#6C3CE9]">About Darkpool</span>
-      <div class="w-8 h-px bg-gradient-to-l from-transparent to-white/20"></div>
-    </div>
-
-    <!-- Main statement -->
-    <h2 class="about-reveal-line text-3xl md:text-5xl lg:text-6xl font-light text-white tracking-tight leading-[1.15] mb-8">
-      We're building the <br class="hidden md:block"><span class="text-white/30">infrastructure</span> for private<br class="hidden md:block"> AI compute markets.
-    </h2>
-
-    <!-- Body copy -->
-    <p class="about-reveal-line text-sm md:text-base text-white/35 font-light leading-relaxed max-w-2xl mx-auto mb-12">
-      Darkpool is a decentralized exchange where AI agents and developers trade GPU compute resources without exposing their strategies. Our protocol uses commit-reveal encryption and batch auctions to eliminate front-running, ensure uniform pricing, and settle instantly on Base — all at 70% less than centralized cloud providers.
-    </p>
-
-    <!-- Stats row -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 max-w-3xl mx-auto">
-      <div class="about-reveal-stat text-center">
-        <div class="font-['JetBrains_Mono'] text-2xl md:text-3xl font-semibold text-white mb-1 tabular-nums about-counter" data-target="250" data-suffix="K+">0</div>
-        <div class="font-['JetBrains_Mono'] text-[9px] uppercase tracking-[0.2em] text-white/25">AI Agents</div>
-      </div>
-      <div class="about-reveal-stat text-center">
-        <div class="font-['JetBrains_Mono'] text-2xl md:text-3xl font-semibold text-white mb-1 tabular-nums about-counter" data-target="70" data-suffix="%">0</div>
-        <div class="font-['JetBrains_Mono'] text-[9px] uppercase tracking-[0.2em] text-white/25">Cost Savings</div>
-      </div>
-      <div class="about-reveal-stat text-center">
-        <div class="font-['JetBrains_Mono'] text-2xl md:text-3xl font-semibold text-white mb-1 tabular-nums">$0.01</div>
-        <div class="font-['JetBrains_Mono'] text-[9px] uppercase tracking-[0.2em] text-white/25">Gas Per Trade</div>
-      </div>
-      <div class="about-reveal-stat text-center">
-        <div class="font-['JetBrains_Mono'] text-2xl md:text-3xl font-semibold text-white mb-1 tabular-nums about-counter" data-target="30" data-suffix="s">0</div>
-        <div class="font-['JetBrains_Mono'] text-[9px] uppercase tracking-[0.2em] text-white/25">Batch Cycle</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<script>
-(function() {
-  const initAbout = () => {
-    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
-      setTimeout(initAbout, 200);
-      return;
-    }
-
-    gsap.fromTo('.about-reveal-line', 
-      { opacity: 0, y: 60, filter: 'blur(8px)' },
-      {
-        opacity: 1, y: 0, filter: 'blur(0px)',
-        duration: 1,
-        ease: 'power3.out',
-        stagger: 0.2,
-        scrollTrigger: {
-          trigger: '#about-us',
-          start: 'top 75%',
-          end: 'top 25%',
-          toggleActions: 'play none none reverse'
-        }
-      }
-    );
-
-    gsap.fromTo('.about-reveal-stat',
-      { opacity: 0, y: 40, scale: 0.9 },
-      {
-        opacity: 1, y: 0, scale: 1,
-        duration: 0.8,
-        ease: 'back.out(1.4)',
-        stagger: 0.12,
-        scrollTrigger: {
-          trigger: '.about-reveal-stat',
-          start: 'top 85%',
-          toggleActions: 'play none none reverse'
-        }
-      }
-    );
-
-    document.querySelectorAll('.about-counter').forEach(el => {
-      const target = parseInt(el.dataset.target) || 0;
-      const suffix = el.dataset.suffix || '';
-      const prefix = el.dataset.prefix !== undefined ? el.dataset.prefix : '';
-
-      ScrollTrigger.create({
-        trigger: el,
-        start: 'top 85%',
-        onEnter: () => {
-          gsap.to({ val: 0 }, {
-            val: target,
-            duration: 2,
-            ease: 'power2.out',
-            onUpdate: function() {
-              el.textContent = prefix + Math.round(this.targets()[0].val) + suffix;
-            }
-          });
-        },
-        once: true
-      });
-    });
-  };
-
-  if (document.readyState === 'complete' || document.readyState === 'interactive') {
-    setTimeout(initAbout, 300);
-  } else {
-    document.addEventListener('DOMContentLoaded', initAbout);
-  }
-})();
-</script>
-
 
       <section class="z-10 w-full pt-32 pb-20 relative" id="how-it-works">
-  <div class="max-w-screen-2xl mx-auto px-6 md:px-10">
+  <div class="md:px-10 flex flex-col md:flex-row gap-12 lg:gap-24 max-w-screen-2xl mr-auto ml-auto pr-6 pl-6 gap-x-12 gap-y-12">
+    <!-- Left Sidebar (Sticky) -->
+    <aside class="md:w-1/3 lg:w-1/4 flex-shrink-0 z-20 relative">
+  <div class="md:sticky md:top-32 lg:space-y-12 space-y-10">
 
-    <!-- Section Header -->
-    <div class="text-center mb-16 space-y-4">
-      <span class="text-[10px] text-violet-400 uppercase tracking-[0.25em] font-['JetBrains_Mono']">Protocol Architecture</span>
-      <h2 class="text-3xl md:text-5xl font-light text-white tracking-tight leading-tight">
-        How it works for<br>buyers & sellers
-      </h2>
-      <p class="text-sm text-white/40 max-w-lg mx-auto font-light">Three steps to private, fair-priced GPU compute on Base L2.</p>
+    <!-- Title -->
+    <div class="space-y-5">
+      <h1 class="text-3xl md:text-4xl lg:text-4xl font-light text-white tracking-tight leading-tight">
+        How it<br>works for<br class="">buyers & sellers
+      </h1>
     </div>
 
-    <!-- 3-Column Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+    <!-- Navigation / Accordion -->
+    <div class="pt-4">
+      <nav class="flex flex-col w-full max-w-sm relative border-l border-white/10 ml-1.5 space-y-2">
 
-      <!-- Card 1: Encrypted Orders -->
-      <div class="group relative overflow-hidden rounded-2xl p-8 md:p-10 transition-all duration-500 hover:translate-y-[-4px]" style="background: rgba(255,255,255,0.04); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.08);">
-        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" style="background: radial-gradient(circle at 50% 0%, rgba(108,60,233,0.12), transparent 60%);"></div>
-        <div class="absolute top-0 left-[10%] right-[10%] h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
-        <div class="relative z-10 space-y-5">
-          <span class="text-[10px] text-violet-400/60 uppercase tracking-[0.2em] font-['JetBrains_Mono']">01 — AGENTS</span>
-          <div class="w-12 h-12 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center group-hover:shadow-[0_0_20px_rgba(108,60,233,0.3)] transition-shadow duration-500">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-violet-400"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <!-- Product Design -->
+        <div class="nav-item group cursor-pointer pl-6 py-2.5 flex flex-col relative transition-colors" data-active="true">
+          <!-- Active Line & Dot -->
+          <div class="absolute left-0 top-2.5 w-[2px] h-8 bg-blue-500 -ml-[1px] rounded-full shadow-[0_0_12px_rgba(59,130,246,0.8)] hidden group-data-[active=true]:block"></div>
+          <span class="absolute left-0 top-[15px] w-2.5 h-2.5 rounded-full bg-blue-500 -ml-[5px] border-2 border-[#030305] shadow-[0_0_8px_rgba(59,130,246,0.8)] hidden group-data-[active=true]:block"></span>
+          <!-- Inactive Dot -->
+          <span class="absolute left-0 top-[16px] w-2 h-2 rounded-full bg-transparent border border-zinc-700 -ml-1 group-hover:border-zinc-400 group-hover:bg-zinc-800 transition-all hidden group-data-[active=false]:block"></span>
+
+          <h2 class="text-sm font-normal transition-transform group-data-[active=false]:group-hover:translate-x-1 text-white">Encrypted Orders</h2>
+          <div class="nav-content mt-3 flex-col gap-3 flex">
+            <p class="text-xs text-zinc-400 font-light leading-relaxed">
+              Submit sealed bids and asks. Nobody sees your order details — not even the platform. ZK proofs verify everything is legitimate.
+            </p>
+            <a href="/dashboard" class="inline-flex items-center gap-1.5 text-xs text-white hover:text-zinc-300 transition-colors font-normal">
+              Start trading
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right">
+                <path d="m9 18 6-6-6-6"></path>
+              </svg>
+            </a>
           </div>
-          <h3 class="text-xl text-white font-medium tracking-tight">Encrypted Orders</h3>
-          <p class="text-sm text-white/40 font-light leading-relaxed">Submit sealed bids and asks. Nobody sees your order details — not even the platform. ZK proofs verify everything is legitimate.</p>
-          <a href="/dashboard" class="inline-flex items-center gap-1.5 text-xs text-violet-400 hover:text-violet-300 transition-colors font-medium group/link">
-            Start trading
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="group-hover/link:translate-x-1 transition-transform"><path d="m9 18 6-6-6-6"></path></svg>
-          </a>
         </div>
-      </div>
 
-      <!-- Card 2: Batch Auctions -->
-      <div class="group relative overflow-hidden rounded-2xl p-8 md:p-10 transition-all duration-500 hover:translate-y-[-4px]" style="background: rgba(255,255,255,0.04); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.08);">
-        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" style="background: radial-gradient(circle at 50% 0%, rgba(108,60,233,0.12), transparent 60%);"></div>
-        <div class="absolute top-0 left-[10%] right-[10%] h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
-        <div class="relative z-10 space-y-5">
-          <span class="text-[10px] text-violet-400/60 uppercase tracking-[0.2em] font-['JetBrains_Mono']">02 — AUCTIONS</span>
-          <div class="w-12 h-12 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center group-hover:shadow-[0_0_20px_rgba(108,60,233,0.3)] transition-shadow duration-500">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-violet-400"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        <!-- Content Management -->
+        <div class="nav-item group cursor-pointer pl-6 py-2.5 flex flex-col relative transition-colors" data-active="false">
+          <!-- Active Line & Dot -->
+          <div class="absolute left-0 top-2.5 w-[2px] h-8 bg-blue-500 -ml-[1px] rounded-full shadow-[0_0_12px_rgba(59,130,246,0.8)] hidden group-data-[active=true]:block"></div>
+          <span class="absolute left-0 top-[15px] w-2.5 h-2.5 rounded-full bg-blue-500 -ml-[5px] border-2 border-[#030305] shadow-[0_0_8px_rgba(59,130,246,0.8)] hidden group-data-[active=true]:block"></span>
+          <!-- Inactive Dot -->
+          <span class="absolute left-0 top-[16px] w-2 h-2 rounded-full bg-transparent border border-zinc-700 -ml-1 group-hover:border-zinc-400 group-hover:bg-zinc-800 transition-all hidden group-data-[active=false]:block"></span>
+
+          <h2 class="text-sm font-normal transition-transform group-data-[active=false]:group-hover:translate-x-1 text-zinc-500 group-hover:text-white">Batch Auctions</h2>
+          <div class="nav-content mt-3 flex-col gap-3 hidden">
+            <p class="text-xs text-zinc-400 font-light leading-relaxed">
+              Orders collect for 30-60 seconds, then a matching engine finds a single clearing price. Everyone pays the same fair rate — no front-running.
+            </p>
+            <a href="/marketplace" class="inline-flex items-center gap-1.5 text-xs text-white hover:text-zinc-300 transition-colors font-normal">
+              View marketplace
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right">
+                <path d="m9 18 6-6-6-6"></path>
+              </svg>
+            </a>
           </div>
-          <h3 class="text-xl text-white font-medium tracking-tight">Batch Auctions</h3>
-          <p class="text-sm text-white/40 font-light leading-relaxed">Orders collect for 30-60 seconds, then a matching engine finds a single clearing price. Everyone pays the same fair rate — no front-running.</p>
-          <a href="/marketplace" class="inline-flex items-center gap-1.5 text-xs text-violet-400 hover:text-violet-300 transition-colors font-medium group/link">
-            View marketplace
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="group-hover/link:translate-x-1 transition-transform"><path d="m9 18 6-6-6-6"></path></svg>
-          </a>
         </div>
-      </div>
 
-      <!-- Card 3: Instant Settlement -->
-      <div class="group relative overflow-hidden rounded-2xl p-8 md:p-10 transition-all duration-500 hover:translate-y-[-4px]" style="background: rgba(255,255,255,0.04); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.08);">
-        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" style="background: radial-gradient(circle at 50% 0%, rgba(108,60,233,0.12), transparent 60%);"></div>
-        <div class="absolute top-0 left-[10%] right-[10%] h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
-        <div class="relative z-10 space-y-5">
-          <span class="text-[10px] text-violet-400/60 uppercase tracking-[0.2em] font-['JetBrains_Mono']">03 — ON-CHAIN</span>
-          <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center group-hover:shadow-[0_0_20px_rgba(16,185,129,0.3)] transition-shadow duration-500">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-emerald-400"><polyline points="20 6 9 17 4 12"/></svg>
+        <!-- Selected Works -->
+        <div class="nav-item group cursor-pointer pl-6 py-2.5 flex flex-col relative transition-colors" data-active="false">
+          <!-- Active Line & Dot -->
+          <div class="absolute left-0 top-2.5 w-[2px] h-8 bg-blue-500 -ml-[1px] rounded-full shadow-[0_0_12px_rgba(59,130,246,0.8)] hidden group-data-[active=true]:block"></div>
+          <span class="absolute left-0 top-[15px] w-2.5 h-2.5 rounded-full bg-blue-500 -ml-[5px] border-2 border-[#030305] shadow-[0_0_8px_rgba(59,130,246,0.8)] hidden group-data-[active=true]:block"></span>
+          <!-- Inactive Dot -->
+          <span class="absolute left-0 top-[16px] w-2 h-2 rounded-full bg-transparent border border-zinc-700 -ml-1 group-hover:border-zinc-400 group-hover:bg-zinc-800 transition-all hidden group-data-[active=false]:block"></span>
+
+          <h2 class="text-sm font-normal transition-transform group-data-[active=false]:group-hover:translate-x-1 text-zinc-500 group-hover:text-white">Instant Settlement</h2>
+          <div class="nav-content mt-3 flex-col gap-3 hidden">
+            <p class="text-xs text-zinc-400 font-light leading-relaxed">
+              USDC payments settle instantly on Base. Gas costs under $0.01. Escrow protects both buyers and sellers automatically.
+            </p>
+            <a href="/analytics" class="inline-flex items-center gap-1.5 text-xs text-white hover:text-zinc-300 transition-colors font-normal">
+              View analytics
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right">
+                <path d="m9 18 6-6-6-6"></path>
+              </svg>
+            </a>
           </div>
-          <h3 class="text-xl text-white font-medium tracking-tight">Instant Settlement</h3>
-          <p class="text-sm text-white/40 font-light leading-relaxed">USDC payments settle instantly on Base. Gas costs under $0.01. Escrow protects both buyers and sellers automatically.</p>
-          <a href="/analytics" class="inline-flex items-center gap-1.5 text-xs text-violet-400 hover:text-violet-300 transition-colors font-medium group/link">
-            View analytics
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="group-hover/link:translate-x-1 transition-transform"><path d="m9 18 6-6-6-6"></path></svg>
-          </a>
         </div>
-      </div>
 
+        <!-- Design Process -->
+        <div class="nav-item group cursor-pointer pl-6 py-2.5 flex flex-col relative transition-colors" data-active="false">
+          <!-- Active Line & Dot -->
+          <div class="absolute left-0 top-2.5 w-[2px] h-8 bg-blue-500 -ml-[1px] rounded-full shadow-[0_0_12px_rgba(59,130,246,0.8)] hidden group-data-[active=true]:block"></div>
+          <span class="absolute left-0 top-[15px] w-2.5 h-2.5 rounded-full bg-blue-500 -ml-[5px] border-2 border-[#030305] shadow-[0_0_8px_rgba(59,130,246,0.8)] hidden group-data-[active=true]:block"></span>
+          <!-- Inactive Dot -->
+          <span class="absolute left-0 top-[16px] w-2 h-2 rounded-full bg-transparent border border-zinc-700 -ml-1 group-hover:border-zinc-400 group-hover:bg-zinc-800 transition-all hidden group-data-[active=false]:block"></span>
+
+          <h2 class="text-sm font-normal transition-transform group-data-[active=false]:group-hover:translate-x-1 text-zinc-500 group-hover:text-white">Agent-Native API</h2>
+          <div class="nav-content mt-3 flex-col gap-3 hidden">
+            <p class="text-xs text-zinc-400 font-light leading-relaxed">
+              Built for AI agents. Submit orders via REST API or x402 protocol. One-line SDK for LangChain, AutoGPT, and CrewAI.
+            </p>
+            <a href="/api-docs" class="inline-flex items-center gap-1.5 text-xs text-white hover:text-zinc-300 transition-colors font-normal">
+              Read API docs
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right">
+                <path d="m9 18 6-6-6-6"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+      </nav>
     </div>
 
-    <!-- How It Works Table -->
-    <div class="mt-20">
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const section = document.getElementById('diagnostics-section');
+      if (!section) return;
+      
+      const navItems = section.querySelectorAll('.nav-item');
+      const sections = section.querySelectorAll('[data-scroll-section]');
+
+      if (sections.length === 0 || navItems.length === 0) return;
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const index = Array.from(sections).indexOf(entry.target);
+            if (index !== -1 && navItems[index]) {
+              navItems.forEach((item, i) => {
+                const h2 = item.querySelector('h2');
+                const content = item.querySelector('.nav-content');
+                if (i === index) {
+                    item.setAttribute('data-active', 'true');
+                    if (h2) { h2.classList.add('text-white'); h2.classList.remove('text-zinc-500'); }
+                    if (content) { content.classList.remove('hidden'); content.classList.add('flex'); }
+                } else {
+                    item.setAttribute('data-active', 'false');
+                    if (h2) { h2.classList.add('text-zinc-500'); h2.classList.remove('text-white'); }
+                    if (content) { content.classList.add('hidden'); content.classList.remove('flex'); }
+                }
+              });
+            }
+          }
+        });
+      }, { rootMargin: '-20% 0px -60% 0px', threshold: 0.1 });
+
+      sections.forEach(sec => observer.observe(sec));
+
+      navItems.forEach((item, index) => {
+        item.addEventListener('click', (e) => {
+          e.preventDefault();
+          if (sections[index]) {
+            const yOffset = -128;
+            const elementPosition = sections[index].getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset + yOffset;
+            window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+          }
+        });
+      });
+
+      // Animate depth chart bars
+      function animateDepthBars() {
+        const bars = document.querySelectorAll('.depth-bar');
+        bars.forEach(bar => {
+          const target = parseFloat(bar.dataset.width || '0');
+          const current = parseFloat(bar.style.width || '0');
+          const jitter = (Math.random() - 0.5) * 4;
+          const next = Math.max(10, Math.min(100, target + jitter));
+          bar.style.width = next + '%';
+          bar.style.transition = 'width 1.5s ease';
+        });
+      }
+      setInterval(animateDepthBars, 2000);
+
+      // Animate settlement pipeline
+      function animateSettlement() {
+        const steps = document.querySelectorAll('.settlement-step');
+        steps.forEach((step, i) => {
+          setTimeout(() => {
+            step.classList.add('settlement-active');
+            const connector = step.previousElementSibling;
+            if (connector && connector.classList.contains('settlement-connector')) {
+              connector.classList.add('settlement-connector-active');
+            }
+          }, i * 1200);
+        });
+        setTimeout(() => {
+          steps.forEach(s => s.classList.remove('settlement-active'));
+          document.querySelectorAll('.settlement-connector').forEach(c => c.classList.remove('settlement-connector-active'));
+          animateSettlement();
+        }, steps.length * 1200 + 2000);
+      }
+      setTimeout(animateSettlement, 500);
+
+      // Batch countdown timer
+      let batchSeconds = 32;
+      const timerEl = document.getElementById('batch-timer');
+      const timerCircle = document.getElementById('batch-timer-circle');
+      if (timerEl && timerCircle) {
+        const circumference = 2 * Math.PI * 20;
+        timerCircle.style.strokeDasharray = circumference;
+        setInterval(() => {
+          batchSeconds = batchSeconds <= 0 ? 60 : batchSeconds - 1;
+          const mins = String(Math.floor(batchSeconds / 60)).padStart(2, '0');
+          const secs = String(batchSeconds % 60).padStart(2, '0');
+          timerEl.textContent = mins + ':' + secs;
+          const progress = batchSeconds / 60;
+          timerCircle.style.strokeDashoffset = circumference * (1 - progress);
+          timerCircle.style.stroke = batchSeconds <= 10 ? '#f59e0b' : '#6C3CE9';
+        }, 1000);
+      }
+
+      // Typing animation for code panel
+      const codeLines = document.querySelectorAll('.code-type-line');
+      codeLines.forEach((line, i) => {
+        line.style.opacity = '0';
+        line.style.transform = 'translateY(8px)';
+        setTimeout(() => {
+          line.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+          line.style.opacity = '1';
+          line.style.transform = 'translateY(0)';
+        }, 600 + i * 300);
+      });
+    });
+  </script>
+  <style>
+    .settlement-step { opacity: 0.4; transform: scale(0.97); transition: all 0.5s ease; }
+    .settlement-step.settlement-active { opacity: 1; transform: scale(1); box-shadow: 0 0 20px rgba(108,60,233,0.3); }
+    .settlement-connector { background: linear-gradient(90deg, transparent, rgba(108,60,233,0.1)); transition: all 0.5s ease; }
+    .settlement-connector-active { background: linear-gradient(90deg, rgba(108,60,233,0.4), rgba(157,111,255,0.4)); box-shadow: 0 0 8px rgba(108,60,233,0.3); }
+    @keyframes encrypt-pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+    .encrypt-anim { animation: encrypt-pulse 2s ease-in-out infinite; }
+    @keyframes hash-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    .hash-scroll { animation: hash-scroll 8s linear infinite; }
+    @keyframes order-match-flash { 0%, 100% { background-color: rgba(108,60,233,0.05); } 50% { background-color: rgba(108,60,233,0.15); } }
+    .order-match-anim { animation: order-match-flash 3s ease-in-out infinite; }
+  </style>
+</aside>
+
+    <!-- Right Content (Scrollable) -->
+    <div class="md:w-2/3 lg:w-3/4 space-y-24">
+
+      <!-- ============ PANEL 1: ENCRYPTED ORDERS ============ -->
+      <div class="overflow-hidden group w-full rounded-2xl relative shadow-2xl" style="background: rgba(255,255,255,0.06); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 8px 32px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(255,255,255,0.06), inset 0 0 18px 9px rgba(255,255,255,0.03);" data-scroll-section>
+        <div class="blur-[100px] pointer-events-none w-[60%] h-[400px] rounded-full absolute top-[-20%] left-[20%] bg-violet-500/10"></div>
+        
+        <!-- Toolbar -->
+        <div class="border-white/[0.08] flex h-12 border-b border-white/[0.1] px-4 items-center justify-between bg-white/[0.04] backdrop-blur-xl relative z-20">
+          <div class="flex items-center gap-4">
+            <div class="flex gap-1.5">
+              <div class="w-2.5 h-2.5 rounded-full bg-[#FF5F57]"></div>
+              <div class="w-2.5 h-2.5 rounded-full bg-[#FEBC2E]"></div>
+              <div class="w-2.5 h-2.5 rounded-full bg-[#28C840]"></div>
+            </div>
+            <div class="h-4 w-[1px] bg-white/[0.08]"></div>
+            <span class="text-[10px] text-white/30 uppercase tracking-[0.15em] font-['JetBrains_Mono']">Order Terminal</span>
+          </div>
+          <div class="hidden md:flex items-center gap-2 bg-[#0B0C0E] border border-white/[0.06] rounded-md px-3 py-1">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-violet-500"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <span class="text-[12px] text-white/80 font-medium">Encrypted Order</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-[11px] text-emerald-400 font-mono flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>Connected</span>
+          </div>
+        </div>
+
+        <!-- Order Form Mockup -->
+        <div class="p-6 md:p-10 bg-gradient-to-br from-[#0B0C0E] to-[#0E0F11] min-h-[500px] md:min-h-[600px] relative">
+          <div class="absolute inset-0 opacity-[0.04]" style="background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 24px 24px;"></div>
+          
+          <div class="relative z-10 max-w-md mx-auto space-y-6">
+            <!-- Buy/Sell Toggle -->
+            <div class="flex gap-2 p-1 bg-white/[0.03] border border-white/[0.06] rounded-lg">
+              <div class="flex-1 py-2.5 text-center text-sm font-medium rounded-md bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 shadow-[0_0_12px_rgba(34,197,94,0.2)]">BUY</div>
+              <div class="flex-1 py-2.5 text-center text-sm font-medium rounded-md text-white/30 hover:text-white/50 transition-colors cursor-pointer">SELL</div>
+            </div>
+
+            <!-- GPU Type -->
+            <div class="space-y-2">
+              <span class="text-[10px] text-white/40 uppercase tracking-[0.2em] font-['JetBrains_Mono']">GPU Type</span>
+              <div class="flex items-center justify-between p-3 bg-white/[0.03] border border-white/[0.06] rounded-lg hover:border-white/10 transition-colors">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-md bg-violet-500/20 border border-violet-500/30 flex items-center justify-center">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-violet-400"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/></svg>
+                  </div>
+                  <div>
+                    <div class="text-sm text-white font-medium">NVIDIA H100 80GB</div>
+                    <div class="text-[10px] text-white/30 font-mono">SXM5 · 700W TDP · 3.35 TB/s</div>
+                  </div>
+                </div>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-white/30"><path d="m6 9 6 6 6-6"/></svg>
+              </div>
+            </div>
+
+            <!-- Quantity -->
+            <div class="space-y-3">
+              <div class="flex justify-between items-center">
+                <span class="text-[10px] text-white/40 uppercase tracking-[0.2em] font-['JetBrains_Mono']">Quantity (GPU-Hours)</span>
+                <span class="text-sm text-white font-mono font-medium">24</span>
+              </div>
+              <div class="h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
+                <div class="h-full w-[60%] bg-gradient-to-r from-violet-600 to-purple-500 rounded-full shadow-[0_0_8px_rgba(108,60,233,0.5)]"></div>
+              </div>
+              <div class="flex gap-2">
+                <div class="px-3 py-1 text-[10px] font-mono text-white/40 bg-white/[0.03] border border-white/[0.06] rounded cursor-pointer hover:border-white/10">8h</div>
+                <div class="px-3 py-1 text-[10px] font-mono text-violet-400 bg-violet-500/10 border border-violet-500/30 rounded cursor-pointer">24h</div>
+                <div class="px-3 py-1 text-[10px] font-mono text-white/40 bg-white/[0.03] border border-white/[0.06] rounded cursor-pointer hover:border-white/10">48h</div>
+                <div class="px-3 py-1 text-[10px] font-mono text-white/40 bg-white/[0.03] border border-white/[0.06] rounded cursor-pointer hover:border-white/10">168h</div>
+              </div>
+            </div>
+
+            <!-- Price -->
+            <div class="space-y-2">
+              <span class="text-[10px] text-white/40 uppercase tracking-[0.2em] font-['JetBrains_Mono']">Max Price (USDC/GPU-hr)</span>
+              <div class="flex items-center gap-3 p-3 bg-white/[0.03] border border-white/[0.06] rounded-lg">
+                <span class="text-lg text-white font-mono font-medium">$0.25</span>
+                <span class="text-[10px] text-emerald-400 font-mono ml-auto">70% below AWS</span>
+              </div>
+            </div>
+
+            <!-- Estimate -->
+            <div class="flex justify-between items-center p-3 bg-white/[0.02] border border-white/[0.04] rounded-lg">
+              <span class="text-xs text-white/40">Estimated Total</span>
+              <span class="text-lg text-white font-mono font-semibold">$6.00 <span class="text-xs text-white/30">USDC</span></span>
+            </div>
+
+            <!-- Commit Hash Preview -->
+            <div class="p-3 bg-[#0B0C0E] border border-white/[0.06] rounded-lg space-y-2">
+              <div class="flex items-center gap-2">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-violet-400"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <span class="text-[10px] text-white/40 uppercase tracking-[0.15em] font-['JetBrains_Mono'] encrypt-anim">Encrypting order...</span>
+              </div>
+              <div class="overflow-hidden">
+                <div class="font-mono text-[10px] text-violet-400/60 whitespace-nowrap hash-scroll">
+                  0x7a3b9c2e1f4d8a6b0e5c3f7d9a1b4e8f2c6d0a3b7e5f9c1d4a8b2e6f0c3d7a · keccak256(order_data || nonce) · commit_hash: 0x9f2e...8c4a
+                </div>
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button class="w-full py-3.5 bg-gradient-to-r from-[#6C3CE9] to-[#9D6FFF] text-white text-sm rounded-lg font-medium shadow-[0_0_25px_rgba(108,60,233,0.4)] hover:shadow-[0_0_35px_rgba(108,60,233,0.6)] transition-all flex items-center justify-center gap-2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              Submit Encrypted Order
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ PANEL 2: BATCH AUCTIONS ============ -->
+      <div class="overflow-hidden group w-full rounded-2xl relative shadow-2xl" style="background: rgba(255,255,255,0.06); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 8px 32px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(255,255,255,0.06), inset 0 0 18px 9px rgba(255,255,255,0.03);" data-scroll-section>
+        <div class="blur-[100px] pointer-events-none w-[50%] h-[300px] rounded-full absolute top-[-10%] right-[10%] bg-blue-500/8"></div>
+
+        <!-- Toolbar -->
+        <div class="border-white/[0.08] flex h-12 border-b border-white/[0.1] px-4 items-center justify-between bg-white/[0.04] backdrop-blur-xl relative z-20">
+          <div class="flex items-center gap-4">
+            <div class="flex gap-1.5">
+              <div class="w-2.5 h-2.5 rounded-full bg-[#FF5F57]"></div>
+              <div class="w-2.5 h-2.5 rounded-full bg-[#FEBC2E]"></div>
+              <div class="w-2.5 h-2.5 rounded-full bg-[#28C840]"></div>
+            </div>
+            <div class="h-4 w-[1px] bg-white/[0.08]"></div>
+            <span class="text-[10px] text-white/30 uppercase tracking-[0.15em] font-['JetBrains_Mono']">Matching Engine</span>
+          </div>
+          <div class="hidden md:flex items-center gap-2 bg-[#0B0C0E] border border-white/[0.06] rounded-md px-3 py-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span class="text-[12px] text-white/80 font-medium">Batch #4,521</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-[11px] text-white/40 font-mono">LIVE</span>
+            <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+          </div>
+        </div>
+
+        <div class="p-6 md:p-10 bg-gradient-to-br from-[#0B0C0E] to-[#0E0F11] min-h-[500px] md:min-h-[600px] relative">
+          <div class="absolute inset-0 opacity-[0.04]" style="background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 24px 24px;"></div>
+
+          <div class="relative z-10 space-y-8">
+            <!-- Stats Row -->
+            <div class="grid grid-cols-3 gap-4">
+              <div class="p-4 bg-white/[0.03] border border-white/[0.06] rounded-xl">
+                <div class="text-[10px] text-white/40 uppercase tracking-[0.15em] font-['JetBrains_Mono'] mb-2">Orders Matched</div>
+                <div class="text-2xl text-white font-mono font-semibold">23</div>
+                <div class="text-[10px] text-emerald-400 font-mono mt-1">+5 this batch</div>
+              </div>
+              <div class="p-4 bg-white/[0.03] border border-white/[0.06] rounded-xl">
+                <div class="text-[10px] text-white/40 uppercase tracking-[0.15em] font-['JetBrains_Mono'] mb-2">GPU-Hours</div>
+                <div class="text-2xl text-white font-mono font-semibold">340</div>
+                <div class="text-[10px] text-violet-400 font-mono mt-1">H100 · A100</div>
+              </div>
+              <div class="p-4 bg-white/[0.03] border border-white/[0.06] rounded-xl relative overflow-hidden">
+                <div class="text-[10px] text-white/40 uppercase tracking-[0.15em] font-['JetBrains_Mono'] mb-2">Clearing Price</div>
+                <div class="text-2xl text-emerald-400 font-mono font-semibold">$0.21</div>
+                <div class="text-[10px] text-white/30 font-mono mt-1">USDC/GPU-hr</div>
+              </div>
+            </div>
+
+            <!-- Depth Chart -->
+            <div class="space-y-3">
+              <div class="flex justify-between items-center">
+                <span class="text-[10px] text-white/40 uppercase tracking-[0.2em] font-['JetBrains_Mono']">Market Depth</span>
+                <span class="text-[10px] text-white/30 font-mono">Bids vs Asks</span>
+              </div>
+              
+              <div class="space-y-2">
+                <!-- Asks (Red - Sell) -->
+                <div class="space-y-1">
+                  <div class="flex items-center gap-3">
+                    <span class="text-[10px] text-white/30 font-mono w-12">$0.28</span>
+                    <div class="flex-1 h-5 bg-white/[0.02] rounded overflow-hidden relative"><div class="depth-bar h-full bg-red-500/20 border-r border-red-500/40 rounded" style="width: 35%" data-width="35"></div></div>
+                    <span class="text-[10px] text-red-400/60 font-mono w-10 text-right">12 hr</span>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <span class="text-[10px] text-white/30 font-mono w-12">$0.25</span>
+                    <div class="flex-1 h-5 bg-white/[0.02] rounded overflow-hidden relative"><div class="depth-bar h-full bg-red-500/20 border-r border-red-500/40 rounded" style="width: 55%" data-width="55"></div></div>
+                    <span class="text-[10px] text-red-400/60 font-mono w-10 text-right">28 hr</span>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <span class="text-[10px] text-white/30 font-mono w-12">$0.23</span>
+                    <div class="flex-1 h-5 bg-white/[0.02] rounded overflow-hidden relative"><div class="depth-bar h-full bg-red-500/20 border-r border-red-500/40 rounded" style="width: 72%" data-width="72"></div></div>
+                    <span class="text-[10px] text-red-400/60 font-mono w-10 text-right">45 hr</span>
+                  </div>
+                </div>
+                <!-- Clearing Price Line -->
+                <div class="flex items-center gap-2 py-1">
+                  <div class="flex-1 h-px bg-gradient-to-r from-transparent via-emerald-500/60 to-transparent"></div>
+                  <span class="text-[10px] text-emerald-400 font-mono font-medium px-2 py-0.5 bg-emerald-500/10 border border-emerald-500/20 rounded">$0.21 clearing</span>
+                  <div class="flex-1 h-px bg-gradient-to-r from-transparent via-emerald-500/60 to-transparent"></div>
+                </div>
+                <!-- Bids (Green - Buy) -->
+                <div class="space-y-1">
+                  <div class="flex items-center gap-3">
+                    <span class="text-[10px] text-white/30 font-mono w-12">$0.21</span>
+                    <div class="flex-1 h-5 bg-white/[0.02] rounded overflow-hidden relative"><div class="depth-bar h-full bg-emerald-500/20 border-r border-emerald-500/40 rounded" style="width: 80%" data-width="80"></div></div>
+                    <span class="text-[10px] text-emerald-400/60 font-mono w-10 text-right">62 hr</span>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <span class="text-[10px] text-white/30 font-mono w-12">$0.19</span>
+                    <div class="flex-1 h-5 bg-white/[0.02] rounded overflow-hidden relative"><div class="depth-bar h-full bg-emerald-500/20 border-r border-emerald-500/40 rounded" style="width: 60%" data-width="60"></div></div>
+                    <span class="text-[10px] text-emerald-400/60 font-mono w-10 text-right">38 hr</span>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <span class="text-[10px] text-white/30 font-mono w-12">$0.17</span>
+                    <div class="flex-1 h-5 bg-white/[0.02] rounded overflow-hidden relative"><div class="depth-bar h-full bg-emerald-500/20 border-r border-emerald-500/40 rounded" style="width: 40%" data-width="40"></div></div>
+                    <span class="text-[10px] text-emerald-400/60 font-mono w-10 text-right">18 hr</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Batch Timer + Order Queue -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <!-- Timer -->
+              <div class="p-5 bg-white/[0.03] border border-white/[0.06] rounded-xl flex items-center gap-4">
+                <div class="relative shrink-0">
+                  <svg width="52" height="52" class="-rotate-90">
+                    <circle cx="26" cy="26" r="20" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="3"/>
+                    <circle id="batch-timer-circle" cx="26" cy="26" r="20" fill="none" stroke="#6C3CE9" stroke-width="3" stroke-linecap="round" style="stroke-dasharray: 125.66; stroke-dashoffset: 58; transition: all 0.5s ease;"/>
+                  </svg>
+                  <svg class="absolute inset-0 m-auto w-4 h-4 text-violet-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
+                <div>
+                  <div class="text-[10px] text-white/40 uppercase tracking-[0.2em] font-['JetBrains_Mono']">Next batch in</div>
+                  <div id="batch-timer" class="font-mono text-2xl font-semibold text-white">00:32</div>
+                </div>
+              </div>
+
+              <!-- Order Queue -->
+              <div class="p-4 bg-white/[0.03] border border-white/[0.06] rounded-xl space-y-2">
+                <div class="text-[10px] text-white/40 uppercase tracking-[0.15em] font-['JetBrains_Mono'] mb-3">Queued Orders</div>
+                <div class="flex items-center justify-between py-1.5 px-2 rounded order-match-anim">
+                  <div class="flex items-center gap-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                    <span class="text-[11px] text-white/60 font-mono">0x7a3b...f82c</span>
+                  </div>
+                  <span class="text-[10px] text-emerald-400 font-mono">BUY 8h</span>
+                </div>
+                <div class="flex items-center justify-between py-1.5 px-2 rounded">
+                  <div class="flex items-center gap-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-red-400"></span>
+                    <span class="text-[11px] text-white/60 font-mono">0x9f2e...8c4a</span>
+                  </div>
+                  <span class="text-[10px] text-red-400 font-mono">SELL 24h</span>
+                </div>
+                <div class="flex items-center justify-between py-1.5 px-2 rounded">
+                  <div class="flex items-center gap-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                    <span class="text-[11px] text-white/60 font-mono">0x4d1c...a7e3</span>
+                  </div>
+                  <span class="text-[10px] text-emerald-400 font-mono">BUY 48h</span>
+                </div>
+                <div class="flex items-center justify-between py-1.5 px-2 rounded">
+                  <div class="flex items-center gap-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                    <span class="text-[11px] text-white/60 font-mono">0x2b8f...d5c1</span>
+                  </div>
+                  <span class="text-[10px] text-emerald-400 font-mono">BUY 16h</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ PANEL 3: INSTANT SETTLEMENT ============ -->
+      <div class="overflow-hidden group w-full rounded-2xl relative shadow-2xl" style="background: rgba(255,255,255,0.06); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 8px 32px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(255,255,255,0.06), inset 0 0 18px 9px rgba(255,255,255,0.03);" data-scroll-section>
+        <div class="blur-[100px] pointer-events-none w-[40%] h-[300px] rounded-full absolute bottom-[-10%] left-[30%] bg-emerald-500/8"></div>
+
+        <!-- Toolbar -->
+        <div class="border-white/[0.08] flex h-12 border-b border-white/[0.1] px-4 items-center justify-between bg-white/[0.04] backdrop-blur-xl relative z-20">
+          <div class="flex items-center gap-4">
+            <div class="flex gap-1.5">
+              <div class="w-2.5 h-2.5 rounded-full bg-[#FF5F57]"></div>
+              <div class="w-2.5 h-2.5 rounded-full bg-[#FEBC2E]"></div>
+              <div class="w-2.5 h-2.5 rounded-full bg-[#28C840]"></div>
+            </div>
+            <div class="h-4 w-[1px] bg-white/[0.08]"></div>
+            <span class="text-[10px] text-white/30 uppercase tracking-[0.15em] font-['JetBrains_Mono']">Settlement Pipeline</span>
+          </div>
+          <div class="hidden md:flex items-center gap-2">
+            <span class="text-[11px] text-white/40 font-mono">Base L2</span>
+            <div class="w-4 h-4 rounded-full bg-blue-500/20 border border-blue-500/30 flex items-center justify-center">
+              <div class="w-1.5 h-1.5 rounded-full bg-blue-400"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-6 md:p-10 bg-gradient-to-br from-[#0B0C0E] to-[#0E0F11] min-h-[500px] md:min-h-[600px] relative">
+          <div class="absolute inset-0 opacity-[0.04]" style="background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 24px 24px;"></div>
+
+          <div class="relative z-10 space-y-10">
+            <!-- Settlement Flow Pipeline -->
+            <div class="flex flex-col md:flex-row items-stretch gap-0 md:gap-0">
+              <!-- Step 1 -->
+              <div class="settlement-step flex-1 p-5 bg-white/[0.03] border border-white/[0.06] rounded-xl md:rounded-r-none">
+                <div class="w-10 h-10 rounded-lg bg-violet-500/20 border border-violet-500/30 flex items-center justify-center mb-3">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-violet-400"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                </div>
+                <div class="text-xs text-white font-medium mb-1">Order Matched</div>
+                <div class="text-[10px] text-white/30">Clearing price found at $0.21/GPU-hr</div>
+              </div>
+              <!-- Connector -->
+              <div class="settlement-connector hidden md:flex w-8 items-center justify-center self-center">
+                <div class="w-full h-px bg-white/10"></div>
+              </div>
+              <div class="settlement-connector md:hidden h-6 flex items-center justify-center">
+                <div class="h-full w-px bg-white/10"></div>
+              </div>
+              <!-- Step 2 -->
+              <div class="settlement-step flex-1 p-5 bg-white/[0.03] border border-white/[0.06] rounded-xl md:rounded-none">
+                <div class="w-10 h-10 rounded-lg bg-violet-500/20 border border-violet-500/30 flex items-center justify-center mb-3">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-violet-400"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <div class="text-xs text-white font-medium mb-1">ZK Proof Generated</div>
+                <div class="text-[10px] text-white/30">Fair execution verified without revealing bids</div>
+              </div>
+              <!-- Connector -->
+              <div class="settlement-connector hidden md:flex w-8 items-center justify-center self-center">
+                <div class="w-full h-px bg-white/10"></div>
+              </div>
+              <div class="settlement-connector md:hidden h-6 flex items-center justify-center">
+                <div class="h-full w-px bg-white/10"></div>
+              </div>
+              <!-- Step 3 -->
+              <div class="settlement-step flex-1 p-5 bg-white/[0.03] border border-white/[0.06] rounded-xl md:rounded-none">
+                <div class="w-10 h-10 rounded-lg bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center mb-3">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-emerald-400"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div class="text-xs text-white font-medium mb-1">On-Chain Settlement</div>
+                <div class="text-[10px] text-white/30">USDC released from escrow on Base</div>
+              </div>
+              <!-- Connector -->
+              <div class="settlement-connector hidden md:flex w-8 items-center justify-center self-center">
+                <div class="w-full h-px bg-white/10"></div>
+              </div>
+              <div class="settlement-connector md:hidden h-6 flex items-center justify-center">
+                <div class="h-full w-px bg-white/10"></div>
+              </div>
+              <!-- Step 4 -->
+              <div class="settlement-step flex-1 p-5 bg-white/[0.03] border border-white/[0.06] rounded-xl md:rounded-l-none">
+                <div class="w-10 h-10 rounded-lg bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center mb-3">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-emerald-400"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/></svg>
+                </div>
+                <div class="text-xs text-white font-medium mb-1">GPU Access Granted</div>
+                <div class="text-[10px] text-white/30">SSH/API credentials delivered instantly</div>
+              </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="grid grid-cols-3 gap-4">
+              <div class="p-4 bg-white/[0.03] border border-white/[0.06] rounded-xl text-center">
+                <div class="text-xl text-white font-mono font-semibold">$0.01</div>
+                <div class="text-[10px] text-white/30 mt-1">Gas Cost</div>
+              </div>
+              <div class="p-4 bg-white/[0.03] border border-white/[0.06] rounded-xl text-center">
+                <div class="text-xl text-white font-mono font-semibold">2 sec</div>
+                <div class="text-[10px] text-white/30 mt-1">Finality</div>
+              </div>
+              <div class="p-4 bg-white/[0.03] border border-white/[0.06] rounded-xl text-center">
+                <div class="text-xl text-violet-400 font-mono font-semibold">Base L2</div>
+                <div class="text-[10px] text-white/30 mt-1">Network</div>
+              </div>
+            </div>
+
+            <!-- Transaction Receipt -->
+            <div class="p-5 bg-[#0B0C0E] border border-white/[0.06] rounded-xl font-mono text-[11px] space-y-2">
+              <div class="flex items-center gap-2 mb-3">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-emerald-400"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+                <span class="text-white/60 uppercase tracking-[0.15em] text-[10px]">Settlement Receipt</span>
+              </div>
+              <div class="flex justify-between"><span class="text-white/30">Tx Hash</span><span class="text-violet-400">0x8f4a2b...e7c9d1</span></div>
+              <div class="flex justify-between"><span class="text-white/30">Block</span><span class="text-white/70">18,442,891</span></div>
+              <div class="flex justify-between"><span class="text-white/30">Amount</span><span class="text-emerald-400">6.00 USDC</span></div>
+              <div class="flex justify-between"><span class="text-white/30">GPU</span><span class="text-white/70">H100 × 24hr</span></div>
+              <div class="flex justify-between"><span class="text-white/30">Status</span><span class="text-emerald-400 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>Confirmed</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ PANEL 4: AGENT-NATIVE API ============ -->
+      <div class="overflow-hidden group w-full rounded-2xl relative shadow-2xl" style="background: rgba(255,255,255,0.06); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 8px 32px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(255,255,255,0.06), inset 0 0 18px 9px rgba(255,255,255,0.03);" data-scroll-section>
+        <div class="blur-[100px] pointer-events-none w-[50%] h-[300px] rounded-full absolute top-[-15%] left-[25%] bg-purple-500/8"></div>
+
+        <!-- Toolbar -->
+        <div class="border-white/[0.08] flex h-12 border-b border-white/[0.1] px-4 items-center justify-between bg-white/[0.04] backdrop-blur-xl relative z-20">
+          <div class="flex items-center gap-4">
+            <div class="flex gap-1.5">
+              <div class="w-2.5 h-2.5 rounded-full bg-[#FF5F57]"></div>
+              <div class="w-2.5 h-2.5 rounded-full bg-[#FEBC2E]"></div>
+              <div class="w-2.5 h-2.5 rounded-full bg-[#28C840]"></div>
+            </div>
+            <div class="h-4 w-[1px] bg-white/[0.08]"></div>
+            <span class="text-[10px] text-white/30 uppercase tracking-[0.15em] font-['JetBrains_Mono']">SDK Terminal</span>
+          </div>
+          <div class="hidden md:flex items-center gap-2 bg-[#0B0C0E] border border-white/[0.06] rounded-md px-3 py-1">
+            <span class="text-[12px] text-white/80 font-medium">example.ts</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-[11px] text-violet-400 font-mono">TypeScript</span>
+          </div>
+        </div>
+
+        <div class="p-6 md:p-10 bg-gradient-to-br from-[#0B0C0E] to-[#0E0F11] min-h-[500px] md:min-h-[600px] relative">
+          <div class="absolute inset-0 opacity-[0.04]" style="background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 24px 24px;"></div>
+
+          <div class="relative z-10 space-y-8">
+            <!-- Code Editor -->
+            <div class="p-6 bg-[#0B0C0E] border border-white/[0.06] rounded-xl font-mono text-[12px] leading-relaxed overflow-x-auto">
+              <div class="space-y-1">
+                <div class="code-type-line"><span class="text-violet-400">import</span> <span class="text-white/80">{ DarkPoolClient }</span> <span class="text-violet-400">from</span> <span class="text-emerald-400">'@agentic-darkpool/sdk'</span><span class="text-white/30">;</span></div>
+                <div class="code-type-line text-white/20">&nbsp;</div>
+                <div class="code-type-line"><span class="text-violet-400">const</span> <span class="text-white/80">client</span> <span class="text-white/40">=</span> <span class="text-violet-400">new</span> <span class="text-yellow-300">DarkPoolClient</span><span class="text-white/40">({</span></div>
+                <div class="code-type-line"><span class="text-white/40">&nbsp;&nbsp;</span><span class="text-white/60">apiKey</span><span class="text-white/40">:</span> <span class="text-emerald-400">process.env.DARKPOOL_KEY</span><span class="text-white/40">,</span></div>
+                <div class="code-type-line"><span class="text-white/40">&nbsp;&nbsp;</span><span class="text-white/60">network</span><span class="text-white/40">:</span> <span class="text-emerald-400">'base'</span></div>
+                <div class="code-type-line"><span class="text-white/40">});</span></div>
+                <div class="code-type-line text-white/20">&nbsp;</div>
+                <div class="code-type-line"><span class="text-white/30">// Submit encrypted buy order</span></div>
+                <div class="code-type-line"><span class="text-violet-400">const</span> <span class="text-white/80">order</span> <span class="text-white/40">=</span> <span class="text-violet-400">await</span> <span class="text-white/80">client</span><span class="text-white/40">.</span><span class="text-yellow-300">submitOrder</span><span class="text-white/40">({</span></div>
+                <div class="code-type-line"><span class="text-white/40">&nbsp;&nbsp;</span><span class="text-white/60">side</span><span class="text-white/40">:</span> <span class="text-emerald-400">'buy'</span><span class="text-white/40">,</span></div>
+                <div class="code-type-line"><span class="text-white/40">&nbsp;&nbsp;</span><span class="text-white/60">gpuType</span><span class="text-white/40">:</span> <span class="text-emerald-400">'H100'</span><span class="text-white/40">,</span></div>
+                <div class="code-type-line"><span class="text-white/40">&nbsp;&nbsp;</span><span class="text-white/60">quantity</span><span class="text-white/40">:</span> <span class="text-orange-300">24</span><span class="text-white/40">,</span></div>
+                <div class="code-type-line"><span class="text-white/40">&nbsp;&nbsp;</span><span class="text-white/60">maxPrice</span><span class="text-white/40">:</span> <span class="text-orange-300">0.25</span></div>
+                <div class="code-type-line"><span class="text-white/40">});</span></div>
+                <div class="code-type-line text-white/20">&nbsp;</div>
+                <div class="code-type-line"><span class="text-white/80">console</span><span class="text-white/40">.</span><span class="text-yellow-300">log</span><span class="text-white/40">(</span><span class="text-white/80">order</span><span class="text-white/40">.</span><span class="text-white/60">commitHash</span><span class="text-white/40">);</span></div>
+              </div>
+            </div>
+
+            <!-- Framework Pills -->
+            <div class="space-y-3">
+              <span class="text-[10px] text-white/40 uppercase tracking-[0.2em] font-['JetBrains_Mono']">Supported Frameworks</span>
+              <div class="flex flex-wrap gap-2">
+                <span class="px-3 py-1.5 text-xs font-medium text-white/70 bg-white/[0.04] border border-white/[0.08] rounded-full hover:border-violet-500/30 hover:text-violet-400 transition-all cursor-pointer">LangChain</span>
+                <span class="px-3 py-1.5 text-xs font-medium text-white/70 bg-white/[0.04] border border-white/[0.08] rounded-full hover:border-violet-500/30 hover:text-violet-400 transition-all cursor-pointer">AutoGPT</span>
+                <span class="px-3 py-1.5 text-xs font-medium text-white/70 bg-white/[0.04] border border-white/[0.08] rounded-full hover:border-violet-500/30 hover:text-violet-400 transition-all cursor-pointer">CrewAI</span>
+                <span class="px-3 py-1.5 text-xs font-medium text-violet-400 bg-violet-500/10 border border-violet-500/30 rounded-full shadow-[0_0_8px_rgba(108,60,233,0.2)]">x402 Protocol</span>
+                <span class="px-3 py-1.5 text-xs font-medium text-white/70 bg-white/[0.04] border border-white/[0.08] rounded-full hover:border-violet-500/30 hover:text-violet-400 transition-all cursor-pointer">REST API</span>
+                <span class="px-3 py-1.5 text-xs font-medium text-white/70 bg-white/[0.04] border border-white/[0.08] rounded-full hover:border-violet-500/30 hover:text-violet-400 transition-all cursor-pointer">WebSocket</span>
+              </div>
+            </div>
+
+            <!-- API Response Preview -->
+            <div class="p-5 bg-[#0B0C0E] border border-white/[0.06] rounded-xl space-y-3">
+              <div class="flex items-center gap-2">
+                <span class="text-[10px] text-emerald-400 font-mono px-1.5 py-0.5 bg-emerald-500/10 border border-emerald-500/20 rounded">200 OK</span>
+                <span class="text-[10px] text-white/30 font-mono">Response · 12ms</span>
+              </div>
+              <pre class="font-mono text-[11px] text-white/60 leading-relaxed"><span class="text-white/30">{</span>
+  <span class="text-violet-400">"orderId"</span>: <span class="text-emerald-400">"#4521"</span>,
+  <span class="text-violet-400">"status"</span>: <span class="text-emerald-400">"encrypted"</span>,
+  <span class="text-violet-400">"commitHash"</span>: <span class="text-emerald-400">"0x7a3b...f82c"</span>,
+  <span class="text-violet-400">"batchETA"</span>: <span class="text-orange-300">32</span>,
+  <span class="text-violet-400">"network"</span>: <span class="text-emerald-400">"base"</span>
+<span class="text-white/30">}</span></pre>
+            </div>
+
+            <!-- Stats Row -->
+            <div class="grid grid-cols-3 gap-4">
+              <div class="p-4 bg-white/[0.03] border border-white/[0.06] rounded-xl text-center">
+                <div class="text-xl text-white font-mono font-semibold">&lt;100ms</div>
+                <div class="text-[10px] text-white/30 mt-1">Latency</div>
+              </div>
+              <div class="p-4 bg-white/[0.03] border border-white/[0.06] rounded-xl text-center">
+                <div class="text-xl text-white font-mono font-semibold">99.9%</div>
+                <div class="text-[10px] text-white/30 mt-1">Uptime</div>
+              </div>
+              <div class="p-4 bg-white/[0.03] border border-white/[0.06] rounded-xl text-center">
+                <div class="text-xl text-violet-400 font-mono font-semibold">3 lines</div>
+                <div class="text-[10px] text-white/30 mt-1">To First Order</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- ============ HOW IT WORKS TABLE (standalone) ============ -->
       <div class="border-white/10 border-t pt-12">
         <div class="flex justify-between items-end mb-8">
@@ -370,7 +890,7 @@ gtag('config', 'G-2M6V79H761');
         </button>
       </div>
 
-    </div><!-- end mt-20 -->
+    </div>
   </div>
 </section><section class="antialiased min-h-screen flex flex-col selection:bg-white/20 overflow-x-hidden md:p-12 text-white/90 rounded-3xl pt-6 pr-6 pb-6 pl-6 relative items-center justify-center" style="font-family: 'Inter', sans-serif">
 
@@ -1606,350 +2126,250 @@ gtag('config', 'G-2M6V79H761');
               }
           })();
   </script>
-</section>
-
-<!-- BUYERS & SELLERS — Premium Glassmorphic Section -->
-<section id="how-it-works-detail" class="w-full max-w-6xl rounded-[25px] mt-24 mx-auto p-[1px] relative" style="background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.01) 100%);">
-  <!-- Outer glow -->
-  <div class="absolute -inset-4 rounded-[35px] pointer-events-none" style="background: radial-gradient(ellipse at 50% 0%, rgba(139,92,246,0.08) 0%, transparent 60%);"></div>
-  
-  <div class="overflow-hidden bg-[#050505] w-full rounded-[24px] relative" style="box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.05);">
-    <!-- Animated background mesh -->
-    <canvas id="buyers-sellers-canvas" class="absolute inset-0 w-full h-full opacity-30 pointer-events-none" style="mix-blend-mode: screen;"></canvas>
-    <!-- Radial gradient overlays -->
-    <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(ellipse at 20% 20%, rgba(139,92,246,0.06) 0%, transparent 50%), radial-gradient(ellipse at 80% 80%, rgba(168,85,247,0.04) 0%, transparent 50%);"></div>
-    
-    <div class="flex flex-col p-6 md:p-10 lg:p-14 gap-12 relative z-10">
-      
-      <!-- Header -->
-      <header class="flex flex-col gap-6 xl:flex-row xl:items-end xl:justify-between">
-        <div class="flex flex-col gap-4">
-          <div class="flex items-center gap-3">
-            <div class="relative flex h-2 w-2 items-center justify-center">
-              <span class="absolute inline-flex h-full w-full animate-ping rounded-full opacity-60 bg-violet-400" style="animation-duration: 2.5s;"></span>
-              <span class="relative inline-flex h-2 w-2 rounded-full shadow-[0_0_12px_rgba(139,92,246,0.8)] bg-violet-500"></span>
-            </div>
-            <span class="font-['JetBrains_Mono'] text-xs font-light uppercase tracking-[0.25em] text-violet-400/80">
-              How It Works
-            </span>
-          </div>
-          <h2 class="text-4xl md:text-5xl lg:text-6xl font-extralight tracking-tight text-white" style="line-height: 1.1;">
-            Buyers <span class="text-white/30">&</span> Sellers
-          </h2>
-          <p class="text-sm text-white/30 font-['JetBrains_Mono'] max-w-md">Three steps from order submission to GPU access. Every transaction is private, fair, and verifiable on-chain.</p>
-        </div>
-
-        <!-- Live stats bar -->
-        <div class="flex items-center gap-6 flex-wrap">
-          <div class="flex flex-col items-end">
-            <span class="font-['JetBrains_Mono'] text-[9px] uppercase tracking-[0.25em] text-white/25">Avg Settlement</span>
-            <span class="font-['JetBrains_Mono'] text-lg text-white tabular-nums font-medium">1.2<span class="text-white/30 text-xs ml-0.5">sec</span></span>
-          </div>
-          <div class="w-px h-8 bg-white/[0.06]"></div>
-          <div class="flex flex-col items-end">
-            <span class="font-['JetBrains_Mono'] text-[9px] uppercase tracking-[0.25em] text-white/25">Privacy Level</span>
-            <span class="font-['JetBrains_Mono'] text-lg text-emerald-400 tabular-nums font-medium">ZK<span class="text-emerald-400/40 text-xs ml-0.5">proof</span></span>
-          </div>
-          <div class="w-px h-8 bg-white/[0.06]"></div>
-          <div class="flex flex-col items-end">
-            <span class="font-['JetBrains_Mono'] text-[9px] uppercase tracking-[0.25em] text-white/25">Gas Cost</span>
-            <span class="font-['JetBrains_Mono'] text-lg text-white tabular-nums font-medium">&lt;$0.01</span>
-          </div>
-        </div>
-      </header>
-
-      <!-- Divider with shimmer -->
-      <div class="relative h-px w-full overflow-hidden">
-        <div class="absolute inset-0 bg-white/[0.04]"></div>
-        <div class="absolute top-0 left-0 h-full w-32 bg-gradient-to-r from-transparent via-violet-400/40 to-transparent shimmer-line" style="animation: shimmerLine 4s ease-in-out infinite;"></div>
+</section><section class="flex flex-col overflow-hidden divide-y divide-white/5 shadow-black/50 text-white/80 font-sans bg-[#050508]/90 w-full border-white/5 border rounded-[32px] mt-24 shadow-2xl backdrop-blur-3xl">
+  <!-- Section 01: For AI Agents -->
+  <div class="group w-full relative">
+    <div class="lg:px-12 lg:py-24 flex flex-col lg:flex-row lg:items-center gap-12 lg:gap-16 w-full mr-auto ml-auto pt-16 pr-6 pb-16 pl-6 gap-x-12 gap-y-12">
+      <div class="w-12">
+        <span class="text-lg text-white/40 font-medium relative pb-2 inline-block after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-white/20">01</span>
       </div>
 
-      <!-- Three Step Cards -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
-        
-        <!-- Step 01: Encrypted Orders -->
-        <div class="group relative rounded-2xl p-[1px] overflow-hidden step-card-hover" style="background: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.01) 100%);">
-          <!-- Hover border glow -->
-          <div class="step-border-glow absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-700 pointer-events-none" style="background: conic-gradient(from 180deg, transparent, rgba(139,92,246,0.3), transparent, rgba(168,85,247,0.2), transparent);"></div>
-          
-          <div class="relative rounded-[15px] bg-[#0a0a0f] p-6 md:p-8 flex flex-col gap-6 h-full overflow-hidden">
-            <!-- Floating particles effect -->
-            <div class="absolute top-4 right-4 w-24 h-24 pointer-events-none">
-              <div class="absolute w-1 h-1 rounded-full bg-violet-400/40 animate-float-1" style="top: 10%; left: 20%;"></div>
-              <div class="absolute w-0.5 h-0.5 rounded-full bg-violet-300/30 animate-float-2" style="top: 50%; left: 60%;"></div>
-              <div class="absolute w-1 h-1 rounded-full bg-fuchsia-400/20 animate-float-3" style="top: 30%; left: 80%;"></div>
-              <div class="absolute w-0.5 h-0.5 rounded-full bg-white/20 animate-float-1" style="top: 70%; left: 40%;"></div>
-            </div>
+      <div class="lg:w-[400px] shrink-0">
+        <h2 class="text-6xl md:text-8xl font-light tracking-tighter uppercase word-reveal text-white"><span style="display: inline-block; overflow: hidden; vertical-align: bottom; margin-right: 0.2em; padding-bottom: 0.1em;"><span class="word-inner" style="display: inline-block;">AGENTS</span></span></h2>
+      </div>
 
-            <!-- Step number + icon -->
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-3">
-                <span class="font-['JetBrains_Mono'] text-[10px] text-violet-400/60 tracking-[0.3em] uppercase">Step</span>
-                <span class="font-['JetBrains_Mono'] text-3xl font-thin text-white/10 tabular-nums">01</span>
-              </div>
-              <div class="w-12 h-12 rounded-2xl flex items-center justify-center relative group-hover:scale-110 transition-transform duration-500" style="background: rgba(139,92,246,0.08); border: 1px solid rgba(139,92,246,0.15); box-shadow: 0 0 30px rgba(139,92,246,0.1);">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-violet-400"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                <div class="absolute inset-0 rounded-2xl bg-violet-500/10 blur-xl group-hover:bg-violet-500/20 transition-all duration-500"></div>
-              </div>
-            </div>
-
-            <!-- Title -->
-            <div>
-              <h3 class="text-xl font-light text-white tracking-tight mb-2">Encrypted Orders</h3>
-              <p class="text-[13px] text-white/35 leading-relaxed font-light">Submit sealed bids and asks. Nobody sees your order details — not even the platform. ZK proofs verify legitimacy.</p>
-            </div>
-
-            <!-- Feature pills -->
-            <div class="flex flex-wrap gap-2 mt-auto">
-              <span class="px-3 py-1.5 rounded-lg text-[10px] font-['JetBrains_Mono'] uppercase tracking-wider text-violet-400/70 border border-violet-500/15 bg-violet-500/5">Sealed Bids</span>
-              <span class="px-3 py-1.5 rounded-lg text-[10px] font-['JetBrains_Mono'] uppercase tracking-wider text-violet-400/70 border border-violet-500/15 bg-violet-500/5">ZK Verified</span>
-            </div>
-
-            <!-- Bottom line animation -->
-            <div class="absolute bottom-0 left-0 right-0 h-px overflow-hidden">
-              <div class="h-full w-full bg-gradient-to-r from-transparent via-violet-500/40 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
-            </div>
-          </div>
+      <div class="flex-1 flex items-start gap-6 max-w-sm">
+        <div class="w-12 h-12 rounded-full flex items-center justify-center shrink-0 text-white/80 bg-white/5 border border-white/10 backdrop-blur-md">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/></svg>
         </div>
+        <p class="text-sm text-white/60 leading-relaxed font-extralight">AI agents autonomously procure GPU compute via REST API or x402 protocol. No human intervention — submit orders, get matched, access GPUs programmatically.</p>
+      </div>
 
-        <!-- Step 02: Batch Auctions -->
-        <div class="group relative rounded-2xl p-[1px] overflow-hidden step-card-hover md:translate-y-4" style="background: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.01) 100%);">
-          <div class="step-border-glow absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-700 pointer-events-none" style="background: conic-gradient(from 90deg, transparent, rgba(34,197,94,0.3), transparent, rgba(52,211,153,0.2), transparent);"></div>
-          
-          <div class="relative rounded-[15px] bg-[#0a0a0f] p-6 md:p-8 flex flex-col gap-6 h-full overflow-hidden">
-            <div class="absolute top-4 right-4 w-24 h-24 pointer-events-none">
-              <div class="absolute w-1 h-1 rounded-full bg-emerald-400/40 animate-float-2" style="top: 15%; left: 30%;"></div>
-              <div class="absolute w-0.5 h-0.5 rounded-full bg-emerald-300/30 animate-float-3" style="top: 55%; left: 50%;"></div>
-              <div class="absolute w-1 h-1 rounded-full bg-teal-400/20 animate-float-1" style="top: 35%; left: 75%;"></div>
-            </div>
-
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-3">
-                <span class="font-['JetBrains_Mono'] text-[10px] text-emerald-400/60 tracking-[0.3em] uppercase">Step</span>
-                <span class="font-['JetBrains_Mono'] text-3xl font-thin text-white/10 tabular-nums">02</span>
-              </div>
-              <div class="w-12 h-12 rounded-2xl flex items-center justify-center relative group-hover:scale-110 transition-transform duration-500" style="background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.15); box-shadow: 0 0 30px rgba(34,197,94,0.1);">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-emerald-400"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                <div class="absolute inset-0 rounded-2xl bg-emerald-500/10 blur-xl group-hover:bg-emerald-500/20 transition-all duration-500"></div>
-              </div>
-            </div>
-
-            <div>
-              <h3 class="text-xl font-light text-white tracking-tight mb-2">Batch Auctions</h3>
-              <p class="text-[13px] text-white/35 leading-relaxed font-light">Orders batch every 30–60 seconds. The engine finds a single clearing price — everyone pays the same fair rate. Zero front-running.</p>
-            </div>
-
-            <div class="flex flex-wrap gap-2 mt-auto">
-              <span class="px-3 py-1.5 rounded-lg text-[10px] font-['JetBrains_Mono'] uppercase tracking-wider text-emerald-400/70 border border-emerald-500/15 bg-emerald-500/5">30-60s Batches</span>
-              <span class="px-3 py-1.5 rounded-lg text-[10px] font-['JetBrains_Mono'] uppercase tracking-wider text-emerald-400/70 border border-emerald-500/15 bg-emerald-500/5">MEV Protected</span>
-            </div>
-
-            <div class="absolute bottom-0 left-0 right-0 h-px overflow-hidden">
-              <div class="h-full w-full bg-gradient-to-r from-transparent via-emerald-500/40 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
-            </div>
-          </div>
+      <div class="flex flex-row lg:flex-col gap-3 shrink-0 flex-wrap">
+        <div class="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium text-white/80 w-fit bg-white/5 border border-white/10 backdrop-blur-md">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-violet-400"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          REST API
         </div>
-
-        <!-- Step 03: Instant Settlement -->
-        <div class="group relative rounded-2xl p-[1px] overflow-hidden step-card-hover" style="background: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.01) 100%);">
-          <div class="step-border-glow absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-700 pointer-events-none" style="background: conic-gradient(from 270deg, transparent, rgba(168,85,247,0.3), transparent, rgba(192,132,252,0.2), transparent);"></div>
-          
-          <div class="relative rounded-[15px] bg-[#0a0a0f] p-6 md:p-8 flex flex-col gap-6 h-full overflow-hidden">
-            <div class="absolute top-4 right-4 w-24 h-24 pointer-events-none">
-              <div class="absolute w-1 h-1 rounded-full bg-fuchsia-400/40 animate-float-3" style="top: 20%; left: 25%;"></div>
-              <div class="absolute w-0.5 h-0.5 rounded-full bg-purple-300/30 animate-float-1" style="top: 60%; left: 55%;"></div>
-              <div class="absolute w-1 h-1 rounded-full bg-violet-400/20 animate-float-2" style="top: 40%; left: 70%;"></div>
-            </div>
-
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-3">
-                <span class="font-['JetBrains_Mono'] text-[10px] text-fuchsia-400/60 tracking-[0.3em] uppercase">Step</span>
-                <span class="font-['JetBrains_Mono'] text-3xl font-thin text-white/10 tabular-nums">03</span>
-              </div>
-              <div class="w-12 h-12 rounded-2xl flex items-center justify-center relative group-hover:scale-110 transition-transform duration-500" style="background: rgba(168,85,247,0.08); border: 1px solid rgba(168,85,247,0.15); box-shadow: 0 0 30px rgba(168,85,247,0.1);">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-fuchsia-400"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-                <div class="absolute inset-0 rounded-2xl bg-fuchsia-500/10 blur-xl group-hover:bg-fuchsia-500/20 transition-all duration-500"></div>
-              </div>
-            </div>
-
-            <div>
-              <h3 class="text-xl font-light text-white tracking-tight mb-2">Instant Settlement</h3>
-              <p class="text-[13px] text-white/35 leading-relaxed font-light">Settlements execute on Base L2 with sub-$0.01 gas. USDC escrow releases automatically. Full on-chain auditability.</p>
-            </div>
-
-            <div class="flex flex-wrap gap-2 mt-auto">
-              <span class="px-3 py-1.5 rounded-lg text-[10px] font-['JetBrains_Mono'] uppercase tracking-wider text-fuchsia-400/70 border border-fuchsia-500/15 bg-fuchsia-500/5">Base L2</span>
-              <span class="px-3 py-1.5 rounded-lg text-[10px] font-['JetBrains_Mono'] uppercase tracking-wider text-fuchsia-400/70 border border-fuchsia-500/15 bg-fuchsia-500/5">USDC Escrow</span>
-            </div>
-
-            <div class="absolute bottom-0 left-0 right-0 h-px overflow-hidden">
-              <div class="h-full w-full bg-gradient-to-r from-transparent via-fuchsia-500/40 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
-            </div>
-          </div>
+        <div class="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium text-white/80 w-fit bg-white/5 border border-white/10 backdrop-blur-md">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-violet-400"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+          x402 PROTOCOL
+        </div>
+        <div class="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium text-white/80 w-fit bg-white/5 border border-white/10 backdrop-blur-md">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-violet-400"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          ZK VERIFIED
         </div>
       </div>
 
-      <!-- Bottom CTA row -->
-      <div class="flex flex-col md:flex-row items-center justify-between gap-6 pt-4">
-        <div class="flex items-center gap-4 flex-wrap">
-          <div class="flex items-center gap-2 px-4 py-2 rounded-full text-[10px] font-['JetBrains_Mono'] uppercase tracking-wider text-white/40" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);">
-            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-violet-400"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-            REST API
-          </div>
-          <div class="flex items-center gap-2 px-4 py-2 rounded-full text-[10px] font-['JetBrains_Mono'] uppercase tracking-wider text-white/40" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);">
-            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-emerald-400"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
-            x402 Protocol
-          </div>
-          <div class="flex items-center gap-2 px-4 py-2 rounded-full text-[10px] font-['JetBrains_Mono'] uppercase tracking-wider text-white/40" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);">
-            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-fuchsia-400"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/></svg>
-            Agent-Native
-          </div>
-        </div>
-        <a href="/dashboard" class="inline-flex items-center gap-2.5 rounded-full px-6 py-3 text-sm font-light text-white transition-all duration-500 hover:shadow-[0_0_30px_rgba(139,92,246,0.3)]" style="background: linear-gradient(135deg, rgba(139,92,246,0.2), rgba(168,85,247,0.1)); border: 1px solid rgba(139,92,246,0.25);">
-          Start Trading
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      <div class="lg:ml-auto">
+        <a href="/dashboard" class="w-16 h-16 rounded-full flex items-center justify-center text-white bg-white/5 border border-white/10 backdrop-blur-md hover:bg-white/10 transition-colors group-hover:border-violet-400/50">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         </a>
       </div>
     </div>
   </div>
-</section>
 
-<style>
-  @keyframes shimmerLine {
-    0% { transform: translateX(-100%); }
-    50% { transform: translateX(400%); }
-    100% { transform: translateX(400%); }
-  }
-  @keyframes float1 {
-    0%, 100% { transform: translateY(0) translateX(0); opacity: 0.4; }
-    33% { transform: translateY(-12px) translateX(4px); opacity: 0.8; }
-    66% { transform: translateY(-6px) translateX(-3px); opacity: 0.3; }
-  }
-  @keyframes float2 {
-    0%, 100% { transform: translateY(0) translateX(0); opacity: 0.3; }
-    40% { transform: translateY(-8px) translateX(-5px); opacity: 0.7; }
-    70% { transform: translateY(-14px) translateX(2px); opacity: 0.2; }
-  }
-  @keyframes float3 {
-    0%, 100% { transform: translateY(0) translateX(0); opacity: 0.2; }
-    25% { transform: translateY(-10px) translateX(6px); opacity: 0.6; }
-    75% { transform: translateY(-4px) translateX(-4px); opacity: 0.4; }
-  }
-  .animate-float-1 { animation: float1 5s ease-in-out infinite; }
-  .animate-float-2 { animation: float2 6s ease-in-out infinite; }
-  .animate-float-3 { animation: float3 7s ease-in-out infinite; }
-  .step-card-hover:hover .step-border-glow {
-    opacity: 1 !important;
-    animation: rotateBorderGlow 3s linear infinite;
-  }
-  @keyframes rotateBorderGlow {
-    from { filter: hue-rotate(0deg); }
-    to { filter: hue-rotate(360deg); }
-  }
-</style>
+  <!-- Section 02: Batch Auctions -->
+  <div class="w-full relative overflow-hidden group bg-white/[0.02]">
+    <div id="webgl-container" class="absolute inset-0 z-0 opacity-70 pointer-events-none mix-blend-screen"></div>
+    <div class="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,transparent_0%,#050508_80%)] pointer-events-none"></div>
 
-<script>
-  // Animated mesh background for buyers/sellers section
-  (function() {
-    const init = () => {
-      const canvas = document.getElementById('buyers-sellers-canvas');
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      const resize = () => { canvas.width = canvas.offsetWidth * 2; canvas.height = canvas.offsetHeight * 2; };
-      resize();
-      window.addEventListener('resize', resize);
-      
-      const nodes = [];
-      for (let i = 0; i < 60; i++) {
-        nodes.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          vx: (Math.random() - 0.5) * 0.4,
-          vy: (Math.random() - 0.5) * 0.4,
-          r: Math.random() * 2 + 0.5,
-        });
-      }
-      
-      const draw = () => {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        nodes.forEach(n => {
-          n.x += n.vx;
-          n.y += n.vy;
-          if (n.x < 0 || n.x > canvas.width) n.vx *= -1;
-          if (n.y < 0 || n.y > canvas.height) n.vy *= -1;
-        });
-        // Draw connections
-        for (let i = 0; i < nodes.length; i++) {
-          for (let j = i + 1; j < nodes.length; j++) {
-            const dx = nodes[i].x - nodes[j].x;
-            const dy = nodes[i].y - nodes[j].y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < 200) {
-              ctx.beginPath();
-              ctx.moveTo(nodes[i].x, nodes[i].y);
-              ctx.lineTo(nodes[j].x, nodes[j].y);
-              ctx.strokeStyle = `rgba(139, 92, 246, ${0.15 * (1 - dist / 200)})`;
-              ctx.lineWidth = 0.5;
-              ctx.stroke();
+    <div class="w-full mx-auto px-6 lg:px-12 py-16 lg:py-28 flex flex-col lg:flex-row lg:items-center gap-12 lg:gap-16 relative z-10">
+      <div class="w-12">
+        <span class="text-lg text-white/40 font-medium relative pb-2 inline-block after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-white/20">02</span>
+      </div>
+
+      <div class="lg:w-[400px] shrink-0">
+        <h2 class="text-6xl md:text-8xl font-light tracking-tighter uppercase word-reveal text-white"><span style="display: inline-block; overflow: hidden; vertical-align: bottom; margin-right: 0.2em; padding-bottom: 0.1em;"><span class="word-inner" style="display: inline-block;">AUCTIONS</span></span></h2>
+      </div>
+
+      <div class="flex-1 flex items-start gap-6 max-w-sm">
+        <div class="w-12 h-12 rounded-full flex items-center justify-center shrink-0 text-white/80 bg-white/5 border border-white/10 backdrop-blur-md">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <p class="text-sm text-white/60 leading-relaxed font-extralight">Orders batch every 30-60 seconds. The matching engine finds a single clearing price — everyone pays the same fair rate. No front-running, no information leakage.</p>
+      </div>
+
+      <div class="flex flex-row lg:flex-col gap-3 shrink-0 flex-wrap">
+        <div class="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium text-white/80 w-fit bg-white/5 border border-white/10 backdrop-blur-md">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-violet-400"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          30-60 SEC BATCHES
+        </div>
+        <div class="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium text-white/80 w-fit bg-white/5 border border-white/10 backdrop-blur-md">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-violet-400"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          MEV PROTECTED
+        </div>
+      </div>
+
+      <div class="lg:ml-auto">
+        <a href="/marketplace" class="w-16 h-16 rounded-full flex items-center justify-center text-white bg-white/5 border border-white/10 backdrop-blur-md hover:bg-white/10 transition-colors group-hover:border-violet-400/50">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 03: Settlement on Base -->
+  <div class="w-full relative group">
+    <div class="w-full mx-auto px-6 lg:px-12 py-16 lg:py-24 flex flex-col lg:flex-row lg:items-center gap-12 lg:gap-16">
+      <div class="w-12">
+        <span class="text-lg text-white/40 font-medium relative pb-2 inline-block after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-white/20">03</span>
+      </div>
+
+      <div class="lg:w-[400px] shrink-0">
+        <h2 class="text-6xl md:text-8xl font-light tracking-tighter uppercase word-reveal text-white"><span style="display: inline-block; overflow: hidden; vertical-align: bottom; margin-right: 0.2em; padding-bottom: 0.1em;"><span class="word-inner" style="display: inline-block;">ON-CHAIN</span></span></h2>
+      </div>
+
+      <div class="flex-1 flex items-start gap-6 max-w-sm">
+        <div class="w-12 h-12 rounded-full flex items-center justify-center shrink-0 text-white/80 bg-white/5 border border-white/10 backdrop-blur-md">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <p class="text-sm text-white/60 leading-relaxed font-extralight">Settlements execute on Base L2 with sub-$0.01 gas. USDC escrow releases automatically. ZK proofs verify fair execution without revealing individual bids.</p>
+      </div>
+
+      <div class="flex flex-row lg:flex-col gap-3 shrink-0 flex-wrap">
+        <div class="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium text-white/80 w-fit bg-white/5 border border-white/10 backdrop-blur-md">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-fuchsia-400"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>
+          BASE L2
+        </div>
+        <div class="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium text-white/80 w-fit bg-white/5 border border-white/10 backdrop-blur-md">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-fuchsia-400"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg>
+          USDC SETTLEMENT
+        </div>
+      </div>
+
+      <div class="lg:ml-auto">
+        <a href="/analytics" class="w-16 h-16 rounded-full flex items-center justify-center text-white bg-white/5 border border-white/10 backdrop-blur-md hover:bg-white/10 transition-colors group-hover:border-fuchsia-400/50">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" class=""></script>
+  <script>
+    setTimeout(() => {
+        document.querySelectorAll('.word-reveal').forEach(element => {
+            const text = element.innerText;
+            const words = text.split(' ');
+            element.innerHTML = '';
+            
+            words.forEach(word => {
+                const wrapper = document.createElement('span');
+                wrapper.style.display = 'inline-block';
+                wrapper.style.overflow = 'hidden';
+                wrapper.style.verticalAlign = 'bottom';
+                wrapper.style.marginRight = '0.2em';
+                wrapper.style.paddingBottom = '0.1em';
+
+                const inner = document.createElement('span');
+                inner.style.display = 'inline-block';
+                inner.style.transform = 'translateY(110%)';
+                inner.innerText = word;
+                inner.className = 'word-inner';
+
+                wrapper.appendChild(inner);
+                element.appendChild(wrapper);
+            });
+
+            if (typeof gsap !== 'undefined') {
+                gsap.to(element.querySelectorAll('.word-inner'), {
+                    y: '0%',
+                    duration: 0.8,
+                    ease: 'power3.out',
+                    stagger: 0.1,
+                    scrollTrigger: {
+                        trigger: element,
+                        start: 'top 85%',
+                    }
+                });
+            } else {
+                element.querySelectorAll('.word-inner').forEach(el => el.style.transform = 'translateY(0)');
             }
-          }
+        });
+
+        const initWebGL = () => {
+            if (typeof THREE === 'undefined') return;
+            
+            const container = document.getElementById('webgl-container');
+            if (!container || container.children.length > 0) return;
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+            camera.position.z = 30;
+
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); 
+            container.appendChild(renderer.domElement);
+
+            const geometry = new THREE.TorusKnotGeometry(10, 3, 200, 32);
+            const particleMaterial = new THREE.PointsMaterial({
+                color: 0x22d3ee,
+                size: 0.05,
+                transparent: true,
+                opacity: 0.6,
+                blending: THREE.AdditiveBlending
+            });
+
+            const particles = new THREE.Points(geometry, particleMaterial);
+            scene.add(particles);
+
+            let mouseX = 0;
+            let mouseY = 0;
+            let targetX = 0;
+            let targetY = 0;
+            let windowHalfX = window.innerWidth / 2;
+            let windowHalfY = window.innerHeight / 2;
+
+            const section = container.parentElement;
+            if (section) {
+                section.addEventListener('mousemove', (event) => {
+                    mouseX = (event.clientX - windowHalfX) * 0.001;
+                    mouseY = (event.clientY - windowHalfY) * 0.001;
+                });
+            }
+
+            const clock = new THREE.Clock();
+
+            const animate = () => {
+                requestAnimationFrame(animate);
+                const elapsedTime = clock.getElapsedTime();
+
+                targetX = mouseX * 0.5;
+                targetY = mouseY * 0.5;
+
+                particles.rotation.y += 0.002;
+                particles.rotation.x += 0.001;
+
+                particles.rotation.x += 0.05 * (targetY - particles.rotation.x);
+                particles.rotation.y += 0.05 * (targetX - particles.rotation.y);
+
+                const scale = 1 + Math.sin(elapsedTime * 0.5) * 0.05;
+                particles.scale.set(scale, scale, scale);
+
+                renderer.render(scene, camera);
+            };
+
+            animate();
+
+            window.addEventListener('resize', () => {
+                if (!container.clientWidth) return;
+                windowHalfX = window.innerWidth / 2;
+                windowHalfY = window.innerHeight / 2;
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            });
+        };
+
+        if (document.readyState === 'complete') {
+            initWebGL();
+        } else {
+            window.addEventListener('DOMContentLoaded', initWebGL);
         }
-        // Draw nodes
-        nodes.forEach(n => {
-          ctx.beginPath();
-          ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(139, 92, 246, 0.3)';
-          ctx.fill();
-        });
-        requestAnimationFrame(draw);
-      };
-      draw();
-    };
-    if (document.readyState === 'complete') init();
-    else window.addEventListener('load', init);
-  })();
-</script>
-
-<!-- GSAP scroll animations for step cards -->
-<script>
-  (function() {
-    function initStepCards() {
-      if (typeof gsap === 'undefined') {
-        setTimeout(initStepCards, 200);
-        return;
-      }
-      var cards = document.querySelectorAll('.step-card-hover');
-      if (!cards.length) return;
-      
-      // If ScrollTrigger available, use scroll-based reveal
-      if (typeof ScrollTrigger !== 'undefined') {
-        cards.forEach(function(card, i) {
-          gsap.fromTo(card, 
-            { y: 50, opacity: 0 },
-            { y: 0, opacity: 1, duration: 0.8, delay: i * 0.12, ease: 'power3.out',
-              scrollTrigger: { trigger: card, start: 'top 90%', toggleActions: 'play none none none' }
-            }
-          );
-        });
-      } else {
-        // Fallback: simple timed animation
-        cards.forEach(function(card, i) {
-          card.style.opacity = '0';
-          card.style.transform = 'translateY(50px)';
-          setTimeout(function() {
-            card.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-            card.style.opacity = '1';
-            card.style.transform = 'translateY(0)';
-          }, 200 + i * 150);
-        });
-      }
-    }
-    // Try immediately and also on load
-    setTimeout(initStepCards, 300);
-  })();
-</script>
-
-<section class="flex flex-col w-full mt-24 gap-x-8 gap-y-8" id="diagnostics-section">
+    }, 100);
+  </script>
+</section><section class="flex flex-col w-full mt-24 gap-x-8 gap-y-8" id="diagnostics-section">
         <!-- Header -->
         <div class="flex border-white/5 border-b pb-4 items-center justify-between">
           <div class="flex items-center gap-4">

@@ -1,11 +1,11 @@
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
 import { GlassCard } from "@/components/ui/glass-card";
 import { SectionLabel } from "@/components/ui/section-label";
 import { AnimatedNumber } from "@/components/ui/animated-number";
 import { GlowBlob } from "@/components/ui/glow-blob";
 import { motion } from "framer-motion";
-import { ease, pageHeader } from "@/lib/animations";
 
 const priceData = [
   { date: "Mar 20", price: 0.22 },
@@ -42,13 +42,13 @@ const Analytics = () => {
     <div className="space-y-8 max-w-[1400px] relative">
       <GlowBlob className="-top-20 right-0 opacity-30" color="purple" size="lg" />
 
-      <motion.div {...pageHeader}>
+      <div>
         <h1 className="text-2xl font-semibold text-gradient">Analytics</h1>
         <p className="text-sm text-white/40 mt-1">Market intelligence and price trends</p>
-      </motion.div>
+      </div>
 
       {/* Price Chart */}
-      <GlassCard delay={0.08} gradient className="p-6">
+      <GlassCard delay={0.1} gradient className="p-6">
         <div className="flex items-center justify-between mb-6">
           <SectionLabel>H100 Price History</SectionLabel>
           <div className="flex gap-1 p-1 rounded-lg bg-white/[0.02] border border-white/[0.06]">
@@ -105,7 +105,7 @@ const Analytics = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Market Stats */}
-        <GlassCard delay={0.16} corners className="p-6 space-y-4">
+        <GlassCard delay={0.2} corners className="p-6 space-y-4">
           <SectionLabel pulse>Market Statistics</SectionLabel>
           <div className="space-y-1">
             {stats.map(({ label, value }) => (
@@ -118,7 +118,7 @@ const Analytics = () => {
         </GlassCard>
 
         {/* Utilization */}
-        <GlassCard delay={0.24} corners className="p-6 space-y-5">
+        <GlassCard delay={0.3} corners className="p-6 space-y-5">
           <SectionLabel>GPU Utilization by Type</SectionLabel>
           {utilizationData.map((gpu, i) => (
             <div key={gpu.name} className="space-y-2">
@@ -130,7 +130,7 @@ const Analytics = () => {
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: `${gpu.value}%` }}
-                  transition={{ duration: 0.8, delay: 0.32 + i * 0.08, ease }}
+                  transition={{ duration: 1.2, delay: 0.4 + i * 0.15, ease: "easeOut" }}
                   className={`h-full rounded-full bg-gradient-to-r ${gpu.color}`}
                 />
               </div>

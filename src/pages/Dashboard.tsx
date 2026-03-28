@@ -4,7 +4,6 @@ import { OrderTable } from "@/components/dashboard/OrderTable";
 import { QuickActions } from "@/components/dashboard/QuickActions";
 import { LiveFeed } from "@/components/dashboard/LiveFeed";
 import { AuctionTimer } from "@/components/dashboard/AuctionTimer";
-import { SparklineChart } from "@/components/dashboard/SparklineChart";
 import { AnimatedNumber } from "@/components/ui/animated-number";
 import { motion } from "framer-motion";
 import { AreaChart, Area, ResponsiveContainer, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
@@ -24,10 +23,6 @@ const portfolioData = [
 const Dashboard = () => {
   return (
     <div className="space-y-6 max-w-[1440px] relative">
-      {/* Background auras */}
-      <div className="absolute -top-32 -left-32 w-96 h-96 bg-violet-500/10 blur-[120px] rounded-full pointer-events-none" />
-      <div className="absolute top-48 -right-24 w-80 h-80 bg-fuchsia-500/8 blur-[100px] rounded-full pointer-events-none" />
-
       {/* Header */}
       <div>
         <h1 className="text-2xl md:text-3xl font-thin tracking-tight text-white">Dashboard</h1>
@@ -37,33 +32,21 @@ const Dashboard = () => {
       {/* Stats Row */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatsCard
-          icon={DollarSign}
-          label="Escrow Balance"
-          value="$2,450.00"
-          change="+12.5%"
-          changeType="positive"
+          icon={DollarSign} label="Escrow Balance" value="$2,450.00"
+          change="+12.5%" changeType="positive"
           sparkData={[1800, 2100, 1950, 2300, 2150, 2400, 2450]}
-          sparkColor="rgb(52, 211, 153)"
-          glow
-          delay={0}
+          sparkColor="rgb(52, 211, 153)" glow delay={0}
         />
         <StatsCard
-          icon={BarChart3}
-          label="Active Orders"
-          value="3"
+          icon={BarChart3} label="Active Orders" value="3"
           sparkData={[1, 3, 2, 4, 3, 2, 3]}
-          sparkColor="rgb(139, 92, 246)"
-          delay={0.08}
+          sparkColor="rgb(139, 92, 246)" delay={0.08}
         />
         <StatsCard
-          icon={CheckCircle}
-          label="Filled Today"
-          value="156 GPU-hrs"
-          change="+24%"
-          changeType="positive"
+          icon={CheckCircle} label="Filled Today" value="156 GPU-hrs"
+          change="+24%" changeType="positive"
           sparkData={[80, 110, 95, 130, 140, 150, 156]}
-          sparkColor="rgb(52, 211, 153)"
-          delay={0.16}
+          sparkColor="rgb(52, 211, 153)" delay={0.16}
         />
         <AuctionTimer />
       </div>
@@ -73,12 +56,8 @@ const Dashboard = () => {
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.15, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="relative overflow-hidden rounded-2xl border border-white/5 bg-white/[0.03] backdrop-blur-xl shadow-2xl p-6"
+        className="glass-card p-6"
       >
-        {/* Aura behind chart */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-64 bg-violet-500/8 blur-[100px] rounded-full pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent pointer-events-none" />
-
         <div className="relative z-10">
           <div className="flex items-center justify-between mb-6">
             <div>
@@ -161,15 +140,17 @@ const Dashboard = () => {
           { label: "Active Providers", value: "387", icon: Zap },
           { label: "Avg Clearing Price", value: "$0.19/hr", icon: BarChart3 },
           { label: "Orders Matched", value: "892", icon: CheckCircle },
-        ].map((stat, i) => (
+        ].map((stat) => (
           <div
             key={stat.label}
-            className="rounded-xl border border-white/5 bg-white/[0.02] backdrop-blur-md p-4 flex items-center gap-3 hover:bg-white/[0.04] transition-all duration-300"
+            className="glass-card p-4 flex items-center gap-3 hover:border-white/20 transition-all duration-300"
           >
-            <stat.icon className="h-4 w-4 text-white/15 shrink-0" />
-            <div>
-              <p className="font-mono text-[9px] uppercase tracking-widest text-white/30">{stat.label}</p>
-              <p className="font-mono text-sm text-white/70 tabular-nums tracking-tight">{stat.value}</p>
+            <div className="relative z-10 flex items-center gap-3">
+              <stat.icon className="h-4 w-4 text-white/15 shrink-0" />
+              <div>
+                <p className="font-mono text-[9px] uppercase tracking-widest text-white/30">{stat.label}</p>
+                <p className="font-mono text-sm text-white/70 tabular-nums tracking-tight">{stat.value}</p>
+              </div>
             </div>
           </div>
         ))}

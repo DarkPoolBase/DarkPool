@@ -1,3 +1,6 @@
+import { GlassCard } from "@/components/ui/glass-card";
+import { motion, AnimatePresence } from "framer-motion";
+
 const feedItems = [
   {
     title: "Batch #4521 settled",
@@ -33,27 +36,39 @@ const feedItems = [
 
 export function LiveFeed() {
   return (
-    <div className="rounded-lg border border-border bg-card">
-      <div className="flex items-center gap-2 p-4 border-b border-border">
-        <span className="h-2 w-2 rounded-full bg-destructive animate-pulse-glow" />
-        <h3 className="text-sm font-medium">Live Batch Settlements</h3>
+    <GlassCard delay={0.4} corners className="overflow-hidden">
+      <div className="flex items-center gap-2 p-5 pb-4">
+        <span className="relative flex h-2 w-2">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-destructive opacity-75" />
+          <span className="relative inline-flex rounded-full h-2 w-2 bg-destructive" />
+        </span>
+        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">Live Batch Settlements</span>
       </div>
-      <div className="divide-y divide-border max-h-[320px] overflow-y-auto">
-        {feedItems.map((item, i) => (
-          <div
-            key={i}
-            className={`p-3 text-sm ${item.highlight ? "bg-primary/5 border-l-2 border-l-primary" : ""}`}
-          >
-            <div className="flex items-center justify-between mb-1">
-              <span className={`font-medium text-xs ${item.highlight ? "text-primary" : ""}`}>
-                {item.title}
-              </span>
-              <span className="text-xs text-muted-foreground">{item.time}</span>
-            </div>
-            <p className="text-xs text-muted-foreground">{item.detail}</p>
-          </div>
-        ))}
+      <div className="divide-y divide-white/[0.04] max-h-[360px] overflow-y-auto">
+        <AnimatePresence>
+          {feedItems.map((item, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: i * 0.1, duration: 0.3 }}
+              className={`px-5 py-3 text-sm transition-colors duration-300 hover:bg-white/[0.02] ${
+                item.highlight
+                  ? "border-l-2 border-l-primary bg-primary/[0.03] shadow-[inset_0_0_20px_rgba(108,60,233,0.05)]"
+                  : ""
+              }`}
+            >
+              <div className="flex items-center justify-between mb-1">
+                <span className={`font-medium text-xs ${item.highlight ? "text-primary" : "text-white/70"}`}>
+                  {item.title}
+                </span>
+                <span className="font-mono text-[10px] text-white/30">{item.time}</span>
+              </div>
+              <p className="text-[11px] text-white/40 font-mono">{item.detail}</p>
+            </motion.div>
+          ))}
+        </AnimatePresence>
       </div>
-    </div>
+    </GlassCard>
   );
 }

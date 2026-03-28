@@ -102,7 +102,9 @@ export function DashboardSidebar() {
                       <NavLink
                         to={item.url}
                         end={item.url === "/dashboard"}
-                        className={`relative gap-3 transition-all duration-300 rounded-xl mx-1.5 my-0.5 ${
+                        className={`relative gap-3 transition-all duration-300 rounded-xl my-0.5 ${
+                          collapsed ? 'mx-0 justify-center' : 'mx-1.5'
+                        } ${
                           isActive
                             ? "text-white"
                             : "text-white/40 hover:text-white/70"

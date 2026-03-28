@@ -60,7 +60,7 @@
 
   body {
     @apply bg-background text-foreground font-sans;
-    font-family: 'Kavo Sans', sans-serif;
+    font-family: 'Inter', sans-serif;
   }
 
   /* Custom scrollbar */

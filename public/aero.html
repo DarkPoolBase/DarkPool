@@ -116,6 +116,128 @@ gtag('config', 'G-2M6V79H761');
   </article>
 </section>
 
+<!-- About the Protocol Section -->
+<section class="z-10 w-full pt-32 pb-24 relative" id="about">
+  <div class="max-w-screen-2xl mx-auto px-6 md:px-10">
+    
+    <!-- Section Header -->
+    <div class="about-reveal mb-16 text-center">
+      <span class="inline-block font-mono text-[11px] tracking-[0.3em] text-white/40 uppercase mb-4">About the Protocol</span>
+      <h2 class="text-3xl md:text-5xl lg:text-6xl font-extralight text-white/90 tracking-tight leading-[1.1]">
+        Privacy-first compute<br class="hidden md:block"> for the agentic era
+      </h2>
+    </div>
+
+    <!-- Three Cards -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-16">
+      
+      <!-- Card 1: The Problem -->
+      <div class="about-card rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm p-8 md:p-10">
+        <span class="font-mono text-[10px] tracking-[0.25em] text-violet-400/70 uppercase mb-4 block">The Problem</span>
+        <h3 class="text-xl md:text-2xl font-light text-white/90 mb-4 leading-snug">GPU compute is broken for AI</h3>
+        <p class="text-sm text-white/50 leading-relaxed font-light">
+          AI companies need massive GPU compute but current options are either expensive — AWS at $6+/hr per H100 — fully transparent where competitors see your orders, or locked behind slow private deals. There's no middle ground between overpaying publicly and negotiating in the dark.
+        </p>
+      </div>
+
+      <!-- Card 2: Our Solution -->
+      <div class="about-card rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm p-8 md:p-10">
+        <span class="font-mono text-[10px] tracking-[0.25em] text-emerald-400/70 uppercase mb-4 block">Our Solution</span>
+        <h3 class="text-xl md:text-2xl font-light text-white/90 mb-4 leading-snug">A dark pool for compute</h3>
+        <p class="text-sm text-white/50 leading-relaxed font-light">
+          Encrypted bids enter batch auctions every 30–60 seconds. Zero-knowledge proofs verify fairness without revealing individual orders. Settlement happens in USDC on Base L2. Nobody — not even the platform — sees raw order data.
+        </p>
+      </div>
+
+      <!-- Card 3: Why It Matters -->
+      <div class="about-card rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm p-8 md:p-10">
+        <span class="font-mono text-[10px] tracking-[0.25em] text-cyan-400/70 uppercase mb-4 block">Why It Matters</span>
+        <h3 class="text-xl md:text-2xl font-light text-white/90 mb-4 leading-snug">Greenfield intersection</h3>
+        <p class="text-sm text-white/50 leading-relaxed font-light">
+          The GPU-as-a-Service market is valued at $5.7B and growing 35.8% per year. No one combines privacy, compute, and autonomous AI agents. This intersection is completely unoccupied — a first-mover opportunity at the convergence of DeFi infrastructure and AI demand.
+        </p>
+      </div>
+    </div>
+
+    <!-- Stats Strip -->
+    <div class="about-reveal grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="rounded-xl border border-white/[0.04] bg-white/[0.02] px-6 py-5 text-center">
+        <span class="block text-2xl md:text-3xl font-extralight text-white/90 about-counter" data-target="5.7">0</span>
+        <span class="block text-[10px] font-mono tracking-[0.2em] text-white/30 uppercase mt-1">Market Size ($B)</span>
+      </div>
+      <div class="rounded-xl border border-white/[0.04] bg-white/[0.02] px-6 py-5 text-center">
+        <span class="block text-2xl md:text-3xl font-extralight text-white/90 about-counter" data-target="35.8">0</span>
+        <span class="block text-[10px] font-mono tracking-[0.2em] text-white/30 uppercase mt-1">CAGR (%)</span>
+      </div>
+      <div class="rounded-xl border border-white/[0.04] bg-white/[0.02] px-6 py-5 text-center">
+        <span class="block text-2xl md:text-3xl font-extralight text-white/90 about-counter" data-target="30">0</span>
+        <span class="block text-[10px] font-mono tracking-[0.2em] text-white/30 uppercase mt-1">Batch Interval (s)</span>
+      </div>
+      <div class="rounded-xl border border-white/[0.04] bg-white/[0.02] px-6 py-5 text-center">
+        <span class="block text-2xl md:text-3xl font-extralight text-white/90">0</span>
+        <span class="block text-[10px] font-mono tracking-[0.2em] text-white/30 uppercase mt-1">Competitors</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- About Section GSAP Animations -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    // Header fade up
+    gsap.from('.about-reveal', {
+      y: 60,
+      opacity: 0,
+      duration: 1,
+      ease: 'power3.out',
+      stagger: 0.2,
+      scrollTrigger: {
+        trigger: '#about',
+        start: 'top 85%',
+        toggleActions: 'play none none none'
+      }
+    });
+
+    // Cards staggered reveal
+    gsap.from('.about-card', {
+      y: 80,
+      opacity: 0,
+      duration: 0.9,
+      ease: 'power3.out',
+      stagger: 0.15,
+      scrollTrigger: {
+        trigger: '.about-card',
+        start: 'top 90%',
+        toggleActions: 'play none none none'
+      }
+    });
+
+    // Counter animation
+    document.querySelectorAll('.about-counter').forEach(function(el) {
+      var target = parseFloat(el.getAttribute('data-target')) || 0;
+      ScrollTrigger.create({
+        trigger: el,
+        start: 'top 90%',
+        onEnter: function() {
+          gsap.to(el, {
+            duration: 2,
+            ease: 'power2.out',
+            onUpdate: function() {
+              var progress = this.progress();
+              var current = (target * progress);
+              el.textContent = target % 1 !== 0 ? current.toFixed(1) : Math.round(current);
+            }
+          });
+        },
+        once: true
+      });
+    });
+  }
+});
+</script>
+
       <section class="z-10 w-full pt-32 pb-20 relative" id="how-it-works">
   <div class="md:px-10 flex flex-col md:flex-row gap-12 lg:gap-24 max-w-screen-2xl mr-auto ml-auto pr-6 pl-6 gap-x-12 gap-y-12">
     <!-- Left Sidebar (Sticky) -->

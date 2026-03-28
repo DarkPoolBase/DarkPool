@@ -6,8 +6,8 @@ import {
   Monitor,
   FileText,
   Settings,
-  Globe,
 } from "lucide-react";
+import darkpoolLogo from "@/assets/darkpool-logo.png";
 import { NavLink } from "@/components/NavLink";
 import { useLocation } from "react-router-dom";
 import {

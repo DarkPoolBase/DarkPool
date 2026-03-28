@@ -236,717 +236,78 @@ gtag('config', 'G-2M6V79H761');
 
 
       <section class="z-10 w-full pt-32 pb-20 relative" id="how-it-works">
-  <div class="md:px-10 flex flex-col md:flex-row gap-12 lg:gap-24 max-w-screen-2xl mr-auto ml-auto pr-6 pl-6 gap-x-12 gap-y-12">
-    <!-- Left Sidebar (Sticky) -->
-    <aside class="md:w-1/3 lg:w-1/4 flex-shrink-0 z-20 relative">
-  <div class="md:sticky md:top-32 lg:space-y-12 space-y-10">
+  <div class="max-w-screen-2xl mx-auto px-6 md:px-10">
 
-    <!-- Title -->
-    <div class="space-y-5">
-      <h1 class="text-3xl md:text-4xl lg:text-4xl font-light text-white tracking-tight leading-tight">
-        How it<br>works for<br class="">buyers & sellers
-      </h1>
+    <!-- Section Header -->
+    <div class="text-center mb-16 space-y-4">
+      <span class="text-[10px] text-violet-400 uppercase tracking-[0.25em] font-['JetBrains_Mono']">Protocol Architecture</span>
+      <h2 class="text-3xl md:text-5xl font-light text-white tracking-tight leading-tight">
+        How it works for<br>buyers & sellers
+      </h2>
+      <p class="text-sm text-white/40 max-w-lg mx-auto font-light">Three steps to private, fair-priced GPU compute on Base L2.</p>
     </div>
 
-    <!-- Navigation / Accordion -->
-    <div class="pt-4">
-      <nav class="flex flex-col w-full max-w-sm relative border-l border-white/10 ml-1.5 space-y-2">
+    <!-- 3-Column Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
 
-        <!-- Product Design -->
-        <div class="nav-item group cursor-pointer pl-6 py-2.5 flex flex-col relative transition-colors" data-active="true">
-          <!-- Active Line & Dot -->
-          <div class="absolute left-0 top-2.5 w-[2px] h-8 bg-blue-500 -ml-[1px] rounded-full shadow-[0_0_12px_rgba(59,130,246,0.8)] hidden group-data-[active=true]:block"></div>
-          <span class="absolute left-0 top-[15px] w-2.5 h-2.5 rounded-full bg-blue-500 -ml-[5px] border-2 border-[#030305] shadow-[0_0_8px_rgba(59,130,246,0.8)] hidden group-data-[active=true]:block"></span>
-          <!-- Inactive Dot -->
-          <span class="absolute left-0 top-[16px] w-2 h-2 rounded-full bg-transparent border border-zinc-700 -ml-1 group-hover:border-zinc-400 group-hover:bg-zinc-800 transition-all hidden group-data-[active=false]:block"></span>
-
-          <h2 class="text-sm font-normal transition-transform group-data-[active=false]:group-hover:translate-x-1 text-white">Encrypted Orders</h2>
-          <div class="nav-content mt-3 flex-col gap-3 flex">
-            <p class="text-xs text-zinc-400 font-light leading-relaxed">
-              Submit sealed bids and asks. Nobody sees your order details — not even the platform. ZK proofs verify everything is legitimate.
-            </p>
-            <a href="/dashboard" class="inline-flex items-center gap-1.5 text-xs text-white hover:text-zinc-300 transition-colors font-normal">
-              Start trading
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right">
-                <path d="m9 18 6-6-6-6"></path>
-              </svg>
-            </a>
+      <!-- Card 1: Encrypted Orders -->
+      <div class="group relative overflow-hidden rounded-2xl p-8 md:p-10 transition-all duration-500 hover:translate-y-[-4px]" style="background: rgba(255,255,255,0.04); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.08);">
+        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" style="background: radial-gradient(circle at 50% 0%, rgba(108,60,233,0.12), transparent 60%);"></div>
+        <div class="absolute top-0 left-[10%] right-[10%] h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+        <div class="relative z-10 space-y-5">
+          <span class="text-[10px] text-violet-400/60 uppercase tracking-[0.2em] font-['JetBrains_Mono']">01 — AGENTS</span>
+          <div class="w-12 h-12 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center group-hover:shadow-[0_0_20px_rgba(108,60,233,0.3)] transition-shadow duration-500">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-violet-400"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
           </div>
+          <h3 class="text-xl text-white font-medium tracking-tight">Encrypted Orders</h3>
+          <p class="text-sm text-white/40 font-light leading-relaxed">Submit sealed bids and asks. Nobody sees your order details — not even the platform. ZK proofs verify everything is legitimate.</p>
+          <a href="/dashboard" class="inline-flex items-center gap-1.5 text-xs text-violet-400 hover:text-violet-300 transition-colors font-medium group/link">
+            Start trading
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="group-hover/link:translate-x-1 transition-transform"><path d="m9 18 6-6-6-6"></path></svg>
+          </a>
         </div>
+      </div>
 
-        <!-- Content Management -->
-        <div class="nav-item group cursor-pointer pl-6 py-2.5 flex flex-col relative transition-colors" data-active="false">
-          <!-- Active Line & Dot -->
-          <div class="absolute left-0 top-2.5 w-[2px] h-8 bg-blue-500 -ml-[1px] rounded-full shadow-[0_0_12px_rgba(59,130,246,0.8)] hidden group-data-[active=true]:block"></div>
-          <span class="absolute left-0 top-[15px] w-2.5 h-2.5 rounded-full bg-blue-500 -ml-[5px] border-2 border-[#030305] shadow-[0_0_8px_rgba(59,130,246,0.8)] hidden group-data-[active=true]:block"></span>
-          <!-- Inactive Dot -->
-          <span class="absolute left-0 top-[16px] w-2 h-2 rounded-full bg-transparent border border-zinc-700 -ml-1 group-hover:border-zinc-400 group-hover:bg-zinc-800 transition-all hidden group-data-[active=false]:block"></span>
-
-          <h2 class="text-sm font-normal transition-transform group-data-[active=false]:group-hover:translate-x-1 text-zinc-500 group-hover:text-white">Batch Auctions</h2>
-          <div class="nav-content mt-3 flex-col gap-3 hidden">
-            <p class="text-xs text-zinc-400 font-light leading-relaxed">
-              Orders collect for 30-60 seconds, then a matching engine finds a single clearing price. Everyone pays the same fair rate — no front-running.
-            </p>
-            <a href="/marketplace" class="inline-flex items-center gap-1.5 text-xs text-white hover:text-zinc-300 transition-colors font-normal">
-              View marketplace
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right">
-                <path d="m9 18 6-6-6-6"></path>
-              </svg>
-            </a>
+      <!-- Card 2: Batch Auctions -->
+      <div class="group relative overflow-hidden rounded-2xl p-8 md:p-10 transition-all duration-500 hover:translate-y-[-4px]" style="background: rgba(255,255,255,0.04); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.08);">
+        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" style="background: radial-gradient(circle at 50% 0%, rgba(108,60,233,0.12), transparent 60%);"></div>
+        <div class="absolute top-0 left-[10%] right-[10%] h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+        <div class="relative z-10 space-y-5">
+          <span class="text-[10px] text-violet-400/60 uppercase tracking-[0.2em] font-['JetBrains_Mono']">02 — AUCTIONS</span>
+          <div class="w-12 h-12 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center group-hover:shadow-[0_0_20px_rgba(108,60,233,0.3)] transition-shadow duration-500">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-violet-400"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
           </div>
+          <h3 class="text-xl text-white font-medium tracking-tight">Batch Auctions</h3>
+          <p class="text-sm text-white/40 font-light leading-relaxed">Orders collect for 30-60 seconds, then a matching engine finds a single clearing price. Everyone pays the same fair rate — no front-running.</p>
+          <a href="/marketplace" class="inline-flex items-center gap-1.5 text-xs text-violet-400 hover:text-violet-300 transition-colors font-medium group/link">
+            View marketplace
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="group-hover/link:translate-x-1 transition-transform"><path d="m9 18 6-6-6-6"></path></svg>
+          </a>
         </div>
+      </div>
 
-        <!-- Selected Works -->
-        <div class="nav-item group cursor-pointer pl-6 py-2.5 flex flex-col relative transition-colors" data-active="false">
-          <!-- Active Line & Dot -->
-          <div class="absolute left-0 top-2.5 w-[2px] h-8 bg-blue-500 -ml-[1px] rounded-full shadow-[0_0_12px_rgba(59,130,246,0.8)] hidden group-data-[active=true]:block"></div>
-          <span class="absolute left-0 top-[15px] w-2.5 h-2.5 rounded-full bg-blue-500 -ml-[5px] border-2 border-[#030305] shadow-[0_0_8px_rgba(59,130,246,0.8)] hidden group-data-[active=true]:block"></span>
-          <!-- Inactive Dot -->
-          <span class="absolute left-0 top-[16px] w-2 h-2 rounded-full bg-transparent border border-zinc-700 -ml-1 group-hover:border-zinc-400 group-hover:bg-zinc-800 transition-all hidden group-data-[active=false]:block"></span>
-
-          <h2 class="text-sm font-normal transition-transform group-data-[active=false]:group-hover:translate-x-1 text-zinc-500 group-hover:text-white">Instant Settlement</h2>
-          <div class="nav-content mt-3 flex-col gap-3 hidden">
-            <p class="text-xs text-zinc-400 font-light leading-relaxed">
-              USDC payments settle instantly on Base. Gas costs under $0.01. Escrow protects both buyers and sellers automatically.
-            </p>
-            <a href="/analytics" class="inline-flex items-center gap-1.5 text-xs text-white hover:text-zinc-300 transition-colors font-normal">
-              View analytics
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right">
-                <path d="m9 18 6-6-6-6"></path>
-              </svg>
-            </a>
+      <!-- Card 3: Instant Settlement -->
+      <div class="group relative overflow-hidden rounded-2xl p-8 md:p-10 transition-all duration-500 hover:translate-y-[-4px]" style="background: rgba(255,255,255,0.04); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 32px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.08);">
+        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" style="background: radial-gradient(circle at 50% 0%, rgba(108,60,233,0.12), transparent 60%);"></div>
+        <div class="absolute top-0 left-[10%] right-[10%] h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+        <div class="relative z-10 space-y-5">
+          <span class="text-[10px] text-violet-400/60 uppercase tracking-[0.2em] font-['JetBrains_Mono']">03 — ON-CHAIN</span>
+          <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center group-hover:shadow-[0_0_20px_rgba(16,185,129,0.3)] transition-shadow duration-500">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-emerald-400"><polyline points="20 6 9 17 4 12"/></svg>
           </div>
+          <h3 class="text-xl text-white font-medium tracking-tight">Instant Settlement</h3>
+          <p class="text-sm text-white/40 font-light leading-relaxed">USDC payments settle instantly on Base. Gas costs under $0.01. Escrow protects both buyers and sellers automatically.</p>
+          <a href="/analytics" class="inline-flex items-center gap-1.5 text-xs text-violet-400 hover:text-violet-300 transition-colors font-medium group/link">
+            View analytics
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="group-hover/link:translate-x-1 transition-transform"><path d="m9 18 6-6-6-6"></path></svg>
+          </a>
         </div>
+      </div>
 
-        <!-- Design Process -->
-        <div class="nav-item group cursor-pointer pl-6 py-2.5 flex flex-col relative transition-colors" data-active="false">
-          <!-- Active Line & Dot -->
-          <div class="absolute left-0 top-2.5 w-[2px] h-8 bg-blue-500 -ml-[1px] rounded-full shadow-[0_0_12px_rgba(59,130,246,0.8)] hidden group-data-[active=true]:block"></div>
-          <span class="absolute left-0 top-[15px] w-2.5 h-2.5 rounded-full bg-blue-500 -ml-[5px] border-2 border-[#030305] shadow-[0_0_8px_rgba(59,130,246,0.8)] hidden group-data-[active=true]:block"></span>
-          <!-- Inactive Dot -->
-          <span class="absolute left-0 top-[16px] w-2 h-2 rounded-full bg-transparent border border-zinc-700 -ml-1 group-hover:border-zinc-400 group-hover:bg-zinc-800 transition-all hidden group-data-[active=false]:block"></span>
-
-          <h2 class="text-sm font-normal transition-transform group-data-[active=false]:group-hover:translate-x-1 text-zinc-500 group-hover:text-white">Agent-Native API</h2>
-          <div class="nav-content mt-3 flex-col gap-3 hidden">
-            <p class="text-xs text-zinc-400 font-light leading-relaxed">
-              Built for AI agents. Submit orders via REST API or x402 protocol. One-line SDK for LangChain, AutoGPT, and CrewAI.
-            </p>
-            <a href="/api-docs" class="inline-flex items-center gap-1.5 text-xs text-white hover:text-zinc-300 transition-colors font-normal">
-              Read API docs
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right">
-                <path d="m9 18 6-6-6-6"></path>
-              </svg>
-            </a>
-          </div>
-        </div>
-
-      </nav>
     </div>
 
-  </div>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const section = document.getElementById('diagnostics-section');
-      if (!section) return;
-      
-      const navItems = section.querySelectorAll('.nav-item');
-      const sections = section.querySelectorAll('[data-scroll-section]');
-
-      if (sections.length === 0 || navItems.length === 0) return;
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const index = Array.from(sections).indexOf(entry.target);
-            if (index !== -1 && navItems[index]) {
-              navItems.forEach((item, i) => {
-                const h2 = item.querySelector('h2');
-                const content = item.querySelector('.nav-content');
-                if (i === index) {
-                    item.setAttribute('data-active', 'true');
-                    if (h2) { h2.classList.add('text-white'); h2.classList.remove('text-zinc-500'); }
-                    if (content) { content.classList.remove('hidden'); content.classList.add('flex'); }
-                } else {
-                    item.setAttribute('data-active', 'false');
-                    if (h2) { h2.classList.add('text-zinc-500'); h2.classList.remove('text-white'); }
-                    if (content) { content.classList.add('hidden'); content.classList.remove('flex'); }
-                }
-              });
-            }
-          }
-        });
-      }, { rootMargin: '-20% 0px -60% 0px', threshold: 0.1 });
-
-      sections.forEach(sec => observer.observe(sec));
-
-      navItems.forEach((item, index) => {
-        item.addEventListener('click', (e) => {
-          e.preventDefault();
-          if (sections[index]) {
-            const yOffset = -128;
-            const elementPosition = sections[index].getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset + yOffset;
-            window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-          }
-        });
-      });
-
-      // Animate depth chart bars
-      function animateDepthBars() {
-        const bars = document.querySelectorAll('.depth-bar');
-        bars.forEach(bar => {
-          const target = parseFloat(bar.dataset.width || '0');
-          const current = parseFloat(bar.style.width || '0');
-          const jitter = (Math.random() - 0.5) * 4;
-          const next = Math.max(10, Math.min(100, target + jitter));
-          bar.style.width = next + '%';
-          bar.style.transition = 'width 1.5s ease';
-        });
-      }
-      setInterval(animateDepthBars, 2000);
-
-      // Animate settlement pipeline
-      function animateSettlement() {
-        const steps = document.querySelectorAll('.settlement-step');
-        steps.forEach((step, i) => {
-          setTimeout(() => {
-            step.classList.add('settlement-active');
-            const connector = step.previousElementSibling;
-            if (connector && connector.classList.contains('settlement-connector')) {
-              connector.classList.add('settlement-connector-active');
-            }
-          }, i * 1200);
-        });
-        setTimeout(() => {
-          steps.forEach(s => s.classList.remove('settlement-active'));
-          document.querySelectorAll('.settlement-connector').forEach(c => c.classList.remove('settlement-connector-active'));
-          animateSettlement();
-        }, steps.length * 1200 + 2000);
-      }
-      setTimeout(animateSettlement, 500);
-
-      // Batch countdown timer
-      let batchSeconds = 32;
-      const timerEl = document.getElementById('batch-timer');
-      const timerCircle = document.getElementById('batch-timer-circle');
-      if (timerEl && timerCircle) {
-        const circumference = 2 * Math.PI * 20;
-        timerCircle.style.strokeDasharray = circumference;
-        setInterval(() => {
-          batchSeconds = batchSeconds <= 0 ? 60 : batchSeconds - 1;
-          const mins = String(Math.floor(batchSeconds / 60)).padStart(2, '0');
-          const secs = String(batchSeconds % 60).padStart(2, '0');
-          timerEl.textContent = mins + ':' + secs;
-          const progress = batchSeconds / 60;
-          timerCircle.style.strokeDashoffset = circumference * (1 - progress);
-          timerCircle.style.stroke = batchSeconds <= 10 ? '#f59e0b' : '#6C3CE9';
-        }, 1000);
-      }
-
-      // Typing animation for code panel
-      const codeLines = document.querySelectorAll('.code-type-line');
-      codeLines.forEach((line, i) => {
-        line.style.opacity = '0';
-        line.style.transform = 'translateY(8px)';
-        setTimeout(() => {
-          line.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-          line.style.opacity = '1';
-          line.style.transform = 'translateY(0)';
-        }, 600 + i * 300);
-      });
-    });
-  </script>
-  <style>
-    .settlement-step { opacity: 0.4; transform: scale(0.97); transition: all 0.5s ease; }
-    .settlement-step.settlement-active { opacity: 1; transform: scale(1); box-shadow: 0 0 20px rgba(108,60,233,0.3); }
-    .settlement-connector { background: linear-gradient(90deg, transparent, rgba(108,60,233,0.1)); transition: all 0.5s ease; }
-    .settlement-connector-active { background: linear-gradient(90deg, rgba(108,60,233,0.4), rgba(157,111,255,0.4)); box-shadow: 0 0 8px rgba(108,60,233,0.3); }
-    @keyframes encrypt-pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
-    .encrypt-anim { animation: encrypt-pulse 2s ease-in-out infinite; }
-    @keyframes hash-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-    .hash-scroll { animation: hash-scroll 8s linear infinite; }
-    @keyframes order-match-flash { 0%, 100% { background-color: rgba(108,60,233,0.05); } 50% { background-color: rgba(108,60,233,0.15); } }
-    .order-match-anim { animation: order-match-flash 3s ease-in-out infinite; }
-  </style>
-</aside>
-
-    <!-- Right Content (Scrollable) -->
-    <div class="md:w-2/3 lg:w-3/4 space-y-24">
-
-      <!-- ============ PANEL 1: ENCRYPTED ORDERS ============ -->
-      <div class="overflow-hidden group w-full rounded-2xl relative shadow-2xl" style="background: rgba(255,255,255,0.06); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 8px 32px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(255,255,255,0.06), inset 0 0 18px 9px rgba(255,255,255,0.03);" data-scroll-section>
-        <div class="blur-[100px] pointer-events-none w-[60%] h-[400px] rounded-full absolute top-[-20%] left-[20%] bg-violet-500/10"></div>
-        
-        <!-- Toolbar -->
-        <div class="border-white/[0.08] flex h-12 border-b border-white/[0.1] px-4 items-center justify-between bg-white/[0.04] backdrop-blur-xl relative z-20">
-          <div class="flex items-center gap-4">
-            <div class="flex gap-1.5">
-              <div class="w-2.5 h-2.5 rounded-full bg-[#FF5F57]"></div>
-              <div class="w-2.5 h-2.5 rounded-full bg-[#FEBC2E]"></div>
-              <div class="w-2.5 h-2.5 rounded-full bg-[#28C840]"></div>
-            </div>
-            <div class="h-4 w-[1px] bg-white/[0.08]"></div>
-            <span class="text-[10px] text-white/30 uppercase tracking-[0.15em] font-['JetBrains_Mono']">Order Terminal</span>
-          </div>
-          <div class="hidden md:flex items-center gap-2 bg-[#0B0C0E] border border-white/[0.06] rounded-md px-3 py-1">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-violet-500"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            <span class="text-[12px] text-white/80 font-medium">Encrypted Order</span>
-          </div>
-          <div class="flex items-center gap-2">
-            <span class="text-[11px] text-emerald-400 font-mono flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>Connected</span>
-          </div>
-        </div>
-
-        <!-- Order Form Mockup -->
-        <div class="p-6 md:p-10 bg-gradient-to-br from-[#0B0C0E] to-[#0E0F11] min-h-[500px] md:min-h-[600px] relative">
-          <div class="absolute inset-0 opacity-[0.04]" style="background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 24px 24px;"></div>
-          
-          <div class="relative z-10 max-w-md mx-auto space-y-6">
-            <!-- Buy/Sell Toggle -->
-            <div class="flex gap-2 p-1 bg-white/[0.03] border border-white/[0.06] rounded-lg">
-              <div class="flex-1 py-2.5 text-center text-sm font-medium rounded-md bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 shadow-[0_0_12px_rgba(34,197,94,0.2)]">BUY</div>
-              <div class="flex-1 py-2.5 text-center text-sm font-medium rounded-md text-white/30 hover:text-white/50 transition-colors cursor-pointer">SELL</div>
-            </div>
-
-            <!-- GPU Type -->
-            <div class="space-y-2">
-              <span class="text-[10px] text-white/40 uppercase tracking-[0.2em] font-['JetBrains_Mono']">GPU Type</span>
-              <div class="flex items-center justify-between p-3 bg-white/[0.03] border border-white/[0.06] rounded-lg hover:border-white/10 transition-colors">
-                <div class="flex items-center gap-3">
-                  <div class="w-8 h-8 rounded-md bg-violet-500/20 border border-violet-500/30 flex items-center justify-center">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-violet-400"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/></svg>
-                  </div>
-                  <div>
-                    <div class="text-sm text-white font-medium">NVIDIA H100 80GB</div>
-                    <div class="text-[10px] text-white/30 font-mono">SXM5 · 700W TDP · 3.35 TB/s</div>
-                  </div>
-                </div>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-white/30"><path d="m6 9 6 6 6-6"/></svg>
-              </div>
-            </div>
-
-            <!-- Quantity -->
-            <div class="space-y-3">
-              <div class="flex justify-between items-center">
-                <span class="text-[10px] text-white/40 uppercase tracking-[0.2em] font-['JetBrains_Mono']">Quantity (GPU-Hours)</span>
-                <span class="text-sm text-white font-mono font-medium">24</span>
-              </div>
-              <div class="h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
-                <div class="h-full w-[60%] bg-gradient-to-r from-violet-600 to-purple-500 rounded-full shadow-[0_0_8px_rgba(108,60,233,0.5)]"></div>
-              </div>
-              <div class="flex gap-2">
-                <div class="px-3 py-1 text-[10px] font-mono text-white/40 bg-white/[0.03] border border-white/[0.06] rounded cursor-pointer hover:border-white/10">8h</div>
-                <div class="px-3 py-1 text-[10px] font-mono text-violet-400 bg-violet-500/10 border border-violet-500/30 rounded cursor-pointer">24h</div>
-                <div class="px-3 py-1 text-[10px] font-mono text-white/40 bg-white/[0.03] border border-white/[0.06] rounded cursor-pointer hover:border-white/10">48h</div>
-                <div class="px-3 py-1 text-[10px] font-mono text-white/40 bg-white/[0.03] border border-white/[0.06] rounded cursor-pointer hover:border-white/10">168h</div>
-              </div>
-            </div>
-
-            <!-- Price -->
-            <div class="space-y-2">
-              <span class="text-[10px] text-white/40 uppercase tracking-[0.2em] font-['JetBrains_Mono']">Max Price (USDC/GPU-hr)</span>
-              <div class="flex items-center gap-3 p-3 bg-white/[0.03] border border-white/[0.06] rounded-lg">
-                <span class="text-lg text-white font-mono font-medium">$0.25</span>
-                <span class="text-[10px] text-emerald-400 font-mono ml-auto">70% below AWS</span>
-              </div>
-            </div>
-
-            <!-- Estimate -->
-            <div class="flex justify-between items-center p-3 bg-white/[0.02] border border-white/[0.04] rounded-lg">
-              <span class="text-xs text-white/40">Estimated Total</span>
-              <span class="text-lg text-white font-mono font-semibold">$6.00 <span class="text-xs text-white/30">USDC</span></span>
-            </div>
-
-            <!-- Commit Hash Preview -->
-            <div class="p-3 bg-[#0B0C0E] border border-white/[0.06] rounded-lg space-y-2">
-              <div class="flex items-center gap-2">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-violet-400"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                <span class="text-[10px] text-white/40 uppercase tracking-[0.15em] font-['JetBrains_Mono'] encrypt-anim">Encrypting order...</span>
-              </div>
-              <div class="overflow-hidden">
-                <div class="font-mono text-[10px] text-violet-400/60 whitespace-nowrap hash-scroll">
-                  0x7a3b9c2e1f4d8a6b0e5c3f7d9a1b4e8f2c6d0a3b7e5f9c1d4a8b2e6f0c3d7a · keccak256(order_data || nonce) · commit_hash: 0x9f2e...8c4a
-                </div>
-              </div>
-            </div>
-
-            <!-- Submit Button -->
-            <button class="w-full py-3.5 bg-gradient-to-r from-[#6C3CE9] to-[#9D6FFF] text-white text-sm rounded-lg font-medium shadow-[0_0_25px_rgba(108,60,233,0.4)] hover:shadow-[0_0_35px_rgba(108,60,233,0.6)] transition-all flex items-center justify-center gap-2">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-              Submit Encrypted Order
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- ============ PANEL 2: BATCH AUCTIONS ============ -->
-      <div class="overflow-hidden group w-full rounded-2xl relative shadow-2xl" style="background: rgba(255,255,255,0.06); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 8px 32px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(255,255,255,0.06), inset 0 0 18px 9px rgba(255,255,255,0.03);" data-scroll-section>
-        <div class="blur-[100px] pointer-events-none w-[50%] h-[300px] rounded-full absolute top-[-10%] right-[10%] bg-blue-500/8"></div>
-
-        <!-- Toolbar -->
-        <div class="border-white/[0.08] flex h-12 border-b border-white/[0.1] px-4 items-center justify-between bg-white/[0.04] backdrop-blur-xl relative z-20">
-          <div class="flex items-center gap-4">
-            <div class="flex gap-1.5">
-              <div class="w-2.5 h-2.5 rounded-full bg-[#FF5F57]"></div>
-              <div class="w-2.5 h-2.5 rounded-full bg-[#FEBC2E]"></div>
-              <div class="w-2.5 h-2.5 rounded-full bg-[#28C840]"></div>
-            </div>
-            <div class="h-4 w-[1px] bg-white/[0.08]"></div>
-            <span class="text-[10px] text-white/30 uppercase tracking-[0.15em] font-['JetBrains_Mono']">Matching Engine</span>
-          </div>
-          <div class="hidden md:flex items-center gap-2 bg-[#0B0C0E] border border-white/[0.06] rounded-md px-3 py-1">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span class="text-[12px] text-white/80 font-medium">Batch #4,521</span>
-          </div>
-          <div class="flex items-center gap-2">
-            <span class="text-[11px] text-white/40 font-mono">LIVE</span>
-            <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
-          </div>
-        </div>
-
-        <div class="p-6 md:p-10 bg-gradient-to-br from-[#0B0C0E] to-[#0E0F11] min-h-[500px] md:min-h-[600px] relative">
-          <div class="absolute inset-0 opacity-[0.04]" style="background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 24px 24px;"></div>
-
-          <div class="relative z-10 space-y-8">
-            <!-- Stats Row -->
-            <div class="grid grid-cols-3 gap-4">
-              <div class="p-4 bg-white/[0.03] border border-white/[0.06] rounded-xl">
-                <div class="text-[10px] text-white/40 uppercase tracking-[0.15em] font-['JetBrains_Mono'] mb-2">Orders Matched</div>
-                <div class="text-2xl text-white font-mono font-semibold">23</div>
-                <div class="text-[10px] text-emerald-400 font-mono mt-1">+5 this batch</div>
-              </div>
-              <div class="p-4 bg-white/[0.03] border border-white/[0.06] rounded-xl">
-                <div class="text-[10px] text-white/40 uppercase tracking-[0.15em] font-['JetBrains_Mono'] mb-2">GPU-Hours</div>
-                <div class="text-2xl text-white font-mono font-semibold">340</div>
-                <div class="text-[10px] text-violet-400 font-mono mt-1">H100 · A100</div>
-              </div>
-              <div class="p-4 bg-white/[0.03] border border-white/[0.06] rounded-xl relative overflow-hidden">
-                <div class="text-[10px] text-white/40 uppercase tracking-[0.15em] font-['JetBrains_Mono'] mb-2">Clearing Price</div>
-                <div class="text-2xl text-emerald-400 font-mono font-semibold">$0.21</div>
-                <div class="text-[10px] text-white/30 font-mono mt-1">USDC/GPU-hr</div>
-              </div>
-            </div>
-
-            <!-- Depth Chart -->
-            <div class="space-y-3">
-              <div class="flex justify-between items-center">
-                <span class="text-[10px] text-white/40 uppercase tracking-[0.2em] font-['JetBrains_Mono']">Market Depth</span>
-                <span class="text-[10px] text-white/30 font-mono">Bids vs Asks</span>
-              </div>
-              
-              <div class="space-y-2">
-                <!-- Asks (Red - Sell) -->
-                <div class="space-y-1">
-                  <div class="flex items-center gap-3">
-                    <span class="text-[10px] text-white/30 font-mono w-12">$0.28</span>
-                    <div class="flex-1 h-5 bg-white/[0.02] rounded overflow-hidden relative"><div class="depth-bar h-full bg-red-500/20 border-r border-red-500/40 rounded" style="width: 35%" data-width="35"></div></div>
-                    <span class="text-[10px] text-red-400/60 font-mono w-10 text-right">12 hr</span>
-                  </div>
-                  <div class="flex items-center gap-3">
-                    <span class="text-[10px] text-white/30 font-mono w-12">$0.25</span>
-                    <div class="flex-1 h-5 bg-white/[0.02] rounded overflow-hidden relative"><div class="depth-bar h-full bg-red-500/20 border-r border-red-500/40 rounded" style="width: 55%" data-width="55"></div></div>
-                    <span class="text-[10px] text-red-400/60 font-mono w-10 text-right">28 hr</span>
-                  </div>
-                  <div class="flex items-center gap-3">
-                    <span class="text-[10px] text-white/30 font-mono w-12">$0.23</span>
-                    <div class="flex-1 h-5 bg-white/[0.02] rounded overflow-hidden relative"><div class="depth-bar h-full bg-red-500/20 border-r border-red-500/40 rounded" style="width: 72%" data-width="72"></div></div>
-                    <span class="text-[10px] text-red-400/60 font-mono w-10 text-right">45 hr</span>
-                  </div>
-                </div>
-                <!-- Clearing Price Line -->
-                <div class="flex items-center gap-2 py-1">
-                  <div class="flex-1 h-px bg-gradient-to-r from-transparent via-emerald-500/60 to-transparent"></div>
-                  <span class="text-[10px] text-emerald-400 font-mono font-medium px-2 py-0.5 bg-emerald-500/10 border border-emerald-500/20 rounded">$0.21 clearing</span>
-                  <div class="flex-1 h-px bg-gradient-to-r from-transparent via-emerald-500/60 to-transparent"></div>
-                </div>
-                <!-- Bids (Green - Buy) -->
-                <div class="space-y-1">
-                  <div class="flex items-center gap-3">
-                    <span class="text-[10px] text-white/30 font-mono w-12">$0.21</span>
-                    <div class="flex-1 h-5 bg-white/[0.02] rounded overflow-hidden relative"><div class="depth-bar h-full bg-emerald-500/20 border-r border-emerald-500/40 rounded" style="width: 80%" data-width="80"></div></div>
-                    <span class="text-[10px] text-emerald-400/60 font-mono w-10 text-right">62 hr</span>
-                  </div>
-                  <div class="flex items-center gap-3">
-                    <span class="text-[10px] text-white/30 font-mono w-12">$0.19</span>
-                    <div class="flex-1 h-5 bg-white/[0.02] rounded overflow-hidden relative"><div class="depth-bar h-full bg-emerald-500/20 border-r border-emerald-500/40 rounded" style="width: 60%" data-width="60"></div></div>
-                    <span class="text-[10px] text-emerald-400/60 font-mono w-10 text-right">38 hr</span>
-                  </div>
-                  <div class="flex items-center gap-3">
-                    <span class="text-[10px] text-white/30 font-mono w-12">$0.17</span>
-                    <div class="flex-1 h-5 bg-white/[0.02] rounded overflow-hidden relative"><div class="depth-bar h-full bg-emerald-500/20 border-r border-emerald-500/40 rounded" style="width: 40%" data-width="40"></div></div>
-                    <span class="text-[10px] text-emerald-400/60 font-mono w-10 text-right">18 hr</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Batch Timer + Order Queue -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <!-- Timer -->
-              <div class="p-5 bg-white/[0.03] border border-white/[0.06] rounded-xl flex items-center gap-4">
-                <div class="relative shrink-0">
-                  <svg width="52" height="52" class="-rotate-90">
-                    <circle cx="26" cy="26" r="20" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="3"/>
-                    <circle id="batch-timer-circle" cx="26" cy="26" r="20" fill="none" stroke="#6C3CE9" stroke-width="3" stroke-linecap="round" style="stroke-dasharray: 125.66; stroke-dashoffset: 58; transition: all 0.5s ease;"/>
-                  </svg>
-                  <svg class="absolute inset-0 m-auto w-4 h-4 text-violet-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                </div>
-                <div>
-                  <div class="text-[10px] text-white/40 uppercase tracking-[0.2em] font-['JetBrains_Mono']">Next batch in</div>
-                  <div id="batch-timer" class="font-mono text-2xl font-semibold text-white">00:32</div>
-                </div>
-              </div>
-
-              <!-- Order Queue -->
-              <div class="p-4 bg-white/[0.03] border border-white/[0.06] rounded-xl space-y-2">
-                <div class="text-[10px] text-white/40 uppercase tracking-[0.15em] font-['JetBrains_Mono'] mb-3">Queued Orders</div>
-                <div class="flex items-center justify-between py-1.5 px-2 rounded order-match-anim">
-                  <div class="flex items-center gap-2">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                    <span class="text-[11px] text-white/60 font-mono">0x7a3b...f82c</span>
-                  </div>
-                  <span class="text-[10px] text-emerald-400 font-mono">BUY 8h</span>
-                </div>
-                <div class="flex items-center justify-between py-1.5 px-2 rounded">
-                  <div class="flex items-center gap-2">
-                    <span class="w-1.5 h-1.5 rounded-full bg-red-400"></span>
-                    <span class="text-[11px] text-white/60 font-mono">0x9f2e...8c4a</span>
-                  </div>
-                  <span class="text-[10px] text-red-400 font-mono">SELL 24h</span>
-                </div>
-                <div class="flex items-center justify-between py-1.5 px-2 rounded">
-                  <div class="flex items-center gap-2">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                    <span class="text-[11px] text-white/60 font-mono">0x4d1c...a7e3</span>
-                  </div>
-                  <span class="text-[10px] text-emerald-400 font-mono">BUY 48h</span>
-                </div>
-                <div class="flex items-center justify-between py-1.5 px-2 rounded">
-                  <div class="flex items-center gap-2">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                    <span class="text-[11px] text-white/60 font-mono">0x2b8f...d5c1</span>
-                  </div>
-                  <span class="text-[10px] text-emerald-400 font-mono">BUY 16h</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ============ PANEL 3: INSTANT SETTLEMENT ============ -->
-      <div class="overflow-hidden group w-full rounded-2xl relative shadow-2xl" style="background: rgba(255,255,255,0.06); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 8px 32px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(255,255,255,0.06), inset 0 0 18px 9px rgba(255,255,255,0.03);" data-scroll-section>
-        <div class="blur-[100px] pointer-events-none w-[40%] h-[300px] rounded-full absolute bottom-[-10%] left-[30%] bg-emerald-500/8"></div>
-
-        <!-- Toolbar -->
-        <div class="border-white/[0.08] flex h-12 border-b border-white/[0.1] px-4 items-center justify-between bg-white/[0.04] backdrop-blur-xl relative z-20">
-          <div class="flex items-center gap-4">
-            <div class="flex gap-1.5">
-              <div class="w-2.5 h-2.5 rounded-full bg-[#FF5F57]"></div>
-              <div class="w-2.5 h-2.5 rounded-full bg-[#FEBC2E]"></div>
-              <div class="w-2.5 h-2.5 rounded-full bg-[#28C840]"></div>
-            </div>
-            <div class="h-4 w-[1px] bg-white/[0.08]"></div>
-            <span class="text-[10px] text-white/30 uppercase tracking-[0.15em] font-['JetBrains_Mono']">Settlement Pipeline</span>
-          </div>
-          <div class="hidden md:flex items-center gap-2">
-            <span class="text-[11px] text-white/40 font-mono">Base L2</span>
-            <div class="w-4 h-4 rounded-full bg-blue-500/20 border border-blue-500/30 flex items-center justify-center">
-              <div class="w-1.5 h-1.5 rounded-full bg-blue-400"></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="p-6 md:p-10 bg-gradient-to-br from-[#0B0C0E] to-[#0E0F11] min-h-[500px] md:min-h-[600px] relative">
-          <div class="absolute inset-0 opacity-[0.04]" style="background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 24px 24px;"></div>
-
-          <div class="relative z-10 space-y-10">
-            <!-- Settlement Flow Pipeline -->
-            <div class="flex flex-col md:flex-row items-stretch gap-0 md:gap-0">
-              <!-- Step 1 -->
-              <div class="settlement-step flex-1 p-5 bg-white/[0.03] border border-white/[0.06] rounded-xl md:rounded-r-none">
-                <div class="w-10 h-10 rounded-lg bg-violet-500/20 border border-violet-500/30 flex items-center justify-center mb-3">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-violet-400"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                </div>
-                <div class="text-xs text-white font-medium mb-1">Order Matched</div>
-                <div class="text-[10px] text-white/30">Clearing price found at $0.21/GPU-hr</div>
-              </div>
-              <!-- Connector -->
-              <div class="settlement-connector hidden md:flex w-8 items-center justify-center self-center">
-                <div class="w-full h-px bg-white/10"></div>
-              </div>
-              <div class="settlement-connector md:hidden h-6 flex items-center justify-center">
-                <div class="h-full w-px bg-white/10"></div>
-              </div>
-              <!-- Step 2 -->
-              <div class="settlement-step flex-1 p-5 bg-white/[0.03] border border-white/[0.06] rounded-xl md:rounded-none">
-                <div class="w-10 h-10 rounded-lg bg-violet-500/20 border border-violet-500/30 flex items-center justify-center mb-3">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-violet-400"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                </div>
-                <div class="text-xs text-white font-medium mb-1">ZK Proof Generated</div>
-                <div class="text-[10px] text-white/30">Fair execution verified without revealing bids</div>
-              </div>
-              <!-- Connector -->
-              <div class="settlement-connector hidden md:flex w-8 items-center justify-center self-center">
-                <div class="w-full h-px bg-white/10"></div>
-              </div>
-              <div class="settlement-connector md:hidden h-6 flex items-center justify-center">
-                <div class="h-full w-px bg-white/10"></div>
-              </div>
-              <!-- Step 3 -->
-              <div class="settlement-step flex-1 p-5 bg-white/[0.03] border border-white/[0.06] rounded-xl md:rounded-none">
-                <div class="w-10 h-10 rounded-lg bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center mb-3">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-emerald-400"><polyline points="20 6 9 17 4 12"/></svg>
-                </div>
-                <div class="text-xs text-white font-medium mb-1">On-Chain Settlement</div>
-                <div class="text-[10px] text-white/30">USDC released from escrow on Base</div>
-              </div>
-              <!-- Connector -->
-              <div class="settlement-connector hidden md:flex w-8 items-center justify-center self-center">
-                <div class="w-full h-px bg-white/10"></div>
-              </div>
-              <div class="settlement-connector md:hidden h-6 flex items-center justify-center">
-                <div class="h-full w-px bg-white/10"></div>
-              </div>
-              <!-- Step 4 -->
-              <div class="settlement-step flex-1 p-5 bg-white/[0.03] border border-white/[0.06] rounded-xl md:rounded-l-none">
-                <div class="w-10 h-10 rounded-lg bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center mb-3">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-emerald-400"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/></svg>
-                </div>
-                <div class="text-xs text-white font-medium mb-1">GPU Access Granted</div>
-                <div class="text-[10px] text-white/30">SSH/API credentials delivered instantly</div>
-              </div>
-            </div>
-
-            <!-- Stats -->
-            <div class="grid grid-cols-3 gap-4">
-              <div class="p-4 bg-white/[0.03] border border-white/[0.06] rounded-xl text-center">
-                <div class="text-xl text-white font-mono font-semibold">$0.01</div>
-                <div class="text-[10px] text-white/30 mt-1">Gas Cost</div>
-              </div>
-              <div class="p-4 bg-white/[0.03] border border-white/[0.06] rounded-xl text-center">
-                <div class="text-xl text-white font-mono font-semibold">2 sec</div>
-                <div class="text-[10px] text-white/30 mt-1">Finality</div>
-              </div>
-              <div class="p-4 bg-white/[0.03] border border-white/[0.06] rounded-xl text-center">
-                <div class="text-xl text-violet-400 font-mono font-semibold">Base L2</div>
-                <div class="text-[10px] text-white/30 mt-1">Network</div>
-              </div>
-            </div>
-
-            <!-- Transaction Receipt -->
-            <div class="p-5 bg-[#0B0C0E] border border-white/[0.06] rounded-xl font-mono text-[11px] space-y-2">
-              <div class="flex items-center gap-2 mb-3">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-emerald-400"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
-                <span class="text-white/60 uppercase tracking-[0.15em] text-[10px]">Settlement Receipt</span>
-              </div>
-              <div class="flex justify-between"><span class="text-white/30">Tx Hash</span><span class="text-violet-400">0x8f4a2b...e7c9d1</span></div>
-              <div class="flex justify-between"><span class="text-white/30">Block</span><span class="text-white/70">18,442,891</span></div>
-              <div class="flex justify-between"><span class="text-white/30">Amount</span><span class="text-emerald-400">6.00 USDC</span></div>
-              <div class="flex justify-between"><span class="text-white/30">GPU</span><span class="text-white/70">H100 × 24hr</span></div>
-              <div class="flex justify-between"><span class="text-white/30">Status</span><span class="text-emerald-400 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>Confirmed</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ============ PANEL 4: AGENT-NATIVE API ============ -->
-      <div class="overflow-hidden group w-full rounded-2xl relative shadow-2xl" style="background: rgba(255,255,255,0.06); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 8px 32px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(255,255,255,0.06), inset 0 0 18px 9px rgba(255,255,255,0.03);" data-scroll-section>
-        <div class="blur-[100px] pointer-events-none w-[50%] h-[300px] rounded-full absolute top-[-15%] left-[25%] bg-purple-500/8"></div>
-
-        <!-- Toolbar -->
-        <div class="border-white/[0.08] flex h-12 border-b border-white/[0.1] px-4 items-center justify-between bg-white/[0.04] backdrop-blur-xl relative z-20">
-          <div class="flex items-center gap-4">
-            <div class="flex gap-1.5">
-              <div class="w-2.5 h-2.5 rounded-full bg-[#FF5F57]"></div>
-              <div class="w-2.5 h-2.5 rounded-full bg-[#FEBC2E]"></div>
-              <div class="w-2.5 h-2.5 rounded-full bg-[#28C840]"></div>
-            </div>
-            <div class="h-4 w-[1px] bg-white/[0.08]"></div>
-            <span class="text-[10px] text-white/30 uppercase tracking-[0.15em] font-['JetBrains_Mono']">SDK Terminal</span>
-          </div>
-          <div class="hidden md:flex items-center gap-2 bg-[#0B0C0E] border border-white/[0.06] rounded-md px-3 py-1">
-            <span class="text-[12px] text-white/80 font-medium">example.ts</span>
-          </div>
-          <div class="flex items-center gap-2">
-            <span class="text-[11px] text-violet-400 font-mono">TypeScript</span>
-          </div>
-        </div>
-
-        <div class="p-6 md:p-10 bg-gradient-to-br from-[#0B0C0E] to-[#0E0F11] min-h-[500px] md:min-h-[600px] relative">
-          <div class="absolute inset-0 opacity-[0.04]" style="background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 24px 24px;"></div>
-
-          <div class="relative z-10 space-y-8">
-            <!-- Code Editor -->
-            <div class="p-6 bg-[#0B0C0E] border border-white/[0.06] rounded-xl font-mono text-[12px] leading-relaxed overflow-x-auto">
-              <div class="space-y-1">
-                <div class="code-type-line"><span class="text-violet-400">import</span> <span class="text-white/80">{ DarkPoolClient }</span> <span class="text-violet-400">from</span> <span class="text-emerald-400">'@agentic-darkpool/sdk'</span><span class="text-white/30">;</span></div>
-                <div class="code-type-line text-white/20">&nbsp;</div>
-                <div class="code-type-line"><span class="text-violet-400">const</span> <span class="text-white/80">client</span> <span class="text-white/40">=</span> <span class="text-violet-400">new</span> <span class="text-yellow-300">DarkPoolClient</span><span class="text-white/40">({</span></div>
-                <div class="code-type-line"><span class="text-white/40">&nbsp;&nbsp;</span><span class="text-white/60">apiKey</span><span class="text-white/40">:</span> <span class="text-emerald-400">process.env.DARKPOOL_KEY</span><span class="text-white/40">,</span></div>
-                <div class="code-type-line"><span class="text-white/40">&nbsp;&nbsp;</span><span class="text-white/60">network</span><span class="text-white/40">:</span> <span class="text-emerald-400">'base'</span></div>
-                <div class="code-type-line"><span class="text-white/40">});</span></div>
-                <div class="code-type-line text-white/20">&nbsp;</div>
-                <div class="code-type-line"><span class="text-white/30">// Submit encrypted buy order</span></div>
-                <div class="code-type-line"><span class="text-violet-400">const</span> <span class="text-white/80">order</span> <span class="text-white/40">=</span> <span class="text-violet-400">await</span> <span class="text-white/80">client</span><span class="text-white/40">.</span><span class="text-yellow-300">submitOrder</span><span class="text-white/40">({</span></div>
-                <div class="code-type-line"><span class="text-white/40">&nbsp;&nbsp;</span><span class="text-white/60">side</span><span class="text-white/40">:</span> <span class="text-emerald-400">'buy'</span><span class="text-white/40">,</span></div>
-                <div class="code-type-line"><span class="text-white/40">&nbsp;&nbsp;</span><span class="text-white/60">gpuType</span><span class="text-white/40">:</span> <span class="text-emerald-400">'H100'</span><span class="text-white/40">,</span></div>
-                <div class="code-type-line"><span class="text-white/40">&nbsp;&nbsp;</span><span class="text-white/60">quantity</span><span class="text-white/40">:</span> <span class="text-orange-300">24</span><span class="text-white/40">,</span></div>
-                <div class="code-type-line"><span class="text-white/40">&nbsp;&nbsp;</span><span class="text-white/60">maxPrice</span><span class="text-white/40">:</span> <span class="text-orange-300">0.25</span></div>
-                <div class="code-type-line"><span class="text-white/40">});</span></div>
-                <div class="code-type-line text-white/20">&nbsp;</div>
-                <div class="code-type-line"><span class="text-white/80">console</span><span class="text-white/40">.</span><span class="text-yellow-300">log</span><span class="text-white/40">(</span><span class="text-white/80">order</span><span class="text-white/40">.</span><span class="text-white/60">commitHash</span><span class="text-white/40">);</span></div>
-              </div>
-            </div>
-
-            <!-- Framework Pills -->
-            <div class="space-y-3">
-              <span class="text-[10px] text-white/40 uppercase tracking-[0.2em] font-['JetBrains_Mono']">Supported Frameworks</span>
-              <div class="flex flex-wrap gap-2">
-                <span class="px-3 py-1.5 text-xs font-medium text-white/70 bg-white/[0.04] border border-white/[0.08] rounded-full hover:border-violet-500/30 hover:text-violet-400 transition-all cursor-pointer">LangChain</span>
-                <span class="px-3 py-1.5 text-xs font-medium text-white/70 bg-white/[0.04] border border-white/[0.08] rounded-full hover:border-violet-500/30 hover:text-violet-400 transition-all cursor-pointer">AutoGPT</span>
-                <span class="px-3 py-1.5 text-xs font-medium text-white/70 bg-white/[0.04] border border-white/[0.08] rounded-full hover:border-violet-500/30 hover:text-violet-400 transition-all cursor-pointer">CrewAI</span>
-                <span class="px-3 py-1.5 text-xs font-medium text-violet-400 bg-violet-500/10 border border-violet-500/30 rounded-full shadow-[0_0_8px_rgba(108,60,233,0.2)]">x402 Protocol</span>
-                <span class="px-3 py-1.5 text-xs font-medium text-white/70 bg-white/[0.04] border border-white/[0.08] rounded-full hover:border-violet-500/30 hover:text-violet-400 transition-all cursor-pointer">REST API</span>
-                <span class="px-3 py-1.5 text-xs font-medium text-white/70 bg-white/[0.04] border border-white/[0.08] rounded-full hover:border-violet-500/30 hover:text-violet-400 transition-all cursor-pointer">WebSocket</span>
-              </div>
-            </div>
-
-            <!-- API Response Preview -->
-            <div class="p-5 bg-[#0B0C0E] border border-white/[0.06] rounded-xl space-y-3">
-              <div class="flex items-center gap-2">
-                <span class="text-[10px] text-emerald-400 font-mono px-1.5 py-0.5 bg-emerald-500/10 border border-emerald-500/20 rounded">200 OK</span>
-                <span class="text-[10px] text-white/30 font-mono">Response · 12ms</span>
-              </div>
-              <pre class="font-mono text-[11px] text-white/60 leading-relaxed"><span class="text-white/30">{</span>
-  <span class="text-violet-400">"orderId"</span>: <span class="text-emerald-400">"#4521"</span>,
-  <span class="text-violet-400">"status"</span>: <span class="text-emerald-400">"encrypted"</span>,
-  <span class="text-violet-400">"commitHash"</span>: <span class="text-emerald-400">"0x7a3b...f82c"</span>,
-  <span class="text-violet-400">"batchETA"</span>: <span class="text-orange-300">32</span>,
-  <span class="text-violet-400">"network"</span>: <span class="text-emerald-400">"base"</span>
-<span class="text-white/30">}</span></pre>
-            </div>
-
-            <!-- Stats Row -->
-            <div class="grid grid-cols-3 gap-4">
-              <div class="p-4 bg-white/[0.03] border border-white/[0.06] rounded-xl text-center">
-                <div class="text-xl text-white font-mono font-semibold">&lt;100ms</div>
-                <div class="text-[10px] text-white/30 mt-1">Latency</div>
-              </div>
-              <div class="p-4 bg-white/[0.03] border border-white/[0.06] rounded-xl text-center">
-                <div class="text-xl text-white font-mono font-semibold">99.9%</div>
-                <div class="text-[10px] text-white/30 mt-1">Uptime</div>
-              </div>
-              <div class="p-4 bg-white/[0.03] border border-white/[0.06] rounded-xl text-center">
-                <div class="text-xl text-violet-400 font-mono font-semibold">3 lines</div>
-                <div class="text-[10px] text-white/30 mt-1">To First Order</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
+    <!-- How It Works Table -->
+    <div class="mt-20">
       <!-- ============ HOW IT WORKS TABLE (standalone) ============ -->
       <div class="border-white/10 border-t pt-12">
         <div class="flex justify-between items-end mb-8">

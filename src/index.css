@@ -6,23 +6,23 @@
 
 @layer base {
   :root {
-    --background: 230 33% 8%;
+    --background: 228 45% 5%;
     --foreground: 0 0% 100%;
 
-    --card: 231 29% 12%;
+    --card: 230 30% 8%;
     --card-foreground: 0 0% 100%;
 
-    --popover: 231 29% 12%;
+    --popover: 230 30% 8%;
     --popover-foreground: 0 0% 100%;
 
     --primary: 258 78% 56%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 231 25% 16%;
+    --secondary: 230 25% 12%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 231 25% 16%;
-    --muted-foreground: 240 4% 66%;
+    --muted: 230 25% 12%;
+    --muted-foreground: 240 5% 65%;
 
     --accent: 258 78% 56%;
     --accent-foreground: 0 0% 100%;
@@ -37,18 +37,18 @@
     --warning-foreground: 0 0% 0%;
 
     --border: 240 4% 16%;
-    --input: 231 25% 16%;
+    --input: 230 25% 12%;
     --ring: 258 78% 56%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
-    --sidebar-background: 230 33% 8%;
+    --sidebar-background: 228 45% 4%;
     --sidebar-foreground: 0 0% 100%;
     --sidebar-primary: 258 78% 56%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 231 25% 16%;
+    --sidebar-accent: 230 25% 12%;
     --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 240 4% 16%;
+    --sidebar-border: 240 4% 12%;
     --sidebar-ring: 258 78% 56%;
   }
 }
@@ -62,10 +62,53 @@
     @apply bg-background text-foreground font-sans;
     font-family: 'Inter', sans-serif;
   }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: hsl(240 4% 20%);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(258 78% 56% / 0.5);
+  }
+
+  ::selection {
+    background: hsl(258 78% 56% / 0.3);
+    color: white;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 @layer utilities {
   .font-mono {
     font-family: 'JetBrains Mono', monospace;
+  }
+
+  .glass-surface {
+    @apply bg-[#0B0C0E]/80 backdrop-blur-xl border border-white/[0.06];
+  }
+
+  .gradient-border {
+    background: linear-gradient(135deg, rgba(108,60,233,0.3), transparent 50%, rgba(108,60,233,0.1));
+    padding: 1px;
+    border-radius: 1rem;
+  }
+
+  .gradient-border > * {
+    border-radius: calc(1rem - 1px);
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-white via-white/90 to-white/60;
   }
 }

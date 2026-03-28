@@ -3,6 +3,9 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { OrderStatusBadge } from "@/components/dashboard/OrderStatusBadge";
 import { Button } from "@/components/ui/button";
 import { ChevronDown, ChevronRight } from "lucide-react";
+import { GlassCard } from "@/components/ui/glass-card";
+import { SectionLabel } from "@/components/ui/section-label";
+import { motion, AnimatePresence } from "framer-motion";
 
 const orders = [
   { id: "#4521", side: "BUY", gpu: "H100", qty: "24 hrs", price: "$0.22", status: "FILLED" as const, submitted: "Mar 26, 2026 14:32:15 UTC", filled: "Mar 26, 2026 14:33:00 UTC (Batch #4521)", clearing: "$0.21/GPU-hr", total: "$5.04 USDC", tx: "0x7a3b...f82c", access: "ssh://compute-xyz123.darkpool.io" },
@@ -28,87 +31,121 @@ const Orders = () => {
   };
 
   return (
-    <div className="space-y-6 max-w-[1400px]">
+    <div className="space-y-8 max-w-[1400px]">
       <div>
-        <h1 className="text-xl font-semibold">Orders</h1>
-        <p className="text-sm text-muted-foreground">Manage and review all your orders</p>
+        <h1 className="text-2xl font-semibold text-gradient">Orders</h1>
+        <p className="text-sm text-white/40 mt-1">Manage and review all your orders</p>
       </div>
 
       <div className="flex gap-2 flex-wrap">
         {(["ALL", "ACTIVE", "FILLED", "CANCELLED", "EXPIRED"] as StatusFilter[]).map((s) => (
-          <Button
+          <button
             key={s}
-            variant={filter === s ? "default" : "outline"}
-            size="sm"
-            className="text-xs"
             onClick={() => setFilter(s)}
+            className={`relative px-4 py-2 text-[10px] font-mono tracking-wider uppercase rounded-xl border transition-all duration-300 ${
+              filter === s
+                ? "text-white border-primary/30 bg-primary/10 shadow-[0_0_15px_rgba(108,60,233,0.15)]"
+                : "text-white/40 border-white/[0.06] hover:border-white/10 hover:text-white/60 bg-white/[0.02]"
+            }`}
           >
             {s === "ALL" ? "All Orders" : s.charAt(0) + s.slice(1).toLowerCase()}
             {s !== "ALL" && ` (${counts[s as keyof typeof counts]})`}
-          </Button>
+          </button>
         ))}
       </div>
 
-      <div className="rounded-lg border border-border bg-card overflow-x-auto">
+      <GlassCard delay={0.1} corners className="overflow-hidden">
         <Table>
           <TableHeader>
-            <TableRow className="border-border hover:bg-transparent">
+            <TableRow className="border-white/[0.04] hover:bg-transparent">
               <TableHead className="w-8" />
-              <TableHead className="text-xs text-muted-foreground">Order ID</TableHead>
-              <TableHead className="text-xs text-muted-foreground">Type</TableHead>
-              <TableHead className="text-xs text-muted-foreground">GPU</TableHead>
-              <TableHead className="text-xs text-muted-foreground">Qty</TableHead>
-              <TableHead className="text-xs text-muted-foreground">Price</TableHead>
-              <TableHead className="text-xs text-muted-foreground">Status</TableHead>
-              <TableHead className="text-xs text-muted-foreground">Actions</TableHead>
+              <TableHead className="text-[10px] font-mono text-white/30 uppercase tracking-wider">Order ID</TableHead>
+              <TableHead className="text-[10px] font-mono text-white/30 uppercase tracking-wider">Type</TableHead>
+              <TableHead className="text-[10px] font-mono text-white/30 uppercase tracking-wider">GPU</TableHead>
+              <TableHead className="text-[10px] font-mono text-white/30 uppercase tracking-wider">Qty</TableHead>
+              <TableHead className="text-[10px] font-mono text-white/30 uppercase tracking-wider">Price</TableHead>
+              <TableHead className="text-[10px] font-mono text-white/30 uppercase tracking-wider">Status</TableHead>
+              <TableHead className="text-[10px] font-mono text-white/30 uppercase tracking-wider">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {filtered.map((order) => (
               <>
-                <TableRow key={order.id} className="border-border hover:bg-secondary/50 cursor-pointer" onClick={() => setExpandedId(expandedId === order.id ? null : order.id)}>
+                <TableRow
+                  key={order.id}
+                  className="border-white/[0.04] hover:bg-white/[0.02] cursor-pointer transition-colors duration-300"
+                  onClick={() => setExpandedId(expandedId === order.id ? null : order.id)}
+                >
                   <TableCell>
-                    {expandedId === order.id ? <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" /> : <ChevronRight className="h-3.5 w-3.5 text-muted-foreground" />}
+                    {expandedId === order.id
+                      ? <ChevronDown className="h-3.5 w-3.5 text-primary/60" />
+                      : <ChevronRight className="h-3.5 w-3.5 text-white/20" />
+                    }
                   </TableCell>
                   <TableCell className="font-mono text-sm text-primary">{order.id}</TableCell>
                   <TableCell>
-                    <span className={`text-xs font-semibold ${order.side === "BUY" ? "text-success" : "text-destructive"}`}>{order.side}</span>
+                    <span className={`text-xs font-bold tracking-wider ${order.side === "BUY" ? "text-success" : "text-destructive"}`}>{order.side}</span>
                   </TableCell>
-                  <TableCell className="text-sm">{order.gpu}</TableCell>
-                  <TableCell className="text-sm font-mono">{order.qty}</TableCell>
-                  <TableCell className="text-sm font-mono">{order.price}</TableCell>
+                  <TableCell className="text-sm text-white/70">{order.gpu}</TableCell>
+                  <TableCell className="font-mono text-sm text-white/70">{order.qty}</TableCell>
+                  <TableCell className="font-mono text-sm text-white/70">{order.price}</TableCell>
                   <TableCell><OrderStatusBadge status={order.status} /></TableCell>
                   <TableCell>
                     {order.status === "ACTIVE" && (
                       <div className="flex gap-1">
-                        <Button variant="outline" size="sm" className="text-xs h-7">Cancel</Button>
-                        <Button variant="outline" size="sm" className="text-xs h-7">Modify</Button>
+                        <Button variant="outline" size="sm" className="text-[10px] h-7 border-white/[0.06] bg-transparent hover:bg-white/[0.04] text-white/50">Cancel</Button>
+                        <Button variant="outline" size="sm" className="text-[10px] h-7 border-white/[0.06] bg-transparent hover:bg-white/[0.04] text-white/50">Modify</Button>
                       </div>
                     )}
                     {order.status === "FILLED" && (
-                      <Button variant="outline" size="sm" className="text-xs h-7">Details</Button>
+                      <Button variant="outline" size="sm" className="text-[10px] h-7 border-white/[0.06] bg-transparent hover:bg-white/[0.04] text-white/50">Details</Button>
                     )}
                   </TableCell>
                 </TableRow>
-                {expandedId === order.id && order.status === "FILLED" && (
-                  <TableRow key={`${order.id}-detail`} className="border-border bg-secondary/30">
-                    <TableCell colSpan={8}>
-                      <div className="p-3 space-y-1 text-xs text-muted-foreground">
-                        <p>Submitted: {order.submitted}</p>
-                        <p>Filled: {order.filled}</p>
-                        <p>Clearing Price: {order.clearing}</p>
-                        <p>Total Paid: {order.total}</p>
-                        <p>Transaction: <span className="font-mono text-primary">{order.tx}</span></p>
-                        {order.access && <p>Compute Access: <span className="font-mono text-primary">{order.access}</span></p>}
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                )}
+                <AnimatePresence>
+                  {expandedId === order.id && order.status === "FILLED" && (
+                    <TableRow key={`${order.id}-detail`} className="border-white/[0.04]">
+                      <TableCell colSpan={8} className="p-0">
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="overflow-hidden"
+                        >
+                          <div className="p-5 bg-primary/[0.02] border-l-2 border-l-primary/30 space-y-1.5">
+                            {[
+                              ["Submitted", order.submitted],
+                              ["Filled", order.filled],
+                              ["Clearing Price", order.clearing],
+                              ["Total Paid", order.total],
+                            ].map(([label, val]) => (
+                              <p key={label} className="flex gap-3 text-xs">
+                                <span className="text-white/30 w-28 shrink-0">{label}</span>
+                                <span className="font-mono text-white/60">{val}</span>
+                              </p>
+                            ))}
+                            <p className="flex gap-3 text-xs">
+                              <span className="text-white/30 w-28 shrink-0">Transaction</span>
+                              <span className="font-mono text-primary">{order.tx}</span>
+                            </p>
+                            {order.access && (
+                              <p className="flex gap-3 text-xs">
+                                <span className="text-white/30 w-28 shrink-0">Compute Access</span>
+                                <span className="font-mono text-primary">{order.access}</span>
+                              </p>
+                            )}
+                          </div>
+                        </motion.div>
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </AnimatePresence>
               </>
             ))}
           </TableBody>
         </Table>
-      </div>
+      </GlassCard>
     </div>
   );
 };

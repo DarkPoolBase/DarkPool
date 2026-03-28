@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
+import { GlassCard } from "@/components/ui/glass-card";
+import { SectionLabel } from "@/components/ui/section-label";
+import { AnimatedNumber } from "@/components/ui/animated-number";
+import { GlowBlob } from "@/components/ui/glow-blob";
+import { motion } from "framer-motion";
 
 const priceData = [
   { date: "Mar 20", price: 0.22 },
@@ -16,31 +20,55 @@ const priceData = [
 ];
 
 const utilizationData = [
-  { name: "H100", value: 78 },
-  { name: "A100", value: 52 },
-  { name: "RTX 4090", value: 41 },
-  { name: "RTX 3090", value: 33 },
+  { name: "H100", value: 78, color: "from-primary to-[hsl(258,78%,70%)]" },
+  { name: "A100", value: 52, color: "from-blue-500 to-blue-400" },
+  { name: "RTX 4090", value: 41, color: "from-emerald-500 to-emerald-400" },
+  { name: "RTX 3090", value: 33, color: "from-amber-500 to-amber-400" },
+];
+
+const stats = [
+  { label: "24h Volume", value: "12,450 GPU-hours ($2,487.50)" },
+  { label: "Active Providers", value: "387" },
+  { label: "Total GPUs Available", value: "1,240" },
+  { label: "Avg Clearing Price", value: "$0.19/GPU-hr" },
+  { label: "Price Range (24h)", value: "$0.15 - $0.28" },
+  { label: "Orders Matched", value: "892" },
 ];
 
 const Analytics = () => {
   const [timeframe, setTimeframe] = useState("1W");
 
   return (
-    <div className="space-y-6 max-w-[1400px]">
+    <div className="space-y-8 max-w-[1400px] relative">
+      <GlowBlob className="-top-20 right-0 opacity-30" color="purple" size="lg" />
+
       <div>
-        <h1 className="text-xl font-semibold">Analytics</h1>
-        <p className="text-sm text-muted-foreground">Market intelligence and price trends</p>
+        <h1 className="text-2xl font-semibold text-gradient">Analytics</h1>
+        <p className="text-sm text-white/40 mt-1">Market intelligence and price trends</p>
       </div>
 
       {/* Price Chart */}
-      <div className="rounded-lg border border-border bg-card p-5">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-sm font-medium">H100 Price History</h3>
-          <div className="flex gap-1">
+      <GlassCard delay={0.1} gradient className="p-6">
+        <div className="flex items-center justify-between mb-6">
+          <SectionLabel>H100 Price History</SectionLabel>
+          <div className="flex gap-1 p-1 rounded-lg bg-white/[0.02] border border-white/[0.06]">
             {["1D", "1W", "1M", "ALL"].map((tf) => (
-              <Button key={tf} variant={timeframe === tf ? "default" : "ghost"} size="sm" className="text-xs h-7 px-2.5" onClick={() => setTimeframe(tf)}>
-                {tf}
-              </Button>
+              <button
+                key={tf}
+                onClick={() => setTimeframe(tf)}
+                className={`relative px-3 py-1 text-[10px] font-mono tracking-wider rounded-md transition-all duration-300 ${
+                  timeframe === tf ? "text-white" : "text-white/40 hover:text-white/60"
+                }`}
+              >
+                {timeframe === tf && (
+                  <motion.div
+                    layoutId="timeframe"
+                    className="absolute inset-0 bg-primary/20 border border-primary/30 rounded-md"
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  />
+                )}
+                <span className="relative z-10">{tf}</span>
+              </button>
             ))}
           </div>
         </div>
@@ -53,54 +81,62 @@ const Analytics = () => {
                   <stop offset="100%" stopColor="hsl(258, 78%, 56%)" stopOpacity={0} />
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="hsl(240, 4%, 16%)" />
-              <XAxis dataKey="date" tick={{ fontSize: 11, fill: "hsl(240, 4%, 66%)" }} axisLine={false} tickLine={false} />
-              <YAxis tick={{ fontSize: 11, fill: "hsl(240, 4%, 66%)" }} axisLine={false} tickLine={false} domain={[0.1, 0.3]} tickFormatter={(v) => `$${v}`} />
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
+              <XAxis dataKey="date" tick={{ fontSize: 10, fill: "rgba(255,255,255,0.3)", fontFamily: "JetBrains Mono" }} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fontSize: 10, fill: "rgba(255,255,255,0.3)", fontFamily: "JetBrains Mono" }} axisLine={false} tickLine={false} domain={[0.1, 0.3]} tickFormatter={(v) => `$${v}`} />
               <Tooltip
-                contentStyle={{ background: "hsl(231, 29%, 12%)", border: "1px solid hsl(240, 4%, 16%)", borderRadius: 8, fontSize: 12 }}
-                labelStyle={{ color: "hsl(240, 4%, 66%)" }}
+                contentStyle={{
+                  background: "rgba(11,12,14,0.95)",
+                  border: "1px solid rgba(255,255,255,0.06)",
+                  borderRadius: 12,
+                  fontSize: 11,
+                  fontFamily: "JetBrains Mono",
+                  backdropFilter: "blur(12px)",
+                  boxShadow: "0 0 20px rgba(108,60,233,0.15)",
+                }}
+                labelStyle={{ color: "rgba(255,255,255,0.4)" }}
                 formatter={(value: number) => [`$${value}/hr`, "Price"]}
               />
               <Area type="monotone" dataKey="price" stroke="hsl(258, 78%, 56%)" strokeWidth={2} fill="url(#priceGradient)" />
             </AreaChart>
           </ResponsiveContainer>
         </div>
-      </div>
+      </GlassCard>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Market Stats */}
-        <div className="rounded-lg border border-border bg-card p-5 space-y-3">
-          <h3 className="text-sm font-medium">Market Statistics</h3>
-          <div className="space-y-2 text-sm">
-            {[
-              ["24h Volume", "12,450 GPU-hours ($2,487.50)"],
-              ["Active Providers", "387"],
-              ["Total GPUs Available", "1,240"],
-              ["Avg Clearing Price", "$0.19/GPU-hr"],
-              ["Price Range (24h)", "$0.15 - $0.28"],
-              ["Orders Matched", "892"],
-            ].map(([label, value]) => (
-              <div key={label} className="flex justify-between py-1.5 border-b border-border last:border-0">
-                <span className="text-muted-foreground">{label}</span>
-                <span className="font-mono">{value}</span>
+        <GlassCard delay={0.2} corners className="p-6 space-y-4">
+          <SectionLabel pulse>Market Statistics</SectionLabel>
+          <div className="space-y-1">
+            {stats.map(({ label, value }) => (
+              <div key={label} className="flex justify-between py-2.5 border-b border-white/[0.04] last:border-0 group hover:bg-white/[0.01] -mx-2 px-2 rounded-lg transition-colors">
+                <span className="text-xs text-white/40">{label}</span>
+                <span className="font-mono text-xs text-white/70">{value}</span>
               </div>
             ))}
           </div>
-        </div>
+        </GlassCard>
 
         {/* Utilization */}
-        <div className="rounded-lg border border-border bg-card p-5 space-y-4">
-          <h3 className="text-sm font-medium">GPU Utilization by Type</h3>
-          {utilizationData.map((gpu) => (
-            <div key={gpu.name} className="space-y-1.5">
-              <div className="flex justify-between text-sm">
-                <span>{gpu.name}</span>
-                <span className="font-mono text-muted-foreground">{gpu.value}%</span>
+        <GlassCard delay={0.3} corners className="p-6 space-y-5">
+          <SectionLabel>GPU Utilization by Type</SectionLabel>
+          {utilizationData.map((gpu, i) => (
+            <div key={gpu.name} className="space-y-2">
+              <div className="flex justify-between items-center">
+                <span className="text-xs text-white/60">{gpu.name}</span>
+                <AnimatedNumber value={gpu.value} suffix="%" className="font-mono text-xs text-white/40" />
               </div>
-              <Progress value={gpu.value} className="h-2" />
+              <div className="w-full h-2 rounded-full bg-white/[0.04] overflow-hidden">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${gpu.value}%` }}
+                  transition={{ duration: 1.2, delay: 0.4 + i * 0.15, ease: "easeOut" }}
+                  className={`h-full rounded-full bg-gradient-to-r ${gpu.color}`}
+                />
+              </div>
             </div>
           ))}
-        </div>
+        </GlassCard>
       </div>
     </div>
   );

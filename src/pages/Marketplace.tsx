@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { Lock, Timer } from "lucide-react";
+import { Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { AuctionTimer } from "@/components/dashboard/AuctionTimer";
-import { Progress } from "@/components/ui/progress";
+import { GlassCard } from "@/components/ui/glass-card";
+import { SectionLabel } from "@/components/ui/section-label";
+import { motion } from "framer-motion";
 
 const gpuTypes = [
   { id: "h100", name: "H100 NVIDIA 80GB", price: "$0.21", providers: 47, utilization: 72 },
@@ -23,137 +25,174 @@ const Marketplace = () => {
   const estTotal = (quantity[0] * parseFloat(price)).toFixed(2);
 
   return (
-    <div className="space-y-6 max-w-[1400px]">
+    <div className="space-y-8 max-w-[1400px]">
       <div>
-        <h1 className="text-xl font-semibold">Marketplace</h1>
-        <p className="text-sm text-muted-foreground">Place buy/sell orders and view market conditions</p>
+        <h1 className="text-2xl font-semibold text-gradient">Marketplace</h1>
+        <p className="text-sm text-white/40 mt-1">Place buy/sell orders and view market conditions</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Order Form */}
-        <div className="lg:col-span-4 rounded-lg border border-border bg-card p-5 space-y-5">
-          {/* Buy/Sell Toggle */}
-          <div className="flex rounded-md border border-border overflow-hidden">
-            <button
-              className={`flex-1 py-2 text-sm font-medium transition-colors ${
-                side === "buy" ? "bg-success/15 text-success" : "text-muted-foreground hover:text-foreground"
-              }`}
-              onClick={() => setSide("buy")}
-            >
-              BUY
-            </button>
-            <button
-              className={`flex-1 py-2 text-sm font-medium transition-colors ${
-                side === "sell" ? "bg-destructive/15 text-destructive" : "text-muted-foreground hover:text-foreground"
-              }`}
-              onClick={() => setSide("sell")}
-            >
-              SELL
-            </button>
-          </div>
-
-          <div className="space-y-1.5">
-            <label className="text-xs text-muted-foreground">GPU Type</label>
-            <Select value={selectedGpu} onValueChange={setSelectedGpu}>
-              <SelectTrigger><SelectValue /></SelectTrigger>
-              <SelectContent>
-                {gpuTypes.map((g) => (
-                  <SelectItem key={g.id} value={g.id}>{g.name}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="space-y-1.5">
-            <label className="text-xs text-muted-foreground">Quantity (GPU-hours): {quantity[0]}</label>
-            <Slider value={quantity} onValueChange={setQuantity} min={1} max={168} step={1} />
-            <div className="flex gap-1.5 mt-2">
-              {[24, 48, 72, 168].map((v) => (
-                <button
-                  key={v}
-                  onClick={() => setQuantity([v])}
-                  className="text-xs px-2 py-1 rounded border border-border hover:border-primary/50 text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  {v}hr
-                </button>
-              ))}
+        <div className="lg:col-span-4">
+          <GlassCard gradient delay={0.1} className="p-6 space-y-5">
+            {/* Buy/Sell Toggle */}
+            <div className="flex rounded-xl border border-white/[0.06] overflow-hidden bg-white/[0.02] relative">
+              <motion.div
+                className="absolute inset-y-0 w-1/2 rounded-xl"
+                animate={{ x: side === "sell" ? "100%" : "0%" }}
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                style={{
+                  background: side === "buy"
+                    ? "linear-gradient(135deg, rgba(34,197,94,0.15), rgba(34,197,94,0.05))"
+                    : "linear-gradient(135deg, rgba(239,68,68,0.15), rgba(239,68,68,0.05))",
+                }}
+              />
+              <button
+                className={`flex-1 py-2.5 text-sm font-bold tracking-wider relative z-10 transition-colors ${
+                  side === "buy" ? "text-success" : "text-white/40"
+                }`}
+                onClick={() => setSide("buy")}
+              >
+                BUY
+              </button>
+              <button
+                className={`flex-1 py-2.5 text-sm font-bold tracking-wider relative z-10 transition-colors ${
+                  side === "sell" ? "text-destructive" : "text-white/40"
+                }`}
+                onClick={() => setSide("sell")}
+              >
+                SELL
+              </button>
             </div>
-          </div>
 
-          <div className="space-y-1.5">
-            <label className="text-xs text-muted-foreground">
-              {side === "buy" ? "Max Price" : "Min Price"} (USDC / GPU-hour)
-            </label>
-            <Input
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-              className="font-mono"
-              type="number"
-              step="0.01"
-            />
-          </div>
+            <div className="space-y-1.5">
+              <SectionLabel>GPU Type</SectionLabel>
+              <Select value={selectedGpu} onValueChange={setSelectedGpu}>
+                <SelectTrigger className="border-white/[0.06] bg-white/[0.02] hover:border-white/[0.12] transition-colors">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {gpuTypes.map((g) => (
+                    <SelectItem key={g.id} value={g.id}>{g.name}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
 
-          <div className="flex items-center justify-between py-3 border-t border-border">
-            <span className="text-xs text-muted-foreground">Est. Total</span>
-            <span className="font-mono font-semibold">${estTotal} USDC</span>
-          </div>
+            <div className="space-y-1.5">
+              <SectionLabel>Quantity (GPU-hours): <span className="text-white/70">{quantity[0]}</span></SectionLabel>
+              <Slider value={quantity} onValueChange={setQuantity} min={1} max={168} step={1} />
+              <div className="flex gap-1.5 mt-2">
+                {[24, 48, 72, 168].map((v) => (
+                  <button
+                    key={v}
+                    onClick={() => setQuantity([v])}
+                    className={`text-[10px] font-mono px-2.5 py-1 rounded-lg border transition-all duration-300 ${
+                      quantity[0] === v
+                        ? "border-primary/40 text-primary bg-primary/10"
+                        : "border-white/[0.06] text-white/40 hover:border-white/10 hover:text-white/60"
+                    }`}
+                  >
+                    {v}hr
+                  </button>
+                ))}
+              </div>
+            </div>
 
-          <Button className="w-full gap-2 bg-primary hover:bg-primary/90">
-            <Lock className="h-4 w-4" />
-            Submit Encrypted Order
-          </Button>
+            <div className="space-y-1.5">
+              <SectionLabel>{side === "buy" ? "Max Price" : "Min Price"} (USDC / GPU-hour)</SectionLabel>
+              <Input
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+                className="font-mono border-white/[0.06] bg-white/[0.02] hover:border-white/[0.12] transition-colors"
+                type="number"
+                step="0.01"
+              />
+            </div>
 
-          <AuctionTimer />
+            <div className="flex items-center justify-between py-3 border-t border-white/[0.06]">
+              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">Est. Total</span>
+              <span className="font-mono text-lg font-semibold">${estTotal} <span className="text-xs text-white/40">USDC</span></span>
+            </div>
+
+            <Button className="w-full gap-2 bg-gradient-to-r from-primary to-[hsl(258,78%,65%)] hover:from-primary/90 hover:to-[hsl(258,78%,60%)] shadow-[0_0_20px_rgba(108,60,233,0.3)] hover:shadow-[0_0_30px_rgba(108,60,233,0.5)] transition-all duration-300 border-0 h-11">
+              <Lock className="h-4 w-4" />
+              Submit Encrypted Order
+            </Button>
+
+            <AuctionTimer />
+          </GlassCard>
         </div>
 
-        {/* Market Depth Placeholder */}
-        <div className="lg:col-span-5 rounded-lg border border-border bg-card p-5 flex flex-col">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-medium">Market Depth (Anonymized)</h3>
-            <span className="text-xs text-muted-foreground font-mono">H100 / USDC</span>
-          </div>
-          <div className="flex-1 flex items-center justify-center min-h-[300px]">
-            <div className="w-full space-y-2">
-              {/* Simplified depth visualization */}
-              <p className="text-xs text-muted-foreground text-center mb-4">SELL ASKS ▲</p>
-              {[60, 75, 90, 100].map((w, i) => (
-                <div key={i} className="flex justify-center">
-                  <div className="h-6 rounded-sm bg-destructive/20 transition-all" style={{ width: `${w}%` }} />
+        {/* Market Depth */}
+        <div className="lg:col-span-5">
+          <GlassCard delay={0.2} corners className="p-6 flex flex-col h-full">
+            <div className="flex items-center justify-between mb-6">
+              <SectionLabel>Market Depth (Anonymized)</SectionLabel>
+              <span className="font-mono text-[10px] text-white/30 tracking-wider">H100 / USDC</span>
+            </div>
+            <div className="flex-1 flex items-center justify-center min-h-[300px]">
+              <div className="w-full space-y-2">
+                <p className="font-mono text-[10px] text-white/30 text-center mb-4 uppercase tracking-[0.2em]">Sell Asks ▲</p>
+                {[60, 75, 90, 100].map((w, i) => (
+                  <div key={i} className="flex justify-center">
+                    <motion.div
+                      initial={{ width: 0 }}
+                      animate={{ width: `${w}%` }}
+                      transition={{ duration: 0.8, delay: 0.3 + i * 0.1, ease: "easeOut" }}
+                      className="h-7 rounded-md bg-gradient-to-r from-destructive/30 to-destructive/10 hover:from-destructive/40 hover:to-destructive/20 transition-colors duration-300 cursor-crosshair"
+                    />
+                  </div>
+                ))}
+                <div className="flex items-center gap-3 py-3">
+                  <div className="flex-1 h-px bg-gradient-to-r from-transparent to-warning/50" />
+                  <span className="font-mono text-xs text-warning font-medium">$0.23 Clearing</span>
+                  <div className="flex-1 h-px bg-gradient-to-l from-transparent to-warning/50" />
                 </div>
-              ))}
-              <div className="flex items-center gap-2 py-2">
-                <div className="flex-1 h-px bg-warning/50" />
-                <span className="text-xs font-mono text-warning">$0.23 Clearing</span>
-                <div className="flex-1 h-px bg-warning/50" />
-              </div>
-              {[100, 85, 70, 50].map((w, i) => (
-                <div key={i} className="flex justify-center">
-                  <div className="h-6 rounded-sm bg-success/20 transition-all" style={{ width: `${w}%` }} />
+                {[100, 85, 70, 50].map((w, i) => (
+                  <div key={i} className="flex justify-center">
+                    <motion.div
+                      initial={{ width: 0 }}
+                      animate={{ width: `${w}%` }}
+                      transition={{ duration: 0.8, delay: 0.7 + i * 0.1, ease: "easeOut" }}
+                      className="h-7 rounded-md bg-gradient-to-r from-success/30 to-success/10 hover:from-success/40 hover:to-success/20 transition-colors duration-300 cursor-crosshair"
+                    />
+                  </div>
+                ))}
+                <p className="font-mono text-[10px] text-white/30 text-center mt-4 uppercase tracking-[0.2em]">Buy Bids ▼</p>
+                <div className="flex justify-between font-mono text-[10px] text-white/20 mt-2 px-4">
+                  <span>$0.15</span><span>$0.20</span><span>$0.25</span><span>$0.30</span><span>$0.35</span>
                 </div>
-              ))}
-              <p className="text-xs text-muted-foreground text-center mt-4">BUY BIDS ▼</p>
-              <div className="flex justify-between text-xs text-muted-foreground font-mono mt-2 px-4">
-                <span>$0.15</span><span>$0.20</span><span>$0.25</span><span>$0.30</span><span>$0.35</span>
               </div>
             </div>
-          </div>
+          </GlassCard>
         </div>
 
         {/* GPU Overview */}
         <div className="lg:col-span-3 space-y-4">
-          <h3 className="text-sm font-medium">Available GPU Types</h3>
-          {gpuTypes.map((gpu) => (
-            <div key={gpu.id} className="rounded-lg border border-border bg-card p-4 space-y-3">
-              <h4 className="text-sm font-medium">{gpu.name}</h4>
-              <div className="flex justify-between text-xs text-muted-foreground">
-                <span>Est. Price: <span className="text-foreground font-mono">{gpu.price}/hr</span></span>
+          <SectionLabel className="mb-2">Available GPU Types</SectionLabel>
+          {gpuTypes.map((gpu, i) => (
+            <GlassCard key={gpu.id} delay={0.3 + i * 0.1} className="p-4 space-y-3 hover:border-white/[0.12] transition-all duration-300 group">
+              <h4 className="text-sm font-medium text-white/80">{gpu.name}</h4>
+              <div className="flex justify-between font-mono text-[10px] text-white/40">
+                <span>Est: <span className="text-white/70">{gpu.price}/hr</span></span>
+                <span>{gpu.providers} providers</span>
               </div>
-              <div className="flex justify-between text-xs text-muted-foreground">
-                <span>Providers: {gpu.providers}</span>
-                <span>Utilization: {gpu.utilization}%</span>
+              <div className="space-y-1">
+                <div className="flex justify-between font-mono text-[10px] text-white/30">
+                  <span>Utilization</span>
+                  <span>{gpu.utilization}%</span>
+                </div>
+                <div className="w-full h-1.5 rounded-full bg-white/[0.06] overflow-hidden">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: `${gpu.utilization}%` }}
+                    transition={{ duration: 1, delay: 0.5 + i * 0.1 }}
+                    className="h-full rounded-full bg-gradient-to-r from-primary to-[hsl(258,78%,70%)]"
+                  />
+                </div>
               </div>
-              <Progress value={gpu.utilization} className="h-1.5" />
-            </div>
+            </GlassCard>
           ))}
         </div>
       </div>

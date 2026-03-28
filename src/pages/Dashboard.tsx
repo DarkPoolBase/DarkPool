@@ -5,7 +5,7 @@ import { QuickActions } from "@/components/dashboard/QuickActions";
 import { LiveFeed } from "@/components/dashboard/LiveFeed";
 import { AuctionTimer } from "@/components/dashboard/AuctionTimer";
 import { AnimatedNumber } from "@/components/ui/animated-number";
-import { motion } from "framer-motion";
+import { GlassCard } from "@/components/ui/glass-card";
 import { AreaChart, Area, ResponsiveContainer, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
 
 const portfolioData = [
@@ -52,70 +52,63 @@ const Dashboard = () => {
       </div>
 
       {/* Portfolio Chart */}
-      <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.15, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="glass-card p-6"
-      >
-        <div className="relative z-10">
-          <div className="flex items-center justify-between mb-6">
-            <div>
-              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40 block mb-1">Portfolio Value</span>
-              <div className="flex items-end gap-3">
-                <AnimatedNumber value={2450} prefix="$" decimals={2} className="text-3xl font-mono font-semibold tracking-tight text-white tabular-nums" />
-                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-mono font-medium border bg-emerald-500/10 text-emerald-400 border-emerald-500/20 mb-1">
-                  +8.2% (7d)
-                </span>
-              </div>
-            </div>
-            <div className="flex gap-1">
-              {["1D", "1W", "1M", "ALL"].map((tf, i) => (
-                <button
-                  key={tf}
-                  className={`px-3 py-1.5 text-[10px] font-mono tracking-wider rounded-full border transition-all duration-300 ${
-                    i === 1
-                      ? "text-white bg-white/[0.06] border-white/10"
-                      : "text-white/30 border-transparent hover:text-white/60 hover:bg-white/[0.03]"
-                  }`}
-                >
-                  {tf}
-                </button>
-              ))}
+      <GlassCard delay={0.15} className="p-6">
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40 block mb-1">Portfolio Value</span>
+            <div className="flex items-end gap-3">
+              <AnimatedNumber value={2450} prefix="$" decimals={2} className="text-3xl font-mono font-semibold tracking-tight text-white tabular-nums" />
+              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-mono font-medium border bg-emerald-500/10 text-emerald-400 border-emerald-500/20 mb-1">
+                +8.2% (7d)
+              </span>
             </div>
           </div>
-
-          <div className="h-[220px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={portfolioData}>
-                <defs>
-                  <linearGradient id="portfolioGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="rgb(139,92,246)" stopOpacity={0.25} />
-                    <stop offset="100%" stopColor="rgb(139,92,246)" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.03)" />
-                <XAxis dataKey="date" tick={{ fontSize: 10, fill: "rgba(255,255,255,0.2)", fontFamily: "JetBrains Mono" }} axisLine={false} tickLine={false} />
-                <YAxis tick={{ fontSize: 10, fill: "rgba(255,255,255,0.2)", fontFamily: "JetBrains Mono" }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${v}`} domain={["auto", "auto"]} />
-                <Tooltip
-                  contentStyle={{
-                    background: "rgba(5,5,8,0.95)",
-                    border: "1px solid rgba(255,255,255,0.06)",
-                    borderRadius: 12,
-                    fontSize: 11,
-                    fontFamily: "JetBrains Mono",
-                    backdropFilter: "blur(16px)",
-                    boxShadow: "0 0 30px rgba(139,92,246,0.15)",
-                  }}
-                  labelStyle={{ color: "rgba(255,255,255,0.3)" }}
-                  formatter={(value: number) => [`$${value.toFixed(2)}`, "Value"]}
-                />
-                <Area type="monotone" dataKey="value" stroke="rgb(139,92,246)" strokeWidth={2} fill="url(#portfolioGradient)" />
-              </AreaChart>
-            </ResponsiveContainer>
+          <div className="flex gap-1">
+            {["1D", "1W", "1M", "ALL"].map((tf, i) => (
+              <button
+                key={tf}
+                className={`px-3 py-1.5 text-[10px] font-mono tracking-wider rounded-full border transition-all duration-300 ${
+                  i === 1
+                    ? "text-white bg-white/[0.06] border-white/10"
+                    : "text-white/30 border-transparent hover:text-white/60 hover:bg-white/[0.03]"
+                }`}
+              >
+                {tf}
+              </button>
+            ))}
           </div>
         </div>
-      </motion.div>
+
+        <div className="h-[220px]">
+          <ResponsiveContainer width="100%" height="100%">
+            <AreaChart data={portfolioData}>
+              <defs>
+                <linearGradient id="portfolioGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="rgb(139,92,246)" stopOpacity={0.25} />
+                  <stop offset="100%" stopColor="rgb(139,92,246)" stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.03)" />
+              <XAxis dataKey="date" tick={{ fontSize: 10, fill: "rgba(255,255,255,0.2)", fontFamily: "JetBrains Mono" }} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fontSize: 10, fill: "rgba(255,255,255,0.2)", fontFamily: "JetBrains Mono" }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${v}`} domain={["auto", "auto"]} />
+              <Tooltip
+                contentStyle={{
+                  background: "rgba(5,5,8,0.95)",
+                  border: "1px solid rgba(255,255,255,0.06)",
+                  borderRadius: 12,
+                  fontSize: 11,
+                  fontFamily: "JetBrains Mono",
+                  backdropFilter: "blur(16px)",
+                  boxShadow: "0 0 30px rgba(139,92,246,0.15)",
+                }}
+                labelStyle={{ color: "rgba(255,255,255,0.3)" }}
+                formatter={(value: number) => [`$${value.toFixed(2)}`, "Value"]}
+              />
+              <Area type="monotone" dataKey="value" stroke="rgb(139,92,246)" strokeWidth={2} fill="url(#portfolioGradient)" />
+            </AreaChart>
+          </ResponsiveContainer>
+        </div>
+      </GlassCard>
 
       {/* Main Content */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
@@ -129,32 +122,24 @@ const Dashboard = () => {
       </div>
 
       {/* Bottom Stats Strip */}
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.5 }}
-        className="grid grid-cols-2 md:grid-cols-4 gap-3"
-      >
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         {[
           { label: "24h Volume", value: "12,450 GPU-hrs", icon: TrendingUp },
           { label: "Active Providers", value: "387", icon: Zap },
           { label: "Avg Clearing Price", value: "$0.19/hr", icon: BarChart3 },
           { label: "Orders Matched", value: "892", icon: CheckCircle },
-        ].map((stat) => (
-          <div
-            key={stat.label}
-            className="glass-card p-4 flex items-center gap-3 hover:border-white/20 transition-all duration-300"
-          >
-            <div className="relative z-10 flex items-center gap-3">
+        ].map((stat, i) => (
+          <GlassCard key={stat.label} delay={0.5 + i * 0.05} className="p-4">
+            <div className="flex items-center gap-3">
               <stat.icon className="h-4 w-4 text-white/15 shrink-0" />
               <div>
                 <p className="font-mono text-[9px] uppercase tracking-widest text-white/30">{stat.label}</p>
                 <p className="font-mono text-sm text-white/70 tabular-nums tracking-tight">{stat.value}</p>
               </div>
             </div>
-          </div>
+          </GlassCard>
         ))}
-      </motion.div>
+      </div>
     </div>
   );
 };

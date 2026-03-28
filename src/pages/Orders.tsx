@@ -6,6 +6,7 @@ import { ChevronDown, ChevronRight } from "lucide-react";
 import { GlassCard } from "@/components/ui/glass-card";
 import { SectionLabel } from "@/components/ui/section-label";
 import { motion, AnimatePresence } from "framer-motion";
+import { ease, pageHeader } from "@/lib/animations";
 
 const orders = [
   { id: "#4521", side: "BUY", gpu: "H100", qty: "24 hrs", price: "$0.22", status: "FILLED" as const, submitted: "Mar 26, 2026 14:32:15 UTC", filled: "Mar 26, 2026 14:33:00 UTC (Batch #4521)", clearing: "$0.21/GPU-hr", total: "$5.04 USDC", tx: "0x7a3b...f82c", access: "ssh://compute-xyz123.darkpool.io" },
@@ -32,12 +33,17 @@ const Orders = () => {
 
   return (
     <div className="space-y-8 max-w-[1400px]">
-      <div>
+      <motion.div {...pageHeader}>
         <h1 className="text-2xl font-semibold text-gradient">Orders</h1>
         <p className="text-sm text-white/40 mt-1">Manage and review all your orders</p>
-      </div>
+      </motion.div>
 
-      <div className="flex gap-2 flex-wrap">
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.08, ease }}
+        className="flex gap-2 flex-wrap"
+      >
         {(["ALL", "ACTIVE", "FILLED", "CANCELLED", "EXPIRED"] as StatusFilter[]).map((s) => (
           <button
             key={s}
@@ -52,9 +58,9 @@ const Orders = () => {
             {s !== "ALL" && ` (${counts[s as keyof typeof counts]})`}
           </button>
         ))}
-      </div>
+      </motion.div>
 
-      <GlassCard delay={0.1} corners className="overflow-hidden">
+      <GlassCard delay={0.16} corners className="overflow-hidden">
         <Table>
           <TableHeader>
             <TableRow className="border-white/[0.04] hover:bg-transparent">
@@ -110,7 +116,7 @@ const Orders = () => {
                           initial={{ height: 0, opacity: 0 }}
                           animate={{ height: "auto", opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.3 }}
+                          transition={{ duration: 0.3, ease }}
                           className="overflow-hidden"
                         >
                           <div className="p-5 bg-primary/[0.02] border-l-2 border-l-primary/30 space-y-1.5">

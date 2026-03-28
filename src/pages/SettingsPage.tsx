@@ -3,17 +3,19 @@ import { Switch } from "@/components/ui/switch";
 import { Copy, RefreshCw, Trash2 } from "lucide-react";
 import { GlassCard } from "@/components/ui/glass-card";
 import { SectionLabel } from "@/components/ui/section-label";
+import { motion } from "framer-motion";
+import { pageHeader } from "@/lib/animations";
 
 const SettingsPage = () => {
   return (
     <div className="space-y-8 max-w-[800px]">
-      <div>
+      <motion.div {...pageHeader}>
         <h1 className="text-2xl font-semibold text-gradient">Settings</h1>
         <p className="text-sm text-white/40 mt-1">Manage your wallet, API keys, and notifications</p>
-      </div>
+      </motion.div>
 
       {/* Wallet */}
-      <GlassCard delay={0.1} corners className="p-6 space-y-4">
+      <GlassCard delay={0.08} corners className="p-6 space-y-4">
         <SectionLabel>Connected Wallet</SectionLabel>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -30,7 +32,7 @@ const SettingsPage = () => {
       </GlassCard>
 
       {/* API Keys */}
-      <GlassCard delay={0.2} gradient className="p-6 space-y-5">
+      <GlassCard delay={0.16} gradient className="p-6 space-y-5">
         <SectionLabel>API Keys</SectionLabel>
         {[
           { label: "Production Key", key: "sk_live_****************************" },
@@ -55,7 +57,7 @@ const SettingsPage = () => {
       </GlassCard>
 
       {/* Notifications */}
-      <GlassCard delay={0.3} corners className="p-6 space-y-5">
+      <GlassCard delay={0.24} corners className="p-6 space-y-5">
         <SectionLabel>Notification Preferences</SectionLabel>
         {[
           { label: "Order filled", defaultChecked: true },

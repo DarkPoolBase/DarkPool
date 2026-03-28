@@ -7,6 +7,7 @@ import { AuctionTimer } from "@/components/dashboard/AuctionTimer";
 import { AnimatedNumber } from "@/components/ui/animated-number";
 import { motion } from "framer-motion";
 import { AreaChart, Area, ResponsiveContainer, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
+import { ease, pageHeader } from "@/lib/animations";
 
 const portfolioData = [
   { date: "Mar 20", value: 1800 },
@@ -24,10 +25,10 @@ const Dashboard = () => {
   return (
     <div className="space-y-6 max-w-[1440px] relative">
       {/* Header */}
-      <div>
+      <motion.div {...pageHeader}>
         <h1 className="text-2xl md:text-3xl font-thin tracking-tight text-white">Dashboard</h1>
         <p className="text-sm text-white/30 mt-1 font-mono text-[11px]">Portfolio overview · Market activity · GPU compute</p>
-      </div>
+      </motion.div>
 
       {/* Stats Row */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -35,27 +36,27 @@ const Dashboard = () => {
           icon={DollarSign} label="Escrow Balance" value="$2,450.00"
           change="+12.5%" changeType="positive"
           sparkData={[1800, 2100, 1950, 2300, 2150, 2400, 2450]}
-          sparkColor="rgb(52, 211, 153)" glow delay={0}
+          sparkColor="rgb(52, 211, 153)" glow delay={0.08}
         />
         <StatsCard
           icon={BarChart3} label="Active Orders" value="3"
           sparkData={[1, 3, 2, 4, 3, 2, 3]}
-          sparkColor="rgb(139, 92, 246)" delay={0.08}
+          sparkColor="rgb(139, 92, 246)" delay={0.16}
         />
         <StatsCard
           icon={CheckCircle} label="Filled Today" value="156 GPU-hrs"
           change="+24%" changeType="positive"
           sparkData={[80, 110, 95, 130, 140, 150, 156]}
-          sparkColor="rgb(52, 211, 153)" delay={0.16}
+          sparkColor="rgb(52, 211, 153)" delay={0.24}
         />
         <AuctionTimer />
       </div>
 
       {/* Portfolio Chart */}
       <motion.div
-        initial={{ opacity: 0, y: 24 }}
+        initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.15, ease: [0.25, 0.46, 0.45, 0.94] }}
+        transition={{ duration: 0.5, delay: 0.32, ease }}
         className="glass-card p-6"
       >
         <div className="relative z-10">
@@ -132,7 +133,7 @@ const Dashboard = () => {
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.5 }}
+        transition={{ duration: 0.5, delay: 0.4, ease }}
         className="grid grid-cols-2 md:grid-cols-4 gap-3"
       >
         {[

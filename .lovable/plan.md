@@ -1,41 +1,45 @@
 
 
-## Replace "Interaction Engine" Section with Protocol Architecture
+## Replace Compute Pricing with FAQ Section
 
 ### What changes
-Replace the 3-panel "Interaction Engine" section (lines 1802-1933 in `public/aero.html`) which currently shows generic design tool content (Scroll Animations, State Transitions, Component Logic) with GPU marketplace protocol architecture content.
+Replace the entire pricing section (lines 2679-2827 in `public/aero.html`) — the 3-column pricing cards with monthly/annual toggle — with a premium glassmorphic FAQ accordion section.
 
-### New content
+### New section: Frequently Asked Questions
 
-**Section header**: "Protocol Architecture" with tag "ZK // COMMIT_REVEAL"
+**Header area** (same pattern as other sections):
+- Tag: `FAQ // PROTOCOL`
+- Title: "Frequently Asked Questions"
+- Subtitle: "Everything you need to know about the agentic dark pool protocol."
 
-**Panel 01 — COMMIT-REVEAL**
-- Title: "COMMIT-REVEAL" / 01//
-- Description: "Orders are encrypted client-side using commit-reveal schemes. No participant — including the protocol — can see order details until the batch clears."
-- Footer label: "SCHEME: PEDERSEN"
-- Footer text: "Cryptographic commitments bind order parameters without revealing price, quantity, or direction to any party."
-- Keep the existing canvas visualization (topology engine) — it works well as an abstract representation of cryptographic structures
+**FAQ items** (glassmorphic accordion — each item is a `glass-card` style panel):
+Each FAQ is a clickable row with a question, plus/minus toggle icon, and expandable answer. Uses the existing design system: `bg-gradient-to-br from-white/[0.03] to-transparent`, `border border-white/5`, `backdrop-blur-md`, `rounded-2xl`, JetBrains Mono labels, violet accents.
 
-**Panel 02 — BATCH MATCHING**
-- Title: "BATCH MATCHING" / 02//
-- Description: "Orders accumulate in 30-60 second batches. A uniform clearing price algorithm matches all compatible orders simultaneously, eliminating MEV extraction."
-- Footer label: "MODE: UNIFORM_PRICE"
-- Footer text: "Single clearing price per batch ensures fair execution — no frontrunning, no sandwich attacks, no information leakage."
-- Keep existing canvas visualization
+**Questions sourced from the PDF research:**
 
-**Panel 03 — ON-CHAIN SETTLEMENT**
-- Title: "ON-CHAIN SETTLEMENT" / 03//
-- Description: "Matched orders settle atomically on Base L2. ZK proofs verify fair execution without revealing individual order details. USDC escrow ensures instant finality."
-- Footer label: "OUTPUT: VERIFIED"
-- Footer text: "Settlement proofs are posted on-chain for full auditability while preserving trader privacy."
-- Keep existing canvas and bar chart visualizations
+1. **What is an agentic dark pool?** — A private exchange where AI agents trade GPU compute resources without exposing order details. Uses commit-reveal encryption and batch auctions to prevent MEV and ensure fair pricing.
+
+2. **How does the batch auction work?** — Orders accumulate in 30-60 second windows. A uniform clearing price algorithm matches all compatible orders simultaneously — every participant gets the same price, eliminating frontrunning.
+
+3. **What is commit-reveal and why does it matter?** — Orders are encrypted client-side using Pedersen commitments before submission. No one — including the protocol — can see price, quantity, or direction until the batch clears.
+
+4. **How does settlement work?** — Matched orders settle atomically on Base L2 using USDC. ZK proofs verify fair execution without revealing individual order details. Typical settlement: under 2 seconds.
+
+5. **What is the x402 payment protocol?** — An HTTP-native payment standard that lets AI agents pay per-request using USDC on Base. Agents include payment in HTTP headers — no wallets, no bridging, no human approval needed.
+
+6. **How much cheaper is this than AWS/cloud providers?** — Batch auction pricing typically yields 60-80% savings vs. on-demand cloud rates by aggregating supply from independent GPU operators and eliminating intermediary margins.
+
+7. **Is my order data private?** — Yes. Orders are encrypted before submission. The protocol uses zero-knowledge proofs to verify execution fairness without exposing any trade details.
+
+8. **What GPU types are supported?** — H100, A100, L40S, and RTX 4090 clusters. Providers list capacity with verifiable hardware attestations.
+
+**Interaction:** Vanilla JS click handlers toggle `max-height` and rotate the chevron icon. Smooth CSS transitions (`transition-all duration-500`). Only one item open at a time (accordion behavior).
+
+**Decorative elements:** Keep the existing violet glow blob behind the section. Add subtle left-border accent on the active/open item (`border-l-2 border-violet-500/50`).
 
 ### Files changed
 
 | Action | File |
 |--------|------|
-| Edit | `public/aero.html` (lines 1802-1933) — Replace text content only, preserve panel structure and canvas elements |
-
-### Approach
-Only replace the text strings inside the existing `quant-reveal-inner` spans and plain text nodes. The panel structure, canvas elements, GSAP animations, and visual effects all remain untouched.
+| Edit | `public/aero.html` (lines 2679-2827) — Replace pricing section with FAQ accordion + inline JS toggle logic |
 

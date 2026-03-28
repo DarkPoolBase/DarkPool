@@ -10,9 +10,10 @@ export function DashboardHeader() {
   const [modalOpen, setModalOpen] = useState(false);
 
   const connectMetaMask = async () => {
-    if (typeof window.ethereum !== "undefined") {
+    const eth = (window as any).ethereum;
+    if (eth) {
       try {
-        await window.ethereum.request({ method: "eth_requestAccounts" });
+        await eth.request({ method: "eth_requestAccounts" });
         setModalOpen(false);
       } catch (e) {
         console.error("MetaMask error:", e);

@@ -17,13 +17,13 @@ export function DashboardLayout() {
         <div className="flex-1 flex flex-col min-w-0 relative z-10">
           <DashboardHeader />
           <main className="flex-1 overflow-auto p-4 md:p-6 lg:p-8">
-            <AnimatePresence mode="wait">
+            <AnimatePresence mode="popLayout">
               <motion.div
                 key={location.pathname}
-                initial={{ opacity: 0, y: 12 }}
+                initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2, ease: "easeOut" }}
               >
                 <Outlet />
               </motion.div>

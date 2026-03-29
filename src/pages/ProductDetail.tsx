@@ -203,11 +203,11 @@ const ProductDetail = () => {
       </GlassCard>
 
       {/* Order Ticket — redesigned */}
-      <GlassCard delay={0.15} glow className="p-6 space-y-6">
+      <GlassCard delay={0.15} glow className="p-8 space-y-8">
         <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground block">Private Order</span>
 
         {/* Full-width Buy/Sell toggle */}
-        <div className="flex rounded-xl border border-white/[0.06] overflow-hidden bg-white/[0.02] relative">
+        <div className="flex rounded-xl border border-white/[0.06] overflow-hidden bg-white/[0.02] relative mt-1">
           <motion.div
             className="absolute inset-y-0 w-1/2 rounded-xl"
             animate={{ x: side === "sell" ? "100%" : "0%" }}
@@ -229,9 +229,9 @@ const ProductDetail = () => {
         </div>
 
         {/* 3-column form grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Col 1: GPU Type */}
-          <div className="space-y-2">
+          <div className="space-y-3">
             <SectionLabel>GPU Type</SectionLabel>
             <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06]">
               <p className="font-mono text-sm font-medium text-foreground">{product.name}</p>
@@ -240,7 +240,7 @@ const ProductDetail = () => {
           </div>
 
           {/* Col 2: Quantity */}
-          <div className="space-y-3">
+          <div className="space-y-4">
             <SectionLabel>Quantity (GPU-hours): <span className="text-foreground/70">{quantity[0]}</span></SectionLabel>
             <Slider value={quantity} onValueChange={setQuantity} min={1} max={168} step={1} />
             <div className="flex gap-2 mt-1">
@@ -259,7 +259,7 @@ const ProductDetail = () => {
           </div>
 
           {/* Col 3: Price + Duration */}
-          <div className="space-y-3">
+          <div className="space-y-4">
             <SectionLabel>{side === "buy" ? "Max Price" : "Min Price"} (USDC / GPU-hr)</SectionLabel>
             <Input
               value={currentPrice}
@@ -285,7 +285,7 @@ const ProductDetail = () => {
         </div>
 
         {/* Summary + Submit bar */}
-        <div className="rounded-xl bg-white/[0.02] border border-white/[0.06] p-4">
+        <div className="rounded-xl bg-white/[0.02] border border-white/[0.06] p-5">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="font-mono text-xs text-muted-foreground">
               {quantity[0]} GPU-hrs × ${currentPrice}/hr

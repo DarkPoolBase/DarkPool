@@ -297,43 +297,15 @@ document.addEventListener('DOMContentLoaded', function() {
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-    // Header fade up
     gsap.from('.about-header', {
       y: 40, opacity: 0, duration: 1.2, ease: 'power3.out',
       scrollTrigger: { trigger: '#about', start: 'top 80%', toggleActions: 'play none none none' }
     });
-
-    // Panels staggered lift
     gsap.utils.toArray('.about-panel').forEach(function(panel, i) {
       gsap.from(panel, {
         y: 60, opacity: 0, duration: 1, ease: 'power3.out',
         delay: i * 0.15,
         scrollTrigger: { trigger: panel, start: 'top 90%', toggleActions: 'play none none none' }
-      });
-    });
-
-    // Metrics strip
-    gsap.from('.about-metrics', {
-      y: 30, opacity: 0, duration: 0.8, ease: 'power2.out',
-      scrollTrigger: { trigger: '.about-metrics', start: 'top 95%', toggleActions: 'play none none none' }
-    });
-
-    // Counter animation
-    document.querySelectorAll('.about-counter').forEach(function(el) {
-      var target = parseFloat(el.getAttribute('data-target')) || 0;
-      ScrollTrigger.create({
-        trigger: el, start: 'top 95%',
-        onEnter: function() {
-          gsap.to(el, {
-            duration: 2, ease: 'power2.out',
-            onUpdate: function() {
-              var p = this.progress();
-              var c = target * p;
-              el.textContent = target % 1 !== 0 ? c.toFixed(1) : Math.round(c);
-            }
-          });
-        },
-        once: true
       });
     });
   }

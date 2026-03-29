@@ -5,7 +5,7 @@ import React, { useRef, useCallback } from "react";
 interface GlassCardProps extends HTMLMotionProps<"div"> {
   glow?: boolean;
   gradient?: boolean;
-  corners?: boolean;
+  corners?: boolean; // deprecated, kept for API compat but no longer renders
   delay?: number;
   children: React.ReactNode;
 }
@@ -64,15 +64,6 @@ export function GlassCard({
         ref={glowRef}
         className="absolute inset-0 z-0 pointer-events-none rounded-2xl opacity-0 transition-opacity duration-500"
       />
-      {/* Subtle top edge highlight - removed to prevent double border */}
-      {corners && (
-        <>
-          <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-white/[0.08] rounded-tl-sm" />
-          <div className="absolute top-0 right-0 w-3 h-3 border-t border-r border-white/[0.08] rounded-tr-sm" />
-          <div className="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-white/[0.08] rounded-bl-sm" />
-          <div className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-white/[0.08] rounded-br-sm" />
-        </>
-      )}
       <div className="relative z-10 flex flex-col flex-1">{children}</div>
     </motion.div>
   );

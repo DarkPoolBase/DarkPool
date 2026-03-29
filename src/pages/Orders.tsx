@@ -54,7 +54,7 @@ const Orders = () => {
         ))}
       </div>
 
-      <GlassCard delay={0.1} corners className="overflow-hidden">
+      <GlassCard delay={0.1} className="overflow-hidden">
         <Table>
           <TableHeader>
             <TableRow className="border-white/[0.04] hover:bg-transparent">

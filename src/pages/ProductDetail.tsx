@@ -209,7 +209,7 @@ const ProductDetail = () => {
           <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Private Order</span>
 
           {/* Full-width Buy/Sell toggle */}
-          <div className="flex rounded-xl border border-white/[0.06] overflow-hidden bg-white/[0.02] relative h-12">
+          <div className="flex rounded-xl overflow-hidden bg-white/[0.03] relative h-12">
             <motion.div
               className="absolute inset-y-0 w-1/2 rounded-xl"
               animate={{ x: side === "sell" ? "100%" : "0%" }}
@@ -235,7 +235,7 @@ const ProductDetail = () => {
             {/* Col 1: GPU Type */}
             <div className="flex flex-col gap-3">
               <SectionLabel>GPU Type</SectionLabel>
-              <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] flex-1 flex flex-col justify-center">
+              <div className="p-4 rounded-xl bg-white/[0.03] flex-1 flex flex-col justify-center">
                 <p className="font-mono text-sm font-medium text-foreground">{product.name}</p>
                 <p className="font-mono text-xs text-muted-foreground mt-2">{product.vram} · Spot Market</p>
               </div>
@@ -293,7 +293,7 @@ const ProductDetail = () => {
           </div>
 
           {/* Summary + Submit bar */}
-          <div className="rounded-xl bg-white/[0.02] border border-white/[0.06] p-5">
+          <div className="rounded-xl bg-white/[0.03] p-5">
             <div className="flex flex-col md:flex-row items-center justify-between gap-5">
               <div className="font-mono text-xs text-muted-foreground">
                 {quantity[0]} GPU-hrs × ${currentPrice}/hr

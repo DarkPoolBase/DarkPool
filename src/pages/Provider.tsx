@@ -21,7 +21,7 @@ const Provider = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
         {/* ─── Section 1: Register GPU ─── */}
-        <GlassCard gradient delay={0.1} className="p-7">
+        <GlassCard delay={0.1} className="p-7">
           <div className="flex flex-col gap-6">
             <SectionLabel>Register GPU</SectionLabel>
 
@@ -86,7 +86,7 @@ const Provider = () => {
             </div>
 
             {/* Stake */}
-            <div className="rounded-xl bg-white/[0.02] border border-white/[0.06] p-4">
+            <div className="rounded-xl bg-white/[0.03] p-4">
               <div className="flex items-center justify-between">
                 <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Stake Required</span>
                 <span className="font-mono text-sm font-semibold text-foreground">500 <span className="text-xs text-muted-foreground">USDC</span></span>
@@ -139,7 +139,7 @@ const Provider = () => {
         <div className="lg:col-span-2 flex flex-col gap-6">
 
           {/* ─── Section 2: Active Listing ─── */}
-          <GlassCard delay={0.2} corners className="p-7">
+          <GlassCard delay={0.2} className="p-7">
             <div className="flex flex-col gap-6">
               {/* Header row */}
               <div className="flex items-center justify-between">
@@ -154,7 +154,7 @@ const Provider = () => {
               </div>
 
               {/* GPU identity */}
-              <div className="flex items-center gap-4 rounded-xl bg-white/[0.02] border border-white/[0.06] p-4">
+              <div className="flex items-center gap-4 rounded-xl bg-white/[0.03] p-4">
                 <div className="h-10 w-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center">
                   <Cpu className="h-5 w-5 text-primary" />
                 </div>
@@ -172,7 +172,7 @@ const Provider = () => {
                   { label: "Hours Sold", value: "342 hrs", icon: Clock },
                   { label: "Min Ask", value: "$0.21/hr", icon: DollarSign },
                 ].map((stat) => (
-                  <div key={stat.label} className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06]">
+                  <div key={stat.label} className="p-4 rounded-xl bg-white/[0.03]">
                     <div className="flex items-center gap-1.5 mb-2">
                       <stat.icon className="h-3 w-3 text-muted-foreground" />
                       <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">{stat.label}</span>
@@ -183,7 +183,7 @@ const Provider = () => {
               </div>
 
               {/* Current Job */}
-              <div className="flex items-center justify-between rounded-xl bg-white/[0.02] border border-white/[0.06] p-4">
+              <div className="flex items-center justify-between rounded-xl bg-white/[0.03] p-4">
                 <div>
                   <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Current Job</span>
                   <p className="font-mono text-sm text-foreground mt-1">Order <span className="text-primary">#4521</span> — 18 hrs remaining</p>
@@ -222,7 +222,7 @@ const Provider = () => {
                   { label: "Fill Rate", value: "87.3%" },
                   { label: "Completed Jobs", value: "28" },
                 ].map((stat) => (
-                  <div key={stat.label} className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06]">
+                  <div key={stat.label} className="p-4 rounded-xl bg-white/[0.03]">
                     <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">{stat.label}</span>
                     <p className={`font-mono text-base font-semibold mt-2 ${stat.accent ? "text-emerald-400" : "text-foreground"}`}>
                       {stat.value}
@@ -232,8 +232,8 @@ const Provider = () => {
               </div>
 
               {/* Recent payouts */}
-              <div className="rounded-xl bg-white/[0.02] border border-white/[0.06]">
-                <div className="px-4 py-3 border-b border-white/[0.06]">
+              <div className="rounded-xl bg-white/[0.03]">
+                <div className="px-4 py-3 border-b border-white/[0.04]">
                   <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Recent Payouts</span>
                 </div>
                 {[

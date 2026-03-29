@@ -243,7 +243,7 @@ const Marketplace = () => {
                   <div className="flex items-center justify-between mb-4">
                     <BatchCountdown />
                     <span className="font-mono text-[9px] text-muted-foreground">
-                      24h vol: <span className="text-foreground/60">{product.volume24h}</span>
+                      24h vol: <span className="text-foreground/60">{product.volume24h}</span> <span className="text-muted-foreground/50">({product.volumeUsd})</span>
                     </span>
                   </div>
 

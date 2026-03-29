@@ -2152,10 +2152,16 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
 
       <section class="flex flex-col gap-8 w-full mt-24 gap-x-8 gap-y-8" id="quant-analytics">
-  <!-- Unified Header with Tab Switcher -->
+  <!-- Header -->
+  <div class="mb-4">
+    <span class="block font-mono text-[11px] tracking-[0.3em] text-white/30 uppercase mb-1">04</span>
+    <span class="block font-mono text-[11px] tracking-[0.3em] text-white/30 uppercase mb-6">Protocol & Infrastructure</span>
+    <h2 class="text-3xl md:text-5xl lg:text-6xl font-extralight text-white/95 tracking-tight leading-[1.1] mb-6">
+      Under the Hood
+    </h2>
+  </div>
   <div class="flex flex-col md:flex-row border-white/5 border-b pb-4 gap-4 md:items-center md:justify-between">
     <div class="flex items-center gap-3 flex-wrap">
-      <span class="font-mono text-[11px] tracking-[0.3em] text-white/30 uppercase shrink-0">05</span>
       <div id="merged-dot" class="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse shadow-[0_0_12px_rgba(52,211,153,0.8)] transition-all duration-700 shrink-0"></div>
       <div class="flex items-center gap-1 bg-white/[0.03] border border-white/[0.06] rounded-lg p-0.5">
         <button id="tab-protocol" onclick="switchMergedTab('protocol')" class="px-2 md:px-3 py-1.5 text-[9px] md:text-[10px] font-['JetBrains_Mono'] uppercase tracking-widest rounded-md transition-all duration-500 bg-white/[0.06] text-white/70 whitespace-nowrap">Protocol</button>

@@ -2846,6 +2846,366 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 
+<section class="flex flex-col gap-12 z-10 w-full mt-32 mb-12 relative gap-x-12 gap-y-12" id="faq">
+  <!-- Decorative Glow -->
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] rounded-full blur-[120px] pointer-events-none bg-violet-500/10"></div>
+
+  <!-- Header -->
+  <div class="flex flex-col gap-4 z-10 text-center pr-6 pl-6 relative gap-x-4 gap-y-4 items-center justify-center">
+    <div class="flex flex-col items-center gap-2 text-xs font-['JetBrains_Mono'] text-white/40 uppercase tracking-widest">
+      <span class="font-mono text-[11px] tracking-[0.3em] text-white/30">06</span>
+      <div class="flex items-center gap-3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-violet-400/80">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+          <path d="M12 17h.01"></path>
+        </svg>
+        <span>Technical FAQ</span>
+      </div>
+    </div>
+    <h2 class="text-4xl md:text-6xl font-thin tracking-tight text-white">
+      Frequently Asked Questions
+    </h2>
+    <p class="text-sm md:text-base font-extralight text-white/40 max-w-lg mx-auto">
+      Everything you need to know about the agentic dark pool protocol.
+    </p>
+  </div>
+
+  <!-- FAQ Accordion -->
+  <div class="flex flex-col gap-3 max-w-6xl mx-auto w-full relative z-10 px-6 lg:px-0" id="faq-accordion">
+
+    <!-- FAQ 1 -->
+    <div class="faq-item rounded-2xl bg-gradient-to-br from-white/[0.03] to-transparent border border-white/5 backdrop-blur-md transition-all duration-500 overflow-hidden cursor-pointer" onclick="toggleFaq(this)">
+      <div class="flex items-center justify-between p-6">
+        <span class="text-sm md:text-base font-light text-white/90">What is an agentic dark pool?</span>
+        <svg class="faq-chevron w-5 h-5 text-white/30 transition-transform duration-500 shrink-0 ml-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="faq-answer max-h-0 transition-all duration-500 ease-in-out overflow-hidden">
+        <div class="px-6 pb-6 pt-0">
+          <p class="text-sm font-extralight text-white/50 leading-relaxed">A private exchange where AI agents trade GPU compute resources without exposing order details. The protocol uses commit-reveal encryption and batch auctions to prevent MEV extraction and ensure fair, uniform pricing for all participants.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ 2 -->
+    <div class="faq-item rounded-2xl bg-gradient-to-br from-white/[0.03] to-transparent border border-white/5 backdrop-blur-md transition-all duration-500 overflow-hidden cursor-pointer" onclick="toggleFaq(this)">
+      <div class="flex items-center justify-between p-6">
+        <span class="text-sm md:text-base font-light text-white/90">How does the batch auction work?</span>
+        <svg class="faq-chevron w-5 h-5 text-white/30 transition-transform duration-500 shrink-0 ml-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="faq-answer max-h-0 transition-all duration-500 ease-in-out overflow-hidden">
+        <div class="px-6 pb-6 pt-0">
+          <p class="text-sm font-extralight text-white/50 leading-relaxed">Orders accumulate in 30–60 second windows. A uniform clearing price algorithm matches all compatible orders simultaneously — every participant gets the same price, eliminating frontrunning, sandwich attacks, and information leakage.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ 3 -->
+    <div class="faq-item rounded-2xl bg-gradient-to-br from-white/[0.03] to-transparent border border-white/5 backdrop-blur-md transition-all duration-500 overflow-hidden cursor-pointer" onclick="toggleFaq(this)">
+      <div class="flex items-center justify-between p-6">
+        <span class="text-sm md:text-base font-light text-white/90">What is commit-reveal and why does it matter?</span>
+        <svg class="faq-chevron w-5 h-5 text-white/30 transition-transform duration-500 shrink-0 ml-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="faq-answer max-h-0 transition-all duration-500 ease-in-out overflow-hidden">
+        <div class="px-6 pb-6 pt-0">
+          <p class="text-sm font-extralight text-white/50 leading-relaxed">Orders are encrypted client-side using Pedersen commitments before submission. No one — including the protocol itself — can see price, quantity, or direction until the batch clears. This cryptographic guarantee ensures true pre-trade privacy.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ 4 -->
+    <div class="faq-item rounded-2xl bg-gradient-to-br from-white/[0.03] to-transparent border border-white/5 backdrop-blur-md transition-all duration-500 overflow-hidden cursor-pointer" onclick="toggleFaq(this)">
+      <div class="flex items-center justify-between p-6">
+        <span class="text-sm md:text-base font-light text-white/90">How does settlement work?</span>
+        <svg class="faq-chevron w-5 h-5 text-white/30 transition-transform duration-500 shrink-0 ml-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="faq-answer max-h-0 transition-all duration-500 ease-in-out overflow-hidden">
+        <div class="px-6 pb-6 pt-0">
+          <p class="text-sm font-extralight text-white/50 leading-relaxed">Matched orders settle atomically on Base L2 using USDC. ZK proofs verify fair execution without revealing individual order details. Typical settlement finality: under 2 seconds.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ 5 -->
+    <div class="faq-item rounded-2xl bg-gradient-to-br from-white/[0.03] to-transparent border border-white/5 backdrop-blur-md transition-all duration-500 overflow-hidden cursor-pointer" onclick="toggleFaq(this)">
+      <div class="flex items-center justify-between p-6">
+        <span class="text-sm md:text-base font-light text-white/90">What is the x402 payment protocol?</span>
+        <svg class="faq-chevron w-5 h-5 text-white/30 transition-transform duration-500 shrink-0 ml-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="faq-answer max-h-0 transition-all duration-500 ease-in-out overflow-hidden">
+        <div class="px-6 pb-6 pt-0">
+          <p class="text-sm font-extralight text-white/50 leading-relaxed">An HTTP-native payment standard that lets AI agents pay per-request using USDC on Base. Agents include payment directly in HTTP headers — no wallets, no bridging, no human approval needed. Autonomous commerce at machine speed.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ 6 -->
+    <div class="faq-item rounded-2xl bg-gradient-to-br from-white/[0.03] to-transparent border border-white/5 backdrop-blur-md transition-all duration-500 overflow-hidden cursor-pointer" onclick="toggleFaq(this)">
+      <div class="flex items-center justify-between p-6">
+        <span class="text-sm md:text-base font-light text-white/90">How much cheaper is this than AWS / cloud providers?</span>
+        <svg class="faq-chevron w-5 h-5 text-white/30 transition-transform duration-500 shrink-0 ml-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="faq-answer max-h-0 transition-all duration-500 ease-in-out overflow-hidden">
+        <div class="px-6 pb-6 pt-0">
+          <p class="text-sm font-extralight text-white/50 leading-relaxed">Batch auction pricing typically yields 60–80% savings vs. on-demand cloud rates by aggregating supply from independent GPU operators and eliminating intermediary margins. No reserved instances, no lock-in.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ 7 -->
+    <div class="faq-item rounded-2xl bg-gradient-to-br from-white/[0.03] to-transparent border border-white/5 backdrop-blur-md transition-all duration-500 overflow-hidden cursor-pointer" onclick="toggleFaq(this)">
+      <div class="flex items-center justify-between p-6">
+        <span class="text-sm md:text-base font-light text-white/90">Is my order data private?</span>
+        <svg class="faq-chevron w-5 h-5 text-white/30 transition-transform duration-500 shrink-0 ml-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="faq-answer max-h-0 transition-all duration-500 ease-in-out overflow-hidden">
+        <div class="px-6 pb-6 pt-0">
+          <p class="text-sm font-extralight text-white/50 leading-relaxed">Yes. Orders are encrypted before submission using Pedersen commitments. The protocol uses zero-knowledge proofs to verify execution fairness without exposing any individual trade details. Full auditability, complete privacy.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ 8 -->
+    <div class="faq-item rounded-2xl bg-gradient-to-br from-white/[0.03] to-transparent border border-white/5 backdrop-blur-md transition-all duration-500 overflow-hidden cursor-pointer" onclick="toggleFaq(this)">
+      <div class="flex items-center justify-between p-6">
+        <span class="text-sm md:text-base font-light text-white/90">What GPU types are supported?</span>
+        <svg class="faq-chevron w-5 h-5 text-white/30 transition-transform duration-500 shrink-0 ml-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="faq-answer max-h-0 transition-all duration-500 ease-in-out overflow-hidden">
+        <div class="px-6 pb-6 pt-0">
+          <p class="text-sm font-extralight text-white/50 leading-relaxed">H100, A100, L40S, and RTX 4090 clusters. Providers list available capacity with verifiable hardware attestations. The protocol supports both spot and reserved compute across all listed GPU classes.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FAQ Toggle Script -->
+  <script>
+    function toggleFaq(el) {
+      const accordion = document.getElementById('faq-accordion');
+      const allItems = accordion.querySelectorAll('.faq-item');
+      const answer = el.querySelector('.faq-answer');
+      const chevron = el.querySelector('.faq-chevron');
+      const isOpen = answer.style.maxHeight && answer.style.maxHeight !== '0px';
+
+      // Close all
+      allItems.forEach(item => {
+        item.querySelector('.faq-answer').style.maxHeight = '0px';
+        item.querySelector('.faq-chevron').style.transform = 'rotate(0deg)';
+        item.style.borderColor = 'rgba(255,255,255,0.05)';
+        item.style.borderLeftWidth = '1px';
+      });
+
+      // Open clicked if it was closed
+      if (!isOpen) {
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+        chevron.style.transform = 'rotate(180deg)';
+        el.style.borderLeftColor = 'rgba(139,92,246,0.5)';
+        el.style.borderLeftWidth = '2px';
+      }
+    }
+  </script>
+</section>
+      
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const initChart = () => {
+                const canvas = document.getElementById('threatChart');
+                if (!canvas) return;
+
+                const ctx = canvas.getContext('2d');
+
+                // Create vibrant gradient fill
+                const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+                gradient.addColorStop(0, 'rgba(244, 63, 94, 0.4)'); // Rose 500
+                gradient.addColorStop(1, 'rgba(244, 63, 94, 0.0)');
+
+                // Setup chart with sleek, minimalistic design
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['00:00', '02:00', '04:00', '06:00', '08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00', '22:00'],
+                        datasets: [{
+                            label: 'Intrusions Mitigated',
+                            data: [15, 22, 18, 35, 28, 45, 38, 55, 42, 65, 58, 72],
+                            borderColor: 'rgba(244, 63, 94, 0.9)',
+                            backgroundColor: gradient,
+                            borderWidth: 2,
+                            pointBackgroundColor: '#050508',
+                            pointBorderColor: 'rgba(244, 63, 94, 1)',
+                            pointBorderWidth: 2,
+                            pointRadius: 4,
+                            pointHoverRadius: 6,
+                            fill: true,
+                            tension: 0.4 // Smooth curves
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                backgroundColor: 'rgba(5, 5, 8, 0.9)',
+                                titleColor: 'rgba(255, 255, 255, 0.5)',
+                                bodyColor: 'rgba(255, 255, 255, 0.9)',
+                                borderColor: 'rgba(255, 255, 255, 0.1)',
+                                borderWidth: 1,
+                                padding: 12,
+                                displayColors: false,
+                                titleFont: { family: 'JetBrains Mono', size: 10, weight: 'normal' },
+                                bodyFont: { family: 'Inter', size: 14, weight: '300' },
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.parsed.y + ' Events Blocked';
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: { color: 'rgba(255, 255, 255, 0.03)', drawBorder: false },
+                                ticks: {
+                                    color: 'rgba(255, 255, 255, 0.3)',
+                                    font: { family: 'JetBrains Mono', size: 10 },
+                                    padding: 10
+                                }
+                            },
+                            x: {
+                                grid: { display: false, drawBorder: false },
+                                ticks: {
+                                    color: 'rgba(255, 255, 255, 0.3)',
+                                    font: { family: 'JetBrains Mono', size: 10 },
+                                    maxTicksLimit: 6,
+                                    padding: 10
+                                }
+                            }
+                        },
+                        interaction: {
+                            intersect: false,
+                            mode: 'index',
+                        },
+                    }
+                });
+            };
+
+            // Delay slightly to ensure Chart.js is loaded from CDN
+            if (typeof Chart !== 'undefined') {
+                initChart();
+            } else {
+                setTimeout(initChart, 500);
+            }
+        });
+      </script>
+
+      <!-- ============ FINAL CTA ============ -->
+      <section class="relative w-full py-32 md:py-44 overflow-hidden" id="final-cta">
+        <!-- Background glow -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-[180px] pointer-events-none bg-violet-600/15"></div>
+        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[900px] h-[300px] rounded-full blur-[120px] pointer-events-none bg-violet-500/8"></div>
+        
+        <div class="max-w-[900px] mx-auto px-6 md:px-10 relative z-10 text-center">
+          <!-- Eyebrow -->
+          <div class="cta-reveal opacity-0 mb-8">
+            <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-violet-500/20 bg-violet-500/5 text-[10px] font-mono tracking-[0.3em] text-violet-400/60 uppercase">
+              <span class="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse"></span>
+              Now Live on Base
+            </span>
+          </div>
+
+          <!-- Main headline with word-by-word reveal -->
+          <h2 class="cta-headline text-4xl md:text-6xl lg:text-7xl font-extralight text-white/95 tracking-tight leading-[1.05] mb-6">
+            <span class="cta-word" style="opacity:0; transform:translateY(40px); display:inline-block; transition: all 0.6s cubic-bezier(0.16,1,0.3,1);">The</span>
+            <span class="cta-word" style="opacity:0; transform:translateY(40px); display:inline-block; transition: all 0.6s cubic-bezier(0.16,1,0.3,1);">future</span>
+            <span class="cta-word" style="opacity:0; transform:translateY(40px); display:inline-block; transition: all 0.6s cubic-bezier(0.16,1,0.3,1);">of</span>
+            <span class="cta-word" style="opacity:0; transform:translateY(40px); display:inline-block; transition: all 0.6s cubic-bezier(0.16,1,0.3,1);">compute</span>
+            <br class="hidden md:block">
+            <span class="cta-word" style="opacity:0; transform:translateY(40px); display:inline-block; transition: all 0.6s cubic-bezier(0.16,1,0.3,1);">is</span>
+            <span class="cta-word cta-word-accent" style="opacity:0; transform:translateY(40px); display:inline-block; transition: all 0.6s cubic-bezier(0.16,1,0.3,1); background: linear-gradient(135deg, #8B5CF6, #6C3CE9, #9D6FFF); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">private.</span>
+          </h2>
+
+          <!-- Subtext -->
+          <p class="cta-reveal opacity-0 text-base md:text-lg font-light text-white/30 max-w-lg mx-auto leading-relaxed mb-12">
+            Encrypted orders. Fair batch auctions. Settlement on Base.<br class="hidden md:block">
+            Join the marketplace where nobody sees what you're trading.
+          </p>
+
+          <!-- CTA Button -->
+          <div class="cta-reveal opacity-0">
+            <a href="/dashboard" class="group relative inline-flex items-center gap-3 px-10 py-4 rounded-full font-medium text-white text-base overflow-hidden transition-all duration-300 hover:shadow-[0_0_40px_rgba(108,60,233,0.5)]" style="background: linear-gradient(135deg, #6C3CE9, #8B5CF6); box-shadow: 0 0 25px rgba(108,60,233,0.3);">
+              <!-- Shimmer effect -->
+              <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style="background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.15) 45%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,0.15) 55%, transparent 60%); background-size: 200% 100%; animation: cta-shimmer 1.5s ease-in-out infinite;"></div>
+              <span class="relative z-10">Launch App</span>
+              <svg class="relative z-10 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+          </div>
+
+          <!-- Trust line -->
+          <div class="cta-reveal opacity-0 mt-8 flex items-center justify-center gap-6 text-[11px] font-mono text-white/20 tracking-wider uppercase">
+            <span class="flex items-center gap-1.5">
+              <svg class="w-3 h-3 text-emerald-400/50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              ZK Verified
+            </span>
+            <span class="w-px h-3 bg-white/10"></span>
+            <span>Base L2</span>
+            <span class="w-px h-3 bg-white/10"></span>
+            <span>USDC Settlement</span>
+          </div>
+        </div>
+      </section>
+
+      <style>
+        @keyframes cta-shimmer {
+          0% { background-position: 200% 0; }
+          100% { background-position: -200% 0; }
+        }
+      </style>
+
+      <script>
+      (function(){
+        var section = document.getElementById('final-cta');
+        if(!section) return;
+
+        // Word-by-word headline reveal
+        var words = section.querySelectorAll('.cta-word');
+        var reveals = section.querySelectorAll('.cta-reveal');
+        var triggered = false;
+
+        function revealCTA(){
+          if(triggered) return;
+          triggered = true;
+          // Reveal words
+          words.forEach(function(w, i){
+            setTimeout(function(){
+              w.style.opacity = '1';
+              w.style.transform = 'translateY(0)';
+            }, 150 + i * 100);
+          });
+          // Reveal other elements
+          reveals.forEach(function(el, i){
+            setTimeout(function(){
+              el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+              el.style.opacity = '1';
+              el.style.transform = 'translateY(0)';
+            }, 600 + i * 200);
+          });
+        }
+
+        if(typeof IntersectionObserver !== 'undefined'){
+          var obs = new IntersectionObserver(function(entries){
+            if(entries[0].isIntersecting){ revealCTA(); obs.disconnect(); }
+          }, {threshold: 0.3});
+          obs.observe(section);
+        } else {
+          revealCTA();
+        }
+      })();
+      </script>
+
+
       <footer class="w-full mt-24 pt-12 pb-8 border-t border-white/5 flex flex-col gap-12 text-sm text-white/40">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8 px-6 md:px-12 max-w-6xl mx-auto w-full">
           <div class="flex flex-col gap-4">

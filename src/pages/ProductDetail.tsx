@@ -123,7 +123,7 @@ const ProductDetail = () => {
   const estTotal = (quantity[0] * parseFloat(currentPrice || "0")).toFixed(2);
 
   return (
-    <div className="space-y-6 max-w-[1200px]">
+    <div className="space-y-6 max-w-6xl">
       {/* Back nav */}
       <button
         onClick={() => navigate("/marketplace")}
@@ -203,8 +203,8 @@ const ProductDetail = () => {
       </GlassCard>
 
       {/* Order Ticket — redesigned */}
-      <GlassCard delay={0.15} glow className="p-7">
-        <div className="flex flex-col gap-7">
+      <GlassCard delay={0.15} glow className="p-6">
+        <div className="flex flex-col gap-6">
           {/* Header */}
           <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Private Order</span>
 
@@ -231,7 +231,7 @@ const ProductDetail = () => {
           </div>
 
           {/* 3-column form grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-7">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Col 1: GPU Type */}
             <div className="flex flex-col gap-3">
               <SectionLabel>GPU Type</SectionLabel>

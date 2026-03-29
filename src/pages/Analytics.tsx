@@ -39,7 +39,7 @@ const Analytics = () => {
   const [timeframe, setTimeframe] = useState("1W");
 
   return (
-    <div className="space-y-8 max-w-[1200px] relative">
+    <div className="space-y-6 max-w-6xl relative">
       <GlowBlob className="-top-20 right-0 opacity-30" color="purple" size="lg" />
 
       <div>
@@ -103,7 +103,7 @@ const Analytics = () => {
         </div>
       </GlassCard>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Market Stats */}
         <GlassCard delay={0.2} className="p-6">
           <SectionLabel pulse>Market Statistics</SectionLabel>

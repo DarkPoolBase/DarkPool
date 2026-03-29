@@ -12,7 +12,7 @@ import { motion } from "framer-motion";
 
 const Provider = () => {
   return (
-    <div className="space-y-8 max-w-[1200px]">
+    <div className="space-y-6 max-w-6xl">
       <div>
         <h1 className="text-2xl md:text-3xl font-thin tracking-tight text-foreground">Provider Panel</h1>
         <p className="text-sm text-muted-foreground mt-2 font-mono text-[11px]">Register, manage, and monetize your GPU compute</p>
@@ -21,7 +21,7 @@ const Provider = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
         {/* ─── Section 1: Register GPU ─── */}
-        <GlassCard delay={0.1} className="p-7">
+        <GlassCard delay={0.1} className="p-6">
           <div className="flex flex-col gap-6">
             <SectionLabel>Register GPU</SectionLabel>
 
@@ -139,7 +139,7 @@ const Provider = () => {
         <div className="lg:col-span-2 flex flex-col gap-6">
 
           {/* ─── Section 2: Active Listing ─── */}
-          <GlassCard delay={0.2} className="p-7">
+          <GlassCard delay={0.2} className="p-6">
             <div className="flex flex-col gap-6">
               {/* Header row */}
               <div className="flex items-center justify-between">
@@ -210,7 +210,7 @@ const Provider = () => {
           </GlassCard>
 
           {/* ─── Section 3: Earnings & Performance ─── */}
-          <GlassCard delay={0.3} glow className="p-7">
+          <GlassCard delay={0.3} glow className="p-6">
             <div className="flex flex-col gap-6">
               <SectionLabel pulse>Earnings & Performance</SectionLabel>
 

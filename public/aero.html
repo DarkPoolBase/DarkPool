@@ -1842,6 +1842,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+  // Feature tile GSAP scroll reveal
+  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    gsap.utils.toArray('.feature-tile').forEach(function(tile, i) {
+      gsap.from(tile, {
+        y: 40, opacity: 0, duration: 0.7, ease: 'power3.out',
+        delay: (i % 3) * 0.1,
+        scrollTrigger: { trigger: tile, start: 'top 92%', toggleActions: 'play none none none' }
+      });
+    });
+  }
   // Execution engine batch timer
   var timerSec = 32;
   var timerText = document.querySelector('.feature-timer-text');

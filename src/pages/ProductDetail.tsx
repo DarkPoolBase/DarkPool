@@ -150,19 +150,19 @@ const ProductDetail = () => {
 
             {/* Key stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+              <div className="p-4 rounded-xl bg-white/[0.02]">
                 <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">Est. Clearing</p>
                 <p className="font-mono text-lg font-semibold text-foreground tabular-nums mt-1">{product.price}</p>
               </div>
-              <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.04]">
-                <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">Providers</p>
+              <div className="p-4 rounded-xl bg-white/[0.02]">
+                <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">Verified Providers</p>
                 <p className="font-mono text-lg font-semibold text-foreground tabular-nums mt-1">{product.providers}</p>
               </div>
-              <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+              <div className="p-4 rounded-xl bg-white/[0.02]">
                 <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">VRAM</p>
                 <p className="font-mono text-lg font-semibold text-foreground tabular-nums mt-1">{product.vram}</p>
               </div>
-              <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+              <div className="p-4 rounded-xl bg-white/[0.02]">
                 <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">Liquidity</p>
                 <p className={`font-mono text-lg font-semibold tabular-nums mt-1 ${
                   product.availability >= 70 ? "text-emerald-400" : product.availability >= 40 ? "text-amber-400" : "text-rose-400"
@@ -171,17 +171,6 @@ const ProductDetail = () => {
             </div>
           </div>
 
-          {/* Workloads */}
-          <div className="lg:w-48 shrink-0">
-            <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground mb-4">Use Cases</p>
-            <div className="flex flex-wrap lg:flex-col gap-2">
-              {product.workloads.map((w) => (
-                <span key={w} className="px-4 py-2 rounded-lg text-[11px] font-mono bg-white/[0.03] border border-white/[0.06] text-muted-foreground">
-                  {w}
-                </span>
-              ))}
-            </div>
-          </div>
         </div>
       </GlassCard>
 
@@ -257,7 +246,7 @@ const ProductDetail = () => {
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 0.4 + i * 0.08 }}
-                  className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.04] text-center"
+                  className="p-4 rounded-xl bg-white/[0.02] text-center"
                 >
                   <b.icon className="w-4 h-4 text-primary mx-auto mb-2" />
                   <p className="font-mono text-sm font-semibold text-foreground tabular-nums">{b.value}</p>
@@ -283,7 +272,7 @@ const ProductDetail = () => {
                   initial={{ opacity: 0, x: -8 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.3, delay: 0.4 + i * 0.06 }}
-                  className="flex items-center justify-between p-4 rounded-xl bg-white/[0.02] border border-white/[0.04] hover:border-white/[0.08] transition-all"
+                  className="flex items-center justify-between p-4 rounded-xl bg-white/[0.02] hover:bg-white/[0.03] transition-all"
                 >
                   <span className="font-mono text-[11px] text-primary/60">{s.id}</span>
                   <span className="font-mono text-[11px] text-muted-foreground">{s.qty}</span>
@@ -308,7 +297,7 @@ const ProductDetail = () => {
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 0.5 + i * 0.1 }}
-                  className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.04]"
+                  className="p-4 rounded-xl bg-white/[0.02]"
                 >
                   <item.icon className="w-5 h-5 text-primary mb-4" />
                   <h4 className="text-sm font-medium text-foreground mb-2">{item.title}</h4>

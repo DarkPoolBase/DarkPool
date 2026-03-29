@@ -139,7 +139,7 @@ const Provider = () => {
         <div className="lg:col-span-2 flex flex-col gap-6">
 
           {/* ─── Section 2: Active Listing ─── */}
-          <GlassCard delay={0.2} corners className="p-7">
+          <GlassCard delay={0.2} className="p-7">
             <div className="flex flex-col gap-6">
               {/* Header row */}
               <div className="flex items-center justify-between">

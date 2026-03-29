@@ -36,7 +36,7 @@ const SettingsPage = () => {
           { label: "Production Key", key: "sk_live_****************************" },
           { label: "Test Key", key: "sk_test_****************************" },
         ].map((item) => (
-          <div key={item.label} className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-4">
+          <div key={item.label} className="rounded-xl bg-white/[0.03] p-4 space-y-4">
             <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/30">{item.label}</p>
             <p className="font-mono text-sm text-white/60 bg-white/[0.02] px-4 py-2 rounded-lg border border-white/[0.04]">{item.key}</p>
             <div className="flex gap-2">

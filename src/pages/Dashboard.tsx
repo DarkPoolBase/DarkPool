@@ -26,7 +26,7 @@ const Dashboard = () => {
   const [tab, setTab] = useState<"overview" | "savings">("overview");
 
   return (
-    <div className="space-y-8 max-w-[1440px] relative">
+    <div className="space-y-6 md:space-y-8 max-w-[1440px] relative">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
         <div>

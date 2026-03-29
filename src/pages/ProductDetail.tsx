@@ -169,78 +169,75 @@ const ProductDetail = () => {
         </div>
       </GlassCard>
 
-      {/* Price History + Order Ticket grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Price History */}
-        <GlassCard delay={0.1} className="p-6 lg:col-span-2">
-          <div className="flex items-center justify-between mb-4">
-            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Price History (24h)</span>
-            <span className="font-mono text-[10px] text-muted-foreground/50">USDC / GPU-hr</span>
-          </div>
-          <div className="h-[200px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={priceHistory}>
-                <defs>
-                  <linearGradient id="priceGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="hsl(263,70%,58%)" stopOpacity={0.25} />
-                    <stop offset="100%" stopColor="hsl(263,70%,58%)" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.03)" />
-                <XAxis dataKey="time" tick={{ fontSize: 10, fill: "rgba(255,255,255,0.2)", fontFamily: "JetBrains Mono" }} axisLine={false} tickLine={false} />
-                <YAxis tick={{ fontSize: 10, fill: "rgba(255,255,255,0.2)", fontFamily: "JetBrains Mono" }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${v}`} domain={["auto", "auto"]} />
-                <Tooltip
-                  contentStyle={{
-                    background: "rgba(5,5,8,0.95)", border: "1px solid rgba(255,255,255,0.06)",
-                    borderRadius: 12, fontSize: 11, fontFamily: "JetBrains Mono",
-                    backdropFilter: "blur(16px)", boxShadow: "0 0 30px rgba(108,60,233,0.15)",
-                  }}
-                  labelStyle={{ color: "rgba(255,255,255,0.3)" }}
-                  formatter={(value: number) => [`$${value.toFixed(3)}`, "Price"]}
-                />
-                <Area type="monotone" dataKey="price" stroke="hsl(263,70%,58%)" strokeWidth={2} fill="url(#priceGrad)" />
-              </AreaChart>
-            </ResponsiveContainer>
-          </div>
-        </GlassCard>
+      {/* Price History — full width */}
+      <GlassCard delay={0.1} className="p-6">
+        <div className="flex items-center justify-between mb-4">
+          <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Price History (24h)</span>
+          <span className="font-mono text-[10px] text-muted-foreground/50">USDC / GPU-hr</span>
+        </div>
+        <div className="h-[280px]">
+          <ResponsiveContainer width="100%" height="100%">
+            <AreaChart data={priceHistory}>
+              <defs>
+                <linearGradient id="priceGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="hsl(263,70%,58%)" stopOpacity={0.25} />
+                  <stop offset="100%" stopColor="hsl(263,70%,58%)" stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.03)" />
+              <XAxis dataKey="time" tick={{ fontSize: 10, fill: "rgba(255,255,255,0.2)", fontFamily: "JetBrains Mono" }} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fontSize: 10, fill: "rgba(255,255,255,0.2)", fontFamily: "JetBrains Mono" }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${v}`} domain={["auto", "auto"]} />
+              <Tooltip
+                contentStyle={{
+                  background: "rgba(5,5,8,0.95)", border: "1px solid rgba(255,255,255,0.06)",
+                  borderRadius: 12, fontSize: 11, fontFamily: "JetBrains Mono",
+                  backdropFilter: "blur(16px)", boxShadow: "0 0 30px rgba(108,60,233,0.15)",
+                }}
+                labelStyle={{ color: "rgba(255,255,255,0.3)" }}
+                formatter={(value: number) => [`$${value.toFixed(3)}`, "Price"]}
+              />
+              <Area type="monotone" dataKey="price" stroke="hsl(263,70%,58%)" strokeWidth={2} fill="url(#priceGrad)" />
+            </AreaChart>
+          </ResponsiveContainer>
+        </div>
+      </GlassCard>
 
-        {/* Order Ticket */}
-        <GlassCard delay={0.15} glow className="p-6 space-y-5 sticky top-8">
-          <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground block">Private Order</span>
-
-          {/* Buy/Sell toggle */}
-          <div className="flex rounded-xl border border-white/[0.06] overflow-hidden bg-white/[0.02] relative">
-            <motion.div
-              className="absolute inset-y-0 w-1/2 rounded-xl"
-              animate={{ x: side === "sell" ? "100%" : "0%" }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              style={{
-                background: side === "buy"
-                  ? "linear-gradient(135deg, rgba(34,197,94,0.15), rgba(34,197,94,0.05))"
-                  : "linear-gradient(135deg, rgba(239,68,68,0.15), rgba(239,68,68,0.05))",
-              }}
-            />
-            <button
-              className={`flex-1 py-2 text-sm font-bold tracking-wider relative z-10 transition-colors ${side === "buy" ? "text-emerald-400" : "text-muted-foreground"}`}
-              onClick={() => setSide("buy")}
-            >BUY</button>
-            <button
-              className={`flex-1 py-2 text-sm font-bold tracking-wider relative z-10 transition-colors ${side === "sell" ? "text-rose-400" : "text-muted-foreground"}`}
-              onClick={() => setSide("sell")}
-            >SELL</button>
-          </div>
-
-          <div className="space-y-2">
-            <SectionLabel>GPU Type</SectionLabel>
+      {/* Order Ticket — horizontal full width */}
+      <GlassCard delay={0.15} glow className="p-6">
+        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground block mb-5">Private Order</span>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          {/* Col 1: Buy/Sell + GPU type */}
+          <div className="space-y-4">
+            <div className="flex rounded-xl border border-white/[0.06] overflow-hidden bg-white/[0.02] relative">
+              <motion.div
+                className="absolute inset-y-0 w-1/2 rounded-xl"
+                animate={{ x: side === "sell" ? "100%" : "0%" }}
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                style={{
+                  background: side === "buy"
+                    ? "linear-gradient(135deg, rgba(34,197,94,0.15), rgba(34,197,94,0.05))"
+                    : "linear-gradient(135deg, rgba(239,68,68,0.15), rgba(239,68,68,0.05))",
+                }}
+              />
+              <button
+                className={`flex-1 py-2 text-sm font-bold tracking-wider relative z-10 transition-colors ${side === "buy" ? "text-emerald-400" : "text-muted-foreground"}`}
+                onClick={() => setSide("buy")}
+              >BUY</button>
+              <button
+                className={`flex-1 py-2 text-sm font-bold tracking-wider relative z-10 transition-colors ${side === "sell" ? "text-rose-400" : "text-muted-foreground"}`}
+                onClick={() => setSide("sell")}
+              >SELL</button>
+            </div>
             <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] font-mono text-sm text-foreground/80">
               {product.name} · {product.vram}
             </div>
           </div>
 
-          <div className="space-y-2">
+          {/* Col 2: Quantity */}
+          <div className="space-y-3">
             <SectionLabel>Quantity (GPU-hours): <span className="text-foreground/70">{quantity[0]}</span></SectionLabel>
             <Slider value={quantity} onValueChange={setQuantity} min={1} max={168} step={1} />
-            <div className="flex gap-2 mt-2">
+            <div className="flex gap-2 mt-1">
               {[24, 48, 72, 168].map((v) => (
                 <button
                   key={v}
@@ -255,7 +252,17 @@ const ProductDetail = () => {
             </div>
           </div>
 
-          <div className="space-y-2">
+          {/* Col 3: Price + Duration */}
+          <div className="space-y-3">
+            <SectionLabel>{side === "buy" ? "Max Price" : "Min Price"} (USDC / GPU-hr)</SectionLabel>
+            <Input
+              value={currentPrice}
+              onChange={(e) => setPrice(e.target.value)}
+              className="font-mono border-white/[0.06] bg-white/[0.02] hover:border-white/[0.12] transition-colors"
+              type="number"
+              step="0.01"
+              placeholder={defaultPrice}
+            />
             <SectionLabel>Duration</SectionLabel>
             <Select value={duration} onValueChange={setDuration}>
               <SelectTrigger className="border-white/[0.06] bg-white/[0.02] hover:border-white/[0.12] transition-colors">
@@ -270,33 +277,22 @@ const ProductDetail = () => {
             </Select>
           </div>
 
-          <div className="space-y-2">
-            <SectionLabel>{side === "buy" ? "Max Price" : "Min Price"} (USDC / GPU-hr)</SectionLabel>
-            <Input
-              value={currentPrice}
-              onChange={(e) => setPrice(e.target.value)}
-              className="font-mono border-white/[0.06] bg-white/[0.02] hover:border-white/[0.12] transition-colors"
-              type="number"
-              step="0.01"
-              placeholder={defaultPrice}
-            />
+          {/* Col 4: Total + Submit */}
+          <div className="flex flex-col justify-between space-y-3">
+            <div className="flex items-center justify-between py-3 border-b border-white/[0.06]">
+              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Est. Total</span>
+              <span className="font-mono text-lg font-semibold text-foreground">${estTotal} <span className="text-xs text-muted-foreground">USDC</span></span>
+            </div>
+            <Button className="w-full gap-2 bg-gradient-to-r from-primary to-[hsl(258,78%,65%)] hover:from-primary/90 hover:to-[hsl(258,78%,60%)] shadow-[0_0_20px_rgba(108,60,233,0.3)] hover:shadow-[0_0_30px_rgba(108,60,233,0.5)] transition-all duration-300 border-0 h-12">
+              <Lock className="h-4 w-4" />
+              Submit Encrypted Order
+            </Button>
+            <p className="font-mono text-[10px] text-muted-foreground/50 leading-relaxed text-center">
+              Orders remain encrypted until verified settlement.
+            </p>
           </div>
-
-          <div className="flex items-center justify-between py-4 border-t border-white/[0.06]">
-            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Est. Total</span>
-            <span className="font-mono text-lg font-semibold text-foreground">${estTotal} <span className="text-xs text-muted-foreground">USDC</span></span>
-          </div>
-
-          <Button className="w-full gap-2 bg-gradient-to-r from-primary to-[hsl(258,78%,65%)] hover:from-primary/90 hover:to-[hsl(258,78%,60%)] shadow-[0_0_20px_rgba(108,60,233,0.3)] hover:shadow-[0_0_30px_rgba(108,60,233,0.5)] transition-all duration-300 border-0 h-12">
-            <Lock className="h-4 w-4" />
-            Submit Encrypted Order
-          </Button>
-
-          <p className="font-mono text-[10px] text-muted-foreground/50 leading-relaxed text-center">
-            Order details remain encrypted until verified settlement. No participant — including the platform — can see raw order data.
-          </p>
-        </GlassCard>
-      </div>
+        </div>
+      </GlassCard>
 
       {/* Supply vs Demand — full width */}
       <GlassCard delay={0.2} className="p-6">

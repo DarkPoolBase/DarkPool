@@ -1,8 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
-import { Copy, RefreshCw, Trash2 } from "lucide-react";
+import { Copy, RefreshCw, Trash2, Eye, EyeOff, Shield, Key } from "lucide-react";
 import { GlassCard } from "@/components/ui/glass-card";
 import { SectionLabel } from "@/components/ui/section-label";
+import { useState } from "react";
 
 const SettingsPage = () => {
   return (

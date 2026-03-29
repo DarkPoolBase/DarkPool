@@ -203,13 +203,13 @@ const ProductDetail = () => {
       </GlassCard>
 
       {/* Order Ticket — redesigned */}
-      <GlassCard delay={0.15} glow className="p-10">
-        <div className="flex flex-col gap-10">
+      <GlassCard delay={0.15} glow className="p-7">
+        <div className="flex flex-col gap-7">
           {/* Header */}
           <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Private Order</span>
 
           {/* Full-width Buy/Sell toggle */}
-          <div className="flex rounded-xl border border-white/[0.06] overflow-hidden bg-white/[0.02] relative h-14">
+          <div className="flex rounded-xl border border-white/[0.06] overflow-hidden bg-white/[0.02] relative h-12">
             <motion.div
               className="absolute inset-y-0 w-1/2 rounded-xl"
               animate={{ x: side === "sell" ? "100%" : "0%" }}
@@ -231,11 +231,11 @@ const ProductDetail = () => {
           </div>
 
           {/* 3-column form grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-7">
             {/* Col 1: GPU Type */}
             <div className="flex flex-col gap-3">
               <SectionLabel>GPU Type</SectionLabel>
-              <div className="p-5 rounded-xl bg-white/[0.02] border border-white/[0.06] flex-1 flex flex-col justify-center">
+              <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] flex-1 flex flex-col justify-center">
                 <p className="font-mono text-sm font-medium text-foreground">{product.name}</p>
                 <p className="font-mono text-xs text-muted-foreground mt-2">{product.vram} · Spot Market</p>
               </div>
@@ -244,7 +244,7 @@ const ProductDetail = () => {
             {/* Col 2: Quantity */}
             <div className="flex flex-col gap-4">
               <SectionLabel>Quantity (GPU-hours): <span className="text-foreground/70">{quantity[0]}</span></SectionLabel>
-              <div className="flex-1 flex flex-col justify-center gap-5">
+              <div className="flex-1 flex flex-col justify-center gap-4">
                 <Slider value={quantity} onValueChange={setQuantity} min={1} max={168} step={1} />
                 <div className="flex gap-2">
                   {[24, 48, 72, 168].map((v) => (
@@ -293,8 +293,8 @@ const ProductDetail = () => {
           </div>
 
           {/* Summary + Submit bar */}
-          <div className="rounded-xl bg-white/[0.02] border border-white/[0.06] p-6">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="rounded-xl bg-white/[0.02] border border-white/[0.06] p-5">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-5">
               <div className="font-mono text-xs text-muted-foreground">
                 {quantity[0]} GPU-hrs × ${currentPrice}/hr
               </div>

@@ -348,32 +348,23 @@ const Marketplace = () => {
         {/* Recent Settlements */}
         <GlassCard delay={0.6} className="p-6">
           <div className="flex items-center justify-between mb-4">
-            <div>
-              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground block mb-1">Recent Settlements</span>
-              <p className="text-[11px] text-muted-foreground/50 font-mono">Anonymized batch auction results</p>
-            </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="font-mono text-[10px] text-emerald-400/70">Live</span>
+              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Recent Settlements</span>
             </div>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {recentSettlements.map((s, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 8 }}
+                initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.7 + i * 0.08 }}
-                className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.04] hover:border-white/[0.08] transition-all duration-300"
+                transition={{ duration: 0.3, delay: 0.7 + i * 0.06 }}
+                className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.04] hover:border-white/[0.08] transition-all duration-300 text-center"
               >
-                <div className="flex items-center justify-between mb-2">
-                  <span className="font-mono text-[10px] font-medium text-foreground/80">{s.pair}</span>
-                  <span className="font-mono text-[9px] text-muted-foreground">{s.time}</span>
-                </div>
-                <div className="flex items-end justify-between">
-                  <span className="font-mono text-xs text-muted-foreground">{s.qty}</span>
-                  <span className="font-mono text-sm font-semibold text-emerald-400 tabular-nums">{s.price}</span>
-                </div>
+                <p className="font-mono text-lg font-semibold text-emerald-400 tabular-nums">{s.price}</p>
+                <p className="font-mono text-[10px] text-foreground/50 mt-1">{s.qty}</p>
+                <p className="font-mono text-[9px] text-muted-foreground/40 mt-0.5">{s.time}</p>
               </motion.div>
             ))}
           </div>

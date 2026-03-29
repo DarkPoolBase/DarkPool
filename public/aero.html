@@ -1110,9 +1110,9 @@ document.addEventListener('DOMContentLoaded', function() {
           <div class="group grid grid-cols-12 gap-4 py-6 border-b border-white/5 items-center hover:bg-white/5 transition-colors -mx-2 px-2 rounded-lg cursor-pointer">
             <div class="col-span-5 md:col-span-4 transition-colors flex font-normal text-white gap-x-2 gap-y-2 items-center group-hover:text-violet-500">
               <span class="text-xs text-zinc-600 font-['JetBrains_Mono']">01</span>
-              Connect Wallet &amp; Deposit
+              Deposit
             </div>
-            <div class="col-span-4 md:col-span-5 text-zinc-400 font-light">MetaMask, Coinbase Wallet, or Agentic Wallet. Deposit USDC to escrow.</div>
+            <div class="col-span-4 md:col-span-5 text-zinc-400 font-light">Fund your wallet with USDC on Base.</div>
             <div class="col-span-3 md:col-span-3 text-right text-zinc-500 font-['JetBrains_Mono']">~$0.01 gas</div>
           </div>
 
@@ -1121,28 +1121,39 @@ document.addEventListener('DOMContentLoaded', function() {
               <span class="text-xs text-zinc-600 font-['JetBrains_Mono']">02</span>
               Submit Encrypted Order
             </div>
-            <div class="col-span-4 md:col-span-5 text-zinc-400 font-light">Specify GPU type, quantity, duration, max price. Order encrypted via commit-reveal.</div>
+            <div class="col-span-4 md:col-span-5 text-zinc-400 font-light">Define GPU, duration, and max price. Order is fully encrypted.</div>
             <div class="col-span-3 md:col-span-3 text-right text-zinc-500 font-['JetBrains_Mono']">Instant</div>
           </div>
 
           <div class="group grid grid-cols-12 gap-4 py-6 border-b border-white/5 items-center hover:bg-white/5 transition-colors -mx-2 px-2 rounded-lg cursor-pointer">
             <div class="col-span-5 md:col-span-4 text-white font-normal transition-colors flex items-center gap-2 group-hover:text-violet-500">
               <span class="text-xs text-zinc-600 font-['JetBrains_Mono']">03</span>
-              Batch Auction Matching
+              Batch Auction
             </div>
-            <div class="col-span-4 md:col-span-5 text-zinc-400 font-light">Engine finds clearing price where most trades execute. Fair for all participants.</div>
+            <div class="col-span-4 md:col-span-5 text-zinc-400 font-light">Orders match every 30–60 seconds at a fair clearing price.</div>
             <div class="col-span-3 md:col-span-3 text-right text-zinc-500 font-['JetBrains_Mono']">30-60 sec</div>
           </div>
 
           <div class="group grid grid-cols-12 gap-4 py-6 border-b border-white/5 items-center hover:bg-white/5 transition-colors -mx-2 px-2 rounded-lg cursor-pointer">
             <div class="col-span-5 md:col-span-4 text-white font-normal transition-colors flex items-center gap-2 group-hover:text-violet-500">
               <span class="text-xs text-zinc-600 font-['JetBrains_Mono']">04</span>
-              Settlement &amp; Delivery
+              Execution
             </div>
-            <div class="col-span-4 md:col-span-5 text-zinc-400 font-light">ZK proof submitted to Base. USDC released from escrow. SSH/API access to GPU.</div>
+            <div class="col-span-4 md:col-span-5 text-zinc-400 font-light">Matched instantly. Compute access delivered.</div>
+            <div class="col-span-3 md:col-span-3 text-right text-zinc-500 font-['JetBrains_Mono']">Instant</div>
+          </div>
+
+          <div class="group grid grid-cols-12 gap-4 py-6 border-b border-white/5 items-center hover:bg-white/5 transition-colors -mx-2 px-2 rounded-lg cursor-pointer">
+            <div class="col-span-5 md:col-span-4 text-white font-normal transition-colors flex items-center gap-2 group-hover:text-violet-500">
+              <span class="text-xs text-zinc-600 font-['JetBrains_Mono']">05</span>
+              Settlement
+            </div>
+            <div class="col-span-4 md:col-span-5 text-zinc-400 font-light">Funds released automatically on-chain.</div>
             <div class="col-span-3 md:col-span-3 text-right text-zinc-500 font-['JetBrains_Mono']">On-chain</div>
           </div>
         </div>
+
+        <p class="text-center text-lg md:text-xl font-light text-white/60 mt-10 italic">All without exposing a single data point.</p>
       </div>
 
       <div class="flex pt-8 justify-center">

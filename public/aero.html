@@ -335,13 +335,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             </article>
 
-            <!-- Right Main: Huge Aura Canvas -->
+            <!-- Right Main: COMPUTE-01 Animation -->
             <article class="lg:col-span-8 flex flex-col min-h-[400px] overflow-hidden transition-all duration-500 hover:border-white/10 group cursor-pointer bg-[#0B0C0E] w-full border-white/5 border relative">
-  
-  <img src="https://images.unsplash.com/photo-1629946832022-c327f74956e0?w=2160&amp;q=80" class="transition-transform duration-1000 group-hover:scale-110 group-hover:opacity-60 opacity-40 mix-blend-overlay w-full h-full object-cover absolute top-0 right-0 bottom-0 left-0" alt="Marketing Sites">
-
-  <!-- Animated background glow -->
-  <div class="-translate-x-1/2 -translate-y-1/2 group-hover:opacity-20 animate-[spin_4s_linear_infinite] transition-opacity duration-700 opacity-0 w-[120%] h-[120%] absolute top-1/2 left-1/2 blur-2xl"></div>
 
   <!-- Popular Badge -->
   <div class="absolute top-6 left-6 text-white text-[10px] font-medium px-3 py-1.5 uppercase tracking-widest rounded border shadow-lg z-20 bg-violet-500 border-violet-400/50 flex items-center gap-2 transform transition-transform group-hover:-translate-y-1">
@@ -349,7 +344,24 @@ document.addEventListener('DOMContentLoaded', function() {
     Popular
   </div>
 
-  <!-- Title & Description Overlay (FRAME-02 Style) -->
+  <!-- Animated Order Matching Visualization -->
+  <div class="absolute inset-0 flex items-center justify-center z-10" id="compute-anim-container">
+    <div class="relative w-[320px] h-[200px]" id="compute-anim">
+      <!-- Order blocks will be animated via JS -->
+      <div class="order-block absolute w-10 h-6 rounded bg-white/10 border border-white/10" style="top:10%;left:5%;"></div>
+      <div class="order-block absolute w-12 h-6 rounded bg-violet-500/20 border border-violet-500/20" style="top:5%;left:35%;"></div>
+      <div class="order-block absolute w-9 h-6 rounded bg-white/10 border border-white/10" style="top:15%;left:70%;"></div>
+      <div class="order-block absolute w-11 h-6 rounded bg-violet-500/20 border border-violet-500/20" style="top:60%;left:10%;"></div>
+      <div class="order-block absolute w-10 h-6 rounded bg-white/10 border border-white/10" style="top:70%;left:55%;"></div>
+      <div class="order-block absolute w-12 h-6 rounded bg-violet-500/20 border border-violet-500/20" style="top:75%;left:80%;"></div>
+      <div class="order-block absolute w-10 h-6 rounded bg-white/10 border border-white/10" style="top:40%;left:85%;"></div>
+      <div class="order-block absolute w-11 h-6 rounded bg-violet-500/20 border border-violet-500/20" style="top:35%;left:20%;"></div>
+      <!-- Clearing price bar (hidden initially) -->
+      <div class="clearing-bar absolute left-[10%] right-[10%] top-1/2 -translate-y-1/2 h-2 rounded-full bg-[#6C3CE9] opacity-0 shadow-[0_0_0px_rgba(108,60,233,0)]" style="transition: all 0.6s ease;"></div>
+    </div>
+  </div>
+
+  <!-- Title & Description Overlay -->
   <div class="absolute bottom-8 left-8 z-20 pointer-events-none flex flex-col justify-end max-w-sm">
     <header class="text-[10px] text-white/30 mb-8 uppercase tracking-[0.2em] flex items-center gap-3 font-extralight" style="font-family: 'JetBrains Mono', monospace;">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]">
@@ -365,57 +377,6 @@ document.addEventListener('DOMContentLoaded', function() {
     <p class="text-xs text-white/40 leading-relaxed font-extralight font-sans">
       Buyers and sellers submit sealed bids via commit-reveal — orders are hashed on-chain so not even the platform can see them. A batch auction runs every 30–60 seconds, finding a single clearing price where the most trades match. ZK proofs verify correctness without exposing any order data.
     </p>
-  </div>
-
-  <!-- Design Tool Overlay: Canvas Selection -->
-  <div class="absolute inset-8 border border-violet-500/30 rounded-lg pointer-events-none transition-all duration-700 flex flex-col justify-between hidden sm:flex z-10 group-hover:border-violet-500/80 group-hover:inset-10 bg-violet-500/[0.02] group-hover:bg-violet-500/[0.05]">
-    <div class="absolute -top-3 left-4 text-[9px] text-white px-2 py-0.5 rounded-sm font-normal bg-violet-500 transition-all duration-500 group-hover:shadow-[0_0_12px_rgba(139,92,246,0.6)]">Hero Section</div>
-    <div class="w-2 h-2 bg-white border border-violet-500 absolute -top-1 -left-1 transition-transform group-hover:scale-125"></div>
-    <div class="w-2 h-2 bg-white border border-violet-500 absolute -top-1 -right-1 transition-transform group-hover:scale-125"></div>
-    <div class="w-2 h-2 bg-white border border-violet-500 absolute -bottom-1 -left-1 transition-transform group-hover:scale-125"></div>
-    <div class="w-2 h-2 bg-white border border-violet-500 absolute -bottom-1 -right-1 transition-transform group-hover:scale-125"></div>
-  </div>
-
-  <!-- Design Tool Overlay: Properties Panel -->
-  <div class="absolute right-8 bottom-8 w-44 bg-[#0E0F11]/95 backdrop-blur-xl border border-white/[0.08] rounded-xl p-4 shadow-2xl transition-all duration-500 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 z-20 group-hover:shadow-violet-900/40">
-    <div class="flex items-center justify-between mb-3 border-b border-white/5 pb-2">
-      <span class="text-[10px] text-white/50 uppercase tracking-widest font-medium">Layout</span>
-      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white/40 hover:text-white transition-colors cursor-pointer">
-        <circle cx="12" cy="12" r="1"></circle>
-        <circle cx="19" cy="12" r="1"></circle>
-        <circle cx="5" cy="12" r="1"></circle>
-      </svg>
-    </div>
-    
-    <div class="flex gap-2 mb-3">
-      <div class="h-8 flex-1 bg-white/[0.02] rounded flex items-center justify-center border border-white/[0.04] hover:bg-white/10 hover:border-white/20 transition-all cursor-pointer group/btn">
-        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white/40 group-hover/btn:text-white transition-colors">
-          <line x1="21" x2="3" y1="6" y2="6"></line>
-          <line x1="15" x2="3" y1="12" y2="12"></line>
-          <line x1="17" x2="3" y1="18" y2="18"></line>
-        </svg>
-      </div>
-      <div class="h-8 flex-1 bg-white/[0.02] rounded flex items-center justify-center border border-white/[0.04] hover:bg-white/10 hover:border-white/20 transition-all cursor-pointer group/btn">
-        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white/40 group-hover/btn:text-white transition-colors">
-          <line x1="21" x2="3" y1="6" y2="6"></line>
-          <line x1="17" x2="7" y1="12" y2="12"></line>
-          <line x1="19" x2="5" y1="18" y2="18"></line>
-        </svg>
-      </div>
-      <div class="h-8 flex-1 bg-violet-500/20 rounded flex items-center justify-center border border-violet-500/50 shadow-inner">
-        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-violet-300">
-          <line x1="3" x2="21" y1="6" y2="6"></line>
-          <line x1="3" x2="21" y1="12" y2="12"></line>
-          <line x1="3" x2="21" y1="18" y2="18"></line>
-        </svg>
-      </div>
-    </div>
-    
-    <div class="flex items-center gap-3 p-2 rounded border border-white/[0.06] bg-white/[0.02] hover:border-white/20 transition-colors cursor-pointer group/input">
-      <span class="text-[10px] text-white/40 font-mono pl-1 group-hover/input:text-white/60">W</span>
-      <span class="text-xs text-white font-mono tracking-tight flex-1">100%</span>
-      <div class="w-1.5 h-3 bg-violet-500/80 animate-pulse hidden group-hover/input:block"></div>
-    </div>
   </div>
 </article>
 
@@ -436,9 +397,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     <p class="text-xs text-white/40 leading-relaxed font-extralight font-sans">Funds lock on order placement and release automatically on verified delivery. Cancellations refund instantly. All settlement happens on Base at ~$0.001 per transaction — no custodial holding, no intermediaries, fully on-chain.</p>
                 </div>
                 <div class="w-full md:w-1/2 h-48 relative flex items-center justify-center order-1 md:order-2">
-                    <!-- Subtle Aura -->
-                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-white/5 blur-[40px] rounded-full pointer-events-none"></div>
-                    <canvas id="canvas-nodes" class="absolute inset-0 w-full h-full" style="touch-action: none;" width="222" height="384"></canvas>
+                    <!-- USDC Escrow Animation -->
+                    <div class="relative w-full h-full flex items-center justify-center" id="escrow-anim">
+                      <!-- Vault outline -->
+                      <div class="absolute w-24 h-20 rounded-lg border-2 border-dashed border-[#6C3CE9]/50 flex items-center justify-center">
+                        <span class="text-[8px] font-mono text-white/20 uppercase tracking-widest">Escrow</span>
+                      </div>
+                      <!-- USDC coin -->
+                      <div class="escrow-coin absolute w-8 h-8 rounded-full bg-white/90 flex items-center justify-center shadow-lg" style="top: -8px; left: 50%; transform: translateX(-50%);">
+                        <span class="text-[#0B0C0E] text-xs font-bold">U</span>
+                      </div>
+                    </div>
                 </div>
             </article>
 
@@ -449,9 +418,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
 
                 <div class="w-full md:w-1/2 h-48 relative flex items-center justify-center order-1">
-                    <!-- Subtle Aura -->
-                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-white/5 blur-[50px] rounded-full pointer-events-none"></div>
-                    <canvas id="canvas-flow" class="absolute inset-0 w-full h-full" style="touch-action: none;" width="222" height="384"></canvas>
+                    <!-- Agent Terminal Animation -->
+                    <div class="relative w-full h-full max-w-[260px] mx-auto flex flex-col" id="agent-terminal">
+                      <div class="bg-[#0E0F11] border border-white/[0.08] rounded-lg overflow-hidden flex-1 flex flex-col">
+                        <!-- Terminal header -->
+                        <div class="flex items-center gap-1.5 px-3 py-2 border-b border-white/[0.06] bg-white/[0.02]">
+                          <div class="w-2 h-2 rounded-full bg-[#FF5F57]/60"></div>
+                          <div class="w-2 h-2 rounded-full bg-[#FEBC2E]/60"></div>
+                          <div class="w-2 h-2 rounded-full bg-[#28C840]/60"></div>
+                          <span class="text-[8px] text-white/20 ml-2 font-mono uppercase tracking-wider">x402 terminal</span>
+                        </div>
+                        <!-- Terminal body -->
+                        <div class="flex-1 px-3 py-3 font-mono text-[11px] leading-relaxed flex flex-col justify-center">
+                          <div class="agent-line text-white/50" data-text="> POST /x402/compute"></div>
+                          <div class="agent-line text-white/40" data-text='> gpu: "H100" | hours: 24'></div>
+                          <div class="agent-line text-[#4ADE80]/80" data-text="> ✓ 200 OK — matched at $0.22/hr"></div>
+                        </div>
+                      </div>
+                    </div>
                 </div>
                 <div class="flex-grow flex flex-col justify-center order-2">
                     <header class="text-[10px] text-white/30 mb-8 uppercase tracking-[0.2em] flex items-center gap-3 font-extralight" style="font-family: 'JetBrains Mono', monospace;">
@@ -676,144 +660,149 @@ document.addEventListener('DOMContentLoaded', function() {
             ctx.strokeStyle = '#000'; ctx.stroke();
         });
 
-        // Auto Layout Visualization
-        setupCanvas('canvas-nodes', (ctx, t) => {
-            const w = 140 + Math.sin(t * 2) * 40;
-            const h = 200;
-            
-            ctx.translate(-w/2, -h/2);
-            
-            // Draw container bounding box
-            ctx.strokeStyle = 'rgba(255,255,255,0.3)';
-            ctx.setLineDash([4, 4]);
-            ctx.strokeRect(0, 0, w, h);
-            ctx.setLineDash([]);
-            
-            // Draw layout guides
-            ctx.strokeStyle = 'rgba(255,255,255,0.05)';
-            ctx.strokeRect(10, 10, w - 20, h - 20);
-            
-            // Header
-            ctx.fillStyle = 'rgba(255,255,255,0.1)';
-            ctx.fillRect(10, 10, w - 20, 20);
-            
-            // Reflowing items
-            const padding = 10;
-            const gap = 10;
-            const availableW = w - padding * 2;
-            
-            ctx.fillStyle = 'rgba(139,92,246,0.4)';
-            ctx.strokeStyle = 'rgba(139,92,246,0.8)';
-            
-            if (availableW > 120) {
-                // 2 columns
-                const itemW = (availableW - gap) / 2;
-                ctx.fillRect(padding, 40, itemW, 60);
-                ctx.strokeRect(padding, 40, itemW, 60);
-                
-                ctx.fillRect(padding + itemW + gap, 40, itemW, 60);
-                ctx.strokeRect(padding + itemW + gap, 40, itemW, 60);
-                
-                ctx.fillRect(padding, 110, itemW, 60);
-                ctx.strokeRect(padding, 110, itemW, 60);
-                
-                ctx.fillRect(padding + itemW + gap, 110, itemW, 60);
-                ctx.strokeRect(padding + itemW + gap, 110, itemW, 60);
-            } else {
-                // 1 column
-                ctx.fillRect(padding, 40, availableW, 30);
-                ctx.strokeRect(padding, 40, availableW, 30);
-                
-                ctx.fillRect(padding, 80, availableW, 30);
-                ctx.strokeRect(padding, 80, availableW, 30);
-                
-                ctx.fillRect(padding, 120, availableW, 30);
-                ctx.strokeRect(padding, 120, availableW, 30);
-                
-                ctx.fillRect(padding, 160, availableW, 30);
-                ctx.strokeRect(padding, 160, availableW, 30);
-            }
-            
-            // Dimensions label
-            ctx.fillStyle = 'rgba(255,255,255,0.5)';
-            ctx.font = '10px monospace';
-            ctx.textAlign = 'center';
-            ctx.fillText(`${Math.round(w)}px`, w/2, -8);
-        });
+        // ===== COMPUTE-01: Order Matching Animation =====
+        (function() {
+          const blocks = document.querySelectorAll('.order-block');
+          const bar = document.querySelector('.clearing-bar');
+          if (!blocks.length || !bar) return;
 
-        // Interactive Component State
-        setupCanvas('canvas-flow', (ctx, t) => {
-            const hover = Math.sin(t * 2.5) > 0;
-            const click = Math.sin(t * 2.5) > 0.8;
-            
-            const scale = click ? 0.95 : (hover ? 1.05 : 1);
-            const w = 120 * scale;
-            const h = 40 * scale;
-            
-            ctx.translate(-w/2, -h/2);
-            
-            // Base shadow
-            ctx.shadowColor = hover ? 'rgba(139, 92, 246, 0.4)' : 'transparent';
-            ctx.shadowBlur = 15;
-            ctx.shadowOffsetY = 5;
-            
-            ctx.fillStyle = hover ? 'rgba(139, 92, 246, 0.9)' : 'rgba(255,255,255,0.05)';
-            ctx.strokeStyle = hover ? 'rgba(139, 92, 246, 1)' : 'rgba(255,255,255,0.2)';
-            ctx.lineWidth = 1;
-            
-            drawRoundRect(ctx, 0, 0, w, h, 6);
-            ctx.fill();
-            ctx.stroke();
-            
-            ctx.shadowColor = 'transparent';
-            
-            ctx.fillStyle = hover ? '#ffffff' : 'rgba(255,255,255,0.5)';
-            ctx.font = '12px Inter, sans-serif';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(hover ? 'Hover State' : 'Default State', w/2, h/2);
-            
-            if (hover && !click) {
-                ctx.strokeStyle = '#a78bfa';
-                ctx.setLineDash([2, 2]);
-                ctx.strokeRect(-6, -6, w+12, h+12);
-                ctx.setLineDash([]);
-                
-                ctx.fillStyle = '#fff';
-                ctx.strokeStyle = '#a78bfa';
-                const drawHandle = (x, y) => {
-                    ctx.fillRect(x-3, y-3, 6, 6);
-                    ctx.strokeRect(x-3, y-3, 6, 6);
-                };
-                drawHandle(-6, -6);
-                drawHandle(w+6, -6);
-                drawHandle(-6, h+6);
-                drawHandle(w+6, h+6);
-                
-                ctx.fillStyle = '#a78bfa';
-                ctx.font = '9px monospace';
-                ctx.fillText('Padding: 16px', w/2, -15);
-            }
-            
-            const curX = hover ? w/2 + (click ? 0 : 10) : w + 40;
-            const curY = hover ? h/2 + (click ? 0 : 10) : h + 40;
-            
-            ctx.save();
-            ctx.translate(curX, curY);
-            if (click) ctx.scale(0.8, 0.8);
-            ctx.beginPath();
-            ctx.moveTo(0, 0);
-            ctx.lineTo(15, 10);
-            ctx.lineTo(5, 12);
-            ctx.lineTo(0, 20);
-            ctx.closePath();
-            ctx.fillStyle = '#fff';
-            ctx.fill();
-            ctx.strokeStyle = '#000';
-            ctx.lineWidth = 1;
-            ctx.stroke();
-            ctx.restore();
-        });
+          const originals = [];
+          blocks.forEach(b => {
+            originals.push({ top: b.style.top, left: b.style.left, opacity: '1' });
+          });
+
+          function runCycle() {
+            // Phase 1: Reset — blocks scattered, bar hidden
+            bar.style.opacity = '0';
+            bar.style.boxShadow = '0 0 0px rgba(108,60,233,0)';
+            blocks.forEach((b, i) => {
+              b.style.transition = 'none';
+              b.style.top = originals[i].top;
+              b.style.left = originals[i].left;
+              b.style.opacity = '0';
+            });
+
+            // Phase 2: Fade in scattered (0-2s)
+            blocks.forEach((b, i) => {
+              setTimeout(() => {
+                b.style.transition = 'opacity 0.4s ease';
+                b.style.opacity = '1';
+              }, i * 200);
+            });
+
+            // Phase 3: Slide to center (2s-3.5s)
+            setTimeout(() => {
+              blocks.forEach((b) => {
+                b.style.transition = 'all 1s cubic-bezier(0.4,0,0.2,1)';
+                b.style.top = 'calc(50% - 12px)';
+                b.style.left = 'calc(50% - 20px)';
+                b.style.opacity = '0';
+              });
+            }, 2000);
+
+            // Phase 4: Show clearing bar (3.5s)
+            setTimeout(() => {
+              bar.style.opacity = '1';
+            }, 3200);
+
+            // Phase 5: Purple glow pulse (4s)
+            setTimeout(() => {
+              bar.style.boxShadow = '0 0 20px rgba(108,60,233,0.7), 0 0 40px rgba(108,60,233,0.3)';
+            }, 3800);
+
+            // Phase 6: Fade glow and reset (5.5s)
+            setTimeout(() => {
+              bar.style.boxShadow = '0 0 0px rgba(108,60,233,0)';
+              bar.style.opacity = '0';
+            }, 5200);
+
+            // Restart at 6s
+            setTimeout(runCycle, 6000);
+          }
+          runCycle();
+        })();
+
+        // ===== ESCROW-02: USDC Coin Drop Animation =====
+        (function() {
+          const coin = document.querySelector('.escrow-coin');
+          if (!coin) return;
+
+          function runCycle() {
+            // Reset: coin at top
+            coin.style.transition = 'none';
+            coin.style.top = '-8px';
+            coin.style.left = '50%';
+            coin.style.transform = 'translateX(-50%)';
+            coin.style.opacity = '1';
+
+            // Drop into vault (0-0.8s)
+            setTimeout(() => {
+              coin.style.transition = 'top 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)';
+              coin.style.top = 'calc(50% - 16px)';
+            }, 200);
+
+            // Hold inside vault for 1.5s (0.8s-2.3s)
+
+            // Slide out right and fade (2.3s-3.3s)
+            setTimeout(() => {
+              coin.style.transition = 'left 0.8s ease-in, opacity 0.8s ease-in, transform 0.8s ease-in';
+              coin.style.left = '110%';
+              coin.style.opacity = '0';
+            }, 2500);
+
+            // Restart at 4s
+            setTimeout(runCycle, 4000);
+          }
+          runCycle();
+        })();
+
+        // ===== AGENT-03: Typewriter Terminal Animation =====
+        (function() {
+          const lines = document.querySelectorAll('.agent-line');
+          if (!lines.length) return;
+
+          function runCycle() {
+            // Clear all lines
+            lines.forEach(l => {
+              l.textContent = '';
+              l.style.textShadow = 'none';
+            });
+
+            let totalDelay = 0;
+
+            lines.forEach((line, lineIdx) => {
+              const text = line.dataset.text;
+              const lineDelay = totalDelay;
+
+              for (let i = 0; i <= text.length; i++) {
+                setTimeout(() => {
+                  line.textContent = text.substring(0, i) + (i < text.length ? '█' : '');
+                }, lineDelay + i * 35);
+              }
+
+              // Remove cursor after typing
+              setTimeout(() => {
+                line.textContent = text;
+              }, lineDelay + text.length * 35 + 100);
+
+              totalDelay += text.length * 35 + 500; // 0.5s pause between lines
+            });
+
+            // Green glow on last line
+            const lastLine = lines[lines.length - 1];
+            setTimeout(() => {
+              lastLine.style.textShadow = '0 0 8px rgba(74,222,128,0.5)';
+            }, totalDelay);
+
+            // Hold for 1.5s then restart
+            setTimeout(() => {
+              lastLine.style.textShadow = 'none';
+            }, totalDelay + 1200);
+
+            setTimeout(runCycle, totalDelay + 1800);
+          }
+          runCycle();
+        })();
 </script>
 
 </section>

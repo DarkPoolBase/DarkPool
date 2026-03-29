@@ -105,7 +105,7 @@ const Analytics = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Market Stats */}
-        <GlassCard delay={0.2} corners className="p-6">
+        <GlassCard delay={0.2} className="p-6">
           <SectionLabel pulse>Market Statistics</SectionLabel>
           <div className="mt-4 space-y-0">
             {stats.map(({ label, value }) => (

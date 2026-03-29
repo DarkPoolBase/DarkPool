@@ -272,6 +272,611 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
+</section><section class="antialiased min-h-screen flex flex-col selection:bg-white/20 overflow-x-hidden md:p-12 text-white/90 rounded-3xl pt-6 pr-6 pb-6 pl-6 relative items-center justify-center" style="font-family: 'Inter', sans-serif">
+
+<canvas id="bg-waves" class="fixed inset-0 z-0 pointer-events-none opacity-30" width="3136" height="2042"></canvas>
+
+<main id="main-container" class="max-w-[1280px] w-full relative z-10 mt-8 mb-8 flex flex-col">
+        
+        <div id="flashlight" class="absolute inset-0 z-0 opacity-0 transition-opacity duration-300 pointer-events-none" style="background: radial-gradient(800px circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.04), transparent 40%);"></div>
+
+        <!-- Vertical Container Lines with Overshoot -->
+        <div class="absolute -top-12 -bottom-12 left-0 w-px bg-gradient-to-b from-transparent via-white/20 to-transparent z-0 pointer-events-none"></div>
+        <div class="absolute -top-12 -bottom-12 right-0 w-px bg-gradient-to-b from-transparent via-white/20 to-transparent z-0 pointer-events-none"></div>
+        
+        <!-- Mini Corner Squares -->
+        <div class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 border border-white/40 bg-[#030303] z-30"></div>
+        <div class="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 border border-white/40 bg-[#030303] z-30"></div>
+        <div class="absolute bottom-0 left-0 -translate-x-1/2 translate-y-1/2 w-1.5 h-1.5 border border-white/40 bg-[#030303] z-30"></div>
+        <div class="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 w-1.5 h-1.5 border border-white/40 bg-[#030303] z-30"></div>
+
+        <!-- Horizontal Shooting Line (Top Border) -->
+        <div class="hidden md:block absolute top-0 left-0 right-0 h-px overflow-hidden z-20 pointer-events-none">
+            <div id="shoot-h" class="absolute top-0 left-0 w-64 h-full bg-gradient-to-r from-transparent via-white/60 to-transparent" style="transform: translateX(-297px);"></div>
+        </div>
+
+        <!-- Remixed Asymmetrical Grid Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 bg-white/10 border-white/10 border relative gap-x-px gap-y-px">
+            
+            <!-- Left Sidebar: Header & Sequence -->
+            <article class="lg:col-span-4 flex flex-col md:p-12 overflow-hidden bg-[#030303]/90 pt-8 pr-8 pb-8 pl-8 relative backdrop-blur-md">
+                <div class="flex-grow flex flex-col justify-start">
+                    <h1 class="text-3xl md:text-4xl font-extralight tracking-tight text-white mb-6 reveal-text">
+                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0%);">Privacy-First</span></span>
+                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">Compute</span></span>
+                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">Architecture.</span></span>
+                    </h1>
+                    <p class="text-xs text-white/50 max-w-sm font-extralight leading-relaxed reveal-text font-sans">
+                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0%);">Zero-knowledge</span></span>
+                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">proofs</span></span>
+                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">verify</span></span>
+                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">matching</span></span>
+                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">correctness</span></span>
+                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">without</span></span>
+                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">revealing</span></span>
+                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">individual</span></span>
+                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">orders.</span></span>
+                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">Batch</span></span>
+                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">auctions</span></span>
+                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">eliminate</span></span>
+                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">front-running</span></span>
+                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">on</span></span>
+                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">Base.</span></span>
+                    </p>
+                </div>
+
+                <!-- Sequential Text Animation -->
+                <div class="mt-16 flex flex-col gap-3 text-[10px] text-white/40 uppercase tracking-widest font-light" style="font-family: 'JetBrains Mono', monospace;">
+                    <div class="seq-line opacity-0 transform translate-y-4 transition-all duration-700 ease-out" style="opacity: 1; transform: translateY(0px);">&gt; Initializing matching engine<span class="anim-dots">..</span></div>
+                    <div class="seq-line opacity-0 transform translate-y-4 transition-all duration-700 ease-out" style="opacity: 1; transform: translateY(0px);">&gt; Generating ZK commitment proofs<span class="anim-dots">..</span></div>
+                    <div class="seq-line opacity-0 transform translate-y-4 transition-all duration-700 ease-out" style="opacity: 1; transform: translateY(0px);">&gt; Synchronizing escrow contracts<span class="anim-dots">..</span></div>
+                    <div class="seq-line opacity-0 transform translate-y-4 transition-all duration-700 ease-out" style="opacity: 1; transform: translateY(0px);">&gt; Awaiting batch settlement<span class="anim-dots">..</span></div>
+                </div>
+            </article>
+
+            <!-- Right Main: Huge Aura Canvas -->
+            <article class="lg:col-span-8 flex flex-col min-h-[400px] overflow-hidden transition-all duration-500 hover:border-white/10 group cursor-pointer bg-[#0B0C0E] w-full border-white/5 border relative">
+  
+  <img src="https://images.unsplash.com/photo-1629946832022-c327f74956e0?w=2160&amp;q=80" class="transition-transform duration-1000 group-hover:scale-110 group-hover:opacity-60 opacity-40 mix-blend-overlay w-full h-full object-cover absolute top-0 right-0 bottom-0 left-0" alt="Marketing Sites">
+
+  <!-- Animated background glow -->
+  <div class="-translate-x-1/2 -translate-y-1/2 group-hover:opacity-20 animate-[spin_4s_linear_infinite] transition-opacity duration-700 opacity-0 w-[120%] h-[120%] absolute top-1/2 left-1/2 blur-2xl"></div>
+
+  <!-- Popular Badge -->
+  <div class="absolute top-6 left-6 text-white text-[10px] font-medium px-3 py-1.5 uppercase tracking-widest rounded border shadow-lg z-20 bg-violet-500 border-violet-400/50 flex items-center gap-2 transform transition-transform group-hover:-translate-y-1">
+    <div class="w-1.5 h-1.5 bg-white rounded-full animate-ping"></div>
+    Popular
+  </div>
+
+  <!-- Title & Description Overlay (FRAME-02 Style) -->
+  <div class="absolute bottom-8 left-8 z-20 pointer-events-none flex flex-col justify-end max-w-sm">
+    <header class="text-[10px] text-white/30 mb-8 uppercase tracking-[0.2em] flex items-center gap-3 font-extralight" style="font-family: 'JetBrains Mono', monospace;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]">
+        <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
+        <line x1="3" x2="21" y1="9" y2="9"></line>
+        <line x1="9" x2="9" y1="21" y2="9"></line>
+      </svg>
+      COMPUTE-01
+    </header>
+    <h3 class="text-base font-extralight tracking-tight mb-2 text-white/90 flex items-center">
+      Encrypted Order Matching
+    </h3>
+    <p class="text-xs text-white/40 leading-relaxed font-extralight font-sans">
+      Submit sealed bids via commit-reveal scheme. The matching engine runs batch auctions to find uniform clearing prices — completely private, completely fair.
+    </p>
+  </div>
+
+  <!-- Design Tool Overlay: Canvas Selection -->
+  <div class="absolute inset-8 border border-violet-500/30 rounded-lg pointer-events-none transition-all duration-700 flex flex-col justify-between hidden sm:flex z-10 group-hover:border-violet-500/80 group-hover:inset-10 bg-violet-500/[0.02] group-hover:bg-violet-500/[0.05]">
+    <div class="absolute -top-3 left-4 text-[9px] text-white px-2 py-0.5 rounded-sm font-normal bg-violet-500 transition-all duration-500 group-hover:shadow-[0_0_12px_rgba(139,92,246,0.6)]">Hero Section</div>
+    <div class="w-2 h-2 bg-white border border-violet-500 absolute -top-1 -left-1 transition-transform group-hover:scale-125"></div>
+    <div class="w-2 h-2 bg-white border border-violet-500 absolute -top-1 -right-1 transition-transform group-hover:scale-125"></div>
+    <div class="w-2 h-2 bg-white border border-violet-500 absolute -bottom-1 -left-1 transition-transform group-hover:scale-125"></div>
+    <div class="w-2 h-2 bg-white border border-violet-500 absolute -bottom-1 -right-1 transition-transform group-hover:scale-125"></div>
+  </div>
+
+  <!-- Design Tool Overlay: Properties Panel -->
+  <div class="absolute right-8 bottom-8 w-44 bg-[#0E0F11]/95 backdrop-blur-xl border border-white/[0.08] rounded-xl p-4 shadow-2xl transition-all duration-500 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 z-20 group-hover:shadow-violet-900/40">
+    <div class="flex items-center justify-between mb-3 border-b border-white/5 pb-2">
+      <span class="text-[10px] text-white/50 uppercase tracking-widest font-medium">Layout</span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white/40 hover:text-white transition-colors cursor-pointer">
+        <circle cx="12" cy="12" r="1"></circle>
+        <circle cx="19" cy="12" r="1"></circle>
+        <circle cx="5" cy="12" r="1"></circle>
+      </svg>
+    </div>
+    
+    <div class="flex gap-2 mb-3">
+      <div class="h-8 flex-1 bg-white/[0.02] rounded flex items-center justify-center border border-white/[0.04] hover:bg-white/10 hover:border-white/20 transition-all cursor-pointer group/btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white/40 group-hover/btn:text-white transition-colors">
+          <line x1="21" x2="3" y1="6" y2="6"></line>
+          <line x1="15" x2="3" y1="12" y2="12"></line>
+          <line x1="17" x2="3" y1="18" y2="18"></line>
+        </svg>
+      </div>
+      <div class="h-8 flex-1 bg-white/[0.02] rounded flex items-center justify-center border border-white/[0.04] hover:bg-white/10 hover:border-white/20 transition-all cursor-pointer group/btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white/40 group-hover/btn:text-white transition-colors">
+          <line x1="21" x2="3" y1="6" y2="6"></line>
+          <line x1="17" x2="7" y1="12" y2="12"></line>
+          <line x1="19" x2="5" y1="18" y2="18"></line>
+        </svg>
+      </div>
+      <div class="h-8 flex-1 bg-violet-500/20 rounded flex items-center justify-center border border-violet-500/50 shadow-inner">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-violet-300">
+          <line x1="3" x2="21" y1="6" y2="6"></line>
+          <line x1="3" x2="21" y1="12" y2="12"></line>
+          <line x1="3" x2="21" y1="18" y2="18"></line>
+        </svg>
+      </div>
+    </div>
+    
+    <div class="flex items-center gap-3 p-2 rounded border border-white/[0.06] bg-white/[0.02] hover:border-white/20 transition-colors cursor-pointer group/input">
+      <span class="text-[10px] text-white/40 font-mono pl-1 group-hover/input:text-white/60">W</span>
+      <span class="text-xs text-white font-mono tracking-tight flex-1">100%</span>
+      <div class="w-1.5 h-3 bg-violet-500/80 animate-pulse hidden group-hover/input:block"></div>
+    </div>
+  </div>
+</article>
+
+            <!-- Bottom Left: Half Card -->
+            <article class="lg:col-span-6 relative flex flex-col md:flex-row p-8 md:p-12 bg-[#030303]/90 backdrop-blur-md gap-8 items-center">
+                <div class="hidden md:block absolute top-0 bottom-0 -left-px w-px overflow-hidden z-20 pointer-events-none">
+                    <div id="shoot1" class="absolute top-0 left-0 w-full h-48 bg-gradient-to-b from-transparent via-white/50 to-transparent" style="transform: translateY(-198px);"></div>
+                </div>
+                
+                <div class="flex-grow flex flex-col justify-center order-2 md:order-1">
+                    <header class="text-[10px] text-white/30 mb-8 uppercase tracking-[0.2em] flex items-center gap-3 font-extralight" style="font-family: 'JetBrains Mono', monospace;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect><line x1="3" x2="21" y1="9" y2="9"></line><line x1="9" x2="9" y1="21" y2="9"></line></svg>
+                        ESCROW-02
+                    </header>
+                    <h3 class="text-base font-extralight tracking-tight mb-2 text-white/90 flex items-center">
+                        USDC Escrow System
+                    </h3>
+                    <p class="text-xs text-white/40 leading-relaxed font-extralight font-sans">Funds locked on order placement, released to sellers on delivery verification. Automatic refunds on cancellation — trustless, on-chain.</p>
+                </div>
+                <div class="w-full md:w-1/2 h-48 relative flex items-center justify-center order-1 md:order-2">
+                    <!-- Subtle Aura -->
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-white/5 blur-[40px] rounded-full pointer-events-none"></div>
+                    <canvas id="canvas-nodes" class="absolute inset-0 w-full h-full" style="touch-action: none;" width="222" height="384"></canvas>
+                </div>
+            </article>
+
+            <!-- Bottom Right: Half Card -->
+            <article class="lg:col-span-6 relative flex flex-col md:flex-row p-8 md:p-12 bg-[#030303]/90 backdrop-blur-md gap-8 items-center">
+                <div class="hidden md:block absolute top-0 bottom-0 -left-px w-px overflow-hidden z-20 pointer-events-none">
+                    <div id="shoot2" class="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-transparent via-white/40 to-transparent" style="transform: translateY(-398.5px);"></div>
+                </div>
+
+                <div class="w-full md:w-1/2 h-48 relative flex items-center justify-center order-1">
+                    <!-- Subtle Aura -->
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-white/5 blur-[50px] rounded-full pointer-events-none"></div>
+                    <canvas id="canvas-flow" class="absolute inset-0 w-full h-full" style="touch-action: none;" width="222" height="384"></canvas>
+                </div>
+                <div class="flex-grow flex flex-col justify-center order-2">
+                    <header class="text-[10px] text-white/30 mb-8 uppercase tracking-[0.2em] flex items-center gap-3 font-extralight" style="font-family: 'JetBrains Mono', monospace;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]"><path d="M5.5 8.5 9 12l-3.5 3.5L2 12l3.5-3.5Z"></path><path d="m12 2 3.5 3.5L12 9 8.5 5.5 12 2Z"></path><path d="M18.5 8.5 22 12l-3.5 3.5L15 12l3.5-3.5Z"></path><path d="m12 15 3.5 3.5L12 22l-3.5-3.5L12 15Z"></path></svg>
+                        AGENT-03
+                    </header>
+                    <h3 class="text-base font-extralight tracking-tight mb-2 text-white/90 flex items-center">
+                        AI Agent Wallets
+                    </h3>
+                    <p class="text-xs text-white/40 leading-relaxed font-extralight font-sans">Coinbase Agentic Wallets let AI agents buy compute autonomously via x402 HTTP-native payments. Gasless transactions, programmable spending controls.</p>
+                </div>
+            </article>
+
+        </div>
+    </main>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js" class=""></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script>
+        // GSAP Masked Reveal for Text
+        if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+            gsap.registerPlugin(ScrollTrigger);
+            
+            document.querySelectorAll('.reveal-text').forEach(el => {
+                // If it already has spans, we can just animate them
+                if(el.querySelectorAll('.reveal-word').length > 0) {
+                    gsap.to(el.querySelectorAll('.reveal-word'), {
+                        y: '0%',
+                        ease: "power4.out",
+                        duration: 1.2,
+                        stagger: 0.04,
+                        scrollTrigger: {
+                            trigger: el,
+                            start: "top 95%",
+                        }
+                    });
+                }
+            });
+        }
+
+        // Sequence Loading Animations
+        const seqLines = document.querySelectorAll('.seq-line');
+        let seqDelay = 500;
+        seqLines.forEach((line) => {
+            setTimeout(() => {
+                line.style.opacity = '1';
+                line.style.transform = 'translateY(0)';
+            }, seqDelay);
+            seqDelay += 900; 
+        });
+
+        // Animate the Dots (JS interval for inline execution)
+        setInterval(() => {
+            document.querySelectorAll('.anim-dots').forEach(el => {
+                let text = el.innerText;
+                el.innerText = text.length >= 3 ? '' : text + '.';
+            });
+        }, 400);
+
+        // Canvas Tool Background (Dot Grid with Selection)
+        const bgCanvas = document.getElementById('bg-waves');
+        if(bgCanvas) {
+            const bgCtx = bgCanvas.getContext('2d', { alpha: true });
+            let bw, bh, bgT = 0;
+            const resizeBg = () => {
+                const dpr = window.devicePixelRatio || 1;
+                bw = window.innerWidth; bh = window.innerHeight;
+                bgCanvas.width = bw * dpr; bgCanvas.height = bh * dpr;
+                bgCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            };
+            window.addEventListener('resize', resizeBg);
+            resizeBg();
+
+            const drawBg = () => {
+                bgT += 0.02;
+                bgCtx.clearRect(0, 0, bw, bh);
+                
+                // Dot grid
+                bgCtx.fillStyle = 'rgba(255,255,255,0.06)';
+                const spacing = 30;
+                const offsetX = (bgT * 10) % spacing;
+                const offsetY = (bgT * 10) % spacing;
+                
+                for(let x = -spacing; x < bw + spacing; x += spacing) {
+                    for(let y = -spacing; y < bh + spacing; y += spacing) {
+                        bgCtx.fillRect(x - offsetX, y - offsetY, 2, 2);
+                    }
+                }
+
+                // Animated Selection Marquee
+                const selX = bw/2 + Math.sin(bgT*0.5)*150 - 150;
+                const selY = bh/2 + Math.cos(bgT*0.3)*100 - 100;
+                const selW = 300 + Math.sin(bgT)*100;
+                const selH = 200 + Math.cos(bgT*0.8)*50;
+                
+                bgCtx.fillStyle = 'rgba(139,92,246,0.02)';
+                bgCtx.strokeStyle = 'rgba(139,92,246,0.2)';
+                bgCtx.lineWidth = 1;
+                bgCtx.beginPath();
+                bgCtx.rect(selX, selY, selW, selH);
+                bgCtx.fill();
+                bgCtx.stroke();
+                
+                // Crosshairs
+                const drawCrosshair = (x, y) => {
+                    bgCtx.beginPath();
+                    bgCtx.moveTo(x - 6, y); bgCtx.lineTo(x + 6, y);
+                    bgCtx.moveTo(x, y - 6); bgCtx.lineTo(x, y + 6);
+                    bgCtx.strokeStyle = 'rgba(139,92,246,0.5)';
+                    bgCtx.stroke();
+                };
+                drawCrosshair(selX, selY);
+                drawCrosshair(selX + selW, selY);
+                drawCrosshair(selX, selY + selH);
+                drawCrosshair(selX + selW, selY + selH);
+
+                requestAnimationFrame(drawBg);
+            };
+            drawBg();
+        }
+
+        // Interactive Flashlight & Shooting Lines
+        const mainEl = document.getElementById('main-container');
+        const flash = document.getElementById('flashlight');
+        const s1 = document.getElementById('shoot1'), s2 = document.getElementById('shoot2');
+        const sh = document.getElementById('shoot-h');
+        let pos1 = -200, pos2 = -400, posH = -300;
+
+        if(mainEl) {
+            mainEl.addEventListener('mousemove', (e) => {
+                const rect = mainEl.getBoundingClientRect();
+                flash.style.setProperty('--x', `${e.clientX - rect.left}px`);
+                flash.style.setProperty('--y', `${e.clientY - rect.top}px`);
+                flash.style.opacity = '1';
+            });
+            mainEl.addEventListener('mouseleave', () => flash.style.opacity = '0');
+
+            const animateShoots = () => {
+                const h = mainEl.offsetHeight || 1000, w = mainEl.offsetWidth || 1200;
+                pos1 += 2.0; pos2 += 1.5; posH += 3.0;
+                if (pos1 > h) pos1 = -200;
+                if (pos2 > h) pos2 = -200;
+                if (posH > w) posH = -300;
+                if (s1) s1.style.transform = `translateY(${pos1}px)`;
+                if (s2) s2.style.transform = `translateY(${pos2}px)`;
+                if (sh) sh.style.transform = `translateX(${posH}px)`;
+                requestAnimationFrame(animateShoots);
+            };
+            animateShoots();
+        }
+
+        // 3D Canvas Utilities
+        const projectIso = (x, y, z) => {
+            const angle = Math.PI / 6; 
+            return { x: (x - z) * Math.cos(angle), y: y + (x + z) * Math.sin(angle) };
+        };
+
+        const drawRoundRect = (ctx, x, y, w, h, r) => {
+            ctx.beginPath();
+            ctx.moveTo(x + r, y);
+            ctx.lineTo(x + w - r, y);
+            ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+            ctx.lineTo(x + w, y + h - r);
+            ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+            ctx.lineTo(x + r, y + h);
+            ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+            ctx.lineTo(x, y + r);
+            ctx.quadraticCurveTo(x, y, x + r, y);
+            ctx.closePath();
+        };
+
+        const setupCanvas = (id, renderFn) => {
+            const canvas = document.getElementById(id);
+            if(!canvas) return;
+            const ctx = canvas.getContext('2d', { alpha: true });
+            let w, h, time = 0;
+            const resize = () => {
+                const rect = canvas.parentElement.getBoundingClientRect();
+                w = rect.width; h = rect.height;
+                const dpr = window.devicePixelRatio || 1;
+                canvas.width = w * dpr; canvas.height = h * dpr;
+                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            };
+            window.addEventListener('resize', resize);
+            resize();
+            const loop = () => {
+                time += 0.012;
+                ctx.clearRect(0, 0, w, h);
+                ctx.save();
+                ctx.translate(w / 2, h / 2 + 5);
+                renderFn(ctx, time);
+                ctx.restore();
+                requestAnimationFrame(loop);
+            };
+            loop();
+        };
+
+        // Isometric Vector Engine Layout
+        setupCanvas('canvas-layers', (ctx, t) => {
+            const drawIsoShape = (yOff, xOff, zOff, sizeX, sizeZ, style) => {
+                const p1 = projectIso(xOff - sizeX, yOff, zOff - sizeZ);
+                const p2 = projectIso(xOff + sizeX, yOff, zOff - sizeZ);
+                const p3 = projectIso(xOff + sizeX, yOff, zOff + sizeZ);
+                const p4 = projectIso(xOff - sizeX, yOff, zOff + sizeZ);
+                
+                ctx.beginPath();
+                ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y);
+                ctx.lineTo(p3.x, p3.y); ctx.lineTo(p4.x, p4.y); ctx.closePath();
+                
+                if (style.fill) { ctx.fillStyle = style.fill; ctx.fill(); }
+                if (style.stroke) { 
+                    if(style.dash) ctx.setLineDash(style.dash);
+                    ctx.strokeStyle = style.stroke; ctx.stroke(); 
+                    ctx.setLineDash([]);
+                }
+            };
+
+            const float1 = Math.sin(t * 1.5) * 8;
+            const float2 = Math.sin(t * 1.5 + 1) * 12;
+            const float3 = Math.sin(t * 1.5 + 2) * 16;
+            
+            // Base wireframe
+            drawIsoShape(60, 0, 0, 100, 140, { fill: '#030303', stroke: 'rgba(255,255,255,0.1)' });
+            
+            // Grid on base
+            for(let i = -80; i <= 80; i+=20) {
+                const p1 = projectIso(i, 60, -120);
+                const p2 = projectIso(i, 60, 120);
+                ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y);
+                ctx.strokeStyle = 'rgba(255,255,255,0.03)'; ctx.stroke();
+            }
+            for(let i = -120; i <= 120; i+=20) {
+                const p1 = projectIso(-80, 60, i);
+                const p2 = projectIso(80, 60, i);
+                ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y);
+                ctx.strokeStyle = 'rgba(255,255,255,0.03)'; ctx.stroke();
+            }
+
+            // Shadow of float 1
+            drawIsoShape(60, 0, -50, 80, 50, { fill: 'rgba(0,0,0,0.5)' });
+            // Image Placeholder (Float 1)
+            drawIsoShape(20 + float1, 0, -50, 80, 50, { fill: 'rgba(255,255,255,0.02)', stroke: 'rgba(255,255,255,0.3)', dash: [4,4] });
+            // Cross inside image
+            const c1 = projectIso(-80, 20+float1, -100);
+            const c2 = projectIso(80, 20+float1, 0);
+            ctx.beginPath(); ctx.moveTo(c1.x, c1.y); ctx.lineTo(c2.x, c2.y); ctx.strokeStyle='rgba(255,255,255,0.1)'; ctx.stroke();
+            const c3 = projectIso(80, 20+float1, -100);
+            const c4 = projectIso(-80, 20+float1, 0);
+            ctx.beginPath(); ctx.moveTo(c3.x, c3.y); ctx.lineTo(c4.x, c4.y); ctx.stroke();
+
+            // Text Lines (Float 2)
+            drawIsoShape(-10 + float2, -20, 40, 60, 6, { fill: 'rgba(255,255,255,0.1)' });
+            drawIsoShape(-10 + float2, -40, 60, 40, 6, { fill: 'rgba(255,255,255,0.05)' });
+
+            // Primary Button (Float 3)
+            drawIsoShape(-40 + float3, -40, 100, 40, 15, { fill: 'rgba(139,92,246,0.15)', stroke: '#8b5cf6' });
+            
+            // Connectors
+            const drawConn = (x, z, y1, y2) => {
+                const p1 = projectIso(x, y1, z);
+                const p2 = projectIso(x, y2, z);
+                ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y);
+                ctx.strokeStyle = 'rgba(139,92,246,0.4)'; ctx.setLineDash([2,2]); ctx.stroke(); ctx.setLineDash([]);
+            };
+            
+            drawConn(-40, 85, 60, -40+float3);
+            drawConn(-40, 115, 60, -40+float3);
+            
+            // Floating cursor
+            const curX = Math.sin(t*2)*40;
+            const curZ = Math.cos(t*1.5)*40;
+            const cp = projectIso(curX, -60, curZ);
+            ctx.beginPath();
+            ctx.moveTo(cp.x, cp.y);
+            ctx.lineTo(cp.x + 15, cp.y + 10);
+            ctx.lineTo(cp.x + 5, cp.y + 12);
+            ctx.lineTo(cp.x, cp.y + 20);
+            ctx.closePath();
+            ctx.fillStyle = '#fff'; ctx.fill();
+            ctx.strokeStyle = '#000'; ctx.stroke();
+        });
+
+        // Auto Layout Visualization
+        setupCanvas('canvas-nodes', (ctx, t) => {
+            const w = 140 + Math.sin(t * 2) * 40;
+            const h = 200;
+            
+            ctx.translate(-w/2, -h/2);
+            
+            // Draw container bounding box
+            ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+            ctx.setLineDash([4, 4]);
+            ctx.strokeRect(0, 0, w, h);
+            ctx.setLineDash([]);
+            
+            // Draw layout guides
+            ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+            ctx.strokeRect(10, 10, w - 20, h - 20);
+            
+            // Header
+            ctx.fillStyle = 'rgba(255,255,255,0.1)';
+            ctx.fillRect(10, 10, w - 20, 20);
+            
+            // Reflowing items
+            const padding = 10;
+            const gap = 10;
+            const availableW = w - padding * 2;
+            
+            ctx.fillStyle = 'rgba(139,92,246,0.4)';
+            ctx.strokeStyle = 'rgba(139,92,246,0.8)';
+            
+            if (availableW > 120) {
+                // 2 columns
+                const itemW = (availableW - gap) / 2;
+                ctx.fillRect(padding, 40, itemW, 60);
+                ctx.strokeRect(padding, 40, itemW, 60);
+                
+                ctx.fillRect(padding + itemW + gap, 40, itemW, 60);
+                ctx.strokeRect(padding + itemW + gap, 40, itemW, 60);
+                
+                ctx.fillRect(padding, 110, itemW, 60);
+                ctx.strokeRect(padding, 110, itemW, 60);
+                
+                ctx.fillRect(padding + itemW + gap, 110, itemW, 60);
+                ctx.strokeRect(padding + itemW + gap, 110, itemW, 60);
+            } else {
+                // 1 column
+                ctx.fillRect(padding, 40, availableW, 30);
+                ctx.strokeRect(padding, 40, availableW, 30);
+                
+                ctx.fillRect(padding, 80, availableW, 30);
+                ctx.strokeRect(padding, 80, availableW, 30);
+                
+                ctx.fillRect(padding, 120, availableW, 30);
+                ctx.strokeRect(padding, 120, availableW, 30);
+                
+                ctx.fillRect(padding, 160, availableW, 30);
+                ctx.strokeRect(padding, 160, availableW, 30);
+            }
+            
+            // Dimensions label
+            ctx.fillStyle = 'rgba(255,255,255,0.5)';
+            ctx.font = '10px monospace';
+            ctx.textAlign = 'center';
+            ctx.fillText(`${Math.round(w)}px`, w/2, -8);
+        });
+
+        // Interactive Component State
+        setupCanvas('canvas-flow', (ctx, t) => {
+            const hover = Math.sin(t * 2.5) > 0;
+            const click = Math.sin(t * 2.5) > 0.8;
+            
+            const scale = click ? 0.95 : (hover ? 1.05 : 1);
+            const w = 120 * scale;
+            const h = 40 * scale;
+            
+            ctx.translate(-w/2, -h/2);
+            
+            // Base shadow
+            ctx.shadowColor = hover ? 'rgba(139, 92, 246, 0.4)' : 'transparent';
+            ctx.shadowBlur = 15;
+            ctx.shadowOffsetY = 5;
+            
+            ctx.fillStyle = hover ? 'rgba(139, 92, 246, 0.9)' : 'rgba(255,255,255,0.05)';
+            ctx.strokeStyle = hover ? 'rgba(139, 92, 246, 1)' : 'rgba(255,255,255,0.2)';
+            ctx.lineWidth = 1;
+            
+            drawRoundRect(ctx, 0, 0, w, h, 6);
+            ctx.fill();
+            ctx.stroke();
+            
+            ctx.shadowColor = 'transparent';
+            
+            ctx.fillStyle = hover ? '#ffffff' : 'rgba(255,255,255,0.5)';
+            ctx.font = '12px Inter, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(hover ? 'Hover State' : 'Default State', w/2, h/2);
+            
+            if (hover && !click) {
+                ctx.strokeStyle = '#a78bfa';
+                ctx.setLineDash([2, 2]);
+                ctx.strokeRect(-6, -6, w+12, h+12);
+                ctx.setLineDash([]);
+                
+                ctx.fillStyle = '#fff';
+                ctx.strokeStyle = '#a78bfa';
+                const drawHandle = (x, y) => {
+                    ctx.fillRect(x-3, y-3, 6, 6);
+                    ctx.strokeRect(x-3, y-3, 6, 6);
+                };
+                drawHandle(-6, -6);
+                drawHandle(w+6, -6);
+                drawHandle(-6, h+6);
+                drawHandle(w+6, h+6);
+                
+                ctx.fillStyle = '#a78bfa';
+                ctx.font = '9px monospace';
+                ctx.fillText('Padding: 16px', w/2, -15);
+            }
+            
+            const curX = hover ? w/2 + (click ? 0 : 10) : w + 40;
+            const curY = hover ? h/2 + (click ? 0 : 10) : h + 40;
+            
+            ctx.save();
+            ctx.translate(curX, curY);
+            if (click) ctx.scale(0.8, 0.8);
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(15, 10);
+            ctx.lineTo(5, 12);
+            ctx.lineTo(0, 20);
+            ctx.closePath();
+            ctx.fillStyle = '#fff';
+            ctx.fill();
+            ctx.strokeStyle = '#000';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+            ctx.restore();
+        });
+</script>
+
+</section>
+
       <section class="z-10 w-full pt-32 pb-20 relative" id="how-it-works">
   <div class="md:px-10 flex flex-col md:flex-row gap-12 lg:gap-24 max-w-screen-2xl mr-auto ml-auto pr-6 pl-6 gap-x-12 gap-y-12">
     <!-- Left Sidebar (Sticky) -->
@@ -1052,611 +1657,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     </div>
   </div>
-</section><section class="antialiased min-h-screen flex flex-col selection:bg-white/20 overflow-x-hidden md:p-12 text-white/90 rounded-3xl pt-6 pr-6 pb-6 pl-6 relative items-center justify-center" style="font-family: 'Inter', sans-serif">
-
-<canvas id="bg-waves" class="fixed inset-0 z-0 pointer-events-none opacity-30" width="3136" height="2042"></canvas>
-
-<main id="main-container" class="max-w-[1280px] w-full relative z-10 mt-8 mb-8 flex flex-col">
-        
-        <div id="flashlight" class="absolute inset-0 z-0 opacity-0 transition-opacity duration-300 pointer-events-none" style="background: radial-gradient(800px circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.04), transparent 40%);"></div>
-
-        <!-- Vertical Container Lines with Overshoot -->
-        <div class="absolute -top-12 -bottom-12 left-0 w-px bg-gradient-to-b from-transparent via-white/20 to-transparent z-0 pointer-events-none"></div>
-        <div class="absolute -top-12 -bottom-12 right-0 w-px bg-gradient-to-b from-transparent via-white/20 to-transparent z-0 pointer-events-none"></div>
-        
-        <!-- Mini Corner Squares -->
-        <div class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 border border-white/40 bg-[#030303] z-30"></div>
-        <div class="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 border border-white/40 bg-[#030303] z-30"></div>
-        <div class="absolute bottom-0 left-0 -translate-x-1/2 translate-y-1/2 w-1.5 h-1.5 border border-white/40 bg-[#030303] z-30"></div>
-        <div class="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 w-1.5 h-1.5 border border-white/40 bg-[#030303] z-30"></div>
-
-        <!-- Horizontal Shooting Line (Top Border) -->
-        <div class="hidden md:block absolute top-0 left-0 right-0 h-px overflow-hidden z-20 pointer-events-none">
-            <div id="shoot-h" class="absolute top-0 left-0 w-64 h-full bg-gradient-to-r from-transparent via-white/60 to-transparent" style="transform: translateX(-297px);"></div>
-        </div>
-
-        <!-- Remixed Asymmetrical Grid Layout -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 bg-white/10 border-white/10 border relative gap-x-px gap-y-px">
-            
-            <!-- Left Sidebar: Header & Sequence -->
-            <article class="lg:col-span-4 flex flex-col md:p-12 overflow-hidden bg-[#030303]/90 pt-8 pr-8 pb-8 pl-8 relative backdrop-blur-md">
-                <div class="flex-grow flex flex-col justify-start">
-                    <h1 class="text-3xl md:text-4xl font-extralight tracking-tight text-white mb-6 reveal-text">
-                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0%);">Privacy-First</span></span>
-                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">Compute</span></span>
-                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">Architecture.</span></span>
-                    </h1>
-                    <p class="text-xs text-white/50 max-w-sm font-extralight leading-relaxed reveal-text font-sans">
-                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0%);">Zero-knowledge</span></span>
-                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">proofs</span></span>
-                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">verify</span></span>
-                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">matching</span></span>
-                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">correctness</span></span>
-                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">without</span></span>
-                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">revealing</span></span>
-                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">individual</span></span>
-                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">orders.</span></span>
-                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">Batch</span></span>
-                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">auctions</span></span>
-                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">eliminate</span></span>
-                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">front-running</span></span>
-                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">on</span></span>
-                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">Base.</span></span>
-                    </p>
-                </div>
-
-                <!-- Sequential Text Animation -->
-                <div class="mt-16 flex flex-col gap-3 text-[10px] text-white/40 uppercase tracking-widest font-light" style="font-family: 'JetBrains Mono', monospace;">
-                    <div class="seq-line opacity-0 transform translate-y-4 transition-all duration-700 ease-out" style="opacity: 1; transform: translateY(0px);">&gt; Initializing matching engine<span class="anim-dots">..</span></div>
-                    <div class="seq-line opacity-0 transform translate-y-4 transition-all duration-700 ease-out" style="opacity: 1; transform: translateY(0px);">&gt; Generating ZK commitment proofs<span class="anim-dots">..</span></div>
-                    <div class="seq-line opacity-0 transform translate-y-4 transition-all duration-700 ease-out" style="opacity: 1; transform: translateY(0px);">&gt; Synchronizing escrow contracts<span class="anim-dots">..</span></div>
-                    <div class="seq-line opacity-0 transform translate-y-4 transition-all duration-700 ease-out" style="opacity: 1; transform: translateY(0px);">&gt; Awaiting batch settlement<span class="anim-dots">..</span></div>
-                </div>
-            </article>
-
-            <!-- Right Main: Huge Aura Canvas -->
-            <article class="lg:col-span-8 flex flex-col min-h-[400px] overflow-hidden transition-all duration-500 hover:border-white/10 group cursor-pointer bg-[#0B0C0E] w-full border-white/5 border relative">
-  
-  <img src="https://images.unsplash.com/photo-1629946832022-c327f74956e0?w=2160&amp;q=80" class="transition-transform duration-1000 group-hover:scale-110 group-hover:opacity-60 opacity-40 mix-blend-overlay w-full h-full object-cover absolute top-0 right-0 bottom-0 left-0" alt="Marketing Sites">
-
-  <!-- Animated background glow -->
-  <div class="-translate-x-1/2 -translate-y-1/2 group-hover:opacity-20 animate-[spin_4s_linear_infinite] transition-opacity duration-700 opacity-0 w-[120%] h-[120%] absolute top-1/2 left-1/2 blur-2xl"></div>
-
-  <!-- Popular Badge -->
-  <div class="absolute top-6 left-6 text-white text-[10px] font-medium px-3 py-1.5 uppercase tracking-widest rounded border shadow-lg z-20 bg-violet-500 border-violet-400/50 flex items-center gap-2 transform transition-transform group-hover:-translate-y-1">
-    <div class="w-1.5 h-1.5 bg-white rounded-full animate-ping"></div>
-    Popular
-  </div>
-
-  <!-- Title & Description Overlay (FRAME-02 Style) -->
-  <div class="absolute bottom-8 left-8 z-20 pointer-events-none flex flex-col justify-end max-w-sm">
-    <header class="text-[10px] text-white/30 mb-8 uppercase tracking-[0.2em] flex items-center gap-3 font-extralight" style="font-family: 'JetBrains Mono', monospace;">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]">
-        <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
-        <line x1="3" x2="21" y1="9" y2="9"></line>
-        <line x1="9" x2="9" y1="21" y2="9"></line>
-      </svg>
-      COMPUTE-01
-    </header>
-    <h3 class="text-base font-extralight tracking-tight mb-2 text-white/90 flex items-center">
-      Encrypted Order Matching
-    </h3>
-    <p class="text-xs text-white/40 leading-relaxed font-extralight font-sans">
-      Submit sealed bids via commit-reveal scheme. The matching engine runs batch auctions to find uniform clearing prices — completely private, completely fair.
-    </p>
-  </div>
-
-  <!-- Design Tool Overlay: Canvas Selection -->
-  <div class="absolute inset-8 border border-violet-500/30 rounded-lg pointer-events-none transition-all duration-700 flex flex-col justify-between hidden sm:flex z-10 group-hover:border-violet-500/80 group-hover:inset-10 bg-violet-500/[0.02] group-hover:bg-violet-500/[0.05]">
-    <div class="absolute -top-3 left-4 text-[9px] text-white px-2 py-0.5 rounded-sm font-normal bg-violet-500 transition-all duration-500 group-hover:shadow-[0_0_12px_rgba(139,92,246,0.6)]">Hero Section</div>
-    <div class="w-2 h-2 bg-white border border-violet-500 absolute -top-1 -left-1 transition-transform group-hover:scale-125"></div>
-    <div class="w-2 h-2 bg-white border border-violet-500 absolute -top-1 -right-1 transition-transform group-hover:scale-125"></div>
-    <div class="w-2 h-2 bg-white border border-violet-500 absolute -bottom-1 -left-1 transition-transform group-hover:scale-125"></div>
-    <div class="w-2 h-2 bg-white border border-violet-500 absolute -bottom-1 -right-1 transition-transform group-hover:scale-125"></div>
-  </div>
-
-  <!-- Design Tool Overlay: Properties Panel -->
-  <div class="absolute right-8 bottom-8 w-44 bg-[#0E0F11]/95 backdrop-blur-xl border border-white/[0.08] rounded-xl p-4 shadow-2xl transition-all duration-500 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 z-20 group-hover:shadow-violet-900/40">
-    <div class="flex items-center justify-between mb-3 border-b border-white/5 pb-2">
-      <span class="text-[10px] text-white/50 uppercase tracking-widest font-medium">Layout</span>
-      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white/40 hover:text-white transition-colors cursor-pointer">
-        <circle cx="12" cy="12" r="1"></circle>
-        <circle cx="19" cy="12" r="1"></circle>
-        <circle cx="5" cy="12" r="1"></circle>
-      </svg>
-    </div>
-    
-    <div class="flex gap-2 mb-3">
-      <div class="h-8 flex-1 bg-white/[0.02] rounded flex items-center justify-center border border-white/[0.04] hover:bg-white/10 hover:border-white/20 transition-all cursor-pointer group/btn">
-        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white/40 group-hover/btn:text-white transition-colors">
-          <line x1="21" x2="3" y1="6" y2="6"></line>
-          <line x1="15" x2="3" y1="12" y2="12"></line>
-          <line x1="17" x2="3" y1="18" y2="18"></line>
-        </svg>
-      </div>
-      <div class="h-8 flex-1 bg-white/[0.02] rounded flex items-center justify-center border border-white/[0.04] hover:bg-white/10 hover:border-white/20 transition-all cursor-pointer group/btn">
-        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white/40 group-hover/btn:text-white transition-colors">
-          <line x1="21" x2="3" y1="6" y2="6"></line>
-          <line x1="17" x2="7" y1="12" y2="12"></line>
-          <line x1="19" x2="5" y1="18" y2="18"></line>
-        </svg>
-      </div>
-      <div class="h-8 flex-1 bg-violet-500/20 rounded flex items-center justify-center border border-violet-500/50 shadow-inner">
-        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-violet-300">
-          <line x1="3" x2="21" y1="6" y2="6"></line>
-          <line x1="3" x2="21" y1="12" y2="12"></line>
-          <line x1="3" x2="21" y1="18" y2="18"></line>
-        </svg>
-      </div>
-    </div>
-    
-    <div class="flex items-center gap-3 p-2 rounded border border-white/[0.06] bg-white/[0.02] hover:border-white/20 transition-colors cursor-pointer group/input">
-      <span class="text-[10px] text-white/40 font-mono pl-1 group-hover/input:text-white/60">W</span>
-      <span class="text-xs text-white font-mono tracking-tight flex-1">100%</span>
-      <div class="w-1.5 h-3 bg-violet-500/80 animate-pulse hidden group-hover/input:block"></div>
-    </div>
-  </div>
-</article>
-
-            <!-- Bottom Left: Half Card -->
-            <article class="lg:col-span-6 relative flex flex-col md:flex-row p-8 md:p-12 bg-[#030303]/90 backdrop-blur-md gap-8 items-center">
-                <div class="hidden md:block absolute top-0 bottom-0 -left-px w-px overflow-hidden z-20 pointer-events-none">
-                    <div id="shoot1" class="absolute top-0 left-0 w-full h-48 bg-gradient-to-b from-transparent via-white/50 to-transparent" style="transform: translateY(-198px);"></div>
-                </div>
-                
-                <div class="flex-grow flex flex-col justify-center order-2 md:order-1">
-                    <header class="text-[10px] text-white/30 mb-8 uppercase tracking-[0.2em] flex items-center gap-3 font-extralight" style="font-family: 'JetBrains Mono', monospace;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect><line x1="3" x2="21" y1="9" y2="9"></line><line x1="9" x2="9" y1="21" y2="9"></line></svg>
-                        ESCROW-02
-                    </header>
-                    <h3 class="text-base font-extralight tracking-tight mb-2 text-white/90 flex items-center">
-                        USDC Escrow System
-                    </h3>
-                    <p class="text-xs text-white/40 leading-relaxed font-extralight font-sans">Funds locked on order placement, released to sellers on delivery verification. Automatic refunds on cancellation — trustless, on-chain.</p>
-                </div>
-                <div class="w-full md:w-1/2 h-48 relative flex items-center justify-center order-1 md:order-2">
-                    <!-- Subtle Aura -->
-                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-white/5 blur-[40px] rounded-full pointer-events-none"></div>
-                    <canvas id="canvas-nodes" class="absolute inset-0 w-full h-full" style="touch-action: none;" width="222" height="384"></canvas>
-                </div>
-            </article>
-
-            <!-- Bottom Right: Half Card -->
-            <article class="lg:col-span-6 relative flex flex-col md:flex-row p-8 md:p-12 bg-[#030303]/90 backdrop-blur-md gap-8 items-center">
-                <div class="hidden md:block absolute top-0 bottom-0 -left-px w-px overflow-hidden z-20 pointer-events-none">
-                    <div id="shoot2" class="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-transparent via-white/40 to-transparent" style="transform: translateY(-398.5px);"></div>
-                </div>
-
-                <div class="w-full md:w-1/2 h-48 relative flex items-center justify-center order-1">
-                    <!-- Subtle Aura -->
-                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-white/5 blur-[50px] rounded-full pointer-events-none"></div>
-                    <canvas id="canvas-flow" class="absolute inset-0 w-full h-full" style="touch-action: none;" width="222" height="384"></canvas>
-                </div>
-                <div class="flex-grow flex flex-col justify-center order-2">
-                    <header class="text-[10px] text-white/30 mb-8 uppercase tracking-[0.2em] flex items-center gap-3 font-extralight" style="font-family: 'JetBrains Mono', monospace;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]"><path d="M5.5 8.5 9 12l-3.5 3.5L2 12l3.5-3.5Z"></path><path d="m12 2 3.5 3.5L12 9 8.5 5.5 12 2Z"></path><path d="M18.5 8.5 22 12l-3.5 3.5L15 12l3.5-3.5Z"></path><path d="m12 15 3.5 3.5L12 22l-3.5-3.5L12 15Z"></path></svg>
-                        AGENT-03
-                    </header>
-                    <h3 class="text-base font-extralight tracking-tight mb-2 text-white/90 flex items-center">
-                        AI Agent Wallets
-                    </h3>
-                    <p class="text-xs text-white/40 leading-relaxed font-extralight font-sans">Coinbase Agentic Wallets let AI agents buy compute autonomously via x402 HTTP-native payments. Gasless transactions, programmable spending controls.</p>
-                </div>
-            </article>
-
-        </div>
-    </main>
-
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js" class=""></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-<script>
-        // GSAP Masked Reveal for Text
-        if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-            gsap.registerPlugin(ScrollTrigger);
-            
-            document.querySelectorAll('.reveal-text').forEach(el => {
-                // If it already has spans, we can just animate them
-                if(el.querySelectorAll('.reveal-word').length > 0) {
-                    gsap.to(el.querySelectorAll('.reveal-word'), {
-                        y: '0%',
-                        ease: "power4.out",
-                        duration: 1.2,
-                        stagger: 0.04,
-                        scrollTrigger: {
-                            trigger: el,
-                            start: "top 95%",
-                        }
-                    });
-                }
-            });
-        }
-
-        // Sequence Loading Animations
-        const seqLines = document.querySelectorAll('.seq-line');
-        let seqDelay = 500;
-        seqLines.forEach((line) => {
-            setTimeout(() => {
-                line.style.opacity = '1';
-                line.style.transform = 'translateY(0)';
-            }, seqDelay);
-            seqDelay += 900; 
-        });
-
-        // Animate the Dots (JS interval for inline execution)
-        setInterval(() => {
-            document.querySelectorAll('.anim-dots').forEach(el => {
-                let text = el.innerText;
-                el.innerText = text.length >= 3 ? '' : text + '.';
-            });
-        }, 400);
-
-        // Canvas Tool Background (Dot Grid with Selection)
-        const bgCanvas = document.getElementById('bg-waves');
-        if(bgCanvas) {
-            const bgCtx = bgCanvas.getContext('2d', { alpha: true });
-            let bw, bh, bgT = 0;
-            const resizeBg = () => {
-                const dpr = window.devicePixelRatio || 1;
-                bw = window.innerWidth; bh = window.innerHeight;
-                bgCanvas.width = bw * dpr; bgCanvas.height = bh * dpr;
-                bgCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
-            };
-            window.addEventListener('resize', resizeBg);
-            resizeBg();
-
-            const drawBg = () => {
-                bgT += 0.02;
-                bgCtx.clearRect(0, 0, bw, bh);
-                
-                // Dot grid
-                bgCtx.fillStyle = 'rgba(255,255,255,0.06)';
-                const spacing = 30;
-                const offsetX = (bgT * 10) % spacing;
-                const offsetY = (bgT * 10) % spacing;
-                
-                for(let x = -spacing; x < bw + spacing; x += spacing) {
-                    for(let y = -spacing; y < bh + spacing; y += spacing) {
-                        bgCtx.fillRect(x - offsetX, y - offsetY, 2, 2);
-                    }
-                }
-
-                // Animated Selection Marquee
-                const selX = bw/2 + Math.sin(bgT*0.5)*150 - 150;
-                const selY = bh/2 + Math.cos(bgT*0.3)*100 - 100;
-                const selW = 300 + Math.sin(bgT)*100;
-                const selH = 200 + Math.cos(bgT*0.8)*50;
-                
-                bgCtx.fillStyle = 'rgba(139,92,246,0.02)';
-                bgCtx.strokeStyle = 'rgba(139,92,246,0.2)';
-                bgCtx.lineWidth = 1;
-                bgCtx.beginPath();
-                bgCtx.rect(selX, selY, selW, selH);
-                bgCtx.fill();
-                bgCtx.stroke();
-                
-                // Crosshairs
-                const drawCrosshair = (x, y) => {
-                    bgCtx.beginPath();
-                    bgCtx.moveTo(x - 6, y); bgCtx.lineTo(x + 6, y);
-                    bgCtx.moveTo(x, y - 6); bgCtx.lineTo(x, y + 6);
-                    bgCtx.strokeStyle = 'rgba(139,92,246,0.5)';
-                    bgCtx.stroke();
-                };
-                drawCrosshair(selX, selY);
-                drawCrosshair(selX + selW, selY);
-                drawCrosshair(selX, selY + selH);
-                drawCrosshair(selX + selW, selY + selH);
-
-                requestAnimationFrame(drawBg);
-            };
-            drawBg();
-        }
-
-        // Interactive Flashlight & Shooting Lines
-        const mainEl = document.getElementById('main-container');
-        const flash = document.getElementById('flashlight');
-        const s1 = document.getElementById('shoot1'), s2 = document.getElementById('shoot2');
-        const sh = document.getElementById('shoot-h');
-        let pos1 = -200, pos2 = -400, posH = -300;
-
-        if(mainEl) {
-            mainEl.addEventListener('mousemove', (e) => {
-                const rect = mainEl.getBoundingClientRect();
-                flash.style.setProperty('--x', `${e.clientX - rect.left}px`);
-                flash.style.setProperty('--y', `${e.clientY - rect.top}px`);
-                flash.style.opacity = '1';
-            });
-            mainEl.addEventListener('mouseleave', () => flash.style.opacity = '0');
-
-            const animateShoots = () => {
-                const h = mainEl.offsetHeight || 1000, w = mainEl.offsetWidth || 1200;
-                pos1 += 2.0; pos2 += 1.5; posH += 3.0;
-                if (pos1 > h) pos1 = -200;
-                if (pos2 > h) pos2 = -200;
-                if (posH > w) posH = -300;
-                if (s1) s1.style.transform = `translateY(${pos1}px)`;
-                if (s2) s2.style.transform = `translateY(${pos2}px)`;
-                if (sh) sh.style.transform = `translateX(${posH}px)`;
-                requestAnimationFrame(animateShoots);
-            };
-            animateShoots();
-        }
-
-        // 3D Canvas Utilities
-        const projectIso = (x, y, z) => {
-            const angle = Math.PI / 6; 
-            return { x: (x - z) * Math.cos(angle), y: y + (x + z) * Math.sin(angle) };
-        };
-
-        const drawRoundRect = (ctx, x, y, w, h, r) => {
-            ctx.beginPath();
-            ctx.moveTo(x + r, y);
-            ctx.lineTo(x + w - r, y);
-            ctx.quadraticCurveTo(x + w, y, x + w, y + r);
-            ctx.lineTo(x + w, y + h - r);
-            ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
-            ctx.lineTo(x + r, y + h);
-            ctx.quadraticCurveTo(x, y + h, x, y + h - r);
-            ctx.lineTo(x, y + r);
-            ctx.quadraticCurveTo(x, y, x + r, y);
-            ctx.closePath();
-        };
-
-        const setupCanvas = (id, renderFn) => {
-            const canvas = document.getElementById(id);
-            if(!canvas) return;
-            const ctx = canvas.getContext('2d', { alpha: true });
-            let w, h, time = 0;
-            const resize = () => {
-                const rect = canvas.parentElement.getBoundingClientRect();
-                w = rect.width; h = rect.height;
-                const dpr = window.devicePixelRatio || 1;
-                canvas.width = w * dpr; canvas.height = h * dpr;
-                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-            };
-            window.addEventListener('resize', resize);
-            resize();
-            const loop = () => {
-                time += 0.012;
-                ctx.clearRect(0, 0, w, h);
-                ctx.save();
-                ctx.translate(w / 2, h / 2 + 5);
-                renderFn(ctx, time);
-                ctx.restore();
-                requestAnimationFrame(loop);
-            };
-            loop();
-        };
-
-        // Isometric Vector Engine Layout
-        setupCanvas('canvas-layers', (ctx, t) => {
-            const drawIsoShape = (yOff, xOff, zOff, sizeX, sizeZ, style) => {
-                const p1 = projectIso(xOff - sizeX, yOff, zOff - sizeZ);
-                const p2 = projectIso(xOff + sizeX, yOff, zOff - sizeZ);
-                const p3 = projectIso(xOff + sizeX, yOff, zOff + sizeZ);
-                const p4 = projectIso(xOff - sizeX, yOff, zOff + sizeZ);
-                
-                ctx.beginPath();
-                ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y);
-                ctx.lineTo(p3.x, p3.y); ctx.lineTo(p4.x, p4.y); ctx.closePath();
-                
-                if (style.fill) { ctx.fillStyle = style.fill; ctx.fill(); }
-                if (style.stroke) { 
-                    if(style.dash) ctx.setLineDash(style.dash);
-                    ctx.strokeStyle = style.stroke; ctx.stroke(); 
-                    ctx.setLineDash([]);
-                }
-            };
-
-            const float1 = Math.sin(t * 1.5) * 8;
-            const float2 = Math.sin(t * 1.5 + 1) * 12;
-            const float3 = Math.sin(t * 1.5 + 2) * 16;
-            
-            // Base wireframe
-            drawIsoShape(60, 0, 0, 100, 140, { fill: '#030303', stroke: 'rgba(255,255,255,0.1)' });
-            
-            // Grid on base
-            for(let i = -80; i <= 80; i+=20) {
-                const p1 = projectIso(i, 60, -120);
-                const p2 = projectIso(i, 60, 120);
-                ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y);
-                ctx.strokeStyle = 'rgba(255,255,255,0.03)'; ctx.stroke();
-            }
-            for(let i = -120; i <= 120; i+=20) {
-                const p1 = projectIso(-80, 60, i);
-                const p2 = projectIso(80, 60, i);
-                ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y);
-                ctx.strokeStyle = 'rgba(255,255,255,0.03)'; ctx.stroke();
-            }
-
-            // Shadow of float 1
-            drawIsoShape(60, 0, -50, 80, 50, { fill: 'rgba(0,0,0,0.5)' });
-            // Image Placeholder (Float 1)
-            drawIsoShape(20 + float1, 0, -50, 80, 50, { fill: 'rgba(255,255,255,0.02)', stroke: 'rgba(255,255,255,0.3)', dash: [4,4] });
-            // Cross inside image
-            const c1 = projectIso(-80, 20+float1, -100);
-            const c2 = projectIso(80, 20+float1, 0);
-            ctx.beginPath(); ctx.moveTo(c1.x, c1.y); ctx.lineTo(c2.x, c2.y); ctx.strokeStyle='rgba(255,255,255,0.1)'; ctx.stroke();
-            const c3 = projectIso(80, 20+float1, -100);
-            const c4 = projectIso(-80, 20+float1, 0);
-            ctx.beginPath(); ctx.moveTo(c3.x, c3.y); ctx.lineTo(c4.x, c4.y); ctx.stroke();
-
-            // Text Lines (Float 2)
-            drawIsoShape(-10 + float2, -20, 40, 60, 6, { fill: 'rgba(255,255,255,0.1)' });
-            drawIsoShape(-10 + float2, -40, 60, 40, 6, { fill: 'rgba(255,255,255,0.05)' });
-
-            // Primary Button (Float 3)
-            drawIsoShape(-40 + float3, -40, 100, 40, 15, { fill: 'rgba(139,92,246,0.15)', stroke: '#8b5cf6' });
-            
-            // Connectors
-            const drawConn = (x, z, y1, y2) => {
-                const p1 = projectIso(x, y1, z);
-                const p2 = projectIso(x, y2, z);
-                ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y);
-                ctx.strokeStyle = 'rgba(139,92,246,0.4)'; ctx.setLineDash([2,2]); ctx.stroke(); ctx.setLineDash([]);
-            };
-            
-            drawConn(-40, 85, 60, -40+float3);
-            drawConn(-40, 115, 60, -40+float3);
-            
-            // Floating cursor
-            const curX = Math.sin(t*2)*40;
-            const curZ = Math.cos(t*1.5)*40;
-            const cp = projectIso(curX, -60, curZ);
-            ctx.beginPath();
-            ctx.moveTo(cp.x, cp.y);
-            ctx.lineTo(cp.x + 15, cp.y + 10);
-            ctx.lineTo(cp.x + 5, cp.y + 12);
-            ctx.lineTo(cp.x, cp.y + 20);
-            ctx.closePath();
-            ctx.fillStyle = '#fff'; ctx.fill();
-            ctx.strokeStyle = '#000'; ctx.stroke();
-        });
-
-        // Auto Layout Visualization
-        setupCanvas('canvas-nodes', (ctx, t) => {
-            const w = 140 + Math.sin(t * 2) * 40;
-            const h = 200;
-            
-            ctx.translate(-w/2, -h/2);
-            
-            // Draw container bounding box
-            ctx.strokeStyle = 'rgba(255,255,255,0.3)';
-            ctx.setLineDash([4, 4]);
-            ctx.strokeRect(0, 0, w, h);
-            ctx.setLineDash([]);
-            
-            // Draw layout guides
-            ctx.strokeStyle = 'rgba(255,255,255,0.05)';
-            ctx.strokeRect(10, 10, w - 20, h - 20);
-            
-            // Header
-            ctx.fillStyle = 'rgba(255,255,255,0.1)';
-            ctx.fillRect(10, 10, w - 20, 20);
-            
-            // Reflowing items
-            const padding = 10;
-            const gap = 10;
-            const availableW = w - padding * 2;
-            
-            ctx.fillStyle = 'rgba(139,92,246,0.4)';
-            ctx.strokeStyle = 'rgba(139,92,246,0.8)';
-            
-            if (availableW > 120) {
-                // 2 columns
-                const itemW = (availableW - gap) / 2;
-                ctx.fillRect(padding, 40, itemW, 60);
-                ctx.strokeRect(padding, 40, itemW, 60);
-                
-                ctx.fillRect(padding + itemW + gap, 40, itemW, 60);
-                ctx.strokeRect(padding + itemW + gap, 40, itemW, 60);
-                
-                ctx.fillRect(padding, 110, itemW, 60);
-                ctx.strokeRect(padding, 110, itemW, 60);
-                
-                ctx.fillRect(padding + itemW + gap, 110, itemW, 60);
-                ctx.strokeRect(padding + itemW + gap, 110, itemW, 60);
-            } else {
-                // 1 column
-                ctx.fillRect(padding, 40, availableW, 30);
-                ctx.strokeRect(padding, 40, availableW, 30);
-                
-                ctx.fillRect(padding, 80, availableW, 30);
-                ctx.strokeRect(padding, 80, availableW, 30);
-                
-                ctx.fillRect(padding, 120, availableW, 30);
-                ctx.strokeRect(padding, 120, availableW, 30);
-                
-                ctx.fillRect(padding, 160, availableW, 30);
-                ctx.strokeRect(padding, 160, availableW, 30);
-            }
-            
-            // Dimensions label
-            ctx.fillStyle = 'rgba(255,255,255,0.5)';
-            ctx.font = '10px monospace';
-            ctx.textAlign = 'center';
-            ctx.fillText(`${Math.round(w)}px`, w/2, -8);
-        });
-
-        // Interactive Component State
-        setupCanvas('canvas-flow', (ctx, t) => {
-            const hover = Math.sin(t * 2.5) > 0;
-            const click = Math.sin(t * 2.5) > 0.8;
-            
-            const scale = click ? 0.95 : (hover ? 1.05 : 1);
-            const w = 120 * scale;
-            const h = 40 * scale;
-            
-            ctx.translate(-w/2, -h/2);
-            
-            // Base shadow
-            ctx.shadowColor = hover ? 'rgba(139, 92, 246, 0.4)' : 'transparent';
-            ctx.shadowBlur = 15;
-            ctx.shadowOffsetY = 5;
-            
-            ctx.fillStyle = hover ? 'rgba(139, 92, 246, 0.9)' : 'rgba(255,255,255,0.05)';
-            ctx.strokeStyle = hover ? 'rgba(139, 92, 246, 1)' : 'rgba(255,255,255,0.2)';
-            ctx.lineWidth = 1;
-            
-            drawRoundRect(ctx, 0, 0, w, h, 6);
-            ctx.fill();
-            ctx.stroke();
-            
-            ctx.shadowColor = 'transparent';
-            
-            ctx.fillStyle = hover ? '#ffffff' : 'rgba(255,255,255,0.5)';
-            ctx.font = '12px Inter, sans-serif';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(hover ? 'Hover State' : 'Default State', w/2, h/2);
-            
-            if (hover && !click) {
-                ctx.strokeStyle = '#a78bfa';
-                ctx.setLineDash([2, 2]);
-                ctx.strokeRect(-6, -6, w+12, h+12);
-                ctx.setLineDash([]);
-                
-                ctx.fillStyle = '#fff';
-                ctx.strokeStyle = '#a78bfa';
-                const drawHandle = (x, y) => {
-                    ctx.fillRect(x-3, y-3, 6, 6);
-                    ctx.strokeRect(x-3, y-3, 6, 6);
-                };
-                drawHandle(-6, -6);
-                drawHandle(w+6, -6);
-                drawHandle(-6, h+6);
-                drawHandle(w+6, h+6);
-                
-                ctx.fillStyle = '#a78bfa';
-                ctx.font = '9px monospace';
-                ctx.fillText('Padding: 16px', w/2, -15);
-            }
-            
-            const curX = hover ? w/2 + (click ? 0 : 10) : w + 40;
-            const curY = hover ? h/2 + (click ? 0 : 10) : h + 40;
-            
-            ctx.save();
-            ctx.translate(curX, curY);
-            if (click) ctx.scale(0.8, 0.8);
-            ctx.beginPath();
-            ctx.moveTo(0, 0);
-            ctx.lineTo(15, 10);
-            ctx.lineTo(5, 12);
-            ctx.lineTo(0, 20);
-            ctx.closePath();
-            ctx.fillStyle = '#fff';
-            ctx.fill();
-            ctx.strokeStyle = '#000';
-            ctx.lineWidth = 1;
-            ctx.stroke();
-            ctx.restore();
-        });
-</script>
-
-</section>
-
 
 <!-- Target Users Section -->
 <section class="z-10 w-full pt-32 pb-24 relative" id="target-users">

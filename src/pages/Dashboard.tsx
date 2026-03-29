@@ -174,6 +174,8 @@ const Dashboard = () => {
           </GlassCard>
         ))}
       </div>
+      </>
+      )}
     </div>
   );
 };

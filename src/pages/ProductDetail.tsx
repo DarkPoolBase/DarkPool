@@ -40,7 +40,7 @@ const productData: Record<string, {
     ],
   },
   rtx4090: {
-    name: "RTX 4090", label: "Private Compute", price: "$0.08/hr", priceNum: 0.08,
+    name: "RTX 4090", label: "Private Compute", price: "$0.08/GPU-hour", priceNum: 0.08,
     providers: 234, vram: "24GB GDDR6X", workloads: ["Inference", "Batch Jobs", "Fine-tuning", "Dev/Test"],
     availability: 65, icon: Zap,
     description: "Cost-efficient GPU compute for inference and development workloads. Ideal for teams scaling with privacy-preserving compute procurement.",

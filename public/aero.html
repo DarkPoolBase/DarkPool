@@ -282,10 +282,10 @@ document.addEventListener('DOMContentLoaded', function() {
     <div class="space-y-5">
       <div class="mb-4">
         <span class="block font-mono text-[11px] tracking-[0.3em] text-white/30 uppercase mb-1">02</span>
-        <span class="block font-mono text-[11px] tracking-[0.3em] text-white/30 uppercase">Order Lifecycle</span>
+        <span class="block font-mono text-[11px] tracking-[0.3em] text-white/30 uppercase">Core Capabilities</span>
       </div>
       <h1 class="text-3xl md:text-4xl lg:text-4xl font-light text-white tracking-tight leading-tight">
-        How it<br>works for<br class="">buyers & sellers
+        Built for<br>AI Agents &<br class="">Institutions
       </h1>
     </div>
 
@@ -1654,201 +1654,186 @@ document.addEventListener('DOMContentLoaded', function() {
             ctx.restore();
         });
 </script>
-</section>
 
-<!-- Product Features Bento -->
-<section class="z-10 w-full pt-32 pb-24 relative" id="features">
-  <div class="max-w-6xl mx-auto px-6 md:px-10">
+    <!-- Feature Bento Grid -->
+    <div class="w-full mt-24 px-6 md:px-10">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
 
-    <!-- Header -->
-    <div class="features-header mb-16">
-      <span class="inline-block font-mono text-[11px] tracking-[0.3em] text-white/30 uppercase mb-1">03</span>
-      <span class="block font-mono text-[11px] tracking-[0.3em] text-white/30 uppercase mb-4">Core Capabilities</span>
-      <h2 class="text-3xl md:text-5xl lg:text-6xl font-extralight text-white/90 tracking-tight leading-[1.1]">
-        Built for AI Agents<br class="hidden md:block"> and Institutions
-      </h2>
-    </div>
-
-    <!-- Bento Grid: Core Features -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-
-      <!-- 1. Encrypted Order Submission -->
-      <div class="feature-tile rounded-2xl border border-white/[0.05] bg-white/[0.015] p-8 relative overflow-hidden group hover:border-white/[0.1] transition-all duration-500">
-        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" style="background: radial-gradient(ellipse at 30% 20%, rgba(139,92,246,0.06) 0%, transparent 60%);"></div>
-        <div class="relative z-10">
-          <div class="w-10 h-10 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center mb-5">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-violet-400"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          </div>
-          <h3 class="text-base font-medium text-white/90 mb-2">Encrypted Orders</h3>
-          <p class="text-[13px] text-white/40 leading-relaxed font-light">Sealed bids and asks. Nobody sees your order details — not even the platform. ZK proofs verify legitimacy.</p>
-          <div class="mt-5 overflow-hidden rounded-lg bg-white/[0.02] border border-white/[0.04] px-3 py-2">
-            <div class="font-mono text-[9px] text-violet-400/40 whitespace-nowrap hash-scroll" style="width: 200%;">0x7a3f...e9c2 → 0xb1d4...3f8a → 0x92e1...d4c7 → 0x5f8b...a1e3 → 0x7a3f...e9c2 → 0xb1d4...3f8a → 0x92e1...d4c7 → 0x5f8b...a1e3</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 2. Uniform Clearing Price Auctions -->
-      <div class="feature-tile rounded-2xl border border-white/[0.05] bg-white/[0.015] p-8 relative overflow-hidden group hover:border-white/[0.1] transition-all duration-500">
-        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" style="background: radial-gradient(ellipse at 70% 20%, rgba(16,185,129,0.06) 0%, transparent 60%);"></div>
-        <div class="relative z-10">
-          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-5">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-emerald-400"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
-          </div>
-          <h3 class="text-base font-medium text-white/90 mb-2">Uniform Price Auctions</h3>
-          <p class="text-[13px] text-white/40 leading-relaxed font-light">Orders batch for 30–60s, then a single clearing price is found. Everyone pays the same fair rate — no front-running.</p>
-          <div class="mt-5 flex items-end gap-[3px] h-8">
-            <div class="w-2 rounded-t bg-emerald-500/20" style="height:45%; animation: auction-bar-1 3s ease-in-out infinite;"></div>
-            <div class="w-2 rounded-t bg-emerald-500/25" style="height:60%; animation: auction-bar-2 3s ease-in-out infinite 0.2s;"></div>
-            <div class="w-2 rounded-t bg-emerald-500/30" style="height:75%; animation: auction-bar-1 3s ease-in-out infinite 0.4s;"></div>
-            <div class="w-2 rounded-t bg-emerald-500/40" style="height:55%; animation: auction-bar-2 3s ease-in-out infinite 0.6s;"></div>
-            <div class="w-2 rounded-t bg-emerald-500/35" style="height:65%; animation: auction-bar-1 3s ease-in-out infinite 0.8s;"></div>
-            <div class="w-2 rounded-t bg-emerald-500/30" style="height:50%; animation: auction-bar-2 3s ease-in-out infinite 1s;"></div>
-            <div class="w-2 rounded-t bg-emerald-500/25" style="height:70%; animation: auction-bar-1 3s ease-in-out infinite 1.2s;"></div>
-            <div class="w-2 rounded-t bg-emerald-500/20" style="height:40%; animation: auction-bar-2 3s ease-in-out infinite 1.4s;"></div>
-            <div class="flex-1"></div>
-            <div class="h-px flex-1 bg-gradient-to-r from-emerald-500/30 to-transparent self-center" style="margin-bottom: 55%;"></div>
-            <span class="text-[9px] font-mono text-emerald-400/50 self-center" style="margin-bottom: calc(55% - 5px);">$0.25</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- 3. USDC Settlement on Base -->
-      <div class="feature-tile rounded-2xl border border-white/[0.05] bg-white/[0.015] p-8 relative overflow-hidden group hover:border-white/[0.1] transition-all duration-500">
-        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" style="background: radial-gradient(ellipse at 50% 80%, rgba(59,130,246,0.06) 0%, transparent 60%);"></div>
-        <div class="relative z-10">
-          <div class="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mb-5">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-blue-400"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg>
-          </div>
-          <h3 class="text-base font-medium text-white/90 mb-2">USDC Settlement</h3>
-          <p class="text-[13px] text-white/40 leading-relaxed font-light">Instant settlement on Base L2. Gas costs under $0.01. Escrow protects both buyers and sellers automatically.</p>
-          <div class="mt-5 flex items-center gap-2">
-            <div class="flex items-center gap-1.5 px-2 py-1 rounded bg-white/[0.03] border border-white/[0.06]">
-              <div class="w-1.5 h-1.5 rounded-full bg-blue-400" style="animation: settle-pulse 2s ease infinite;"></div>
-              <span class="text-[9px] font-mono text-white/30">Order</span>
+        <!-- 1. Encrypted Order Submission -->
+        <div class="feature-tile rounded-2xl border border-white/[0.05] bg-white/[0.015] p-8 relative overflow-hidden group hover:border-white/[0.1] transition-all duration-500">
+          <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" style="background: radial-gradient(ellipse at 30% 20%, rgba(139,92,246,0.06) 0%, transparent 60%);"></div>
+          <div class="relative z-10">
+            <div class="w-10 h-10 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center mb-5">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-violet-400"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
             </div>
-            <div class="h-px w-4 bg-gradient-to-r from-blue-500/30 to-blue-500/10"></div>
-            <div class="flex items-center gap-1.5 px-2 py-1 rounded bg-white/[0.03] border border-white/[0.06]">
-              <div class="w-1.5 h-1.5 rounded-full bg-blue-400" style="animation: settle-pulse 2s ease infinite 0.5s;"></div>
-              <span class="text-[9px] font-mono text-white/30">Match</span>
-            </div>
-            <div class="h-px w-4 bg-gradient-to-r from-blue-500/30 to-blue-500/10"></div>
-            <div class="flex items-center gap-1.5 px-2 py-1 rounded bg-emerald-500/10 border border-emerald-500/20">
-              <div class="w-1.5 h-1.5 rounded-full bg-emerald-400" style="animation: settle-pulse 2s ease infinite 1s;"></div>
-              <span class="text-[9px] font-mono text-emerald-400/60">Settled</span>
+            <h3 class="text-base font-medium text-white/90 mb-2">Encrypted Orders</h3>
+            <p class="text-[13px] text-white/40 leading-relaxed font-light">Sealed bids and asks. Nobody sees your order details — not even the platform. ZK proofs verify legitimacy.</p>
+            <div class="mt-5 overflow-hidden rounded-lg bg-white/[0.02] border border-white/[0.04] px-3 py-2">
+              <div class="font-mono text-[9px] text-violet-400/40 whitespace-nowrap hash-scroll" style="width: 200%;">0x7a3f...e9c2 → 0xb1d4...3f8a → 0x92e1...d4c7 → 0x5f8b...a1e3 → 0x7a3f...e9c2 → 0xb1d4...3f8a → 0x92e1...d4c7 → 0x5f8b...a1e3</div>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- 4. Agent-Native API -->
-      <div class="feature-tile rounded-2xl border border-white/[0.05] bg-white/[0.015] p-8 relative overflow-hidden group hover:border-white/[0.1] transition-all duration-500">
-        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" style="background: radial-gradient(ellipse at 30% 80%, rgba(251,146,60,0.06) 0%, transparent 60%);"></div>
-        <div class="relative z-10">
-          <div class="w-10 h-10 rounded-xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center mb-5">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-orange-400"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-          </div>
-          <h3 class="text-base font-medium text-white/90 mb-2">Agent-Native API</h3>
-          <p class="text-[13px] text-white/40 leading-relaxed font-light">Submit orders via REST or x402 protocol. One-line SDK for LangChain, AutoGPT, and CrewAI.</p>
-          <div class="mt-5 rounded-lg bg-[#0B0C0E] border border-white/[0.04] px-3 py-2.5 font-mono text-[10px] leading-relaxed">
-            <span class="text-orange-400/60">await</span> <span class="text-white/50">darkpool</span><span class="text-white/20">.</span><span class="text-emerald-400/60">submitOrder</span><span class="text-white/20">({</span><br>
-            <span class="text-white/20">&nbsp;&nbsp;</span><span class="text-white/30">gpu:</span> <span class="text-violet-400/60">"H100"</span><span class="text-white/20">,</span><br>
-            <span class="text-white/20">&nbsp;&nbsp;</span><span class="text-white/30">hours:</span> <span class="text-blue-400/60">24</span><br>
-            <span class="text-white/20">})</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- 5. GPU Provider Marketplace -->
-      <div class="feature-tile rounded-2xl border border-white/[0.05] bg-white/[0.015] p-8 relative overflow-hidden group hover:border-white/[0.1] transition-all duration-500">
-        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" style="background: radial-gradient(ellipse at 70% 80%, rgba(139,92,246,0.06) 0%, transparent 60%);"></div>
-        <div class="relative z-10">
-          <div class="w-10 h-10 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center mb-5">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-violet-400"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/></svg>
-          </div>
-          <h3 class="text-base font-medium text-white/90 mb-2">GPU Marketplace</h3>
-          <p class="text-[13px] text-white/40 leading-relaxed font-light">Spot markets, reserved blocks, credits, and cluster matching. Browse verified providers with reputation scores.</p>
-          <div class="mt-5 space-y-1.5">
-            <div class="flex items-center justify-between px-2.5 py-1.5 rounded bg-white/[0.02] border border-white/[0.04]">
-              <div class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div><span class="text-[9px] font-mono text-white/40">H100 × 8</span></div>
-              <span class="text-[9px] font-mono text-emerald-400/60">$0.22/hr</span>
+        <!-- 2. Uniform Clearing Price Auctions -->
+        <div class="feature-tile rounded-2xl border border-white/[0.05] bg-white/[0.015] p-8 relative overflow-hidden group hover:border-white/[0.1] transition-all duration-500">
+          <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" style="background: radial-gradient(ellipse at 70% 20%, rgba(16,185,129,0.06) 0%, transparent 60%);"></div>
+          <div class="relative z-10">
+            <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-5">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-emerald-400"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
             </div>
-            <div class="flex items-center justify-between px-2.5 py-1.5 rounded bg-white/[0.02] border border-white/[0.04]">
-              <div class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div><span class="text-[9px] font-mono text-white/40">A100 × 4</span></div>
-              <span class="text-[9px] font-mono text-emerald-400/60">$0.14/hr</span>
-            </div>
-            <div class="flex items-center justify-between px-2.5 py-1.5 rounded bg-white/[0.02] border border-white/[0.04]">
-              <div class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-amber-400"></div><span class="text-[9px] font-mono text-white/40">L40S × 2</span></div>
-              <span class="text-[9px] font-mono text-amber-400/60">$0.09/hr</span>
+            <h3 class="text-base font-medium text-white/90 mb-2">Uniform Price Auctions</h3>
+            <p class="text-[13px] text-white/40 leading-relaxed font-light">Orders batch for 30–60s, then a single clearing price is found. Everyone pays the same fair rate — no front-running.</p>
+            <div class="mt-5 flex items-end gap-[3px] h-8">
+              <div class="w-2 rounded-t bg-emerald-500/20" style="height:45%; animation: auction-bar-1 3s ease-in-out infinite;"></div>
+              <div class="w-2 rounded-t bg-emerald-500/25" style="height:60%; animation: auction-bar-2 3s ease-in-out infinite 0.2s;"></div>
+              <div class="w-2 rounded-t bg-emerald-500/30" style="height:75%; animation: auction-bar-1 3s ease-in-out infinite 0.4s;"></div>
+              <div class="w-2 rounded-t bg-emerald-500/40" style="height:55%; animation: auction-bar-2 3s ease-in-out infinite 0.6s;"></div>
+              <div class="w-2 rounded-t bg-emerald-500/35" style="height:65%; animation: auction-bar-1 3s ease-in-out infinite 0.8s;"></div>
+              <div class="w-2 rounded-t bg-emerald-500/30" style="height:50%; animation: auction-bar-2 3s ease-in-out infinite 1s;"></div>
+              <div class="w-2 rounded-t bg-emerald-500/25" style="height:70%; animation: auction-bar-1 3s ease-in-out infinite 1.2s;"></div>
+              <div class="w-2 rounded-t bg-emerald-500/20" style="height:40%; animation: auction-bar-2 3s ease-in-out infinite 1.4s;"></div>
+              <div class="flex-1"></div>
+              <div class="h-px flex-1 bg-gradient-to-r from-emerald-500/30 to-transparent self-center" style="margin-bottom: 55%;"></div>
+              <span class="text-[9px] font-mono text-emerald-400/50 self-center" style="margin-bottom: calc(55% - 5px);">$0.25</span>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- 6. Real-Time Execution Engine -->
-      <div class="feature-tile rounded-2xl border border-white/[0.05] bg-white/[0.015] p-8 relative overflow-hidden group hover:border-white/[0.1] transition-all duration-500">
-        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" style="background: radial-gradient(ellipse at 50% 20%, rgba(6,182,212,0.06) 0%, transparent 60%);"></div>
-        <div class="relative z-10">
-          <div class="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center mb-5">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-cyan-400"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-          </div>
-          <h3 class="text-base font-medium text-white/90 mb-2">Execution Engine</h3>
-          <p class="text-[13px] text-white/40 leading-relaxed font-light">Batch matching every 30–60 seconds. Orders encrypted end-to-end. Results posted with cryptographic proofs.</p>
-          <div class="mt-5 flex items-center gap-3">
-            <div class="relative w-9 h-9">
-              <svg viewBox="0 0 36 36" class="w-full h-full -rotate-90">
-                <circle cx="18" cy="18" r="15" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="2"/>
-                <circle cx="18" cy="18" r="15" fill="none" stroke="rgba(6,182,212,0.4)" stroke-width="2" stroke-dasharray="94.25" stroke-dashoffset="30" stroke-linecap="round" class="feature-timer-ring"/>
-              </svg>
-              <span class="absolute inset-0 flex items-center justify-center text-[8px] font-mono text-cyan-400/70 feature-timer-text">32s</span>
+        <!-- 3. USDC Settlement on Base -->
+        <div class="feature-tile rounded-2xl border border-white/[0.05] bg-white/[0.015] p-8 relative overflow-hidden group hover:border-white/[0.1] transition-all duration-500">
+          <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" style="background: radial-gradient(ellipse at 50% 80%, rgba(59,130,246,0.06) 0%, transparent 60%);"></div>
+          <div class="relative z-10">
+            <div class="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mb-5">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-blue-400"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg>
             </div>
-            <div class="flex-1">
-              <div class="h-1 bg-white/[0.04] rounded-full overflow-hidden">
-                <div class="h-full bg-gradient-to-r from-cyan-500/40 to-cyan-500/20 rounded-full feature-timer-bar" style="width:53%;"></div>
+            <h3 class="text-base font-medium text-white/90 mb-2">USDC Settlement</h3>
+            <p class="text-[13px] text-white/40 leading-relaxed font-light">Instant settlement on Base L2. Gas costs under $0.01. Escrow protects both buyers and sellers automatically.</p>
+            <div class="mt-5 flex items-center gap-2">
+              <div class="flex items-center gap-1.5 px-2 py-1 rounded bg-white/[0.03] border border-white/[0.06]">
+                <div class="w-1.5 h-1.5 rounded-full bg-blue-400" style="animation: settle-pulse 2s ease infinite;"></div>
+                <span class="text-[9px] font-mono text-white/30">Order</span>
               </div>
-              <span class="text-[8px] font-mono text-white/20 mt-1 block">Next batch clearing</span>
+              <div class="h-px w-4 bg-gradient-to-r from-blue-500/30 to-blue-500/10"></div>
+              <div class="flex items-center gap-1.5 px-2 py-1 rounded bg-white/[0.03] border border-white/[0.06]">
+                <div class="w-1.5 h-1.5 rounded-full bg-blue-400" style="animation: settle-pulse 2s ease infinite 0.5s;"></div>
+                <span class="text-[9px] font-mono text-white/30">Match</span>
+              </div>
+              <div class="h-px w-4 bg-gradient-to-r from-blue-500/30 to-blue-500/10"></div>
+              <div class="flex items-center gap-1.5 px-2 py-1 rounded bg-emerald-500/10 border border-emerald-500/20">
+                <div class="w-1.5 h-1.5 rounded-full bg-emerald-400" style="animation: settle-pulse 2s ease infinite 1s;"></div>
+                <span class="text-[9px] font-mono text-emerald-400/60">Settled</span>
+              </div>
             </div>
           </div>
         </div>
+
+        <!-- 4. Agent-Native API -->
+        <div class="feature-tile rounded-2xl border border-white/[0.05] bg-white/[0.015] p-8 relative overflow-hidden group hover:border-white/[0.1] transition-all duration-500">
+          <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" style="background: radial-gradient(ellipse at 30% 80%, rgba(251,146,60,0.06) 0%, transparent 60%);"></div>
+          <div class="relative z-10">
+            <div class="w-10 h-10 rounded-xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center mb-5">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-orange-400"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            </div>
+            <h3 class="text-base font-medium text-white/90 mb-2">Agent-Native API</h3>
+            <p class="text-[13px] text-white/40 leading-relaxed font-light">Submit orders via REST or x402 protocol. One-line SDK for LangChain, AutoGPT, and CrewAI.</p>
+            <div class="mt-5 rounded-lg bg-[#0B0C0E] border border-white/[0.04] px-3 py-2.5 font-mono text-[10px] leading-relaxed">
+              <span class="text-orange-400/60">await</span> <span class="text-white/50">darkpool</span><span class="text-white/20">.</span><span class="text-emerald-400/60">submitOrder</span><span class="text-white/20">({</span><br>
+              <span class="text-white/20">&nbsp;&nbsp;</span><span class="text-white/30">gpu:</span> <span class="text-violet-400/60">"H100"</span><span class="text-white/20">,</span><br>
+              <span class="text-white/20">&nbsp;&nbsp;</span><span class="text-white/30">hours:</span> <span class="text-blue-400/60">24</span><br>
+              <span class="text-white/20">})</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. GPU Provider Marketplace -->
+        <div class="feature-tile rounded-2xl border border-white/[0.05] bg-white/[0.015] p-8 relative overflow-hidden group hover:border-white/[0.1] transition-all duration-500">
+          <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" style="background: radial-gradient(ellipse at 70% 80%, rgba(139,92,246,0.06) 0%, transparent 60%);"></div>
+          <div class="relative z-10">
+            <div class="w-10 h-10 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center mb-5">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-violet-400"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/></svg>
+            </div>
+            <h3 class="text-base font-medium text-white/90 mb-2">GPU Marketplace</h3>
+            <p class="text-[13px] text-white/40 leading-relaxed font-light">Spot markets, reserved blocks, credits, and cluster matching. Browse verified providers with reputation scores.</p>
+            <div class="mt-5 space-y-1.5">
+              <div class="flex items-center justify-between px-2.5 py-1.5 rounded bg-white/[0.02] border border-white/[0.04]">
+                <div class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div><span class="text-[9px] font-mono text-white/40">H100 × 8</span></div>
+                <span class="text-[9px] font-mono text-emerald-400/60">$0.22/hr</span>
+              </div>
+              <div class="flex items-center justify-between px-2.5 py-1.5 rounded bg-white/[0.02] border border-white/[0.04]">
+                <div class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div><span class="text-[9px] font-mono text-white/40">A100 × 4</span></div>
+                <span class="text-[9px] font-mono text-emerald-400/60">$0.14/hr</span>
+              </div>
+              <div class="flex items-center justify-between px-2.5 py-1.5 rounded bg-white/[0.02] border border-white/[0.04]">
+                <div class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-amber-400"></div><span class="text-[9px] font-mono text-white/40">L40S × 2</span></div>
+                <span class="text-[9px] font-mono text-amber-400/60">$0.09/hr</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. Real-Time Execution Engine -->
+        <div class="feature-tile rounded-2xl border border-white/[0.05] bg-white/[0.015] p-8 relative overflow-hidden group hover:border-white/[0.1] transition-all duration-500">
+          <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" style="background: radial-gradient(ellipse at 50% 20%, rgba(6,182,212,0.06) 0%, transparent 60%);"></div>
+          <div class="relative z-10">
+            <div class="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center mb-5">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-cyan-400"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            </div>
+            <h3 class="text-base font-medium text-white/90 mb-2">Execution Engine</h3>
+            <p class="text-[13px] text-white/40 leading-relaxed font-light">Batch matching every 30–60 seconds. Orders encrypted end-to-end. Results posted with cryptographic proofs.</p>
+            <div class="mt-5 flex items-center gap-3">
+              <div class="relative w-9 h-9">
+                <svg viewBox="0 0 36 36" class="w-full h-full -rotate-90">
+                  <circle cx="18" cy="18" r="15" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="2"/>
+                  <circle cx="18" cy="18" r="15" fill="none" stroke="rgba(6,182,212,0.4)" stroke-width="2" stroke-dasharray="94.25" stroke-dashoffset="30" stroke-linecap="round" class="feature-timer-ring"/>
+                </svg>
+                <span class="absolute inset-0 flex items-center justify-center text-[8px] font-mono text-cyan-400/70 feature-timer-text">32s</span>
+              </div>
+              <div class="flex-1">
+                <div class="h-1 bg-white/[0.04] rounded-full overflow-hidden">
+                  <div class="h-full bg-gradient-to-r from-cyan-500/40 to-cyan-500/20 rounded-full feature-timer-bar" style="width:53%;"></div>
+                </div>
+                <span class="text-[8px] font-mono text-white/20 mt-1 block">Next batch clearing</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
 
+      <!-- Advanced Features Strip -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="feature-tile rounded-xl border border-white/[0.04] bg-white/[0.01] px-5 py-5 group hover:border-white/[0.08] transition-all duration-500">
+          <div class="flex items-center gap-3 mb-3">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-amber-400/60"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <span class="text-[13px] text-white/70 font-medium">Reputation System</span>
+          </div>
+          <p class="text-[11px] text-white/30 leading-relaxed font-light">Provider scoring based on uptime, job completion rate, and benchmark verification.</p>
+        </div>
+        <div class="feature-tile rounded-xl border border-white/[0.04] bg-white/[0.01] px-5 py-5 group hover:border-white/[0.08] transition-all duration-500">
+          <div class="flex items-center gap-3 mb-3">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-violet-400/60"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/></svg>
+            <span class="text-[13px] text-white/70 font-medium">Cluster Matching</span>
+          </div>
+          <p class="text-[11px] text-white/30 leading-relaxed font-light">Multi-GPU cluster assembly across providers for distributed training workloads.</p>
+        </div>
+        <div class="feature-tile rounded-xl border border-white/[0.04] bg-white/[0.01] px-5 py-5 group hover:border-white/[0.08] transition-all duration-500">
+          <div class="flex items-center gap-3 mb-3">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-emerald-400/60"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span class="text-[13px] text-white/70 font-medium">SLA-Backed Execution</span>
+          </div>
+          <p class="text-[11px] text-white/30 leading-relaxed font-light">Service level guarantees with staked collateral. Automatic penalties for provider failures.</p>
+        </div>
+        <div class="feature-tile rounded-xl border border-white/[0.04] bg-white/[0.01] px-5 py-5 group hover:border-white/[0.08] transition-all duration-500">
+          <div class="flex items-center gap-3 mb-3">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-blue-400/60"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+            <span class="text-[13px] text-white/70 font-medium">Fiat Payments</span>
+          </div>
+          <p class="text-[11px] text-white/30 leading-relaxed font-light">Stripe integration for USD/EUR onramp. Pay with cards, settle on-chain seamlessly.</p>
+        </div>
+      </div>
     </div>
 
-    <!-- Advanced Features Strip -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <div class="feature-tile rounded-xl border border-white/[0.04] bg-white/[0.01] px-5 py-5 group hover:border-white/[0.08] transition-all duration-500">
-        <div class="flex items-center gap-3 mb-3">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-amber-400/60"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <span class="text-[13px] text-white/70 font-medium">Reputation System</span>
-        </div>
-        <p class="text-[11px] text-white/30 leading-relaxed font-light">Provider scoring based on uptime, job completion rate, and benchmark verification.</p>
-      </div>
-      <div class="feature-tile rounded-xl border border-white/[0.04] bg-white/[0.01] px-5 py-5 group hover:border-white/[0.08] transition-all duration-500">
-        <div class="flex items-center gap-3 mb-3">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-violet-400/60"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/></svg>
-          <span class="text-[13px] text-white/70 font-medium">Cluster Matching</span>
-        </div>
-        <p class="text-[11px] text-white/30 leading-relaxed font-light">Multi-GPU cluster assembly across providers for distributed training workloads.</p>
-      </div>
-      <div class="feature-tile rounded-xl border border-white/[0.04] bg-white/[0.01] px-5 py-5 group hover:border-white/[0.08] transition-all duration-500">
-        <div class="flex items-center gap-3 mb-3">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-emerald-400/60"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          <span class="text-[13px] text-white/70 font-medium">SLA-Backed Execution</span>
-        </div>
-        <p class="text-[11px] text-white/30 leading-relaxed font-light">Service level guarantees with staked collateral. Automatic penalties for provider failures.</p>
-      </div>
-      <div class="feature-tile rounded-xl border border-white/[0.04] bg-white/[0.01] px-5 py-5 group hover:border-white/[0.08] transition-all duration-500">
-        <div class="flex items-center gap-3 mb-3">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-blue-400/60"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
-          <span class="text-[13px] text-white/70 font-medium">Fiat Payments</span>
-        </div>
-        <p class="text-[11px] text-white/30 leading-relaxed font-light">Stripe integration for USD/EUR onramp. Pay with cards, settle on-chain seamlessly.</p>
-      </div>
-    </div>
-
-  </div>
 </section>
-
-<!-- Feature Bento Styles -->
 <style>
 @keyframes auction-bar-1 { 0%, 100% { height: 45%; } 50% { height: 70%; } }
 @keyframes auction-bar-2 { 0%, 100% { height: 60%; } 50% { height: 35%; } }
@@ -1857,11 +1842,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+  // Feature tile GSAP scroll reveal
   if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-    gsap.from('.features-header', {
-      y: 40, opacity: 0, duration: 1.2, ease: 'power3.out',
-      scrollTrigger: { trigger: '#features', start: 'top 80%', toggleActions: 'play none none none' }
-    });
     gsap.utils.toArray('.feature-tile').forEach(function(tile, i) {
       gsap.from(tile, {
         y: 40, opacity: 0, duration: 0.7, ease: 'power3.out',
@@ -1893,7 +1875,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <section class="z-10 w-full pt-32 pb-24 relative" id="target-users">
   <div class="max-w-6xl mx-auto px-6 md:px-10">
     <div class="target-header mb-16">
-      <span class="inline-block font-mono text-[11px] tracking-[0.3em] text-white/30 uppercase mb-1">04</span>
+      <span class="inline-block font-mono text-[11px] tracking-[0.3em] text-white/30 uppercase mb-1">03</span>
       <span class="block font-mono text-[11px] tracking-[0.3em] text-white/30 uppercase mb-4">Target Users</span>
       <h2 class="text-3xl md:text-5xl lg:text-6xl font-extralight text-white/90 tracking-tight leading-[1.1]">
         Who This Is For
@@ -1976,7 +1958,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <header class="flex flex-col gap-10 xl:flex-row xl:items-end xl:justify-between">
               <div class="flex flex-col gap-4">
                 <div class="flex items-center gap-3">
-                  <span class="font-mono text-[11px] tracking-[0.3em] text-white/30 uppercase">05</span>
+                  <span class="font-mono text-[11px] tracking-[0.3em] text-white/30 uppercase">04</span>
                   <span class="font-mono text-[11px] tracking-[0.3em] text-white/30 uppercase">Network Performance</span>
                 </div>
                 <div class="flex items-center gap-3">
@@ -2286,7 +2268,7 @@ document.addEventListener('DOMContentLoaded', function() {
   <!-- Header -->
   <div class="flex border-white/5 border-b pb-4 items-center justify-between">
     <div class="flex items-center gap-4">
-      <span class="font-mono text-[11px] tracking-[0.3em] text-white/30 uppercase">06</span>
+      <span class="font-mono text-[11px] tracking-[0.3em] text-white/30 uppercase">05</span>
       <div class="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse shadow-[0_0_12px_rgba(52,211,153,0.8)]"></div>
       <h2 class="text-xs font-['JetBrains_Mono'] text-white/40 uppercase tracking-widest">
         Protocol Architecture
@@ -3167,7 +3149,7 @@ document.addEventListener('DOMContentLoaded', function() {
   <!-- Header -->
   <div class="flex flex-col gap-4 z-10 text-center pr-6 pl-6 relative gap-x-4 gap-y-4 items-center justify-center">
     <div class="flex flex-col items-center gap-2 text-xs font-['JetBrains_Mono'] text-white/40 uppercase tracking-widest">
-      <span class="font-mono text-[11px] tracking-[0.3em] text-white/30">07</span>
+      <span class="font-mono text-[11px] tracking-[0.3em] text-white/30">06</span>
       <div class="flex items-center gap-3">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-violet-400/80">
           <circle cx="12" cy="12" r="10"></circle>

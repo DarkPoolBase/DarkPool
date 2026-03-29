@@ -679,8 +679,91 @@ document.addEventListener('DOMContentLoaded', function() {
     </main>
 
 
+    <!-- Cycling detail text below bento -->
+    <div id="wpm-details" class="mt-16 md:mt-20 max-w-4xl mx-auto">
+      <!-- Layer 0: Core Features -->
+      <div class="wpm-detail wpm-detail-0 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6 transition-all duration-700" style="opacity:1;">
+        <div>
+          <h4 class="text-sm font-medium text-white/80 mb-1.5">Encrypted Order Matching</h4>
+          <p class="text-xs text-white/35 leading-relaxed font-light">Sealed bids via commit-reveal — orders are hashed on-chain so not even the platform can see individual prices or quantities.</p>
+        </div>
+        <div>
+          <h4 class="text-sm font-medium text-white/80 mb-1.5">USDC Escrow & Settlement</h4>
+          <p class="text-xs text-white/35 leading-relaxed font-light">Funds lock on order placement and release automatically on verified delivery. All settlement on Base at ~$0.001 per tx.</p>
+        </div>
+        <div>
+          <h4 class="text-sm font-medium text-white/80 mb-1.5">Batch Auctions</h4>
+          <p class="text-xs text-white/35 leading-relaxed font-light">Orders batch every 30–60 seconds and clear at a single uniform price. No front-running, no information leakage.</p>
+        </div>
+        <div>
+          <h4 class="text-sm font-medium text-white/80 mb-1.5">AI Agent Commerce via x402</h4>
+          <p class="text-xs text-white/35 leading-relaxed font-light">AI agents purchase compute with a single HTTP request using Coinbase x402 protocol. Gasless transactions and autonomous wallet control.</p>
+        </div>
+      </div>
+
+      <!-- Layer 1: Without Privacy -->
+      <div class="wpm-detail wpm-detail-1 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6 transition-all duration-700" style="opacity:0; position:absolute; left:0; right:0; pointer-events:none;">
+        <div>
+          <h4 class="text-sm font-medium text-red-400/80 mb-1.5">Strategy Leakage</h4>
+          <p class="text-xs text-white/35 leading-relaxed font-light">Competitors can track your compute demand and infer where you are going.</p>
+        </div>
+        <div>
+          <h4 class="text-sm font-medium text-red-400/80 mb-1.5">Model Inference Exposure</h4>
+          <p class="text-xs text-white/35 leading-relaxed font-light">Compute patterns can reveal architecture, training intensity, and operational behavior.</p>
+        </div>
+        <div>
+          <h4 class="text-sm font-medium text-red-400/80 mb-1.5">Market Manipulation</h4>
+          <p class="text-xs text-white/35 leading-relaxed font-light">Visible intent creates opportunities for front-running and price exploitation.</p>
+        </div>
+        <div>
+          <h4 class="text-sm font-medium text-red-400/80 mb-1.5">Roadmap Signaling</h4>
+          <p class="text-xs text-white/35 leading-relaxed font-light">Compute spikes can expose launches, deployments, and internal milestones.</p>
+        </div>
+      </div>
+
+      <!-- Layer 2: Our Dark Pool Prevents -->
+      <div class="wpm-detail wpm-detail-2 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6 transition-all duration-700" style="opacity:0; position:absolute; left:0; right:0; pointer-events:none;">
+        <div>
+          <h4 class="text-sm font-medium text-emerald-400/80 mb-1.5">Pre-Trade Privacy</h4>
+          <p class="text-xs text-white/35 leading-relaxed font-light">Encrypted commitments keep intent hidden before execution.</p>
+        </div>
+        <div>
+          <h4 class="text-sm font-medium text-emerald-400/80 mb-1.5">Post-Trade Anonymity</h4>
+          <p class="text-xs text-white/35 leading-relaxed font-light">Zero-knowledge proofs preserve verification without exposing counterparties.</p>
+        </div>
+        <div>
+          <h4 class="text-sm font-medium text-emerald-400/80 mb-1.5">Fair Pricing</h4>
+          <p class="text-xs text-white/35 leading-relaxed font-light">Uniform clearing reduces information asymmetry and execution distortion.</p>
+        </div>
+        <div>
+          <h4 class="text-sm font-medium text-emerald-400/80 mb-1.5">Autonomous Execution</h4>
+          <p class="text-xs text-white/35 leading-relaxed font-light">Agent wallets allow private, machine-native participation without manual coordination.</p>
+        </div>
+      </div>
+
+      <!-- Layer 3: Target Audience -->
+      <div class="wpm-detail wpm-detail-3 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6 transition-all duration-700" style="opacity:0; position:absolute; left:0; right:0; pointer-events:none;">
+        <div>
+          <h4 class="text-sm font-medium text-violet-400/80 mb-1.5">AI Agents</h4>
+          <p class="text-xs text-white/35 leading-relaxed font-light">250K+ daily active on-chain agents. Autonomous compute procurement via REST API and x402 — programmatic, private, instant.</p>
+        </div>
+        <div>
+          <h4 class="text-sm font-medium text-violet-400/80 mb-1.5">Enterprises</h4>
+          <p class="text-xs text-white/35 leading-relaxed font-light">Large-scale compute procurement without signaling intent to competitors. Block orders matched privately.</p>
+        </div>
+        <div>
+          <h4 class="text-sm font-medium text-violet-400/80 mb-1.5">Developers & Startups</h4>
+          <p class="text-xs text-white/35 leading-relaxed font-light">Access institutional-grade pricing without institutional-grade budgets. Fair clearing levels the playing field.</p>
+        </div>
+        <div>
+          <h4 class="text-sm font-medium text-violet-400/80 mb-1.5">GPU Providers</h4>
+          <p class="text-xs text-white/35 leading-relaxed font-light">Monetize idle hardware with private pricing — no public rate sheets. Stake, benchmark, earn USDC.</p>
+        </div>
+      </div>
+    </div>
+
     <!-- Bottom Closing Statement -->
-    <div class="text-center mt-24 md:mt-32">
+    <div class="text-center mt-20 md:mt-28">
       <p class="wpm-closing text-2xl md:text-4xl lg:text-5xl font-extralight text-white/90 tracking-tight leading-[1.15] opacity-0">
         You don't just get cheaper compute.<br class="hidden md:block">
         <span class="text-white/50">You get protection.</span>

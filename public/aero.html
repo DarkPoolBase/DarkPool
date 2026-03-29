@@ -679,9 +679,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     <!-- Cycling detail text below bento -->
-    <div id="wpm-details" class="mt-16 md:mt-20 max-w-4xl mx-auto relative">
+    <div id="wpm-details" class="mt-16 md:mt-20 max-w-4xl mx-auto relative" style="min-height: 140px;">
       <!-- Layer 0: Core Features -->
-      <div class="wpm-detail wpm-detail-0 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6 transition-all duration-700" style="opacity:1;">
+      <div class="wpm-detail wpm-detail-0 absolute inset-x-0 top-0 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6 transition-opacity duration-700" style="opacity:1;">
         <div>
           <h4 class="text-sm font-medium text-white/80 mb-1.5">Encrypted Order Matching</h4>
           <p class="text-xs text-white/35 leading-relaxed font-light">Sealed bids via commit-reveal — orders are hashed on-chain so not even the platform can see individual prices or quantities.</p>
@@ -701,7 +701,7 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
 
       <!-- Layer 1: Without Privacy -->
-      <div class="wpm-detail wpm-detail-1 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6 transition-all duration-700" style="opacity:0; position:absolute; left:0; right:0; pointer-events:none;">
+      <div class="wpm-detail wpm-detail-1 absolute inset-x-0 top-0 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6 transition-opacity duration-700" style="opacity:0; pointer-events:none;">
         <div>
           <h4 class="text-sm font-medium text-red-400/80 mb-1.5">Strategy Leakage</h4>
           <p class="text-xs text-white/35 leading-relaxed font-light">Competitors can track your compute demand and infer where you are going.</p>
@@ -721,7 +721,7 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
 
       <!-- Layer 2: Our Dark Pool Prevents -->
-      <div class="wpm-detail wpm-detail-2 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6 transition-all duration-700" style="opacity:0; position:absolute; left:0; right:0; pointer-events:none;">
+      <div class="wpm-detail wpm-detail-2 absolute inset-x-0 top-0 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6 transition-opacity duration-700" style="opacity:0; pointer-events:none;">
         <div>
           <h4 class="text-sm font-medium text-emerald-400/80 mb-1.5">Pre-Trade Privacy</h4>
           <p class="text-xs text-white/35 leading-relaxed font-light">Encrypted commitments keep intent hidden before execution.</p>
@@ -741,7 +741,7 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
 
       <!-- Layer 3: Target Audience -->
-      <div class="wpm-detail wpm-detail-3 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6 transition-all duration-700" style="opacity:0; position:absolute; left:0; right:0; pointer-events:none;">
+      <div class="wpm-detail wpm-detail-3 absolute inset-x-0 top-0 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6 transition-opacity duration-700" style="opacity:0; pointer-events:none;">
         <div>
           <h4 class="text-sm font-medium text-violet-400/80 mb-1.5">AI Agents</h4>
           <p class="text-xs text-white/35 leading-relaxed font-light">250K+ daily active on-chain agents. Autonomous compute procurement via REST API and x402 — programmatic, private, instant.</p>
@@ -852,16 +852,12 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.wpm-detail').forEach(function(d){
       d.style.opacity = '0';
       d.style.pointerEvents = 'none';
-      d.style.position = 'absolute';
-      d.style.transform = 'translateY(10px)';
     });
     var activeDetail = document.querySelector('.wpm-detail-'+idx);
     if(activeDetail){
       setTimeout(function(){
         activeDetail.style.opacity = '1';
         activeDetail.style.pointerEvents = 'auto';
-        activeDetail.style.position = 'relative';
-        activeDetail.style.transform = 'translateY(0)';
       }, 200);
     }
 

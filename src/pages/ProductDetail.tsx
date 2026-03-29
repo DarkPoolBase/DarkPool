@@ -28,7 +28,7 @@ const productData: Record<string, {
     ],
   },
   a100: {
-    name: "NVIDIA A100", label: "Private Compute", price: "$0.15/hr", priceNum: 0.15,
+    name: "NVIDIA A100", label: "Private Compute", price: "$0.15/GPU-hour", priceNum: 0.15,
     providers: 89, vram: "80GB HBM2e", workloads: ["Training", "Fine-tuning", "Inference", "Research"],
     availability: 78, icon: Server,
     description: "High-performance compute for AI training workloads. Privacy-preserving batch auctions ensure fair pricing without exposing your demand.",

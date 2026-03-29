@@ -274,7 +274,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 </section><section class="antialiased min-h-screen flex flex-col selection:bg-white/20 overflow-x-hidden md:p-12 text-white/90 rounded-3xl pt-6 pr-6 pb-6 pl-6 relative items-center justify-center" style="font-family: 'Inter', sans-serif">
 
-<canvas id="bg-waves" class="fixed inset-0 z-0 pointer-events-none opacity-30" width="3136" height="2042"></canvas>
+
 
 <main id="main-container" class="max-w-[1280px] w-full relative z-10 mt-8 mb-8 flex flex-col">
         
@@ -512,67 +512,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }, 400);
 
-        // Canvas Tool Background (Dot Grid with Selection)
-        const bgCanvas = document.getElementById('bg-waves');
-        if(bgCanvas) {
-            const bgCtx = bgCanvas.getContext('2d', { alpha: true });
-            let bw, bh, bgT = 0;
-            const resizeBg = () => {
-                const dpr = window.devicePixelRatio || 1;
-                bw = window.innerWidth; bh = window.innerHeight;
-                bgCanvas.width = bw * dpr; bgCanvas.height = bh * dpr;
-                bgCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
-            };
-            window.addEventListener('resize', resizeBg);
-            resizeBg();
-
-            const drawBg = () => {
-                bgT += 0.02;
-                bgCtx.clearRect(0, 0, bw, bh);
-                
-                // Dot grid
-                bgCtx.fillStyle = 'rgba(255,255,255,0.06)';
-                const spacing = 30;
-                const offsetX = (bgT * 10) % spacing;
-                const offsetY = (bgT * 10) % spacing;
-                
-                for(let x = -spacing; x < bw + spacing; x += spacing) {
-                    for(let y = -spacing; y < bh + spacing; y += spacing) {
-                        bgCtx.fillRect(x - offsetX, y - offsetY, 2, 2);
-                    }
-                }
-
-                // Animated Selection Marquee
-                const selX = bw/2 + Math.sin(bgT*0.5)*150 - 150;
-                const selY = bh/2 + Math.cos(bgT*0.3)*100 - 100;
-                const selW = 300 + Math.sin(bgT)*100;
-                const selH = 200 + Math.cos(bgT*0.8)*50;
-                
-                bgCtx.fillStyle = 'rgba(139,92,246,0.02)';
-                bgCtx.strokeStyle = 'rgba(139,92,246,0.2)';
-                bgCtx.lineWidth = 1;
-                bgCtx.beginPath();
-                bgCtx.rect(selX, selY, selW, selH);
-                bgCtx.fill();
-                bgCtx.stroke();
-                
-                // Crosshairs
-                const drawCrosshair = (x, y) => {
-                    bgCtx.beginPath();
-                    bgCtx.moveTo(x - 6, y); bgCtx.lineTo(x + 6, y);
-                    bgCtx.moveTo(x, y - 6); bgCtx.lineTo(x, y + 6);
-                    bgCtx.strokeStyle = 'rgba(139,92,246,0.5)';
-                    bgCtx.stroke();
-                };
-                drawCrosshair(selX, selY);
-                drawCrosshair(selX + selW, selY);
-                drawCrosshair(selX, selY + selH);
-                drawCrosshair(selX + selW, selY + selH);
-
-                requestAnimationFrame(drawBg);
-            };
-            drawBg();
-        }
+        // Canvas background removed
 
         // Interactive Flashlight & Shooting Lines
         const mainEl = document.getElementById('main-container');

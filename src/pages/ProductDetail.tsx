@@ -304,8 +304,8 @@ const ProductDetail = () => {
         </div>
 
         {/* Right column: Order ticket */}
-        <div className="space-y-4">
-          <GlassCard delay={0.15} glow className="p-6 space-y-4 sticky top-8">
+        <div className="space-y-6">
+          <GlassCard delay={0.15} glow className="p-6 space-y-5 sticky top-8">
             <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground block">Private Order</span>
 
             {/* Buy/Sell toggle */}

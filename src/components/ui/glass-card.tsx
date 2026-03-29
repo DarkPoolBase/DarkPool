@@ -64,8 +64,7 @@ export function GlassCard({
         ref={glowRef}
         className="absolute inset-0 z-0 pointer-events-none rounded-2xl opacity-0 transition-opacity duration-500"
       />
-      {/* Subtle top edge highlight */}
-      <div className="absolute top-0 left-[10%] right-[10%] h-px bg-gradient-to-r from-transparent via-white/20 to-transparent z-10 pointer-events-none" />
+      {/* Subtle top edge highlight - removed to prevent double border */}
       {corners && (
         <>
           <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-white/[0.08] rounded-tl-sm" />

@@ -267,7 +267,7 @@ const ProductDetail = () => {
                   initial={{ opacity: 0, x: -8 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.3, delay: 0.4 + i * 0.06 }}
-                  className="flex items-center justify-between p-4 rounded-xl bg-white/[0.02] hover:bg-white/[0.03] transition-all"
+                  className="flex items-center justify-between p-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.04] transition-all"
                 >
                   <span className="font-mono text-[11px] text-primary/60">{s.id}</span>
                   <span className="font-mono text-[11px] text-muted-foreground">{s.qty}</span>

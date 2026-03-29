@@ -137,7 +137,7 @@ const Marketplace = () => {
               </div>
               <div>
                 <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">Est. Market Price</p>
-                <p className="text-lg font-mono font-semibold text-foreground tabular-nums mt-1">$0.19<span className="text-xs text-muted-foreground">/hr</span></p>
+                <p className="text-lg font-mono font-semibold text-foreground tabular-nums mt-1">$0.19<span className="text-xs text-muted-foreground">/GPU-hour</span></p>
               </div>
             </div>
             <div className="mt-4 flex items-center gap-2">

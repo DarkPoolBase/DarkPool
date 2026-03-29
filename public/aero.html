@@ -2861,7 +2861,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelectorAll('.roadmap-layer').forEach(function(layer){
     var idx = layer.getAttribute('data-layer');
     layer.addEventListener('mouseenter', function(){
-      layer.style.transform = 'rotateX(14deg) rotateY(-6deg) rotateZ(1.5deg) translateY(-8px) translateZ(10px)';
+      layer.style.transform = 'translateY(-6px)';
       layer.querySelector('div').style.borderColor = 'rgba(108,60,233,0.35)';
       // Dim other labels
       document.querySelectorAll('.roadmap-label').forEach(function(l){

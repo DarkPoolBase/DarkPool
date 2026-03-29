@@ -172,70 +172,10 @@ const Marketplace = () => {
       <div className="space-y-8 max-w-[1440px]">
         {/* Header */}
         <div>
-          <h1 className="text-2xl md:text-3xl font-thin tracking-tight text-foreground">Marketplace</h1>
+          <h1 className="text-2xl md:text-3xl font-thin tracking-tight text-foreground">Private Compute Markets</h1>
           <p className="text-sm text-muted-foreground mt-2 font-mono text-[11px]">
-            Private compute markets · Encrypted order flow · Batch auction execution
+            Buy and sell GPU compute through private batch auctions
           </p>
-        </div>
-
-        {/* Top Market Stats Row */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <GlassCard delay={0} className="p-4">
-            <div className="flex items-center gap-4">
-              <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                <TrendingUp className="w-4 h-4 text-primary" />
-              </div>
-              <div>
-                <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">Est. Market Price</p>
-                <p className="text-lg font-mono font-semibold text-foreground tabular-nums mt-1">$0.19<span className="text-xs text-muted-foreground">/GPU-hour</span></p>
-              </div>
-            </div>
-            <div className="mt-4 flex items-center gap-2">
-              <span className="inline-flex items-center px-2 py-1 rounded text-[9px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                ▲ 3.2%
-              </span>
-              <span className="text-[10px] text-muted-foreground font-mono">vs last epoch</span>
-            </div>
-          </GlassCard>
-
-          <AuctionTimer />
-
-          <GlassCard delay={0.1} className="p-4">
-            <div className="flex items-center gap-4">
-              <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                <Shield className="w-4 h-4 text-primary" />
-              </div>
-              <div>
-                <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">Anonymized Depth</p>
-                <p className="text-lg font-mono font-semibold text-foreground tabular-nums mt-1">12,450<span className="text-xs text-muted-foreground ml-1">GPU-hrs</span></p>
-              </div>
-            </div>
-            <div className="mt-4 h-2 rounded-full bg-white/[0.06] overflow-hidden">
-              <motion.div
-                initial={{ width: 0 }}
-                animate={{ width: "72%" }}
-                transition={{ duration: 1.2, delay: 0.3 }}
-                className="h-full rounded-full bg-gradient-to-r from-primary to-primary/50"
-              />
-            </div>
-          </GlassCard>
-
-          <GlassCard delay={0.15} className="p-4">
-            <div className="flex items-center gap-4">
-              <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                <Users className="w-4 h-4 text-primary" />
-              </div>
-              <div>
-                <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">Active Providers</p>
-                <p className="text-lg font-mono font-semibold text-foreground tabular-nums mt-1">387</p>
-              </div>
-            </div>
-            <div className="mt-4 flex items-center gap-2">
-              <span className="inline-flex items-center px-2 py-1 rounded text-[9px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                +12 today
-              </span>
-            </div>
-          </GlassCard>
         </div>
 
         {/* Category Tabs + Products */}

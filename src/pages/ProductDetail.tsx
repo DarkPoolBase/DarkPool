@@ -171,17 +171,6 @@ const ProductDetail = () => {
             </div>
           </div>
 
-          {/* Workloads */}
-          <div className="lg:w-48 shrink-0">
-            <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground mb-4">Use Cases</p>
-            <div className="flex flex-wrap lg:flex-col gap-2">
-              {product.workloads.map((w) => (
-                <span key={w} className="px-4 py-2 rounded-lg text-[11px] font-mono bg-white/[0.03] border border-white/[0.06] text-muted-foreground">
-                  {w}
-                </span>
-              ))}
-            </div>
-          </div>
         </div>
       </GlassCard>
 

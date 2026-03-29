@@ -1,26 +1,35 @@
 
 
-# Widen All Sections by ~11%
+# Reposition 01 Section Header to Match Reference Layout
 
-## Change
+## What changes
 
-Replace `max-w-6xl` (1152px) with `max-w-7xl` (1280px) everywhere — a standard Tailwind breakpoint that's ~11% wider.
+The reference image shows a two-column layout where:
+- **Left column**: Small section label (`/01 OUR PURPOSE` style) positioned top-left
+- **Right column**: Large heading text taking up the majority of the width, with a subheading/description below in a lighter color
 
-No other changes to spacing, colors, copy, or layout.
+Currently the 01 section (`#about`) stacks everything vertically — section number, label, heading, and paragraph all in a single column.
 
-## Files
+## Implementation
 
-### `public/aero.html` (~14 occurrences)
-- Hero `#core-section`: `max-w-6xl` → `max-w-7xl`
-- About section containers (4 instances): `max-w-6xl` → `max-w-7xl`
-- Why Privacy `#main-container` + outer container: `max-w-6xl` → `max-w-7xl`
-- Why Privacy details `#wpm-details`: `max-w-6xl` → `max-w-7xl`
-- Capabilities `#how-it-works`: `max-w-6xl` → `max-w-7xl`
-- Roadmap: `max-w-6xl` → `max-w-7xl`
-- FAQ header + accordion: `max-w-6xl` → `max-w-7xl`
-- CTA: `max-w-6xl` → `max-w-7xl`
-- Footer (2 instances): `max-w-6xl` → `max-w-7xl`
+**File: `public/aero.html` (lines 229–239)**
 
-### React pages (6 files, 1 change each)
-- `Dashboard.tsx`, `Marketplace.tsx`, `Orders.tsx`, `Analytics.tsx`, `Provider.tsx`, `ApiDocs.tsx`, `SettingsPage.tsx`, `ProductDetail.tsx`: `max-w-6xl` → `max-w-7xl`
+Replace the current stacked `.about-header` with a two-column grid layout:
+
+```text
+┌──────────────┬─────────────────────────────────────────────┐
+│ /01          │  Privacy-first compute for the agentic      │
+│ ABOUT THE    │  era. Buying compute shouldn't mean         │
+│ PROTOCOL     │  broadcasting your strategy to the world... │
+│              │                                             │
+└──────────────┴─────────────────────────────────────────────┘
+```
+
+- Wrap in `grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-8 items-start`
+- Left column: section number + label (mono, small, uppercase, white/30)
+- Right column: the `<h2>` heading and `<p>` description
+- The heading text remains the same size/weight; the paragraph stays below it
+- On mobile, falls back to single column (label on top)
+
+No changes to copy, colors, fonts, or anything outside lines 229–239.
 

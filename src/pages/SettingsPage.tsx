@@ -55,7 +55,7 @@ const SettingsPage = () => {
       </GlassCard>
 
       {/* Notifications */}
-      <GlassCard delay={0.3} corners className="p-6 space-y-4">
+      <GlassCard delay={0.3} className="p-6 space-y-4">
         <SectionLabel>Notification Preferences</SectionLabel>
         {[
           { label: "Order filled", defaultChecked: true },

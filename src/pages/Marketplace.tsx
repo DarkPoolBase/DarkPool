@@ -395,7 +395,7 @@ const Marketplace = () => {
 
           <GlassCard delay={0.85} className="p-6 opacity-60">
             <div className="flex items-center gap-4 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.06] flex items-center justify-center">
+              <div className="w-8 h-8 rounded-lg bg-white/[0.04] flex items-center justify-center">
                 <Shield className="w-4 h-4 text-muted-foreground" />
               </div>
               <div>

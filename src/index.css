@@ -135,35 +135,4 @@
       inset 0 -1px 0 rgba(255, 255, 255, 0.04);
   }
 
-  .glass-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 10%;
-    right: 10%;
-    height: 1px;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(255, 255, 255, 0.2),
-      transparent
-    );
-    z-index: 1;
-  }
-
-  .glass-card::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 1px;
-    height: 100%;
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.15),
-      transparent 60%,
-      rgba(255, 255, 255, 0.05)
-    );
-    z-index: 1;
-  }
 }

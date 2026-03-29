@@ -118,7 +118,7 @@ const Analytics = () => {
         </GlassCard>
 
         {/* Utilization */}
-        <GlassCard delay={0.3} corners className="p-6">
+        <GlassCard delay={0.3} className="p-6">
           <SectionLabel>GPU Utilization by Type</SectionLabel>
           <div className="mt-4 space-y-6">
             {utilizationData.map((gpu, i) => (

@@ -232,8 +232,8 @@ const Provider = () => {
               </div>
 
               {/* Recent payouts */}
-              <div className="rounded-xl bg-white/[0.02] border border-white/[0.06]">
-                <div className="px-4 py-3 border-b border-white/[0.06]">
+              <div className="rounded-xl bg-white/[0.03]">
+                <div className="px-4 py-3 border-b border-white/[0.04]">
                   <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Recent Payouts</span>
                 </div>
                 {[

@@ -255,7 +255,7 @@ const Marketplace = () => {
                   </div>
 
                   {/* Fill Likelihood bar */}
-                  <div className="space-y-2">
+                  <div className="space-y-2 mt-auto">
                     <div className="flex justify-between font-mono text-[10px] items-center">
                       <Tooltip>
                         <TooltipTrigger asChild>

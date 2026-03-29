@@ -203,105 +203,114 @@ const ProductDetail = () => {
       </GlassCard>
 
       {/* Order Ticket — redesigned */}
-      <GlassCard delay={0.15} glow className="p-8 space-y-8">
-        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground block">Private Order</span>
+      <GlassCard delay={0.15} glow className="p-10">
+        <div className="flex flex-col gap-10">
+          {/* Header */}
+          <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Private Order</span>
 
-        {/* Full-width Buy/Sell toggle */}
-        <div className="flex rounded-xl border border-white/[0.06] overflow-hidden bg-white/[0.02] relative mt-1">
-          <motion.div
-            className="absolute inset-y-0 w-1/2 rounded-xl"
-            animate={{ x: side === "sell" ? "100%" : "0%" }}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            style={{
-              background: side === "buy"
-                ? "linear-gradient(135deg, rgba(34,197,94,0.15), rgba(34,197,94,0.05))"
-                : "linear-gradient(135deg, rgba(239,68,68,0.15), rgba(239,68,68,0.05))",
-            }}
-          />
-          <button
-            className={`flex-1 py-3 text-base font-bold tracking-wider relative z-10 transition-colors ${side === "buy" ? "text-emerald-400" : "text-muted-foreground"}`}
-            onClick={() => setSide("buy")}
-          >BUY</button>
-          <button
-            className={`flex-1 py-3 text-base font-bold tracking-wider relative z-10 transition-colors ${side === "sell" ? "text-rose-400" : "text-muted-foreground"}`}
-            onClick={() => setSide("sell")}
-          >SELL</button>
-        </div>
-
-        {/* 3-column form grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Col 1: GPU Type */}
-          <div className="space-y-3">
-            <SectionLabel>GPU Type</SectionLabel>
-            <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06]">
-              <p className="font-mono text-sm font-medium text-foreground">{product.name}</p>
-              <p className="font-mono text-xs text-muted-foreground mt-1">{product.vram} · Spot Market</p>
-            </div>
-          </div>
-
-          {/* Col 2: Quantity */}
-          <div className="space-y-4">
-            <SectionLabel>Quantity (GPU-hours): <span className="text-foreground/70">{quantity[0]}</span></SectionLabel>
-            <Slider value={quantity} onValueChange={setQuantity} min={1} max={168} step={1} />
-            <div className="flex gap-2 mt-1">
-              {[24, 48, 72, 168].map((v) => (
-                <button
-                  key={v}
-                  onClick={() => setQuantity([v])}
-                  className={`text-[10px] font-mono px-2 py-1 rounded-lg border transition-all duration-300 ${
-                    quantity[0] === v
-                      ? "border-primary/40 text-primary bg-primary/10"
-                      : "border-white/[0.06] text-muted-foreground hover:border-white/10 hover:text-foreground/60"
-                  }`}
-                >{v}hr</button>
-              ))}
-            </div>
-          </div>
-
-          {/* Col 3: Price + Duration */}
-          <div className="space-y-4">
-            <SectionLabel>{side === "buy" ? "Max Price" : "Min Price"} (USDC / GPU-hr)</SectionLabel>
-            <Input
-              value={currentPrice}
-              onChange={(e) => setPrice(e.target.value)}
-              className="font-mono border-white/[0.06] bg-white/[0.02] hover:border-white/[0.12] transition-colors"
-              type="number"
-              step="0.01"
-              placeholder={defaultPrice}
+          {/* Full-width Buy/Sell toggle */}
+          <div className="flex rounded-xl border border-white/[0.06] overflow-hidden bg-white/[0.02] relative h-14">
+            <motion.div
+              className="absolute inset-y-0 w-1/2 rounded-xl"
+              animate={{ x: side === "sell" ? "100%" : "0%" }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              style={{
+                background: side === "buy"
+                  ? "linear-gradient(135deg, rgba(34,197,94,0.15), rgba(34,197,94,0.05))"
+                  : "linear-gradient(135deg, rgba(239,68,68,0.15), rgba(239,68,68,0.05))",
+              }}
             />
-            <SectionLabel>Duration</SectionLabel>
-            <Select value={duration} onValueChange={setDuration}>
-              <SelectTrigger className="border-white/[0.06] bg-white/[0.02] hover:border-white/[0.12] transition-colors">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="1h">1 Hour</SelectItem>
-                <SelectItem value="4h">4 Hours</SelectItem>
-                <SelectItem value="24h">24 Hours</SelectItem>
-                <SelectItem value="7d">7 Days</SelectItem>
-              </SelectContent>
-            </Select>
+            <button
+              className={`flex-1 text-base font-bold tracking-wider relative z-10 transition-colors ${side === "buy" ? "text-emerald-400" : "text-muted-foreground"}`}
+              onClick={() => setSide("buy")}
+            >BUY</button>
+            <button
+              className={`flex-1 text-base font-bold tracking-wider relative z-10 transition-colors ${side === "sell" ? "text-rose-400" : "text-muted-foreground"}`}
+              onClick={() => setSide("sell")}
+            >SELL</button>
           </div>
-        </div>
 
-        {/* Summary + Submit bar */}
-        <div className="rounded-xl bg-white/[0.02] border border-white/[0.06] p-5">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="font-mono text-xs text-muted-foreground">
-              {quantity[0]} GPU-hrs × ${currentPrice}/hr
+          {/* 3-column form grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+            {/* Col 1: GPU Type */}
+            <div className="flex flex-col gap-3">
+              <SectionLabel>GPU Type</SectionLabel>
+              <div className="p-5 rounded-xl bg-white/[0.02] border border-white/[0.06] flex-1 flex flex-col justify-center">
+                <p className="font-mono text-sm font-medium text-foreground">{product.name}</p>
+                <p className="font-mono text-xs text-muted-foreground mt-2">{product.vram} · Spot Market</p>
+              </div>
             </div>
-            <div className="flex items-center gap-2">
-              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Est. Total</span>
-              <span className="font-mono text-xl font-semibold text-foreground">${estTotal} <span className="text-xs text-muted-foreground">USDC</span></span>
+
+            {/* Col 2: Quantity */}
+            <div className="flex flex-col gap-4">
+              <SectionLabel>Quantity (GPU-hours): <span className="text-foreground/70">{quantity[0]}</span></SectionLabel>
+              <div className="flex-1 flex flex-col justify-center gap-5">
+                <Slider value={quantity} onValueChange={setQuantity} min={1} max={168} step={1} />
+                <div className="flex gap-2">
+                  {[24, 48, 72, 168].map((v) => (
+                    <button
+                      key={v}
+                      onClick={() => setQuantity([v])}
+                      className={`text-[10px] font-mono px-3 py-1.5 rounded-lg border transition-all duration-300 ${
+                        quantity[0] === v
+                          ? "border-primary/40 text-primary bg-primary/10"
+                          : "border-white/[0.06] text-muted-foreground hover:border-white/10 hover:text-foreground/60"
+                      }`}
+                    >{v}hr</button>
+                  ))}
+                </div>
+              </div>
             </div>
-            <Button className="gap-2 bg-gradient-to-r from-primary to-[hsl(258,78%,65%)] hover:from-primary/90 hover:to-[hsl(258,78%,60%)] shadow-[0_0_20px_rgba(108,60,233,0.3)] hover:shadow-[0_0_30px_rgba(108,60,233,0.5)] transition-all duration-300 border-0 h-12 px-8">
-              <Lock className="h-4 w-4" />
-              Submit Encrypted Order
-            </Button>
+
+            {/* Col 3: Price + Duration */}
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-3">
+                <SectionLabel>{side === "buy" ? "Max Price" : "Min Price"} (USDC / GPU-hr)</SectionLabel>
+                <Input
+                  value={currentPrice}
+                  onChange={(e) => setPrice(e.target.value)}
+                  className="font-mono border-white/[0.06] bg-white/[0.02] hover:border-white/[0.12] transition-colors h-11"
+                  type="number"
+                  step="0.01"
+                  placeholder={defaultPrice}
+                />
+              </div>
+              <div className="flex flex-col gap-3">
+                <SectionLabel>Duration</SectionLabel>
+                <Select value={duration} onValueChange={setDuration}>
+                  <SelectTrigger className="border-white/[0.06] bg-white/[0.02] hover:border-white/[0.12] transition-colors h-11">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="1h">1 Hour</SelectItem>
+                    <SelectItem value="4h">4 Hours</SelectItem>
+                    <SelectItem value="24h">24 Hours</SelectItem>
+                    <SelectItem value="7d">7 Days</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
           </div>
-          <p className="font-mono text-[10px] text-muted-foreground/50 leading-relaxed text-center mt-3">
-            Orders remain encrypted until verified settlement.
-          </p>
+
+          {/* Summary + Submit bar */}
+          <div className="rounded-xl bg-white/[0.02] border border-white/[0.06] p-6">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+              <div className="font-mono text-xs text-muted-foreground">
+                {quantity[0]} GPU-hrs × ${currentPrice}/hr
+              </div>
+              <div className="flex items-center gap-3">
+                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Est. Total</span>
+                <span className="font-mono text-xl font-semibold text-foreground">${estTotal} <span className="text-xs text-muted-foreground">USDC</span></span>
+              </div>
+              <Button className="gap-2 bg-gradient-to-r from-primary to-[hsl(258,78%,65%)] hover:from-primary/90 hover:to-[hsl(258,78%,60%)] shadow-[0_0_20px_rgba(108,60,233,0.3)] hover:shadow-[0_0_30px_rgba(108,60,233,0.5)] transition-all duration-300 border-0 h-12 px-8">
+                <Lock className="h-4 w-4" />
+                Submit Encrypted Order
+              </Button>
+            </div>
+            <p className="font-mono text-[10px] text-muted-foreground/50 leading-relaxed text-center mt-4">
+              Orders remain encrypted until verified settlement.
+            </p>
+          </div>
         </div>
       </GlassCard>
 

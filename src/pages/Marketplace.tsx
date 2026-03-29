@@ -163,10 +163,12 @@ const computeProducts = [
 ];
 
 const recentSettlements = [
-  { pair: "H100 / USDC", qty: "48 GPU-hrs", price: "$0.21", time: "2m ago" },
-  { pair: "A100 / USDC", qty: "120 GPU-hrs", price: "$0.14", time: "4m ago" },
-  { pair: "RTX 4090 / USDC", qty: "72 GPU-hrs", price: "$0.09", time: "7m ago" },
-  { pair: "H100 / USDC", qty: "24 GPU-hrs", price: "$0.22", time: "11m ago" },
+  { name: "NVIDIA H100", price: "$0.21", unit: "GPU-hr", qty: "48 GPU-hrs", time: "2m ago" },
+  { name: "NVIDIA A100", price: "$0.14", unit: "GPU-hr", qty: "120 GPU-hrs", time: "4m ago" },
+  { name: "RTX 4090", price: "$0.09", unit: "GPU-hr", qty: "72 GPU-hrs", time: "7m ago" },
+  { name: "NVIDIA H100", price: "$0.22", unit: "GPU-hr", qty: "24 GPU-hrs", time: "5m ago" },
+  { name: "NVIDIA L40S", price: "$0.11", unit: "GPU-hr", qty: "96 GPU-hrs", time: "9m ago" },
+  { name: "RTX 3090", price: "$0.04", unit: "GPU-hr", qty: "210 GPU-hrs", time: "12m ago" },
 ];
 
 const categories: { key: MarketCategory; label: string }[] = [
@@ -345,39 +347,34 @@ const Marketplace = () => {
           </div>
         </div>
 
-        {/* Recent Settlements */}
-        <GlassCard delay={0.6} className="p-6">
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground block mb-1">Recent Settlements</span>
-              <p className="text-[11px] text-muted-foreground/50 font-mono">Anonymized batch auction results</p>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="font-mono text-[10px] text-emerald-400/70">Live</span>
-            </div>
+        {/* Live Activity Strip */}
+        <div className="space-y-3">
+          <div className="flex items-center gap-3">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400" />
+            </span>
+            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Live Settlements</span>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="flex flex-col gap-0 rounded-xl border border-white/[0.04] bg-white/[0.01] overflow-hidden">
             {recentSettlements.map((s, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.7 + i * 0.08 }}
-                className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.04] hover:border-white/[0.08] transition-all duration-300"
+                initial={{ opacity: 0, x: -8 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3, delay: 0.6 + i * 0.06 }}
+                className="flex items-center gap-4 px-4 py-2.5 font-mono text-[11px] border-b border-white/[0.03] last:border-b-0 hover:bg-white/[0.02] transition-colors duration-200"
               >
-                <div className="flex items-center justify-between mb-2">
-                  <span className="font-mono text-[10px] font-medium text-foreground/80">{s.pair}</span>
-                  <span className="font-mono text-[9px] text-muted-foreground">{s.time}</span>
-                </div>
-                <div className="flex items-end justify-between">
-                  <span className="font-mono text-xs text-muted-foreground">{s.qty}</span>
-                  <span className="font-mono text-sm font-semibold text-emerald-400 tabular-nums">{s.price}</span>
-                </div>
+                <span className="text-foreground/60 w-28 shrink-0 truncate">{s.name}</span>
+                <span className="text-emerald-400 font-semibold text-sm tabular-nums">{s.price}</span>
+                <span className="text-muted-foreground/40 text-[10px]">/ {s.unit}</span>
+                <span className="text-muted-foreground/50 hidden sm:inline">—</span>
+                <span className="text-foreground/40 tabular-nums hidden sm:inline">{s.qty} traded</span>
+                <span className="ml-auto text-muted-foreground/30 text-[10px] tabular-nums shrink-0">{s.time}</span>
               </motion.div>
             ))}
           </div>
-        </GlassCard>
+        </div>
 
         {/* Future Products Teaser */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

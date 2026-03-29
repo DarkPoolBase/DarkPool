@@ -293,7 +293,7 @@ const ProductDetail = () => {
           </div>
 
           {/* Summary + Submit bar */}
-          <div className="rounded-xl bg-white/[0.02] border border-white/[0.06] p-5">
+          <div className="rounded-xl bg-white/[0.03] p-5">
             <div className="flex flex-col md:flex-row items-center justify-between gap-5">
               <div className="font-mono text-xs text-muted-foreground">
                 {quantity[0]} GPU-hrs × ${currentPrice}/hr

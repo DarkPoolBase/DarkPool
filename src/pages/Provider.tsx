@@ -222,7 +222,7 @@ const Provider = () => {
                   { label: "Fill Rate", value: "87.3%" },
                   { label: "Completed Jobs", value: "28" },
                 ].map((stat) => (
-                  <div key={stat.label} className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06]">
+                  <div key={stat.label} className="p-4 rounded-xl bg-white/[0.03]">
                     <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">{stat.label}</span>
                     <p className={`font-mono text-base font-semibold mt-2 ${stat.accent ? "text-emerald-400" : "text-foreground"}`}>
                       {stat.value}

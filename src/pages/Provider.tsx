@@ -86,7 +86,7 @@ const Provider = () => {
             </div>
 
             {/* Stake */}
-            <div className="rounded-xl bg-white/[0.02] border border-white/[0.06] p-4">
+            <div className="rounded-xl bg-white/[0.03] p-4">
               <div className="flex items-center justify-between">
                 <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Stake Required</span>
                 <span className="font-mono text-sm font-semibold text-foreground">500 <span className="text-xs text-muted-foreground">USDC</span></span>

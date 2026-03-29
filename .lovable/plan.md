@@ -1,37 +1,39 @@
 
 
-## Add "About Us" Section Below Hero with GSAP Scroll Reveals
+## Resize Product Detail Bentos to Fill Full Page Width
 
-### What We're Building
-A full-width "About Us" section inserted between the hero (line 117) and the "How It Works" section (line 119) in `public/aero.html`. Content is sourced from the uploaded PDF research document. The section uses GSAP ScrollTrigger animations for progressive reveal as the user scrolls.
+### Problem
+The current layout uses a 2/3 + 1/3 grid (`lg:grid-cols-3` with `lg:col-span-2` for charts). The charts and info sections only fill ~66% of the page, leaving wasted space. Below the order ticket, the left-column bentos continue at 2/3 width with empty space on the right.
 
-### Content (from PDF)
-Three content blocks with staggered reveals:
+### Solution
+Restructure the layout so the order ticket sits beside the hero/price chart at the top, and all remaining bento sections span the full page width below.
 
-1. **The Problem** — AI companies need massive GPU compute but current options are either expensive (AWS at $6+/hr), fully transparent (competitors see your orders), or slow private deals.
+### Layout Structure
 
-2. **Our Solution** — A "dark pool" for compute: encrypted bids, batch auctions every 30-60s, ZK proofs verify fairness, settlement in USDC on Base. Nobody — not even the platform — sees raw order data.
+```text
+┌─────────────────────────────────┬──────────────┐
+│  Price History Chart            │  Order Ticket │
+│  (2/3 width)                    │  (1/3, sticky)│
+├─────────────────────────────────┴──────────────┤
+│  Supply vs Demand  (full width)                 │
+├────────────┬────────────┬──────────────────────┤
+│  Provider Quality       │  Recent Settlements   │
+│  (1/2 width)            │  (1/2 width)          │
+├─────────────────────────────────────────────────┤
+│  Privacy & Fair Execution (full width, 3-col)   │
+└─────────────────────────────────────────────────┘
+```
 
-3. **Why It Matters** — $5.7B GPU-as-a-Service market growing 35.8%/yr. Nobody combines privacy + compute + AI agents. The intersection is completely greenfield.
+### Changes — `src/pages/ProductDetail.tsx`
 
-### Design
-- Matches the existing glassmorphic dark aesthetic (bg-[#030303], white/50 text, JetBrains Mono labels)
-- Section header with uppercase tracking label ("ABOUT THE PROTOCOL") and large light headline
-- Three glass cards in a row (lg:grid-cols-3) with subtle borders (white/[0.06]) and backdrop-blur
-- Each card has a monospace category label, heading, and body text
-- Optional: a key stats strip below (market size, growth rate, competitors)
+1. **Remove `max-w-[1440px]`** from the outer container — let the dashboard layout control max width.
 
-### GSAP Animations
-- Section headline: fade-up with `ScrollTrigger` (start: "top 85%")
-- Cards: staggered fade-up (0.15s stagger, power3.out easing)
-- Stats strip: counter animation on scroll entry
-- All using the existing GSAP + ScrollTrigger already loaded in the page
+2. **Keep the 3-column grid** (lines 172–400) but move only the Price History chart + Order Ticket into it. End the grid after those two items.
 
-### Technical Details
+3. **Move the remaining sections** (Supply vs Demand, Provider Quality, Recent Settlements, Privacy) outside the grid so they span full width:
+   - Supply vs Demand: full width
+   - Provider Quality + Recent Settlements: side by side in a `grid-cols-2` layout
+   - Privacy & Fair Execution: full width, keeping its internal 3-column grid
 
-| Action | File | Details |
-|--------|------|---------|
-| Edit | `public/aero.html` (after line 117) | Insert ~80 lines of HTML for the About Us section + GSAP scroll animation script block |
-
-The section HTML will be inserted between `</section>` (line 117) and `<section ... id="how-it-works">` (line 119). A `<script>` block at the end of the section will initialize GSAP ScrollTrigger animations for the `.about-reveal` elements, using the same pattern as the existing reveal animations.
+4. **Increase chart heights** from `h-[200px]` to `h-[280px]` for the Supply vs Demand chart since it now has full width.
 

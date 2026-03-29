@@ -289,12 +289,12 @@ document.addEventListener('DOMContentLoaded', function() {
       <p id="wpm-subtitle" class="text-base md:text-lg font-light text-white/30 max-w-lg mx-auto leading-relaxed transition-all duration-700">
         Every GPU purchase on an open marketplace reveals your model size, your launch timing, and your budget. On DarkPool, they see nothing.
       </p>
-      <!-- Cycle indicators -->
-      <div class="flex items-center justify-center gap-2 mt-8">
-        <button onclick="cycleTo(0)" class="cycle-dot w-2 h-2 rounded-full bg-white/60 transition-all duration-300" data-idx="0"></button>
-        <button onclick="cycleTo(1)" class="cycle-dot w-2 h-2 rounded-full bg-white/15 transition-all duration-300" data-idx="1"></button>
-        <button onclick="cycleTo(2)" class="cycle-dot w-2 h-2 rounded-full bg-white/15 transition-all duration-300" data-idx="2"></button>
-        <button onclick="cycleTo(3)" class="cycle-dot w-2 h-2 rounded-full bg-white/15 transition-all duration-300" data-idx="3"></button>
+      <!-- Cycle section tabs -->
+      <div class="flex items-center justify-center gap-1 mt-8 flex-wrap">
+        <button onclick="cycleTo(0)" class="cycle-tab px-4 py-2 rounded-full text-[11px] font-mono tracking-wider uppercase transition-all duration-300 border" data-idx="0" style="background: rgba(108,60,233,0.15); border-color: rgba(108,60,233,0.4); color: rgba(255,255,255,0.9);">Core Features</button>
+        <button onclick="cycleTo(1)" class="cycle-tab px-4 py-2 rounded-full text-[11px] font-mono tracking-wider uppercase transition-all duration-300 border" data-idx="1" style="background: transparent; border-color: rgba(255,255,255,0.08); color: rgba(255,255,255,0.35);">Without Privacy</button>
+        <button onclick="cycleTo(2)" class="cycle-tab px-4 py-2 rounded-full text-[11px] font-mono tracking-wider uppercase transition-all duration-300 border" data-idx="2" style="background: transparent; border-color: rgba(255,255,255,0.08); color: rgba(255,255,255,0.35);">Our Dark Pool</button>
+        <button onclick="cycleTo(3)" class="cycle-tab px-4 py-2 rounded-full text-[11px] font-mono tracking-wider uppercase transition-all duration-300 border" data-idx="3" style="background: transparent; border-color: rgba(255,255,255,0.08); color: rgba(255,255,255,0.35);">Target Audience</button>
       </div>
     </div>
 

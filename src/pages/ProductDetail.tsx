@@ -259,7 +259,7 @@ const ProductDetail = () => {
           </div>
 
           {/* Col 3: Price + Duration */}
-          <div className="space-y-3">
+          <div className="space-y-4">
             <SectionLabel>{side === "buy" ? "Max Price" : "Min Price"} (USDC / GPU-hr)</SectionLabel>
             <Input
               value={currentPrice}

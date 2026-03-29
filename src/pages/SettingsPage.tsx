@@ -31,28 +31,34 @@ const SettingsPage = () => {
       </GlassCard>
 
       {/* API Keys */}
-      <GlassCard delay={0.2} gradient className="p-6 space-y-8">
-        <SectionLabel>API Keys</SectionLabel>
-        {[
-          { label: "Production Key", key: "sk_live_****************************" },
-          { label: "Test Key", key: "sk_test_****************************" },
-        ].map((item) => (
-          <div key={item.label} className="rounded-xl bg-white/[0.03] p-4 space-y-4">
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/30">{item.label}</p>
-            <p className="font-mono text-sm text-white/60 bg-white/[0.02] px-4 py-2 rounded-lg border border-white/[0.04]">{item.key}</p>
-            <div className="flex gap-2">
-              <Button variant="outline" size="sm" className="text-[10px] gap-2 h-8 border-white/[0.06] bg-transparent hover:bg-white/[0.04] text-white/50 transition-all duration-300">
-                <Copy className="h-4 w-4" /> Copy
-              </Button>
-              <Button variant="outline" size="sm" className="text-[10px] gap-2 h-8 border-white/[0.06] bg-transparent hover:bg-white/[0.04] text-white/50 transition-all duration-300">
-                <RefreshCw className="h-4 w-4" /> Regenerate
-              </Button>
-              <Button variant="outline" size="sm" className="text-[10px] gap-2 h-8 border-destructive/20 bg-transparent hover:bg-destructive/10 text-destructive/70 transition-all duration-300">
-                <Trash2 className="h-4 w-4" /> Revoke
-              </Button>
-            </div>
+      <GlassCard delay={0.2} gradient className="p-6 space-y-6">
+        <div className="flex items-center justify-between">
+          <SectionLabel>API Keys</SectionLabel>
+          <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20">
+            <Shield className="h-3 w-3 text-primary" />
+            <span className="font-mono text-[9px] uppercase tracking-[0.15em] text-primary">Encrypted</span>
           </div>
-        ))}
+        </div>
+
+        <div className="space-y-4">
+          {[
+            { label: "Production", prefix: "sk_live_", env: "LIVE", active: true },
+            { label: "Test", prefix: "sk_test_", env: "TEST", active: true },
+          ].map((item) => (
+            <ApiKeyRow key={item.label} {...item} />
+          ))}
+        </div>
+
+        <div className="pt-2">
+          <Button
+            variant="outline"
+            size="sm"
+            className="w-full text-[10px] font-mono uppercase tracking-[0.15em] h-9 border-dashed border-white/[0.08] bg-transparent hover:bg-white/[0.03] text-white/40 hover:text-white/60 transition-all duration-300"
+          >
+            <Key className="h-3.5 w-3.5 mr-2" />
+            Generate New Key
+          </Button>
+        </div>
       </GlassCard>
 
       {/* Notifications */}

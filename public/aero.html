@@ -274,6 +274,159 @@ document.addEventListener('DOMContentLoaded', function() {
 
 </section><section class="antialiased min-h-screen flex flex-col selection:bg-white/20 overflow-x-hidden md:p-12 text-white/90 rounded-3xl pt-6 pr-6 pb-6 pl-6 relative items-center justify-center" style="font-family: 'Inter', sans-serif">
 
+<!-- ============ WHY PRIVACY MATTERS ============ -->
+<section class="relative w-full py-32 md:py-40 overflow-hidden" id="why-privacy" style="background: linear-gradient(180deg, #030303 0%, #050506 50%, #030303 100%);">
+  <!-- Subtle grid texture -->
+  <div class="absolute inset-0 opacity-[0.025] pointer-events-none" style="background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.5) 1px, transparent 0); background-size: 32px 32px;"></div>
+
+  <div class="max-w-5xl mx-auto px-6 md:px-10 relative z-10">
+
+    <!-- Top Intro -->
+    <div class="text-center mb-24 md:mb-32">
+      <span class="wpm-eyebrow inline-block font-mono text-[11px] tracking-[0.4em] text-white/25 uppercase mb-6 opacity-0">Why Privacy Matters</span>
+      <h2 class="wpm-headline text-3xl md:text-5xl lg:text-6xl font-extralight text-white/95 tracking-tight leading-[1.1] mb-6 opacity-0" style="filter: blur(0px);">
+        Privacy = Competitive Advantage
+      </h2>
+      <p class="wpm-sub text-base md:text-lg font-light text-white/30 max-w-lg mx-auto leading-relaxed opacity-0">
+        In AI, compute equals intelligence. And intelligence must stay private.
+      </p>
+    </div>
+
+    <!-- Split Layout -->
+    <div class="relative flex flex-col md:flex-row gap-16 md:gap-0">
+
+      <!-- Vertical Divider -->
+      <div class="wpm-divider hidden md:block absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2" style="background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.06) 20%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.06) 80%, transparent 100%); box-shadow: 0 0 0px rgba(108,60,233,0);"></div>
+
+      <!-- Left Column -->
+      <div class="flex-1 md:pr-16">
+        <h3 class="wpm-col-heading text-lg md:text-xl font-light text-white/80 tracking-tight mb-10 opacity-0">
+          Without privacy, you expose
+        </h3>
+
+        <div class="space-y-10">
+          <div class="wpm-item opacity-0">
+            <h4 class="text-sm font-medium text-white/70 mb-2 tracking-wide">Strategy leakage</h4>
+            <p class="text-sm font-light text-white/30 leading-relaxed">Competitors can track your compute demand and infer where you are going.</p>
+          </div>
+          <div class="wpm-item opacity-0">
+            <h4 class="text-sm font-medium text-white/70 mb-2 tracking-wide">Model inference exposure</h4>
+            <p class="text-sm font-light text-white/30 leading-relaxed">Compute patterns can reveal architecture, training intensity, and operational behavior.</p>
+          </div>
+          <div class="wpm-item opacity-0">
+            <h4 class="text-sm font-medium text-white/70 mb-2 tracking-wide">Market manipulation</h4>
+            <p class="text-sm font-light text-white/30 leading-relaxed">Visible intent creates opportunities for front-running and price exploitation.</p>
+          </div>
+          <div class="wpm-item opacity-0">
+            <h4 class="text-sm font-medium text-white/70 mb-2 tracking-wide">Roadmap signaling</h4>
+            <p class="text-sm font-light text-white/30 leading-relaxed">Compute spikes can expose launches, deployments, and internal milestones.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column -->
+      <div class="flex-1 md:pl-16">
+        <h3 class="wpm-col-heading text-lg md:text-xl font-light text-white/80 tracking-tight mb-10 opacity-0">
+          Our dark pool prevents
+        </h3>
+
+        <div class="space-y-10">
+          <div class="wpm-item opacity-0">
+            <h4 class="text-sm font-medium text-white/70 mb-2 tracking-wide">Pre-trade privacy</h4>
+            <p class="text-sm font-light text-white/30 leading-relaxed">Encrypted commitments keep intent hidden before execution.</p>
+          </div>
+          <div class="wpm-item opacity-0">
+            <h4 class="text-sm font-medium text-white/70 mb-2 tracking-wide">Post-trade anonymity</h4>
+            <p class="text-sm font-light text-white/30 leading-relaxed">Zero-knowledge proofs preserve verification without exposing counterparties.</p>
+          </div>
+          <div class="wpm-item opacity-0">
+            <h4 class="text-sm font-medium text-white/70 mb-2 tracking-wide">Fair pricing</h4>
+            <p class="text-sm font-light text-white/30 leading-relaxed">Uniform clearing reduces information asymmetry and execution distortion.</p>
+          </div>
+          <div class="wpm-item opacity-0">
+            <h4 class="text-sm font-medium text-white/70 mb-2 tracking-wide">Autonomous execution</h4>
+            <p class="text-sm font-light text-white/30 leading-relaxed">Agent wallets allow private, machine-native participation without manual coordination.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Closing Statement -->
+    <div class="text-center mt-24 md:mt-32">
+      <p class="wpm-closing text-2xl md:text-4xl lg:text-5xl font-extralight text-white/90 tracking-tight leading-[1.15] opacity-0">
+        You don't just get cheaper compute.<br class="hidden md:block">
+        <span class="text-white/50">You get protection.</span>
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+  gsap.registerPlugin(ScrollTrigger);
+
+  var wpmSection = document.getElementById('why-privacy');
+  if (!wpmSection) return;
+
+  // Eyebrow
+  gsap.to(wpmSection.querySelector('.wpm-eyebrow'), {
+    opacity: 1, duration: 1, ease: 'power2.out',
+    scrollTrigger: { trigger: wpmSection, start: 'top 80%' }
+  });
+
+  // Headline with blur
+  gsap.fromTo(wpmSection.querySelector('.wpm-headline'),
+    { opacity: 0, y: 30, filter: 'blur(8px)' },
+    { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.2, ease: 'power3.out', delay: 0.2,
+      scrollTrigger: { trigger: wpmSection, start: 'top 80%' }
+    }
+  );
+
+  // Subheadline
+  gsap.to(wpmSection.querySelector('.wpm-sub'), {
+    opacity: 1, y: 0, duration: 1, ease: 'power2.out', delay: 0.5,
+    scrollTrigger: { trigger: wpmSection, start: 'top 80%' }
+  });
+
+  // Column headings
+  gsap.utils.toArray('.wpm-col-heading').forEach(function(el, i) {
+    gsap.to(el, {
+      opacity: 1, duration: 0.8, ease: 'power2.out',
+      scrollTrigger: { trigger: el, start: 'top 88%' }
+    });
+  });
+
+  // Bullet items staggered
+  gsap.utils.toArray('.wpm-item').forEach(function(el, i) {
+    gsap.fromTo(el,
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 90%' }
+      }
+    );
+  });
+
+  // Divider glow
+  var divider = wpmSection.querySelector('.wpm-divider');
+  if (divider) {
+    gsap.to(divider, {
+      boxShadow: '0 0 12px rgba(108,60,233,0.15)',
+      duration: 1.5, ease: 'power2.inOut',
+      scrollTrigger: { trigger: divider, start: 'top 85%' }
+    });
+  }
+
+  // Closing statement
+  gsap.fromTo(wpmSection.querySelector('.wpm-closing'),
+    { opacity: 0, y: 40 },
+    { opacity: 1, y: 0, duration: 1.4, ease: 'power3.out',
+      scrollTrigger: { trigger: '.wpm-closing', start: 'top 88%' }
+    }
+  );
+});
+</script>
 
 
 <main id="main-container" class="max-w-[1280px] w-full relative z-10 mt-8 mb-8 flex flex-col">

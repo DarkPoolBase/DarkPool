@@ -172,7 +172,7 @@ const Provider = () => {
                   { label: "Hours Sold", value: "342 hrs", icon: Clock },
                   { label: "Min Ask", value: "$0.21/hr", icon: DollarSign },
                 ].map((stat) => (
-                  <div key={stat.label} className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06]">
+                  <div key={stat.label} className="p-4 rounded-xl bg-white/[0.03]">
                     <div className="flex items-center gap-1.5 mb-2">
                       <stat.icon className="h-3 w-3 text-muted-foreground" />
                       <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">{stat.label}</span>

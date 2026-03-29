@@ -155,7 +155,7 @@ const ProductDetail = () => {
                 <p className="font-mono text-lg font-semibold text-foreground tabular-nums mt-1">{product.price}</p>
               </div>
               <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.04]">
-                <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">Providers</p>
+                <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">Verified Providers</p>
                 <p className="font-mono text-lg font-semibold text-foreground tabular-nums mt-1">{product.providers}</p>
               </div>
               <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.04]">

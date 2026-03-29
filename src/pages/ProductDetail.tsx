@@ -203,8 +203,8 @@ const ProductDetail = () => {
       </GlassCard>
 
       {/* Order Ticket — redesigned */}
-      <GlassCard delay={0.15} glow className="p-7">
-        <div className="flex flex-col gap-7">
+      <GlassCard delay={0.15} glow className="p-6">
+        <div className="flex flex-col gap-6">
           {/* Header */}
           <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Private Order</span>
 

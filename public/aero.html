@@ -280,19 +280,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
   <div class="max-w-[1280px] mx-auto px-6 md:px-10 relative z-10">
 
-    <!-- Top Intro -->
+    <!-- Top Intro (cycles with content) -->
     <div class="text-center mb-24 md:mb-32">
       <span class="wpm-eyebrow inline-block font-mono text-[11px] tracking-[0.4em] text-white/25 uppercase mb-6 opacity-0">Why Privacy Matters</span>
-      <h2 class="wpm-headline text-3xl md:text-5xl lg:text-6xl font-extralight text-white/95 tracking-tight leading-[1.1] mb-6 opacity-0" style="filter: blur(0px);">
+      <h2 id="wpm-title" class="text-3xl md:text-5xl lg:text-6xl font-extralight text-white/95 tracking-tight leading-[1.1] mb-6 transition-all duration-700" style="filter: blur(0px);">
         Your Competitors Are Watching
       </h2>
-      <p class="wpm-sub text-base md:text-lg font-light text-white/30 max-w-lg mx-auto leading-relaxed opacity-0">
+      <p id="wpm-subtitle" class="text-base md:text-lg font-light text-white/30 max-w-lg mx-auto leading-relaxed transition-all duration-700">
         Every GPU purchase on an open marketplace reveals your model size, your launch timing, and your budget. On DarkPool, they see nothing.
       </p>
+      <!-- Cycle indicators -->
+      <div class="flex items-center justify-center gap-2 mt-8">
+        <button onclick="cycleTo(0)" class="cycle-dot w-2 h-2 rounded-full bg-white/60 transition-all duration-300" data-idx="0"></button>
+        <button onclick="cycleTo(1)" class="cycle-dot w-2 h-2 rounded-full bg-white/15 transition-all duration-300" data-idx="1"></button>
+        <button onclick="cycleTo(2)" class="cycle-dot w-2 h-2 rounded-full bg-white/15 transition-all duration-300" data-idx="2"></button>
+        <button onclick="cycleTo(3)" class="cycle-dot w-2 h-2 rounded-full bg-white/15 transition-all duration-300" data-idx="3"></button>
+      </div>
     </div>
 
-    <!-- Bento Grid -->
-
+    <!-- Bento Grid with cycling content layers -->
 <main id="main-container" class="max-w-[1280px] w-full relative z-10 mt-8 mb-24 md:mb-32 flex flex-col">
         
         <div id="flashlight" class="absolute inset-0 z-0 opacity-0 transition-opacity duration-300 pointer-events-none" style="background: radial-gradient(800px circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.04), transparent 40%);"></div>
@@ -312,37 +318,35 @@ document.addEventListener('DOMContentLoaded', function() {
             <div id="shoot-h" class="absolute top-0 left-0 w-64 h-full bg-gradient-to-r from-transparent via-white/60 to-transparent" style="transform: translateX(-297px);"></div>
         </div>
 
-        <!-- Remixed Asymmetrical Grid Layout -->
+        <!-- Grid Layout -->
         <div class="grid grid-cols-1 lg:grid-cols-12 bg-white/10 border-white/10 border relative gap-x-px gap-y-px">
             
-            <!-- Left Sidebar: Header & Sequence -->
+            <!-- Left Sidebar: cycles content -->
             <article class="lg:col-span-4 flex flex-col md:p-12 overflow-hidden bg-[#030303]/90 pt-8 pr-8 pb-8 pl-8 relative backdrop-blur-md">
                 <div class="flex-grow flex flex-col justify-start">
-                    <h1 class="text-3xl md:text-4xl font-extralight tracking-tight text-white mb-6 reveal-text">
-                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0%);">Privacy-First</span></span>
-                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">Compute</span></span>
-                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">Architecture.</span></span>
-                    </h1>
-                    <p class="text-xs text-white/50 max-w-sm font-extralight leading-relaxed reveal-text font-sans">
-                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0%);">Zero-knowledge</span></span>
-                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">proofs</span></span>
-                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">verify</span></span>
-                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">matching</span></span>
-                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">correctness</span></span>
-                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">without</span></span>
-                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">revealing</span></span>
-                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">individual</span></span>
-                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">orders.</span></span>
-                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">Batch</span></span>
-                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">auctions</span></span>
-                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">eliminate</span></span>
-                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">front-running</span></span>
-                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">on</span></span>
-                        <span class="inline-block overflow-hidden align-bottom mr-[0.25em]"><span class="reveal-word inline-block translate-y-[110%]">Base.</span></span>
-                    </p>
+                    <!-- Layer 0: Privacy-First Compute Architecture -->
+                    <div class="bento-layer bento-layer-0" style="transition: opacity 0.6s ease, transform 0.6s ease;">
+                      <h1 class="text-3xl md:text-4xl font-extralight tracking-tight text-white mb-6">Privacy-First Compute Architecture.</h1>
+                      <p class="text-xs text-white/50 max-w-sm font-extralight leading-relaxed font-sans">Zero-knowledge proofs verify matching correctness without revealing individual orders. Batch auctions eliminate front-running on Base.</p>
+                    </div>
+                    <!-- Layer 1: Without privacy -->
+                    <div class="bento-layer bento-layer-1" style="opacity:0; position:absolute; top:32px; left:32px; right:32px; transition: opacity 0.6s ease, transform 0.6s ease;">
+                      <h1 class="text-3xl md:text-4xl font-extralight tracking-tight text-white mb-6">Without Privacy, You Expose Everything.</h1>
+                      <p class="text-xs text-white/50 max-w-sm font-extralight leading-relaxed font-sans">Open marketplaces broadcast your compute demand — revealing strategy, model architecture, training scale, and launch timing to every competitor watching.</p>
+                    </div>
+                    <!-- Layer 2: Our dark pool prevents -->
+                    <div class="bento-layer bento-layer-2" style="opacity:0; position:absolute; top:32px; left:32px; right:32px; transition: opacity 0.6s ease, transform 0.6s ease;">
+                      <h1 class="text-3xl md:text-4xl font-extralight tracking-tight text-white mb-6">Our Dark Pool Prevents All of It.</h1>
+                      <p class="text-xs text-white/50 max-w-sm font-extralight leading-relaxed font-sans">Encrypted orders, zero-knowledge proofs, and uniform clearing prices — privacy at every stage of the transaction lifecycle.</p>
+                    </div>
+                    <!-- Layer 3: Target Audience -->
+                    <div class="bento-layer bento-layer-3" style="opacity:0; position:absolute; top:32px; left:32px; right:32px; transition: opacity 0.6s ease, transform 0.6s ease;">
+                      <h1 class="text-3xl md:text-4xl font-extralight tracking-tight text-white mb-6">Built for Every Compute Participant.</h1>
+                      <p class="text-xs text-white/50 max-w-sm font-extralight leading-relaxed font-sans">From autonomous AI agents to enterprise procurement teams and GPU providers — DarkPool serves every role in the compute supply chain.</p>
+                    </div>
                 </div>
 
-                <!-- Sequential Text Animation -->
+                <!-- Sequential Text Animation (always visible) -->
                 <div class="mt-16 flex flex-col gap-3 text-[9px] md:text-[10px] text-white/40 uppercase tracking-widest font-light overflow-hidden" style="font-family: 'JetBrains Mono', monospace;">
                     <div class="seq-line opacity-0 transform translate-y-4 transition-all duration-700 ease-out" style="white-space: nowrap; opacity: 1; transform: translateY(0px);">&gt; Collecting encrypted orders<span class="anim-dots">..</span></div>
                     <div class="seq-line opacity-0 transform translate-y-4 transition-all duration-700 ease-out" style="white-space: nowrap; opacity: 1; transform: translateY(0px);">&gt; Running batch auction<span class="anim-dots">..</span></div>
@@ -352,100 +356,258 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             </article>
 
-            <!-- Right Main: COMPUTE-01 Animation -->
-            <article class="lg:col-span-8 flex flex-col min-h-[400px] overflow-hidden transition-all duration-500 hover:border-white/10 group cursor-pointer bg-[#0B0C0E] w-full border-white/5 border relative">
+            <!-- Right Main: Cycling visual cards -->
+            <article class="lg:col-span-8 flex flex-col min-h-[400px] overflow-hidden bg-[#0B0C0E] w-full border-white/5 border relative">
+              <!-- Layer 0: Encrypted Order Matching -->
+              <div class="bento-right bento-right-0 absolute inset-0" style="transition: opacity 0.6s ease, transform 0.6s ease;">
+                <div class="absolute top-6 left-6 text-white text-[10px] font-medium px-3 py-1.5 uppercase tracking-widest rounded border shadow-lg z-20 bg-violet-500 border-violet-400/50 flex items-center gap-2">
+                  <div class="w-1.5 h-1.5 bg-white rounded-full animate-ping"></div>Popular
+                </div>
+                <div class="absolute inset-0 flex items-center justify-center z-10" id="compute-anim-container">
+                  <div class="relative w-[320px] h-[200px]" id="compute-anim">
+                    <div class="order-block absolute w-10 h-6 rounded bg-white/10 border border-white/10" style="top:10%;left:5%;"></div>
+                    <div class="order-block absolute w-12 h-6 rounded bg-violet-500/20 border border-violet-500/20" style="top:5%;left:35%;"></div>
+                    <div class="order-block absolute w-9 h-6 rounded bg-white/10 border border-white/10" style="top:15%;left:70%;"></div>
+                    <div class="order-block absolute w-11 h-6 rounded bg-violet-500/20 border border-violet-500/20" style="top:60%;left:10%;"></div>
+                    <div class="order-block absolute w-10 h-6 rounded bg-white/10 border border-white/10" style="top:70%;left:55%;"></div>
+                    <div class="order-block absolute w-12 h-6 rounded bg-violet-500/20 border border-violet-500/20" style="top:75%;left:80%;"></div>
+                    <div class="order-block absolute w-10 h-6 rounded bg-white/10 border border-white/10" style="top:40%;left:85%;"></div>
+                    <div class="order-block absolute w-11 h-6 rounded bg-violet-500/20 border border-violet-500/20" style="top:35%;left:20%;"></div>
+                    <div class="clearing-bar absolute left-[10%] right-[10%] top-1/2 -translate-y-1/2 h-2 rounded-full bg-[#6C3CE9] opacity-0 shadow-[0_0_0px_rgba(108,60,233,0)]" style="transition: all 0.6s ease;"></div>
+                  </div>
+                </div>
+                <div class="absolute bottom-8 left-8 z-20 pointer-events-none max-w-sm">
+                  <header class="text-[10px] text-white/30 mb-8 uppercase tracking-[0.2em] flex items-center gap-3 font-extralight" style="font-family: 'JetBrains Mono', monospace;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect><line x1="3" x2="21" y1="9" y2="9"></line><line x1="9" x2="9" y1="21" y2="9"></line></svg>
+                    COMPUTE-01
+                  </header>
+                  <h3 class="text-base font-extralight tracking-tight mb-2 text-white/90">Encrypted Order Matching</h3>
+                  <p class="text-xs text-white/40 leading-relaxed font-extralight font-sans">Buyers and sellers submit sealed bids via commit-reveal — orders are hashed on-chain so not even the platform can see them.</p>
+                </div>
+              </div>
 
-  <!-- Popular Badge -->
-  <div class="absolute top-6 left-6 text-white text-[10px] font-medium px-3 py-1.5 uppercase tracking-widest rounded border shadow-lg z-20 bg-violet-500 border-violet-400/50 flex items-center gap-2 transform transition-transform group-hover:-translate-y-1">
-    <div class="w-1.5 h-1.5 bg-white rounded-full animate-ping"></div>
-    Popular
-  </div>
+              <!-- Layer 1: Strategy Leakage viz -->
+              <div class="bento-right bento-right-1 absolute inset-0" style="opacity:0; transition: opacity 0.6s ease, transform 0.6s ease; pointer-events:none;">
+                <div class="absolute inset-0 flex items-center justify-center z-10">
+                  <div class="relative w-[320px] h-[200px]" id="leak-anim">
+                    <!-- Eye watching animation -->
+                    <svg class="absolute inset-0 w-full h-full" viewBox="0 0 320 200">
+                      <defs><filter id="leak-glow"><feGaussianBlur stdDeviation="3"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+                      <!-- Radiating scan lines -->
+                      <g id="scan-lines" opacity="0.3">
+                        <line x1="160" y1="100" x2="40" y2="30" stroke="#6C3CE9" stroke-width="0.5" stroke-dasharray="4 4"><animate attributeName="opacity" values="0;0.5;0" dur="3s" repeatCount="indefinite"/></line>
+                        <line x1="160" y1="100" x2="280" y2="40" stroke="#6C3CE9" stroke-width="0.5" stroke-dasharray="4 4"><animate attributeName="opacity" values="0;0.5;0" dur="3s" begin="0.5s" repeatCount="indefinite"/></line>
+                        <line x1="160" y1="100" x2="60" y2="170" stroke="#6C3CE9" stroke-width="0.5" stroke-dasharray="4 4"><animate attributeName="opacity" values="0;0.5;0" dur="3s" begin="1s" repeatCount="indefinite"/></line>
+                        <line x1="160" y1="100" x2="260" y2="160" stroke="#6C3CE9" stroke-width="0.5" stroke-dasharray="4 4"><animate attributeName="opacity" values="0;0.5;0" dur="3s" begin="1.5s" repeatCount="indefinite"/></line>
+                      </g>
+                      <!-- Central eye -->
+                      <ellipse cx="160" cy="100" rx="40" ry="22" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" filter="url(#leak-glow)"/>
+                      <circle cx="160" cy="100" r="10" fill="#6C3CE9" opacity="0.6"><animate attributeName="r" values="8;12;8" dur="2s" repeatCount="indefinite"/></circle>
+                      <circle cx="160" cy="100" r="4" fill="white" opacity="0.8"/>
+                      <!-- Data points being watched -->
+                      <g font-family="JetBrains Mono, monospace" font-size="7" fill="rgba(255,255,255,0.25)">
+                        <text x="30" y="35"><animate attributeName="opacity" values="0;0.4;0" dur="4s" repeatCount="indefinite"/>GPU: H100 x128</text>
+                        <text x="220" y="45"><animate attributeName="opacity" values="0;0.4;0" dur="4s" begin="1s" repeatCount="indefinite"/>BUDGET: $2.4M</text>
+                        <text x="40" y="175"><animate attributeName="opacity" values="0;0.4;0" dur="4s" begin="2s" repeatCount="indefinite"/>LAUNCH: Q2 2026</text>
+                        <text x="210" y="165"><animate attributeName="opacity" values="0;0.4;0" dur="4s" begin="0.5s" repeatCount="indefinite"/>MODEL: 70B PARAMS</text>
+                      </g>
+                    </svg>
+                  </div>
+                </div>
+                <div class="absolute bottom-8 left-8 z-20 pointer-events-none max-w-sm">
+                  <header class="text-[10px] text-white/30 mb-8 uppercase tracking-[0.2em] flex items-center gap-3 font-extralight" style="font-family: 'JetBrains Mono', monospace;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-red-400 drop-shadow-[0_0_8px_rgba(248,113,113,0.4)]"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                    EXPOSURE-01
+                  </header>
+                  <h3 class="text-base font-extralight tracking-tight mb-2 text-white/90">Strategy Leakage</h3>
+                  <p class="text-xs text-white/40 leading-relaxed font-extralight font-sans">Competitors track your compute demand and infer your roadmap, model size, and budget — all from public marketplace data.</p>
+                </div>
+              </div>
 
-  <!-- Animated Order Matching Visualization -->
-  <div class="absolute inset-0 flex items-center justify-center z-10" id="compute-anim-container">
-    <div class="relative w-[320px] h-[200px]" id="compute-anim">
-      <!-- Order blocks will be animated via JS -->
-      <div class="order-block absolute w-10 h-6 rounded bg-white/10 border border-white/10" style="top:10%;left:5%;"></div>
-      <div class="order-block absolute w-12 h-6 rounded bg-violet-500/20 border border-violet-500/20" style="top:5%;left:35%;"></div>
-      <div class="order-block absolute w-9 h-6 rounded bg-white/10 border border-white/10" style="top:15%;left:70%;"></div>
-      <div class="order-block absolute w-11 h-6 rounded bg-violet-500/20 border border-violet-500/20" style="top:60%;left:10%;"></div>
-      <div class="order-block absolute w-10 h-6 rounded bg-white/10 border border-white/10" style="top:70%;left:55%;"></div>
-      <div class="order-block absolute w-12 h-6 rounded bg-violet-500/20 border border-violet-500/20" style="top:75%;left:80%;"></div>
-      <div class="order-block absolute w-10 h-6 rounded bg-white/10 border border-white/10" style="top:40%;left:85%;"></div>
-      <div class="order-block absolute w-11 h-6 rounded bg-violet-500/20 border border-violet-500/20" style="top:35%;left:20%;"></div>
-      <!-- Clearing price bar (hidden initially) -->
-      <div class="clearing-bar absolute left-[10%] right-[10%] top-1/2 -translate-y-1/2 h-2 rounded-full bg-[#6C3CE9] opacity-0 shadow-[0_0_0px_rgba(108,60,233,0)]" style="transition: all 0.6s ease;"></div>
-    </div>
-  </div>
+              <!-- Layer 2: Shield / Prevention viz -->
+              <div class="bento-right bento-right-2 absolute inset-0" style="opacity:0; transition: opacity 0.6s ease, transform 0.6s ease; pointer-events:none;">
+                <div class="absolute inset-0 flex items-center justify-center z-10">
+                  <svg class="w-[280px] h-[180px]" viewBox="0 0 280 180">
+                    <defs>
+                      <filter id="shield-glow"><feGaussianBlur stdDeviation="4"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+                    </defs>
+                    <!-- Shield shape -->
+                    <path d="M140 20 L220 50 L220 110 Q220 155 140 170 Q60 155 60 110 L60 50 Z" fill="none" stroke="#6C3CE9" stroke-width="1.5" filter="url(#shield-glow)" opacity="0.6">
+                      <animate attributeName="opacity" values="0.4;0.8;0.4" dur="3s" repeatCount="indefinite"/>
+                    </path>
+                    <path d="M140 35 L205 58 L205 108 Q205 145 140 158 Q75 145 75 108 L75 58 Z" fill="rgba(108,60,233,0.08)" stroke="rgba(108,60,233,0.2)" stroke-width="0.5"/>
+                    <!-- Lock icon inside shield -->
+                    <rect x="127" y="75" width="26" height="22" rx="3" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+                    <path d="M132 75 V68 Q132 58 140 58 Q148 58 148 68 V75" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+                    <circle cx="140" cy="88" r="2.5" fill="white" opacity="0.6"/>
+                    <!-- Blocked data rays -->
+                    <g opacity="0.25">
+                      <line x1="20" y1="40" x2="60" y2="60" stroke="#F43F5E" stroke-width="1" stroke-dasharray="3 3"><animate attributeName="opacity" values="0.3;0;0.3" dur="2s" repeatCount="indefinite"/></line>
+                      <line x1="260" y1="50" x2="220" y2="65" stroke="#F43F5E" stroke-width="1" stroke-dasharray="3 3"><animate attributeName="opacity" values="0.3;0;0.3" dur="2s" begin="0.7s" repeatCount="indefinite"/></line>
+                      <line x1="30" y1="150" x2="65" y2="130" stroke="#F43F5E" stroke-width="1" stroke-dasharray="3 3"><animate attributeName="opacity" values="0.3;0;0.3" dur="2s" begin="1.2s" repeatCount="indefinite"/></line>
+                      <line x1="250" y1="140" x2="215" y2="125" stroke="#F43F5E" stroke-width="1" stroke-dasharray="3 3"><animate attributeName="opacity" values="0.3;0;0.3" dur="2s" begin="0.4s" repeatCount="indefinite"/></line>
+                    </g>
+                    <!-- Checkmark labels -->
+                    <g font-family="JetBrains Mono, monospace" font-size="7">
+                      <text x="105" y="125" fill="rgba(74,222,128,0.5)">✓ ZK VERIFIED</text>
+                      <text x="105" y="140" fill="rgba(74,222,128,0.4)">✓ ENCRYPTED</text>
+                    </g>
+                  </svg>
+                </div>
+                <div class="absolute bottom-8 left-8 z-20 pointer-events-none max-w-sm">
+                  <header class="text-[10px] text-white/30 mb-8 uppercase tracking-[0.2em] flex items-center gap-3 font-extralight" style="font-family: 'JetBrains Mono', monospace;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.4)]"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    SHIELD-02
+                  </header>
+                  <h3 class="text-base font-extralight tracking-tight mb-2 text-white/90">Pre-Trade Privacy</h3>
+                  <p class="text-xs text-white/40 leading-relaxed font-extralight font-sans">Encrypted commitments keep intent hidden before execution. Zero-knowledge proofs verify without exposing counterparties.</p>
+                </div>
+              </div>
 
-  <!-- Title & Description Overlay -->
-  <div class="absolute bottom-8 left-8 z-20 pointer-events-none flex flex-col justify-end max-w-sm">
-    <header class="text-[10px] text-white/30 mb-8 uppercase tracking-[0.2em] flex items-center gap-3 font-extralight" style="font-family: 'JetBrains Mono', monospace;">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]">
-        <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
-        <line x1="3" x2="21" y1="9" y2="9"></line>
-        <line x1="9" x2="9" y1="21" y2="9"></line>
-      </svg>
-      COMPUTE-01
-    </header>
-    <h3 class="text-base font-extralight tracking-tight mb-2 text-white/90 flex items-center">
-      Encrypted Order Matching
-    </h3>
-    <p class="text-xs text-white/40 leading-relaxed font-extralight font-sans">
-      Buyers and sellers submit sealed bids via commit-reveal — orders are hashed on-chain so not even the platform can see them. A batch auction runs every 30–60 seconds, finding a single clearing price where the most trades match. ZK proofs verify correctness without exposing any order data.
-    </p>
-  </div>
-</article>
+              <!-- Layer 3: Target Audience viz -->
+              <div class="bento-right bento-right-3 absolute inset-0" style="opacity:0; transition: opacity 0.6s ease, transform 0.6s ease; pointer-events:none;">
+                <div class="absolute inset-0 flex items-center justify-center z-10">
+                  <svg class="w-[320px] h-[200px]" viewBox="0 0 320 200">
+                    <!-- Connected nodes representing different participants -->
+                    <defs><filter id="node-glow"><feGaussianBlur stdDeviation="2"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+                    <!-- Connection lines -->
+                    <line x1="160" y1="100" x2="70" y2="50" stroke="rgba(108,60,233,0.2)" stroke-width="1"/>
+                    <line x1="160" y1="100" x2="250" y2="50" stroke="rgba(108,60,233,0.2)" stroke-width="1"/>
+                    <line x1="160" y1="100" x2="70" y2="150" stroke="rgba(108,60,233,0.2)" stroke-width="1"/>
+                    <line x1="160" y1="100" x2="250" y2="150" stroke="rgba(108,60,233,0.2)" stroke-width="1"/>
+                    <!-- Center node (DarkPool) -->
+                    <circle cx="160" cy="100" r="18" fill="rgba(108,60,233,0.15)" stroke="#6C3CE9" stroke-width="1.5" filter="url(#node-glow)">
+                      <animate attributeName="r" values="16;20;16" dur="3s" repeatCount="indefinite"/>
+                    </circle>
+                    <text x="160" y="103" text-anchor="middle" fill="white" font-size="7" font-family="JetBrains Mono, monospace" font-weight="bold">DP</text>
+                    <!-- AI Agents node -->
+                    <circle cx="70" cy="50" r="14" fill="rgba(139,92,246,0.1)" stroke="rgba(139,92,246,0.4)" stroke-width="1"/>
+                    <text x="70" y="46" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="12">🤖</text>
+                    <text x="70" y="58" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="6" font-family="JetBrains Mono, monospace">AGENTS</text>
+                    <!-- Enterprises node -->
+                    <circle cx="250" cy="50" r="14" fill="rgba(139,92,246,0.1)" stroke="rgba(139,92,246,0.4)" stroke-width="1"/>
+                    <text x="250" y="46" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="12">🏢</text>
+                    <text x="250" y="58" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="6" font-family="JetBrains Mono, monospace">ENTERPRISE</text>
+                    <!-- Developers node -->
+                    <circle cx="70" cy="150" r="14" fill="rgba(139,92,246,0.1)" stroke="rgba(139,92,246,0.4)" stroke-width="1"/>
+                    <text x="70" y="146" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="12">👨‍💻</text>
+                    <text x="70" y="158" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="6" font-family="JetBrains Mono, monospace">DEVS</text>
+                    <!-- GPU Providers node -->
+                    <circle cx="250" cy="150" r="14" fill="rgba(139,92,246,0.1)" stroke="rgba(139,92,246,0.4)" stroke-width="1"/>
+                    <text x="250" y="146" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="12">⚡</text>
+                    <text x="250" y="158" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="6" font-family="JetBrains Mono, monospace">PROVIDERS</text>
+                    <!-- Animated data packets along lines -->
+                    <circle r="2" fill="#6C3CE9" opacity="0.8"><animateMotion dur="2s" repeatCount="indefinite" path="M160,100 L70,50"/></circle>
+                    <circle r="2" fill="#6C3CE9" opacity="0.8"><animateMotion dur="2.5s" repeatCount="indefinite" path="M160,100 L250,50"/></circle>
+                    <circle r="2" fill="#4ADE80" opacity="0.8"><animateMotion dur="2.2s" repeatCount="indefinite" path="M70,150 L160,100"/></circle>
+                    <circle r="2" fill="#4ADE80" opacity="0.8"><animateMotion dur="1.8s" repeatCount="indefinite" path="M250,150 L160,100"/></circle>
+                  </svg>
+                </div>
+                <div class="absolute bottom-8 left-8 z-20 pointer-events-none max-w-sm">
+                  <header class="text-[10px] text-white/30 mb-8 uppercase tracking-[0.2em] flex items-center gap-3 font-extralight" style="font-family: 'JetBrains Mono', monospace;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-violet-400 drop-shadow-[0_0_8px_rgba(139,92,246,0.4)]"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    NETWORK-03
+                  </header>
+                  <h3 class="text-base font-extralight tracking-tight mb-2 text-white/90">Multi-Participant Network</h3>
+                  <p class="text-xs text-white/40 leading-relaxed font-extralight font-sans">AI agents, enterprises, developers, and GPU providers — all connected through a single private marketplace.</p>
+                </div>
+              </div>
+            </article>
 
-            <!-- Bottom Left: Half Card -->
-            <article class="lg:col-span-6 relative flex flex-col md:flex-row p-8 md:p-12 bg-[#030303]/90 backdrop-blur-md gap-8 items-center">
+            <!-- Bottom Left: cycles between 4 content cards -->
+            <article class="lg:col-span-6 relative flex flex-col md:flex-row p-8 md:p-12 bg-[#030303]/90 backdrop-blur-md gap-8 items-center min-h-[250px]">
                 <div class="hidden md:block absolute top-0 bottom-0 -left-px w-px overflow-hidden z-20 pointer-events-none">
                     <div id="shoot1" class="absolute top-0 left-0 w-full h-48 bg-gradient-to-b from-transparent via-white/50 to-transparent" style="transform: translateY(-198px);"></div>
                 </div>
                 
-                <div class="flex-grow flex flex-col justify-center order-2 md:order-1">
+                <!-- Layer 0: USDC Escrow -->
+                <div class="bento-bl bento-bl-0 flex flex-col md:flex-row gap-8 items-center w-full" style="transition: opacity 0.6s ease, transform 0.6s ease;">
+                  <div class="flex-grow flex flex-col justify-center order-2 md:order-1">
                     <header class="text-[10px] text-white/30 mb-8 uppercase tracking-[0.2em] flex items-center gap-3 font-extralight" style="font-family: 'JetBrains Mono', monospace;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect><line x1="3" x2="21" y1="9" y2="9"></line><line x1="9" x2="9" y1="21" y2="9"></line></svg>
-                        ESCROW-02
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect width="18" height="18" x="3" y="3" rx="2"/><line x1="3" x2="21" y1="9" y2="9"/><line x1="9" x2="9" y1="21" y2="9"/></svg>
+                      ESCROW-02
                     </header>
-                    <h3 class="text-base font-extralight tracking-tight mb-2 text-white/90 flex items-center">
-                        USDC Escrow &amp; Settlement
-                    </h3>
-                    <p class="text-xs text-white/40 leading-relaxed font-extralight font-sans">Funds lock on order placement and release automatically on verified delivery. Cancellations refund instantly. All settlement happens on Base at ~$0.001 per transaction — no custodial holding, no intermediaries, fully on-chain.</p>
-                </div>
-                <div class="w-full md:w-1/2 h-48 relative flex items-center justify-center order-1 md:order-2">
-                    <!-- USDC Escrow Animation -->
+                    <h3 class="text-base font-extralight tracking-tight mb-2 text-white/90">USDC Escrow & Settlement</h3>
+                    <p class="text-xs text-white/40 leading-relaxed font-extralight font-sans">Funds lock on order placement and release automatically on verified delivery. All settlement on Base at ~$0.001 per tx.</p>
+                  </div>
+                  <div class="w-full md:w-1/2 h-48 relative flex items-center justify-center order-1 md:order-2">
                     <div class="relative w-full h-full flex items-center justify-center" id="escrow-anim">
-                      <!-- Vault outline -->
                       <div class="absolute w-24 h-20 rounded-lg border-2 border-dashed border-[#6C3CE9]/50 flex items-center justify-center">
                         <span class="text-[8px] font-mono text-white/20 uppercase tracking-widest">Escrow</span>
                       </div>
-                      <!-- USDC coin -->
                       <div class="escrow-coin absolute w-8 h-8 rounded-full bg-white/90 flex items-center justify-center shadow-lg" style="top: -8px; left: 50%; transform: translateX(-50%);">
                         <span class="text-[#0B0C0E] text-xs font-bold">U</span>
                       </div>
                     </div>
+                  </div>
+                </div>
+
+                <!-- Layer 1: Model Inference Exposure -->
+                <div class="bento-bl bento-bl-1 absolute inset-0 p-8 md:p-12 flex items-center" style="opacity:0; transition: opacity 0.6s ease; pointer-events:none;">
+                  <div class="flex flex-col justify-center">
+                    <header class="text-[10px] text-white/30 mb-8 uppercase tracking-[0.2em] flex items-center gap-3 font-extralight" style="font-family: 'JetBrains Mono', monospace;">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-red-400"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                      RISK-02
+                    </header>
+                    <h3 class="text-base font-extralight tracking-tight mb-2 text-white/90">Model Inference Exposure</h3>
+                    <p class="text-xs text-white/40 leading-relaxed font-extralight font-sans">Compute patterns can reveal architecture, training intensity, and operational behavior to anyone watching the marketplace.</p>
+                    <div class="mt-4 flex gap-2">
+                      <span class="px-2 py-1 rounded text-[8px] font-mono text-red-400/60 bg-red-500/10 border border-red-500/10">ARCHITECTURE LEAK</span>
+                      <span class="px-2 py-1 rounded text-[8px] font-mono text-red-400/60 bg-red-500/10 border border-red-500/10">TRAINING DATA</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Layer 2: Fair Pricing -->
+                <div class="bento-bl bento-bl-2 absolute inset-0 p-8 md:p-12 flex items-center" style="opacity:0; transition: opacity 0.6s ease; pointer-events:none;">
+                  <div class="flex flex-col justify-center">
+                    <header class="text-[10px] text-white/30 mb-8 uppercase tracking-[0.2em] flex items-center gap-3 font-extralight" style="font-family: 'JetBrains Mono', monospace;">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-400"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                      PROTECT-02
+                    </header>
+                    <h3 class="text-base font-extralight tracking-tight mb-2 text-white/90">Fair Pricing</h3>
+                    <p class="text-xs text-white/40 leading-relaxed font-extralight font-sans">Uniform clearing reduces information asymmetry and execution distortion. Everyone pays the same fair rate.</p>
+                    <div class="mt-4 flex gap-2">
+                      <span class="px-2 py-1 rounded text-[8px] font-mono text-emerald-400/60 bg-emerald-500/10 border border-emerald-500/10">UNIFORM PRICE</span>
+                      <span class="px-2 py-1 rounded text-[8px] font-mono text-emerald-400/60 bg-emerald-500/10 border border-emerald-500/10">NO MEV</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Layer 3: AI Agents audience -->
+                <div class="bento-bl bento-bl-3 absolute inset-0 p-8 md:p-12 flex items-center" style="opacity:0; transition: opacity 0.6s ease; pointer-events:none;">
+                  <div class="flex flex-col justify-center">
+                    <header class="text-[10px] text-white/30 mb-8 uppercase tracking-[0.2em] flex items-center gap-3 font-extralight" style="font-family: 'JetBrains Mono', monospace;">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-violet-400"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/></svg>
+                      TARGET-01
+                    </header>
+                    <h3 class="text-base font-extralight tracking-tight mb-2 text-white/90">AI Agents</h3>
+                    <p class="text-xs text-white/40 leading-relaxed font-extralight font-sans">250K+ daily active on-chain agents. Autonomous compute procurement via REST API and x402 — programmatic, private, instant.</p>
+                    <div class="mt-4 flex gap-2">
+                      <span class="px-2 py-1 rounded text-[8px] font-mono text-violet-400/60 bg-violet-500/10 border border-violet-500/10">REST API</span>
+                      <span class="px-2 py-1 rounded text-[8px] font-mono text-violet-400/60 bg-violet-500/10 border border-violet-500/10">x402</span>
+                    </div>
+                  </div>
                 </div>
             </article>
 
-            <!-- Bottom Right: Half Card -->
-            <article class="lg:col-span-6 relative flex flex-col md:flex-row p-8 md:p-12 bg-[#030303]/90 backdrop-blur-md gap-8 items-center">
+            <!-- Bottom Right: cycles between 4 content cards -->
+            <article class="lg:col-span-6 relative flex flex-col md:flex-row p-8 md:p-12 bg-[#030303]/90 backdrop-blur-md gap-8 items-center min-h-[250px]">
                 <div class="hidden md:block absolute top-0 bottom-0 -left-px w-px overflow-hidden z-20 pointer-events-none">
                     <div id="shoot2" class="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-transparent via-white/40 to-transparent" style="transform: translateY(-398.5px);"></div>
                 </div>
 
-                <div class="w-full md:w-1/2 h-48 relative flex items-center justify-center order-1">
-                    <!-- Agent Terminal Animation -->
+                <!-- Layer 0: Agent x402 -->
+                <div class="bento-br bento-br-0 flex flex-col md:flex-row gap-8 items-center w-full" style="transition: opacity 0.6s ease, transform 0.6s ease;">
+                  <div class="w-full md:w-1/2 h-48 relative flex items-center justify-center order-1">
                     <div class="relative w-full h-full max-w-[260px] mx-auto flex flex-col" id="agent-terminal">
                       <div class="bg-[#0E0F11] border border-white/[0.08] rounded-lg overflow-hidden flex-1 flex flex-col">
-                        <!-- Terminal header -->
                         <div class="flex items-center gap-1.5 px-3 py-2 border-b border-white/[0.06] bg-white/[0.02]">
                           <div class="w-2 h-2 rounded-full bg-[#FF5F57]/60"></div>
                           <div class="w-2 h-2 rounded-full bg-[#FEBC2E]/60"></div>
                           <div class="w-2 h-2 rounded-full bg-[#28C840]/60"></div>
                           <span class="text-[8px] text-white/20 ml-2 font-mono uppercase tracking-wider">x402 terminal</span>
                         </div>
-                        <!-- Terminal body -->
                         <div class="flex-1 px-3 py-3 font-mono text-[11px] leading-relaxed flex flex-col justify-center">
                           <div class="agent-line text-white/50" data-text="> POST /x402/compute"></div>
                           <div class="agent-line text-white/40" data-text='> gpu: "H100" | hours: 24'></div>
@@ -453,81 +615,69 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                       </div>
                     </div>
-                </div>
-                <div class="flex-grow flex flex-col justify-center order-2">
+                  </div>
+                  <div class="flex-grow flex flex-col justify-center order-2">
                     <header class="text-[10px] text-white/30 mb-8 uppercase tracking-[0.2em] flex items-center gap-3 font-extralight" style="font-family: 'JetBrains Mono', monospace;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]"><path d="M5.5 8.5 9 12l-3.5 3.5L2 12l3.5-3.5Z"></path><path d="m12 2 3.5 3.5L12 9 8.5 5.5 12 2Z"></path><path d="M18.5 8.5 22 12l-3.5 3.5L15 12l3.5-3.5Z"></path><path d="m12 15 3.5 3.5L12 22l-3.5-3.5L12 15Z"></path></svg>
-                        AGENT-03
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5.5 8.5 9 12l-3.5 3.5L2 12l3.5-3.5Z"/><path d="m12 2 3.5 3.5L12 9 8.5 5.5 12 2Z"/><path d="M18.5 8.5 22 12l-3.5 3.5L15 12l3.5-3.5Z"/><path d="m12 15 3.5 3.5L12 22l-3.5-3.5L12 15Z"/></svg>
+                      AGENT-03
                     </header>
-                    <h3 class="text-base font-extralight tracking-tight mb-2 text-white/90 flex items-center">
-                        AI Agent Commerce via x402
-                    </h3>
-                    <p class="text-xs text-white/40 leading-relaxed font-extralight font-sans">AI agents purchase compute with a single HTTP request using Coinbase x402 protocol. Gasless transactions, programmable spending limits, and autonomous wallet control — no human in the loop. Tap into 250K+ daily active on-chain agents.</p>
+                    <h3 class="text-base font-extralight tracking-tight mb-2 text-white/90">AI Agent Commerce via x402</h3>
+                    <p class="text-xs text-white/40 leading-relaxed font-extralight font-sans">AI agents purchase compute with a single HTTP request using Coinbase x402 protocol. Gasless transactions and autonomous wallet control.</p>
+                  </div>
+                </div>
+
+                <!-- Layer 1: Roadmap Signaling risk -->
+                <div class="bento-br bento-br-1 absolute inset-0 p-8 md:p-12 flex items-center" style="opacity:0; transition: opacity 0.6s ease; pointer-events:none;">
+                  <div class="flex flex-col justify-center">
+                    <header class="text-[10px] text-white/30 mb-8 uppercase tracking-[0.2em] flex items-center gap-3 font-extralight" style="font-family: 'JetBrains Mono', monospace;">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-red-400"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                      RISK-04
+                    </header>
+                    <h3 class="text-base font-extralight tracking-tight mb-2 text-white/90">Roadmap Signaling</h3>
+                    <p class="text-xs text-white/40 leading-relaxed font-extralight font-sans">Compute spikes can expose launches, deployments, and internal milestones — giving competitors a preview of your strategy.</p>
+                    <div class="mt-4 flex gap-2">
+                      <span class="px-2 py-1 rounded text-[8px] font-mono text-red-400/60 bg-red-500/10 border border-red-500/10">LAUNCH TIMING</span>
+                      <span class="px-2 py-1 rounded text-[8px] font-mono text-red-400/60 bg-red-500/10 border border-red-500/10">BUDGET EXPOSED</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Layer 2: Autonomous Execution -->
+                <div class="bento-br bento-br-2 absolute inset-0 p-8 md:p-12 flex items-center" style="opacity:0; transition: opacity 0.6s ease; pointer-events:none;">
+                  <div class="flex flex-col justify-center">
+                    <header class="text-[10px] text-white/30 mb-8 uppercase tracking-[0.2em] flex items-center gap-3 font-extralight" style="font-family: 'JetBrains Mono', monospace;">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-400"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/></svg>
+                      PROTECT-04
+                    </header>
+                    <h3 class="text-base font-extralight tracking-tight mb-2 text-white/90">Autonomous Execution</h3>
+                    <p class="text-xs text-white/40 leading-relaxed font-extralight font-sans">Agent wallets allow private, machine-native participation without manual coordination. Fully programmatic compute procurement.</p>
+                    <div class="mt-4 flex gap-2">
+                      <span class="px-2 py-1 rounded text-[8px] font-mono text-emerald-400/60 bg-emerald-500/10 border border-emerald-500/10">AGENT WALLETS</span>
+                      <span class="px-2 py-1 rounded text-[8px] font-mono text-emerald-400/60 bg-emerald-500/10 border border-emerald-500/10">NO HUMAN</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Layer 3: GPU Providers audience -->
+                <div class="bento-br bento-br-3 absolute inset-0 p-8 md:p-12 flex items-center" style="opacity:0; transition: opacity 0.6s ease; pointer-events:none;">
+                  <div class="flex flex-col justify-center">
+                    <header class="text-[10px] text-white/30 mb-8 uppercase tracking-[0.2em] flex items-center gap-3 font-extralight" style="font-family: 'JetBrains Mono', monospace;">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-violet-400"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/></svg>
+                      TARGET-04
+                    </header>
+                    <h3 class="text-base font-extralight tracking-tight mb-2 text-white/90">GPU Providers</h3>
+                    <p class="text-xs text-white/40 leading-relaxed font-extralight font-sans">Monetize idle hardware with private pricing — no public rate sheets. Stake, benchmark, earn USDC without exposing your rates.</p>
+                    <div class="mt-4 flex gap-2">
+                      <span class="px-2 py-1 rounded text-[8px] font-mono text-violet-400/60 bg-violet-500/10 border border-violet-500/10">PRIVATE RATES</span>
+                      <span class="px-2 py-1 rounded text-[8px] font-mono text-violet-400/60 bg-violet-500/10 border border-violet-500/10">USDC</span>
+                    </div>
+                  </div>
                 </div>
             </article>
 
         </div>
     </main>
 
-
-    <!-- Split Layout -->
-    <div class="relative flex flex-col md:flex-row gap-16 md:gap-0">
-
-      <!-- Vertical Divider -->
-      <div class="wpm-divider hidden md:block absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2" style="background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.06) 20%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.06) 80%, transparent 100%); box-shadow: 0 0 0px rgba(108,60,233,0);"></div>
-
-      <!-- Left Column -->
-      <div class="flex-1 md:pr-16">
-        <h3 class="wpm-col-heading text-lg md:text-xl font-light text-white/80 tracking-tight mb-10 opacity-0">
-          Without privacy, you expose
-        </h3>
-
-        <div class="space-y-10">
-          <div class="wpm-item opacity-0">
-            <h4 class="text-sm font-medium text-white/70 mb-2 tracking-wide">Strategy leakage</h4>
-            <p class="text-sm font-light text-white/30 leading-relaxed">Competitors can track your compute demand and infer where you are going.</p>
-          </div>
-          <div class="wpm-item opacity-0">
-            <h4 class="text-sm font-medium text-white/70 mb-2 tracking-wide">Model inference exposure</h4>
-            <p class="text-sm font-light text-white/30 leading-relaxed">Compute patterns can reveal architecture, training intensity, and operational behavior.</p>
-          </div>
-          <div class="wpm-item opacity-0">
-            <h4 class="text-sm font-medium text-white/70 mb-2 tracking-wide">Market manipulation</h4>
-            <p class="text-sm font-light text-white/30 leading-relaxed">Visible intent creates opportunities for front-running and price exploitation.</p>
-          </div>
-          <div class="wpm-item opacity-0">
-            <h4 class="text-sm font-medium text-white/70 mb-2 tracking-wide">Roadmap signaling</h4>
-            <p class="text-sm font-light text-white/30 leading-relaxed">Compute spikes can expose launches, deployments, and internal milestones.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Right Column -->
-      <div class="flex-1 md:pl-16">
-        <h3 class="wpm-col-heading text-lg md:text-xl font-light text-white/80 tracking-tight mb-10 opacity-0">
-          Our dark pool prevents
-        </h3>
-
-        <div class="space-y-10">
-          <div class="wpm-item opacity-0">
-            <h4 class="text-sm font-medium text-white/70 mb-2 tracking-wide">Pre-trade privacy</h4>
-            <p class="text-sm font-light text-white/30 leading-relaxed">Encrypted commitments keep intent hidden before execution.</p>
-          </div>
-          <div class="wpm-item opacity-0">
-            <h4 class="text-sm font-medium text-white/70 mb-2 tracking-wide">Post-trade anonymity</h4>
-            <p class="text-sm font-light text-white/30 leading-relaxed">Zero-knowledge proofs preserve verification without exposing counterparties.</p>
-          </div>
-          <div class="wpm-item opacity-0">
-            <h4 class="text-sm font-medium text-white/70 mb-2 tracking-wide">Fair pricing</h4>
-            <p class="text-sm font-light text-white/30 leading-relaxed">Uniform clearing reduces information asymmetry and execution distortion.</p>
-          </div>
-          <div class="wpm-item opacity-0">
-            <h4 class="text-sm font-medium text-white/70 mb-2 tracking-wide">Autonomous execution</h4>
-            <p class="text-sm font-light text-white/30 leading-relaxed">Agent wallets allow private, machine-native participation without manual coordination.</p>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <!-- Bottom Closing Statement -->
     <div class="text-center mt-24 md:mt-32">
@@ -539,6 +689,99 @@ document.addEventListener('DOMContentLoaded', function() {
 
   </div>
 </section>
+
+<!-- Cycling content script -->
+<script>
+(function(){
+  var currentIdx = 0;
+  var totalLayers = 4;
+  var cycleInterval = 8000;
+  var timer;
+
+  var titles = [
+    'Your Competitors Are Watching',
+    'Without Privacy, You Expose',
+    'Our Dark Pool Prevents',
+    'Built for Every Participant'
+  ];
+  var subtitles = [
+    'Every GPU purchase on an open marketplace reveals your model size, your launch timing, and your budget. On DarkPool, they see nothing.',
+    'Open compute marketplaces leak strategy, model architecture, training intensity, and deployment timelines to anyone paying attention.',
+    'Encrypted orders, zero-knowledge proofs, and uniform clearing — privacy at every stage of the compute transaction lifecycle.',
+    'From autonomous AI agents to enterprise procurement teams and GPU providers — DarkPool serves the entire compute supply chain.'
+  ];
+
+  function showLayer(idx) {
+    // Fade out all layers
+    ['bento-layer','bento-right','bento-bl','bento-br'].forEach(function(cls){
+      document.querySelectorAll('.'+cls).forEach(function(el){
+        el.style.opacity = '0';
+        el.style.pointerEvents = 'none';
+        el.style.transform = 'translateY(8px)';
+      });
+    });
+
+    // Fade in target layer
+    setTimeout(function(){
+      ['.bento-layer-'+idx, '.bento-right-'+idx, '.bento-bl-'+idx, '.bento-br-'+idx].forEach(function(sel){
+        var el = document.querySelector(sel);
+        if(el){
+          el.style.opacity = '1';
+          el.style.pointerEvents = 'auto';
+          el.style.transform = 'translateY(0)';
+        }
+      });
+    }, 100);
+
+    // Update title & subtitle
+    var titleEl = document.getElementById('wpm-title');
+    var subEl = document.getElementById('wpm-subtitle');
+    if(titleEl){
+      titleEl.style.opacity = '0';
+      titleEl.style.transform = 'translateY(10px)';
+      setTimeout(function(){
+        titleEl.textContent = titles[idx];
+        titleEl.style.opacity = '1';
+        titleEl.style.transform = 'translateY(0)';
+      }, 300);
+    }
+    if(subEl){
+      subEl.style.opacity = '0';
+      setTimeout(function(){
+        subEl.textContent = subtitles[idx];
+        subEl.style.opacity = '1';
+      }, 400);
+    }
+
+    // Update dots
+    document.querySelectorAll('.cycle-dot').forEach(function(dot){
+      dot.style.background = 'rgba(255,255,255,0.15)';
+      dot.style.transform = 'scale(1)';
+    });
+    var activeDot = document.querySelector('.cycle-dot[data-idx="'+idx+'"]');
+    if(activeDot){
+      activeDot.style.background = 'rgba(255,255,255,0.6)';
+      activeDot.style.transform = 'scale(1.3)';
+    }
+
+    currentIdx = idx;
+  }
+
+  window.cycleTo = function(idx){
+    clearInterval(timer);
+    showLayer(idx);
+    timer = setInterval(autoAdvance, cycleInterval);
+  };
+
+  function autoAdvance(){
+    showLayer((currentIdx + 1) % totalLayers);
+  }
+
+  // Init: show layer 0
+  showLayer(0);
+  timer = setInterval(autoAdvance, cycleInterval);
+})();
+</script>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -553,48 +796,6 @@ document.addEventListener('DOMContentLoaded', function() {
     opacity: 1, duration: 1, ease: 'power2.out',
     scrollTrigger: { trigger: wpmSection, start: 'top 80%' }
   });
-
-  // Headline with blur
-  gsap.fromTo(wpmSection.querySelector('.wpm-headline'),
-    { opacity: 0, y: 30, filter: 'blur(8px)' },
-    { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.2, ease: 'power3.out', delay: 0.2,
-      scrollTrigger: { trigger: wpmSection, start: 'top 80%' }
-    }
-  );
-
-  // Subheadline
-  gsap.to(wpmSection.querySelector('.wpm-sub'), {
-    opacity: 1, y: 0, duration: 1, ease: 'power2.out', delay: 0.5,
-    scrollTrigger: { trigger: wpmSection, start: 'top 80%' }
-  });
-
-  // Column headings
-  gsap.utils.toArray('.wpm-col-heading').forEach(function(el, i) {
-    gsap.to(el, {
-      opacity: 1, duration: 0.8, ease: 'power2.out',
-      scrollTrigger: { trigger: el, start: 'top 88%' }
-    });
-  });
-
-  // Bullet items staggered
-  gsap.utils.toArray('.wpm-item').forEach(function(el, i) {
-    gsap.fromTo(el,
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out',
-        scrollTrigger: { trigger: el, start: 'top 90%' }
-      }
-    );
-  });
-
-  // Divider glow
-  var divider = wpmSection.querySelector('.wpm-divider');
-  if (divider) {
-    gsap.to(divider, {
-      boxShadow: '0 0 12px rgba(108,60,233,0.15)',
-      duration: 1.5, ease: 'power2.inOut',
-      scrollTrigger: { trigger: divider, start: 'top 85%' }
-    });
-  }
 
   // Closing statement
   gsap.fromTo(wpmSection.querySelector('.wpm-closing'),

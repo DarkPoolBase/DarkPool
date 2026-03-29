@@ -852,16 +852,12 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.wpm-detail').forEach(function(d){
       d.style.opacity = '0';
       d.style.pointerEvents = 'none';
-      d.style.position = 'absolute';
-      d.style.transform = 'translateY(10px)';
     });
     var activeDetail = document.querySelector('.wpm-detail-'+idx);
     if(activeDetail){
       setTimeout(function(){
         activeDetail.style.opacity = '1';
         activeDetail.style.pointerEvents = 'auto';
-        activeDetail.style.position = 'relative';
-        activeDetail.style.transform = 'translateY(0)';
       }, 200);
     }
 

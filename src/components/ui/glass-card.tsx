@@ -40,23 +40,30 @@ export function GlassCard({
   const content = (
     <motion.div
       ref={cardRef}
-      initial={{ opacity: 0, x: 30, scale: 0.97 }}
+      initial={{ opacity: 0, x: 20, scale: 0.98 }}
       animate={{ opacity: 1, x: 0, scale: 1 }}
-      transition={{ duration: 0.55, delay, ease: [0.25, 0.46, 0.45, 0.94] }}
+      transition={{
+        type: "spring",
+        stiffness: 200,
+        damping: 25,
+        mass: 0.6,
+        delay,
+      }}
+      style={{
+        willChange: "transform, opacity",
+        boxShadow: glow
+          ? "0 8px 32px rgba(0,0,0,0.2), 0 0 30px rgba(108,60,233,0.15)"
+          : "0 8px 32px rgba(0,0,0,0.2)",
+      }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       className={cn(
         "relative rounded-2xl bg-white/[0.04] backdrop-blur-xl overflow-hidden",
         "border border-white/[0.06]",
-        "hover:border-white/[0.1] transition-all duration-500",
+        "hover:border-white/[0.1] transition-[border-color] duration-500",
         glow && "shadow-[0_0_30px_rgba(108,60,233,0.15)]",
         className
       )}
-      style={{
-        boxShadow: glow
-          ? "0 8px 32px rgba(0,0,0,0.2), 0 0 30px rgba(108,60,233,0.15)"
-          : "0 8px 32px rgba(0,0,0,0.2)",
-      }}
       {...props}
     >
       {/* Mouse-following border glow */}

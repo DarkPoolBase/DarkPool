@@ -40,9 +40,16 @@ export function GlassCard({
   const content = (
     <motion.div
       ref={cardRef}
-      initial={{ opacity: 0, x: 30, scale: 0.97 }}
+      initial={{ opacity: 0, x: 20, scale: 0.98 }}
       animate={{ opacity: 1, x: 0, scale: 1 }}
-      transition={{ duration: 0.55, delay, ease: [0.25, 0.46, 0.45, 0.94] }}
+      transition={{
+        type: "spring",
+        stiffness: 200,
+        damping: 25,
+        mass: 0.6,
+        delay,
+      }}
+      style={{ willChange: "transform, opacity" }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       className={cn(

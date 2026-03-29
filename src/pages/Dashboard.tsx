@@ -113,7 +113,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="h-[224px]">
+        <div className="h-[180px] md:h-[224px]">
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={portfolioData}>
               <defs>

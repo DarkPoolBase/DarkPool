@@ -101,8 +101,8 @@ const BatchCountdown = () => {
     return () => clearInterval(iv);
   }, []);
   return (
-    <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-mono bg-primary/10 text-primary border border-primary/20">
-      <Timer className="w-2.5 h-2.5" />
+    <span className="inline-flex items-center gap-1 px-2 py-1 rounded text-[9px] font-mono bg-primary/10 text-primary border border-primary/20">
+      <Timer className="w-3 h-3" />
       Clears in {secs}s
     </span>
   );
@@ -117,25 +117,25 @@ const Marketplace = () => {
         {/* Header */}
         <div>
           <h1 className="text-2xl md:text-3xl font-thin tracking-tight text-foreground">Marketplace</h1>
-          <p className="text-sm text-muted-foreground mt-1 font-mono text-[11px]">
+          <p className="text-sm text-muted-foreground mt-2 font-mono text-[11px]">
             Private compute markets · Encrypted order flow · Batch auction execution
           </p>
         </div>
 
         {/* Top Market Stats Row */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <GlassCard delay={0} className="p-5">
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center">
+          <GlassCard delay={0} className="p-4">
+            <div className="flex items-center gap-4">
+              <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
                 <TrendingUp className="w-4 h-4 text-primary" />
               </div>
               <div>
                 <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">Est. Market Price</p>
-                <p className="text-lg font-mono font-semibold text-foreground tabular-nums">$0.19<span className="text-xs text-muted-foreground">/hr</span></p>
+                <p className="text-lg font-mono font-semibold text-foreground tabular-nums mt-1">$0.19<span className="text-xs text-muted-foreground">/hr</span></p>
               </div>
             </div>
-            <div className="mt-3 flex items-center gap-1.5">
-              <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+            <div className="mt-4 flex items-center gap-2">
+              <span className="inline-flex items-center px-2 py-1 rounded text-[9px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
                 ▲ 3.2%
               </span>
               <span className="text-[10px] text-muted-foreground font-mono">vs last epoch</span>
@@ -144,17 +144,17 @@ const Marketplace = () => {
 
           <AuctionTimer />
 
-          <GlassCard delay={0.1} className="p-5">
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center">
+          <GlassCard delay={0.1} className="p-4">
+            <div className="flex items-center gap-4">
+              <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
                 <Shield className="w-4 h-4 text-primary" />
               </div>
               <div>
                 <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">Anonymized Depth</p>
-                <p className="text-lg font-mono font-semibold text-foreground tabular-nums">12,450<span className="text-xs text-muted-foreground ml-1">GPU-hrs</span></p>
+                <p className="text-lg font-mono font-semibold text-foreground tabular-nums mt-1">12,450<span className="text-xs text-muted-foreground ml-1">GPU-hrs</span></p>
               </div>
             </div>
-            <div className="mt-3 h-1.5 rounded-full bg-white/[0.06] overflow-hidden">
+            <div className="mt-4 h-2 rounded-full bg-white/[0.06] overflow-hidden">
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: "72%" }}
@@ -164,18 +164,18 @@ const Marketplace = () => {
             </div>
           </GlassCard>
 
-          <GlassCard delay={0.15} className="p-5">
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center">
+          <GlassCard delay={0.15} className="p-4">
+            <div className="flex items-center gap-4">
+              <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
                 <Users className="w-4 h-4 text-primary" />
               </div>
               <div>
                 <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">Active Providers</p>
-                <p className="text-lg font-mono font-semibold text-foreground tabular-nums">387</p>
+                <p className="text-lg font-mono font-semibold text-foreground tabular-nums mt-1">387</p>
               </div>
             </div>
-            <div className="mt-3 flex items-center gap-1.5">
-              <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+            <div className="mt-4 flex items-center gap-2">
+              <span className="inline-flex items-center px-2 py-1 rounded text-[9px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
                 +12 today
               </span>
             </div>
@@ -186,7 +186,7 @@ const Marketplace = () => {
         <div>
           <div className="flex items-center justify-between mb-4">
             <div>
-              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground block mb-1">Private Compute Markets</span>
+              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground block mb-2">Private Compute Markets</span>
               <p className="text-[11px] text-muted-foreground/60 font-mono">Encrypted bids · Batch auctions · USDC settlement on Base</p>
             </div>
           </div>
@@ -199,10 +199,10 @@ const Marketplace = () => {
                 className="p-0 cursor-pointer group"
                 onClick={() => navigate(`/marketplace/${product.id}`)}
               >
-                <div className="p-5 pb-4">
+                <div className="p-4">
                   {/* Header */}
                   <div className="flex items-start justify-between mb-4">
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-4">
                       <div className="w-10 h-10 rounded-xl bg-primary/[0.08] border border-primary/[0.12] flex items-center justify-center group-hover:bg-primary/[0.14] transition-colors duration-500">
                         <product.icon className="w-5 h-5 text-primary" />
                       </div>
@@ -212,20 +212,20 @@ const Marketplace = () => {
                       </div>
                     </div>
                     {product.badge && (
-                      <span className="px-2 py-0.5 rounded-full text-[9px] font-mono font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                      <span className="px-2 py-1 rounded-full text-[9px] font-mono font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
                         {product.badge.toUpperCase()}
                       </span>
                     )}
                   </div>
 
                   {/* Price & Providers */}
-                  <div className="flex items-end justify-between mb-3">
+                  <div className="flex items-end justify-between mb-4">
                     <div>
-                      <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-muted-foreground mb-0.5">Est. Clearing Price</p>
+                      <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-muted-foreground mb-1">Est. Clearing Price</p>
                       <p className="font-mono text-xl font-semibold text-foreground tabular-nums">{product.price}</p>
                     </div>
                     <div className="text-right">
-                      <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-muted-foreground mb-0.5">Verified Providers</p>
+                      <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-muted-foreground mb-1">Verified Providers</p>
                       <p className="font-mono text-sm text-foreground/70 tabular-nums flex items-center justify-end gap-1">
                         <Shield className="w-3 h-3 text-emerald-400/60" />
                         {product.providers}
@@ -234,7 +234,7 @@ const Marketplace = () => {
                   </div>
 
                   {/* Batch countdown + 24h volume */}
-                  <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center justify-between mb-4">
                     <BatchCountdown />
                     <span className="font-mono text-[9px] text-muted-foreground">
                       24h vol: <span className="text-foreground/60">{product.volume24h}</span>
@@ -242,7 +242,7 @@ const Marketplace = () => {
                   </div>
 
                   {/* Meta */}
-                  <div className="flex items-center gap-2 mb-3 flex-wrap">
+                  <div className="flex items-center gap-2 mb-4 flex-wrap">
                     <span className="px-2 py-1 rounded-lg text-[10px] font-mono bg-white/[0.03] border border-white/[0.06] text-muted-foreground">
                       {product.vram}
                     </span>
@@ -255,13 +255,13 @@ const Marketplace = () => {
                   </div>
 
                   {/* Fill Likelihood bar */}
-                  <div className="space-y-1.5">
+                  <div className="space-y-2">
                     <div className="flex justify-between font-mono text-[10px] items-center">
                       <Tooltip>
                         <TooltipTrigger asChild>
                           <span className="text-muted-foreground flex items-center gap-1 cursor-help">
                             Fill Likelihood
-                            <Info className="w-2.5 h-2.5 text-muted-foreground/50" />
+                            <Info className="w-3 h-3 text-muted-foreground/50" />
                           </span>
                         </TooltipTrigger>
                         <TooltipContent side="top" className="max-w-[200px] text-[10px]">
@@ -290,22 +290,22 @@ const Marketplace = () => {
                 </div>
 
                 {/* Footer CTA — Buy / Sell */}
-                <div className="px-5 py-2.5 border-t border-white/[0.04] flex items-center gap-2 group-hover:bg-white/[0.02] transition-colors duration-500">
+                <div className="px-4 py-2 border-t border-white/[0.04] flex items-center gap-2 group-hover:bg-white/[0.02] transition-colors duration-500">
                   <button
                     onClick={(e) => { e.stopPropagation(); navigate(`/marketplace/${product.id}?side=buy`); }}
-                    className="flex-1 py-1.5 rounded-lg text-[10px] font-mono font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20 transition-colors"
+                    className="flex-1 py-2 rounded-lg text-[10px] font-mono font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20 transition-colors"
                   >
                     Buy
                   </button>
                   <button
                     onClick={(e) => { e.stopPropagation(); navigate(`/marketplace/${product.id}?side=sell`); }}
-                    className="flex-1 py-1.5 rounded-lg text-[10px] font-mono font-medium bg-rose-500/10 text-rose-400 border border-rose-500/20 hover:bg-rose-500/20 transition-colors"
+                    className="flex-1 py-2 rounded-lg text-[10px] font-mono font-medium bg-rose-500/10 text-rose-400 border border-rose-500/20 hover:bg-rose-500/20 transition-colors"
                   >
                     Sell
                   </button>
-                  <div className="ml-auto flex items-center gap-1">
+                  <div className="ml-auto flex items-center gap-2">
                     <span className="font-mono text-[9px] text-muted-foreground group-hover:text-foreground/70 transition-colors">Details</span>
-                    <ArrowRight className="w-3 h-3 text-muted-foreground group-hover:text-primary group-hover:translate-x-0.5 transition-all duration-300" />
+                    <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-0.5 transition-all duration-300" />
                   </div>
                 </div>
               </GlassCard>
@@ -315,24 +315,24 @@ const Marketplace = () => {
 
         {/* Recent Settlements */}
         <GlassCard delay={0.6} className="p-6">
-          <div className="flex items-center justify-between mb-5">
+          <div className="flex items-center justify-between mb-4">
             <div>
-              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground block mb-0.5">Recent Settlements</span>
+              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground block mb-1">Recent Settlements</span>
               <p className="text-[11px] text-muted-foreground/50 font-mono">Anonymized batch auction results</p>
             </div>
             <div className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               <span className="font-mono text-[10px] text-emerald-400/70">Live</span>
             </div>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {recentSettlements.map((s, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.7 + i * 0.08 }}
-                className="p-3.5 rounded-xl bg-white/[0.02] border border-white/[0.04] hover:border-white/[0.08] transition-all duration-300"
+                className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.04] hover:border-white/[0.08] transition-all duration-300"
               >
                 <div className="flex items-center justify-between mb-2">
                   <span className="font-mono text-[10px] font-medium text-foreground/80">{s.pair}</span>
@@ -349,9 +349,9 @@ const Marketplace = () => {
 
         {/* Future Products Teaser */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <GlassCard delay={0.8} className="p-5 opacity-60">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-center">
+          <GlassCard delay={0.8} className="p-6 opacity-60">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.06] flex items-center justify-center">
                 <BarChart3 className="w-4 h-4 text-muted-foreground" />
               </div>
               <div>
@@ -364,9 +364,9 @@ const Marketplace = () => {
             </p>
           </GlassCard>
 
-          <GlassCard delay={0.85} className="p-5 opacity-60">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-center">
+          <GlassCard delay={0.85} className="p-6 opacity-60">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.06] flex items-center justify-center">
                 <Shield className="w-4 h-4 text-muted-foreground" />
               </div>
               <div>

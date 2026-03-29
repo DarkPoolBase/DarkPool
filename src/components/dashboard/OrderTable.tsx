@@ -16,14 +16,14 @@ export function OrderTable() {
 
   return (
     <GlassCard delay={0.2}>
-      <div className="flex items-center justify-between p-5 pb-3">
-        <div className="flex items-center gap-2.5">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+      <div className="flex items-center justify-between p-4 pb-4">
+        <div className="flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
           <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">Recent Orders</span>
         </div>
         <button
           onClick={() => navigate("/orders")}
-          className="font-mono text-[10px] text-violet-400/70 hover:text-violet-400 tracking-wider uppercase transition-all duration-300 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full px-3 py-1 backdrop-blur-md"
+          className="font-mono text-[10px] text-violet-400/70 hover:text-violet-400 tracking-wider uppercase transition-all duration-300 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full px-4 py-2 backdrop-blur-md"
         >
           View All →
         </button>
@@ -48,17 +48,17 @@ export function OrderTable() {
                 className="border-b border-white/5 hover:bg-white/[0.02] cursor-pointer transition-all duration-300 ease-out"
                 onClick={() => navigate("/orders")}
               >
-                <TableCell className="font-mono text-sm text-violet-400 tabular-nums">{order.id}</TableCell>
-                <TableCell>
+                <TableCell className="font-mono text-sm text-violet-400 tabular-nums py-4">{order.id}</TableCell>
+                <TableCell className="py-4">
                   <span className={`text-[10px] font-bold font-mono tracking-widest ${order.side === "BUY" ? "text-emerald-400" : "text-rose-400"}`}>
                     {order.side}
                   </span>
                 </TableCell>
-                <TableCell className="text-sm text-white/70 font-mono">{order.gpu}</TableCell>
-                <TableCell className="font-mono text-sm text-white/60 tabular-nums">{order.qty}</TableCell>
-                <TableCell className="font-mono text-sm text-white/60 tabular-nums">{order.price}</TableCell>
-                <TableCell><OrderStatusBadge status={order.status} /></TableCell>
-                <TableCell className="text-[11px] text-white/30 font-mono">{order.time}</TableCell>
+                <TableCell className="text-sm text-white/70 font-mono py-4">{order.gpu}</TableCell>
+                <TableCell className="font-mono text-sm text-white/60 tabular-nums py-4">{order.qty}</TableCell>
+                <TableCell className="font-mono text-sm text-white/60 tabular-nums py-4">{order.price}</TableCell>
+                <TableCell className="py-4"><OrderStatusBadge status={order.status} /></TableCell>
+                <TableCell className="text-[11px] text-white/30 font-mono py-4">{order.time}</TableCell>
               </TableRow>
             ))}
           </TableBody>

@@ -123,21 +123,21 @@ const ProductDetail = () => {
   const estTotal = (quantity[0] * parseFloat(currentPrice || "0")).toFixed(2);
 
   return (
-    <div className="space-y-6 max-w-[1440px]">
+    <div className="space-y-8 max-w-[1440px]">
       {/* Back nav */}
       <button
         onClick={() => navigate("/marketplace")}
         className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors font-mono text-[11px] group"
       >
-        <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" />
+        <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
         Back to Marketplace
       </button>
 
       {/* Hero */}
       <GlassCard delay={0} glow className="p-6 md:p-8">
-        <div className="flex flex-col lg:flex-row lg:items-start gap-6">
+        <div className="flex flex-col lg:flex-row lg:items-start gap-8">
           <div className="flex-1">
-            <div className="flex items-center gap-3 mb-4">
+            <div className="flex items-center gap-4 mb-4">
               <div className="w-12 h-12 rounded-2xl bg-primary/[0.08] border border-primary/[0.12] flex items-center justify-center">
                 <product.icon className="w-6 h-6 text-primary" />
               </div>
@@ -146,25 +146,25 @@ const ProductDetail = () => {
                 <span className="font-mono text-xs text-primary/70 tracking-wider">{product.label}</span>
               </div>
             </div>
-            <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl mb-6">{product.description}</p>
+            <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl mb-8">{product.description}</p>
 
             {/* Key stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              <div className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.04]">
                 <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">Est. Clearing</p>
-                <p className="font-mono text-lg font-semibold text-foreground tabular-nums mt-0.5">{product.price}</p>
+                <p className="font-mono text-lg font-semibold text-foreground tabular-nums mt-1">{product.price}</p>
               </div>
-              <div className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+              <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.04]">
                 <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">Providers</p>
-                <p className="font-mono text-lg font-semibold text-foreground tabular-nums mt-0.5">{product.providers}</p>
+                <p className="font-mono text-lg font-semibold text-foreground tabular-nums mt-1">{product.providers}</p>
               </div>
-              <div className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+              <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.04]">
                 <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">VRAM</p>
-                <p className="font-mono text-lg font-semibold text-foreground tabular-nums mt-0.5">{product.vram}</p>
+                <p className="font-mono text-lg font-semibold text-foreground tabular-nums mt-1">{product.vram}</p>
               </div>
-              <div className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+              <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.04]">
                 <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">Liquidity</p>
-                <p className={`font-mono text-lg font-semibold tabular-nums mt-0.5 ${
+                <p className={`font-mono text-lg font-semibold tabular-nums mt-1 ${
                   product.availability >= 70 ? "text-emerald-400" : product.availability >= 40 ? "text-amber-400" : "text-rose-400"
                 }`}>{product.availability}%</p>
               </div>
@@ -173,10 +173,10 @@ const ProductDetail = () => {
 
           {/* Workloads */}
           <div className="lg:w-48 shrink-0">
-            <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground mb-3">Use Cases</p>
+            <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground mb-4">Use Cases</p>
             <div className="flex flex-wrap lg:flex-col gap-2">
               {product.workloads.map((w) => (
-                <span key={w} className="px-3 py-1.5 rounded-lg text-[11px] font-mono bg-white/[0.03] border border-white/[0.06] text-muted-foreground">
+                <span key={w} className="px-4 py-2 rounded-lg text-[11px] font-mono bg-white/[0.03] border border-white/[0.06] text-muted-foreground">
                   {w}
                 </span>
               ))}
@@ -185,9 +185,9 @@ const ProductDetail = () => {
         </div>
       </GlassCard>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {/* Left column: Charts */}
-        <div className="lg:col-span-2 space-y-5">
+        <div className="lg:col-span-2 space-y-4">
           {/* Price History */}
           <GlassCard delay={0.1} className="p-6">
             <div className="flex items-center justify-between mb-4">
@@ -250,18 +250,18 @@ const ProductDetail = () => {
           {/* Provider Quality */}
           <GlassCard delay={0.3} className="p-6">
             <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground block mb-4">Provider Quality</span>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {product.benchmarks.map((b, i) => (
                 <motion.div
                   key={b.label}
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 0.4 + i * 0.08 }}
-                  className="p-3.5 rounded-xl bg-white/[0.02] border border-white/[0.04] text-center"
+                  className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.04] text-center"
                 >
                   <b.icon className="w-4 h-4 text-primary mx-auto mb-2" />
                   <p className="font-mono text-sm font-semibold text-foreground tabular-nums">{b.value}</p>
-                  <p className="font-mono text-[9px] text-muted-foreground mt-0.5">{b.label}</p>
+                  <p className="font-mono text-[9px] text-muted-foreground mt-1">{b.label}</p>
                 </motion.div>
               ))}
             </div>
@@ -272,7 +272,7 @@ const ProductDetail = () => {
             <div className="flex items-center justify-between mb-4">
               <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Recent Settlements</span>
               <div className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                 <span className="font-mono text-[10px] text-emerald-400/70">Live</span>
               </div>
             </div>
@@ -280,10 +280,10 @@ const ProductDetail = () => {
               {settlements.map((s, i) => (
                 <motion.div
                   key={s.id}
-                  initial={{ opacity: 0, x: -10 }}
+                  initial={{ opacity: 0, x: -8 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.3, delay: 0.4 + i * 0.06 }}
-                  className="flex items-center justify-between p-3 rounded-xl bg-white/[0.02] border border-white/[0.04] hover:border-white/[0.08] transition-all"
+                  className="flex items-center justify-between p-4 rounded-xl bg-white/[0.02] border border-white/[0.04] hover:border-white/[0.08] transition-all"
                 >
                   <span className="font-mono text-[11px] text-primary/60">{s.id}</span>
                   <span className="font-mono text-[11px] text-muted-foreground">{s.qty}</span>
@@ -305,13 +305,13 @@ const ProductDetail = () => {
               ].map((item, i) => (
                 <motion.div
                   key={item.title}
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 0.5 + i * 0.1 }}
                   className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.04]"
                 >
-                  <item.icon className="w-5 h-5 text-primary mb-3" />
-                  <h4 className="text-sm font-medium text-foreground mb-1.5">{item.title}</h4>
+                  <item.icon className="w-5 h-5 text-primary mb-4" />
+                  <h4 className="text-sm font-medium text-foreground mb-2">{item.title}</h4>
                   <p className="text-[11px] text-muted-foreground leading-relaxed">{item.desc}</p>
                 </motion.div>
               ))}
@@ -320,8 +320,8 @@ const ProductDetail = () => {
         </div>
 
         {/* Right column: Order ticket */}
-        <div className="space-y-5">
-          <GlassCard delay={0.15} glow className="p-6 space-y-5 sticky top-6">
+        <div className="space-y-4">
+          <GlassCard delay={0.15} glow className="p-6 space-y-4 sticky top-8">
             <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground block">Private Order</span>
 
             {/* Buy/Sell toggle */}
@@ -337,31 +337,31 @@ const ProductDetail = () => {
                 }}
               />
               <button
-                className={`flex-1 py-2.5 text-sm font-bold tracking-wider relative z-10 transition-colors ${side === "buy" ? "text-emerald-400" : "text-muted-foreground"}`}
+                className={`flex-1 py-2 text-sm font-bold tracking-wider relative z-10 transition-colors ${side === "buy" ? "text-emerald-400" : "text-muted-foreground"}`}
                 onClick={() => setSide("buy")}
               >BUY</button>
               <button
-                className={`flex-1 py-2.5 text-sm font-bold tracking-wider relative z-10 transition-colors ${side === "sell" ? "text-rose-400" : "text-muted-foreground"}`}
+                className={`flex-1 py-2 text-sm font-bold tracking-wider relative z-10 transition-colors ${side === "sell" ? "text-rose-400" : "text-muted-foreground"}`}
                 onClick={() => setSide("sell")}
               >SELL</button>
             </div>
 
-            <div className="space-y-1.5">
+            <div className="space-y-2">
               <SectionLabel>GPU Type</SectionLabel>
-              <div className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.06] font-mono text-sm text-foreground/80">
+              <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] font-mono text-sm text-foreground/80">
                 {product.name} · {product.vram}
               </div>
             </div>
 
-            <div className="space-y-1.5">
+            <div className="space-y-2">
               <SectionLabel>Quantity (GPU-hours): <span className="text-foreground/70">{quantity[0]}</span></SectionLabel>
               <Slider value={quantity} onValueChange={setQuantity} min={1} max={168} step={1} />
-              <div className="flex gap-1.5 mt-2">
+              <div className="flex gap-2 mt-2">
                 {[24, 48, 72, 168].map((v) => (
                   <button
                     key={v}
                     onClick={() => setQuantity([v])}
-                    className={`text-[10px] font-mono px-2.5 py-1 rounded-lg border transition-all duration-300 ${
+                    className={`text-[10px] font-mono px-2 py-1 rounded-lg border transition-all duration-300 ${
                       quantity[0] === v
                         ? "border-primary/40 text-primary bg-primary/10"
                         : "border-white/[0.06] text-muted-foreground hover:border-white/10 hover:text-foreground/60"
@@ -371,7 +371,7 @@ const ProductDetail = () => {
               </div>
             </div>
 
-            <div className="space-y-1.5">
+            <div className="space-y-2">
               <SectionLabel>Duration</SectionLabel>
               <Select value={duration} onValueChange={setDuration}>
                 <SelectTrigger className="border-white/[0.06] bg-white/[0.02] hover:border-white/[0.12] transition-colors">
@@ -386,7 +386,7 @@ const ProductDetail = () => {
               </Select>
             </div>
 
-            <div className="space-y-1.5">
+            <div className="space-y-2">
               <SectionLabel>{side === "buy" ? "Max Price" : "Min Price"} (USDC / GPU-hr)</SectionLabel>
               <Input
                 value={currentPrice}
@@ -398,12 +398,12 @@ const ProductDetail = () => {
               />
             </div>
 
-            <div className="flex items-center justify-between py-3 border-t border-white/[0.06]">
+            <div className="flex items-center justify-between py-4 border-t border-white/[0.06]">
               <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Est. Total</span>
               <span className="font-mono text-lg font-semibold text-foreground">${estTotal} <span className="text-xs text-muted-foreground">USDC</span></span>
             </div>
 
-            <Button className="w-full gap-2 bg-gradient-to-r from-primary to-[hsl(258,78%,65%)] hover:from-primary/90 hover:to-[hsl(258,78%,60%)] shadow-[0_0_20px_rgba(108,60,233,0.3)] hover:shadow-[0_0_30px_rgba(108,60,233,0.5)] transition-all duration-300 border-0 h-11">
+            <Button className="w-full gap-2 bg-gradient-to-r from-primary to-[hsl(258,78%,65%)] hover:from-primary/90 hover:to-[hsl(258,78%,60%)] shadow-[0_0_20px_rgba(108,60,233,0.3)] hover:shadow-[0_0_30px_rgba(108,60,233,0.5)] transition-all duration-300 border-0 h-12">
               <Lock className="h-4 w-4" />
               Submit Encrypted Order
             </Button>

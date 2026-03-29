@@ -39,12 +39,12 @@ const Analytics = () => {
   const [timeframe, setTimeframe] = useState("1W");
 
   return (
-    <div className="space-y-8 max-w-[1400px] relative">
+    <div className="space-y-8 max-w-[1440px] relative">
       <GlowBlob className="-top-20 right-0 opacity-30" color="purple" size="lg" />
 
       <div>
-        <h1 className="text-2xl font-semibold text-gradient">Analytics</h1>
-        <p className="text-sm text-white/40 mt-1">Market intelligence and price trends</p>
+        <h1 className="text-2xl md:text-3xl font-thin tracking-tight text-foreground">Analytics</h1>
+        <p className="text-sm text-muted-foreground mt-2 font-mono text-[11px]">Market intelligence and price trends</p>
       </div>
 
       {/* Price Chart */}
@@ -56,7 +56,7 @@ const Analytics = () => {
               <button
                 key={tf}
                 onClick={() => setTimeframe(tf)}
-                className={`relative px-3 py-1 text-[10px] font-mono tracking-wider rounded-md transition-all duration-300 ${
+                className={`relative px-4 py-2 text-[10px] font-mono tracking-wider rounded-md transition-all duration-300 ${
                   timeframe === tf ? "text-white" : "text-white/40 hover:text-white/60"
                 }`}
               >
@@ -72,7 +72,7 @@ const Analytics = () => {
             ))}
           </div>
         </div>
-        <div className="h-[300px]">
+        <div className="h-[296px]">
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={priceData}>
               <defs>
@@ -103,13 +103,13 @@ const Analytics = () => {
         </div>
       </GlassCard>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Market Stats */}
-        <GlassCard delay={0.2} corners className="p-6 space-y-4">
+        <GlassCard delay={0.2} corners className="p-6">
           <SectionLabel pulse>Market Statistics</SectionLabel>
-          <div className="space-y-1">
+          <div className="mt-4 space-y-0">
             {stats.map(({ label, value }) => (
-              <div key={label} className="flex justify-between py-2.5 border-b border-white/[0.04] last:border-0 group hover:bg-white/[0.01] -mx-2 px-2 rounded-lg transition-colors">
+              <div key={label} className="flex justify-between py-4 border-b border-white/[0.04] last:border-0 group hover:bg-white/[0.01] -mx-2 px-2 rounded-lg transition-colors">
                 <span className="text-xs text-white/40">{label}</span>
                 <span className="font-mono text-xs text-white/70">{value}</span>
               </div>
@@ -118,24 +118,26 @@ const Analytics = () => {
         </GlassCard>
 
         {/* Utilization */}
-        <GlassCard delay={0.3} corners className="p-6 space-y-5">
+        <GlassCard delay={0.3} corners className="p-6">
           <SectionLabel>GPU Utilization by Type</SectionLabel>
-          {utilizationData.map((gpu, i) => (
-            <div key={gpu.name} className="space-y-2">
-              <div className="flex justify-between items-center">
-                <span className="text-xs text-white/60">{gpu.name}</span>
-                <AnimatedNumber value={gpu.value} suffix="%" className="font-mono text-xs text-white/40" />
+          <div className="mt-4 space-y-6">
+            {utilizationData.map((gpu, i) => (
+              <div key={gpu.name} className="space-y-2">
+                <div className="flex justify-between items-center">
+                  <span className="text-xs text-white/60">{gpu.name}</span>
+                  <AnimatedNumber value={gpu.value} suffix="%" className="font-mono text-xs text-white/40" />
+                </div>
+                <div className="w-full h-2 rounded-full bg-white/[0.04] overflow-hidden">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: `${gpu.value}%` }}
+                    transition={{ duration: 1.2, delay: 0.4 + i * 0.15, ease: "easeOut" }}
+                    className={`h-full rounded-full bg-gradient-to-r ${gpu.color}`}
+                  />
+                </div>
               </div>
-              <div className="w-full h-2 rounded-full bg-white/[0.04] overflow-hidden">
-                <motion.div
-                  initial={{ width: 0 }}
-                  animate={{ width: `${gpu.value}%` }}
-                  transition={{ duration: 1.2, delay: 0.4 + i * 0.15, ease: "easeOut" }}
-                  className={`h-full rounded-full bg-gradient-to-r ${gpu.color}`}
-                />
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </GlassCard>
       </div>
     </div>

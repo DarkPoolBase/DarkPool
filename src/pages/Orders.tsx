@@ -31,10 +31,10 @@ const Orders = () => {
   };
 
   return (
-    <div className="space-y-8 max-w-[1400px]">
+    <div className="space-y-8 max-w-[1440px]">
       <div>
-        <h1 className="text-2xl font-semibold text-gradient">Orders</h1>
-        <p className="text-sm text-white/40 mt-1">Manage and review all your orders</p>
+        <h1 className="text-2xl md:text-3xl font-thin tracking-tight text-foreground">Orders</h1>
+        <p className="text-sm text-muted-foreground mt-2 font-mono text-[11px]">Manage and review all your orders</p>
       </div>
 
       <div className="flex gap-2 flex-wrap">
@@ -76,29 +76,29 @@ const Orders = () => {
                   className="border-white/[0.04] hover:bg-white/[0.02] cursor-pointer transition-colors duration-300"
                   onClick={() => setExpandedId(expandedId === order.id ? null : order.id)}
                 >
-                  <TableCell>
+                  <TableCell className="py-4">
                     {expandedId === order.id
-                      ? <ChevronDown className="h-3.5 w-3.5 text-primary/60" />
-                      : <ChevronRight className="h-3.5 w-3.5 text-white/20" />
+                      ? <ChevronDown className="h-4 w-4 text-primary/60" />
+                      : <ChevronRight className="h-4 w-4 text-white/20" />
                     }
                   </TableCell>
-                  <TableCell className="font-mono text-sm text-primary">{order.id}</TableCell>
-                  <TableCell>
+                  <TableCell className="font-mono text-sm text-primary py-4">{order.id}</TableCell>
+                  <TableCell className="py-4">
                     <span className={`text-xs font-bold tracking-wider ${order.side === "BUY" ? "text-success" : "text-destructive"}`}>{order.side}</span>
                   </TableCell>
-                  <TableCell className="text-sm text-white/70">{order.gpu}</TableCell>
-                  <TableCell className="font-mono text-sm text-white/70">{order.qty}</TableCell>
-                  <TableCell className="font-mono text-sm text-white/70">{order.price}</TableCell>
-                  <TableCell><OrderStatusBadge status={order.status} /></TableCell>
-                  <TableCell>
+                  <TableCell className="text-sm text-white/70 py-4">{order.gpu}</TableCell>
+                  <TableCell className="font-mono text-sm text-white/70 py-4">{order.qty}</TableCell>
+                  <TableCell className="font-mono text-sm text-white/70 py-4">{order.price}</TableCell>
+                  <TableCell className="py-4"><OrderStatusBadge status={order.status} /></TableCell>
+                  <TableCell className="py-4">
                     {order.status === "ACTIVE" && (
-                      <div className="flex gap-1">
-                        <Button variant="outline" size="sm" className="text-[10px] h-7 border-white/[0.06] bg-transparent hover:bg-white/[0.04] text-white/50">Cancel</Button>
-                        <Button variant="outline" size="sm" className="text-[10px] h-7 border-white/[0.06] bg-transparent hover:bg-white/[0.04] text-white/50">Modify</Button>
+                      <div className="flex gap-2">
+                        <Button variant="outline" size="sm" className="text-[10px] h-8 border-white/[0.06] bg-transparent hover:bg-white/[0.04] text-white/50">Cancel</Button>
+                        <Button variant="outline" size="sm" className="text-[10px] h-8 border-white/[0.06] bg-transparent hover:bg-white/[0.04] text-white/50">Modify</Button>
                       </div>
                     )}
                     {order.status === "FILLED" && (
-                      <Button variant="outline" size="sm" className="text-[10px] h-7 border-white/[0.06] bg-transparent hover:bg-white/[0.04] text-white/50">Details</Button>
+                      <Button variant="outline" size="sm" className="text-[10px] h-8 border-white/[0.06] bg-transparent hover:bg-white/[0.04] text-white/50">Details</Button>
                     )}
                   </TableCell>
                 </TableRow>
@@ -113,25 +113,25 @@ const Orders = () => {
                           transition={{ duration: 0.3 }}
                           className="overflow-hidden"
                         >
-                          <div className="p-5 bg-primary/[0.02] border-l-2 border-l-primary/30 space-y-1.5">
+                          <div className="p-6 bg-primary/[0.02] border-l-2 border-l-primary/30 space-y-2">
                             {[
                               ["Submitted", order.submitted],
                               ["Filled", order.filled],
                               ["Clearing Price", order.clearing],
                               ["Total Paid", order.total],
                             ].map(([label, val]) => (
-                              <p key={label} className="flex gap-3 text-xs">
-                                <span className="text-white/30 w-28 shrink-0">{label}</span>
+                              <p key={label} className="flex gap-4 text-xs">
+                                <span className="text-white/30 w-32 shrink-0">{label}</span>
                                 <span className="font-mono text-white/60">{val}</span>
                               </p>
                             ))}
-                            <p className="flex gap-3 text-xs">
-                              <span className="text-white/30 w-28 shrink-0">Transaction</span>
+                            <p className="flex gap-4 text-xs">
+                              <span className="text-white/30 w-32 shrink-0">Transaction</span>
                               <span className="font-mono text-primary">{order.tx}</span>
                             </p>
                             {order.access && (
-                              <p className="flex gap-3 text-xs">
-                                <span className="text-white/30 w-28 shrink-0">Compute Access</span>
+                              <p className="flex gap-4 text-xs">
+                                <span className="text-white/30 w-32 shrink-0">Compute Access</span>
                                 <span className="font-mono text-primary">{order.access}</span>
                               </p>
                             )}

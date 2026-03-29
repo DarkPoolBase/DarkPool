@@ -25,16 +25,16 @@ export function StatsCard({ icon: Icon, label, value, change, changeType = "neut
 
   return (
     <GlassCard glow={glow} delay={delay} className="p-0">
-      <div className="p-5 pb-0">
-        <div className="flex items-center justify-between mb-3">
+      <div className="p-4 pb-0">
+        <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-white/[0.04] border border-white/[0.06] flex items-center justify-center">
-              <Icon className={`h-3.5 w-3.5 ${glow ? "text-violet-400" : "text-white/30"}`} />
+            <div className="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.06] flex items-center justify-center">
+              <Icon className={`h-4 w-4 ${glow ? "text-violet-400" : "text-white/30"}`} />
             </div>
             <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">{label}</span>
           </div>
           {change && (
-            <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium font-mono ${
+            <span className={`inline-flex items-center px-2 py-1 rounded-full text-[10px] font-medium font-mono ${
               changeType === "positive"
                 ? "bg-emerald-500/10 text-emerald-400"
                 : changeType === "negative"
@@ -61,7 +61,7 @@ export function StatsCard({ icon: Icon, label, value, change, changeType = "neut
 
       {/* Sparkline fills the bottom of the card */}
       {sparkData && (
-        <div className="mt-3 px-1 -mb-px">
+        <div className="mt-4 px-1 -mb-px">
           <SparklineChart data={sparkData} color={sparkColor || "rgb(139, 92, 246)"} width={280} height={48} />
         </div>
       )}

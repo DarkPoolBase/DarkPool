@@ -254,8 +254,8 @@ const Marketplace = () => {
                     </span>
                   </div>
 
-                  {/* Fill Likelihood bar */}
-                  <div className="space-y-2">
+                  {/* Fill Likelihood bar — pushed to bottom */}
+                  <div className="space-y-2 mt-auto pt-4">
                     <div className="flex justify-between font-mono text-[10px] items-center">
                       <Tooltip>
                         <TooltipTrigger asChild>

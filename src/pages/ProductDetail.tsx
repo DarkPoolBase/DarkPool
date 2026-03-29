@@ -231,7 +231,7 @@ const ProductDetail = () => {
           </div>
 
           {/* 3-column form grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-7">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Col 1: GPU Type */}
             <div className="flex flex-col gap-3">
               <SectionLabel>GPU Type</SectionLabel>

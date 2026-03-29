@@ -31,7 +31,7 @@ const Orders = () => {
   };
 
   return (
-    <div className="space-y-8 max-w-[1200px]">
+    <div className="space-y-6 max-w-6xl">
       <div>
         <h1 className="text-2xl md:text-3xl font-thin tracking-tight text-foreground">Orders</h1>
         <p className="text-sm text-muted-foreground mt-2 font-mono text-[11px]">Manage and review all your orders</p>

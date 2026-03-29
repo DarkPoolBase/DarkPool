@@ -103,7 +103,7 @@ const Analytics = () => {
         </div>
       </GlassCard>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Market Stats */}
         <GlassCard delay={0.2} className="p-6">
           <SectionLabel pulse>Market Statistics</SectionLabel>

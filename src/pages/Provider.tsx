@@ -210,7 +210,7 @@ const Provider = () => {
           </GlassCard>
 
           {/* ─── Section 3: Earnings & Performance ─── */}
-          <GlassCard delay={0.3} glow className="p-7">
+          <GlassCard delay={0.3} glow className="p-6">
             <div className="flex flex-col gap-6">
               <SectionLabel pulse>Earnings & Performance</SectionLabel>
 

@@ -154,7 +154,7 @@ const Provider = () => {
               </div>
 
               {/* GPU identity */}
-              <div className="flex items-center gap-4 rounded-xl bg-white/[0.02] border border-white/[0.06] p-4">
+              <div className="flex items-center gap-4 rounded-xl bg-white/[0.03] p-4">
                 <div className="h-10 w-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center">
                   <Cpu className="h-5 w-5 text-primary" />
                 </div>

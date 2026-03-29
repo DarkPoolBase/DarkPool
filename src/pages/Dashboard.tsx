@@ -23,13 +23,45 @@ const portfolioData = [
 ];
 
 const Dashboard = () => {
+  const [tab, setTab] = useState<"overview" | "savings">("overview");
+
   return (
     <div className="space-y-8 max-w-[1440px] relative">
       {/* Header */}
-      <div>
-        <h1 className="text-2xl md:text-3xl font-thin tracking-tight text-white">Dashboard</h1>
-        <p className="text-sm text-white/30 mt-2 font-mono text-[11px]">Portfolio overview · Market activity · GPU compute</p>
+      <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+        <div>
+          <h1 className="text-2xl md:text-3xl font-thin tracking-tight text-white">Dashboard</h1>
+          <p className="text-sm text-white/30 mt-2 font-mono text-[11px]">Portfolio overview · Market activity · GPU compute</p>
+        </div>
+        <div className="flex gap-1 p-1 bg-white/[0.03] border border-white/[0.06] rounded-lg">
+          <button
+            onClick={() => setTab("overview")}
+            className={`px-4 py-2 text-[10px] font-mono uppercase tracking-wider rounded-md transition-all duration-300 ${
+              tab === "overview"
+                ? "text-white bg-white/[0.06] border border-white/10"
+                : "text-white/30 border border-transparent hover:text-white/60"
+            }`}
+          >
+            Overview
+          </button>
+          <button
+            onClick={() => setTab("savings")}
+            className={`px-4 py-2 text-[10px] font-mono uppercase tracking-wider rounded-md transition-all duration-300 flex items-center gap-1.5 ${
+              tab === "savings"
+                ? "text-white bg-white/[0.06] border border-white/10"
+                : "text-white/30 border border-transparent hover:text-white/60"
+            }`}
+          >
+            <Calculator className="w-3 h-3" />
+            Savings Calculator
+          </button>
+        </div>
       </div>
+
+      {tab === "savings" ? (
+        <SavingsCalculator />
+      ) : (
+        <>
 
       {/* Stats Row — 8pt gap */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

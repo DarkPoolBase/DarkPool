@@ -241,7 +241,7 @@ const ProductDetail = () => {
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 0.4 + i * 0.08 }}
-                  className="p-4 rounded-xl bg-white/[0.02] text-center"
+                  className="p-4 rounded-xl bg-white/[0.03] text-center"
                 >
                   <b.icon className="w-4 h-4 text-primary mx-auto mb-2" />
                   <p className="font-mono text-sm font-semibold text-foreground tabular-nums">{b.value}</p>

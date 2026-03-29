@@ -13,10 +13,10 @@ const feedItems = [
 export function LiveFeed() {
   return (
     <GlassCard delay={0.4} className="h-full">
-      <div className="flex items-center gap-2.5 p-5 pb-3">
-        <span className="relative flex h-1.5 w-1.5">
+      <div className="flex items-center gap-2 p-4">
+        <span className="relative flex h-2 w-2">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-          <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400" />
+          <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
         </span>
         <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">Live Batch Settlements</span>
       </div>
@@ -28,13 +28,13 @@ export function LiveFeed() {
               initial={{ opacity: 0, x: -12 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: i * 0.08, duration: 0.4, ease: "easeOut" }}
-              className={`px-5 py-3.5 transition-all duration-300 ease-out hover:bg-white/[0.02] ${
+              className={`px-4 py-4 transition-all duration-300 ease-out hover:bg-white/[0.02] ${
                 item.highlight
                   ? "border-l-2 border-l-violet-500/60 bg-violet-500/[0.03]"
                   : ""
               }`}
             >
-              <div className="flex items-center justify-between mb-1">
+              <div className="flex items-center justify-between mb-2">
                 <span className={`font-medium text-xs ${item.highlight ? "text-violet-400" : "text-white/60"}`}>
                   {item.title}
                 </span>

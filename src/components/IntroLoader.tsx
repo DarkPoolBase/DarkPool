@@ -102,7 +102,7 @@ export const IntroLoader = ({ onComplete }: IntroLoaderProps) => {
                 <div className="w-[10px] h-[10px] rounded-full bg-white/[0.06]" />
               </div>
               <span className="font-mono text-[10px] text-white/15 tracking-[0.15em] ml-2">
-                aero — bash — 80×24
+                darkpool — bash — 80×24
               </span>
             </div>
 

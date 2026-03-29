@@ -203,11 +203,11 @@ const ProductDetail = () => {
       </GlassCard>
 
       {/* Order Ticket — redesigned */}
-      <GlassCard delay={0.15} glow className="p-6 space-y-6">
+      <GlassCard delay={0.15} glow className="p-8 space-y-8">
         <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground block">Private Order</span>
 
         {/* Full-width Buy/Sell toggle */}
-        <div className="flex rounded-xl border border-white/[0.06] overflow-hidden bg-white/[0.02] relative">
+        <div className="flex rounded-xl border border-white/[0.06] overflow-hidden bg-white/[0.02] relative mt-1">
           <motion.div
             className="absolute inset-y-0 w-1/2 rounded-xl"
             animate={{ x: side === "sell" ? "100%" : "0%" }}

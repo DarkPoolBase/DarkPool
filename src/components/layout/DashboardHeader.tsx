@@ -39,7 +39,7 @@ export function DashboardHeader() {
 
   return (
     <>
-      <header className="h-[68px] flex items-center justify-between border-b border-white/[0.06] px-4 shrink-0 backdrop-blur-xl bg-[#030305]/80 relative z-20">
+      <header className="h-[56px] md:h-[68px] flex items-center justify-between border-b border-white/[0.06] px-3 md:px-4 shrink-0 backdrop-blur-xl bg-[#030305]/80 relative z-20">
         <div className="flex items-center gap-3">
           <SidebarTrigger className="text-white/30 hover:text-white/70 transition-colors duration-300" />
           <div className="flex items-center gap-2 px-3 py-1 rounded-full border border-white/5 bg-white/[0.02] backdrop-blur-md">

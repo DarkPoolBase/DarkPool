@@ -1052,7 +1052,36 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
 
-        // Sequence Loading Animations
+        // Magic Scroll Reveal Text
+        (function() {
+          var el = document.getElementById('magic-reveal-text');
+          if (!el) return;
+          var text = el.textContent.trim();
+          el.innerHTML = '';
+          var words = text.split(/\s+/);
+          words.forEach(function(word) {
+            var span = document.createElement('span');
+            span.className = 'magic-word';
+            span.style.cssText = 'display:inline-block; margin-right:0.25em; opacity:0.12; transition:none;';
+            span.textContent = word;
+            el.appendChild(span);
+          });
+
+          gsap.registerPlugin(ScrollTrigger);
+          var wordEls = el.querySelectorAll('.magic-word');
+          gsap.to(wordEls, {
+            opacity: 1,
+            stagger: 0.03,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: '#scroll-reveal-tagline',
+              start: 'top 80%',
+              end: 'bottom 40%',
+              scrub: 0.5
+            }
+          });
+        })();
+
         const seqLines = document.querySelectorAll('.seq-line');
         let seqDelay = 500;
         seqLines.forEach((line) => {

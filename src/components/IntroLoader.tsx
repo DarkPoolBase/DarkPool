@@ -110,7 +110,7 @@ export const IntroLoader = ({ onComplete }: IntroLoaderProps) => {
             <div className="rounded-lg border border-white/[0.06] bg-white/[0.01] p-5">
               {/* Prompt header */}
               <div className="font-mono text-[10px] text-white/20 tracking-[0.2em] uppercase mb-4 pb-3 border-b border-white/[0.04]">
-                aero@node-0x7a3b ~ boot
+                darkpool@node-0x7a3b ~ boot
               </div>
 
               {/* Status lines */}

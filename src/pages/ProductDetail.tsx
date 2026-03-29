@@ -235,7 +235,7 @@ const ProductDetail = () => {
             {/* Col 1: GPU Type */}
             <div className="flex flex-col gap-3">
               <SectionLabel>GPU Type</SectionLabel>
-              <div className="p-5 rounded-xl bg-white/[0.02] border border-white/[0.06] flex-1 flex flex-col justify-center">
+              <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] flex-1 flex flex-col justify-center">
                 <p className="font-mono text-sm font-medium text-foreground">{product.name}</p>
                 <p className="font-mono text-xs text-muted-foreground mt-2">{product.vram} · Spot Market</p>
               </div>

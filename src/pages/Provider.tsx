@@ -21,7 +21,7 @@ const Provider = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
         {/* ─── Section 1: Register GPU ─── */}
-        <GlassCard gradient delay={0.1} className="p-7">
+        <GlassCard delay={0.1} className="p-7">
           <div className="flex flex-col gap-6">
             <SectionLabel>Register GPU</SectionLabel>
 

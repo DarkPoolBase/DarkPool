@@ -281,7 +281,7 @@ const ProductDetail = () => {
           {/* Privacy section */}
           <GlassCard delay={0.4} className="p-6">
             <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground block mb-4">Privacy & Fair Execution</span>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               {[
                 { icon: Lock, title: "Encrypted Order Flow", desc: "All bids and asks are encrypted. No participant — including the platform — can see raw order data before settlement." },
                 { icon: Shield, title: "Provable Fairness", desc: "ZK proofs verify that batch auctions produce fair clearing prices without revealing individual orders." },

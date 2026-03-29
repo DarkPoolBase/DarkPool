@@ -2094,20 +2094,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
       <section class="flex flex-col gap-8 w-full mt-24 gap-x-8 gap-y-8" id="quant-analytics">
   <!-- Unified Header with Tab Switcher -->
-  <div class="flex border-white/5 border-b pb-4 items-center justify-between">
-    <div class="flex items-center gap-4">
-      <span class="font-mono text-[11px] tracking-[0.3em] text-white/30 uppercase">05</span>
-      <div id="merged-dot" class="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse shadow-[0_0_12px_rgba(52,211,153,0.8)] transition-all duration-700"></div>
+  <div class="flex flex-col md:flex-row border-white/5 border-b pb-4 gap-4 md:items-center md:justify-between">
+    <div class="flex items-center gap-3 flex-wrap">
+      <span class="font-mono text-[11px] tracking-[0.3em] text-white/30 uppercase shrink-0">05</span>
+      <div id="merged-dot" class="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse shadow-[0_0_12px_rgba(52,211,153,0.8)] transition-all duration-700 shrink-0"></div>
       <div class="flex items-center gap-1 bg-white/[0.03] border border-white/[0.06] rounded-lg p-0.5">
-        <button id="tab-protocol" onclick="switchMergedTab('protocol')" class="px-3 py-1.5 text-[10px] font-['JetBrains_Mono'] uppercase tracking-widest rounded-md transition-all duration-500 bg-white/[0.06] text-white/70">Protocol Architecture</button>
-        <button id="tab-network" onclick="switchMergedTab('network')" class="px-3 py-1.5 text-[10px] font-['JetBrains_Mono'] uppercase tracking-widest rounded-md transition-all duration-500 text-white/25 hover:text-white/40">Network Infrastructure</button>
+        <button id="tab-protocol" onclick="switchMergedTab('protocol')" class="px-2 md:px-3 py-1.5 text-[9px] md:text-[10px] font-['JetBrains_Mono'] uppercase tracking-widest rounded-md transition-all duration-500 bg-white/[0.06] text-white/70 whitespace-nowrap">Protocol</button>
+        <button id="tab-network" onclick="switchMergedTab('network')" class="px-2 md:px-3 py-1.5 text-[9px] md:text-[10px] font-['JetBrains_Mono'] uppercase tracking-widest rounded-md transition-all duration-500 text-white/25 hover:text-white/40 whitespace-nowrap">Network</button>
       </div>
     </div>
     <div class="flex items-center gap-4">
       <div id="merged-right-label" class="text-xs font-['JetBrains_Mono'] text-emerald-400/80 uppercase tracking-widest hidden md:flex items-center gap-2 transition-all duration-500">
         ZK // COMMIT_REVEAL
       </div>
-      <!-- Progress bar for auto-cycle -->
       <div class="hidden md:block w-20 h-[2px] bg-white/5 rounded-full overflow-hidden">
         <div id="merged-progress" class="h-full bg-gradient-to-r from-violet-500/60 to-emerald-400/60 rounded-full transition-none" style="width: 0%;"></div>
       </div>

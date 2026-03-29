@@ -1,4 +1,5 @@
-import { DollarSign, BarChart3, CheckCircle, Zap, TrendingUp } from "lucide-react";
+import { useState } from "react";
+import { DollarSign, BarChart3, CheckCircle, Zap, TrendingUp, Calculator } from "lucide-react";
 import { StatsCard } from "@/components/dashboard/StatsCard";
 import { OrderTable } from "@/components/dashboard/OrderTable";
 import { QuickActions } from "@/components/dashboard/QuickActions";
@@ -6,6 +7,7 @@ import { LiveFeed } from "@/components/dashboard/LiveFeed";
 import { AuctionTimer } from "@/components/dashboard/AuctionTimer";
 import { AnimatedNumber } from "@/components/ui/animated-number";
 import { GlassCard } from "@/components/ui/glass-card";
+import { SavingsCalculator } from "@/components/dashboard/SavingsCalculator";
 import { AreaChart, Area, ResponsiveContainer, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
 
 const portfolioData = [

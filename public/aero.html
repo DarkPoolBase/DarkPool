@@ -222,13 +222,6 @@ gtag('config', 'G-2M6V79H761');
   </article>
 </section>
 
-<!-- Matrix Text: DARKPOOL -->
-<section class="z-10 w-full py-16 md:py-24 relative" id="matrix-text-section">
-  <div class="max-w-7xl mx-auto px-6 flex items-center justify-center">
-    <div id="matrix-text" class="font-mono text-5xl md:text-7xl lg:text-8xl font-bold tracking-[0.15em] text-white/90 select-none" style="font-family:'JetBrains Mono',monospace;"></div>
-  </div>
-</section>
-
 <!-- Scroll Reveal Tagline -->
 <section class="z-10 w-full py-24 md:py-40 relative" id="scroll-reveal-tagline">
   <div class="max-w-7xl mx-auto px-6">
@@ -1058,55 +1051,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         }
-
-        // Matrix Text Animation — DARKPOOL
-        (function() {
-          var el = document.getElementById('matrix-text');
-          if (!el) return;
-          var word = 'DARKPOOL';
-          var purple = '#a855f7';
-          var white = 'rgba(255,255,255,0.9)';
-          // Create letter spans
-          el.innerHTML = '';
-          for (var i = 0; i < word.length; i++) {
-            var span = document.createElement('span');
-            span.textContent = word[i];
-            span.style.display = 'inline-block';
-            span.style.transition = 'color 0.3s, text-shadow 0.3s';
-            span.dataset.final = word[i];
-            el.appendChild(span);
-          }
-          var spans = el.querySelectorAll('span');
-          function getRand() { return Math.random() > 0.5 ? '1' : '0'; }
-
-          // Use IntersectionObserver to trigger once visible
-          var triggered = false;
-          var obs = new IntersectionObserver(function(entries) {
-            if (entries[0].isIntersecting && !triggered) {
-              triggered = true;
-              obs.disconnect();
-              var idx = 0;
-              function animNext() {
-                if (idx >= spans.length) return;
-                var s = spans[idx];
-                s.textContent = getRand();
-                s.style.color = purple;
-                s.style.textShadow = '0 2px 8px rgba(168,85,247,0.5)';
-                (function(sp, fi) {
-                  setTimeout(function() {
-                    sp.textContent = fi;
-                    sp.style.color = white;
-                    sp.style.textShadow = 'none';
-                  }, 500);
-                })(s, s.dataset.final);
-                idx++;
-                setTimeout(animNext, 100);
-              }
-              setTimeout(animNext, 200);
-            }
-          }, { threshold: 0.3 });
-          obs.observe(el);
-        })();
 
         // Magic Scroll Reveal Text
         (function() {

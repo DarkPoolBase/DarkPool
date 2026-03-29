@@ -116,471 +116,159 @@ gtag('config', 'G-2M6V79H761');
   </article>
 </section>
 
-<!-- About the Protocol: Invisible Market -->
-<section class="z-10 w-full pt-32 pb-24 relative" id="about">
-  <div class="max-w-screen-2xl mx-auto px-6 md:px-10">
+<!-- About the Protocol: Structured Clarity -->
+<section class="z-10 w-full pt-40 pb-32 relative" id="about">
+  <div class="max-w-5xl mx-auto px-6 md:px-10">
 
-    <!-- Section Header with decrypt effect -->
-    <div class="about-reveal mb-20 text-center relative">
-      <span class="inline-block font-mono text-[11px] tracking-[0.3em] text-white/40 uppercase mb-4">About the Protocol</span>
-      <h2 id="decrypt-heading" class="text-3xl md:text-5xl lg:text-6xl font-extralight text-white/90 tracking-tight leading-[1.1]">
+    <!-- Hero Statement -->
+    <div class="about-header mb-8 text-center">
+      <span class="inline-block font-mono text-[11px] tracking-[0.3em] text-white/30 uppercase mb-6">About the Protocol</span>
+      <h2 class="text-4xl md:text-6xl lg:text-7xl font-extralight text-white/90 tracking-tight leading-[1.08] mb-6">
         Privacy-first compute<br class="hidden md:block"> for the agentic era
       </h2>
+      <p class="text-base md:text-lg font-light text-white/40 max-w-xl mx-auto leading-relaxed">
+        A new market for AI compute — private, efficient, and verifiable.
+      </p>
     </div>
 
-    <!-- Dark Pool Network Canvas -->
-    <div class="relative w-full rounded-3xl border border-white/[0.04] overflow-hidden mb-16" style="min-height: 600px; background: radial-gradient(ellipse at 50% 50%, rgba(108,60,233,0.04) 0%, transparent 70%), #030305;">
+  </div>
 
-      <!-- Network Canvas -->
-      <canvas id="darkpool-network" class="absolute inset-0 w-full h-full" style="z-index:1;"></canvas>
+  <!-- Panels -->
+  <div class="max-w-6xl mx-auto px-6 md:px-10 mt-24 flex flex-col gap-5">
 
-      <!-- Scan beams -->
-      <div class="absolute inset-0 pointer-events-none" style="z-index:2;">
-        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-violet-500/20 to-transparent" style="animation: scanVertical 8s linear infinite;"></div>
-        <div class="absolute top-0 left-0 h-full w-px bg-gradient-to-b from-transparent via-violet-500/10 to-transparent" style="animation: scanHorizontal 12s linear infinite;"></div>
+    <!-- Panel 1: The Problem -->
+    <div class="about-panel rounded-2xl border border-white/[0.05] bg-white/[0.015] p-10 md:p-14 lg:p-16 relative overflow-hidden group">
+      <!-- Subtle grid texture -->
+      <div class="absolute inset-0 opacity-[0.02] pointer-events-none" style="background-image: linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px); background-size: 48px 48px;"></div>
+      <div class="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-start">
+        <div>
+          <span class="font-mono text-[10px] tracking-[0.3em] text-white/25 uppercase block mb-5">The Problem</span>
+          <h3 class="text-2xl md:text-3xl lg:text-4xl font-extralight text-white/90 leading-[1.15] tracking-tight">GPU compute is broken</h3>
+        </div>
+        <div class="flex flex-col gap-4">
+          <p class="text-[15px] text-white/45 leading-[1.8] font-light">
+            AI companies need massive GPU compute, but current options are either expensive and fully transparent, or locked behind slow private deals.
+          </p>
+          <p class="text-[15px] text-white/45 leading-[1.8] font-light">
+            There is no middle ground between overpaying publicly and negotiating in the dark.
+          </p>
+        </div>
       </div>
+    </div>
 
-      <!-- Interactive Reveal Zones -->
-      <div class="relative grid grid-cols-1 lg:grid-cols-3 gap-0 w-full" style="z-index:10; min-height: 600px;">
-
-        <!-- Zone 1: The Problem -->
-        <div id="zone-problem" class="darkpool-zone group relative flex flex-col justify-end p-8 md:p-10 cursor-crosshair border-r border-white/[0.03] transition-all duration-700" data-zone="problem">
-          <div class="absolute inset-0 bg-gradient-to-b from-transparent to-[#030305]/80 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
-          
-          <!-- Hover indicator -->
-          <div class="absolute top-8 left-8 flex items-center gap-2 opacity-30 group-hover:opacity-80 transition-all duration-500">
-            <div class="w-2 h-2 rounded-full bg-rose-500/80 group-hover:shadow-[0_0_12px_rgba(244,63,94,0.6)] transition-all duration-500"></div>
-            <span class="font-mono text-[9px] tracking-[0.3em] text-white/30 group-hover:text-rose-400/70 uppercase transition-colors duration-500">Chaos Zone</span>
-          </div>
-
-          <!-- Content (reveals on hover) -->
-          <div class="relative z-10 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-700 ease-out">
-            <span class="font-mono text-[10px] tracking-[0.25em] text-violet-400/70 uppercase mb-3 block">The Problem</span>
-            <h3 class="text-xl md:text-2xl font-light text-white/90 mb-3 leading-snug">GPU compute is broken for AI</h3>
-            <p class="text-sm text-white/50 leading-relaxed font-light">
-              AI companies need massive GPU compute but current options are either expensive — AWS at $6+/hr per H100 — fully transparent where competitors see your orders, or locked behind slow private deals.
-            </p>
-          </div>
-
-          <!-- Persistent hint -->
-          <div class="relative z-10 group-hover:opacity-0 transition-opacity duration-500">
-            <span class="font-mono text-[10px] tracking-[0.2em] text-white/15 uppercase">Hover to reveal</span>
-          </div>
+    <!-- Panel 2: Our Solution (Hero Panel) -->
+    <div class="about-panel rounded-2xl border border-white/[0.08] p-10 md:p-14 lg:p-20 relative overflow-hidden group" style="background: linear-gradient(135deg, rgba(108,60,233,0.04) 0%, rgba(255,255,255,0.02) 50%, rgba(108,60,233,0.02) 100%);">
+      <!-- Subtle grid texture -->
+      <div class="absolute inset-0 opacity-[0.02] pointer-events-none" style="background-image: linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px); background-size: 48px 48px;"></div>
+      <!-- Soft edge glow -->
+      <div class="absolute -top-px -left-px -right-px h-px bg-gradient-to-r from-transparent via-violet-500/20 to-transparent"></div>
+      <div class="absolute -bottom-px -left-px -right-px h-px bg-gradient-to-r from-transparent via-violet-500/10 to-transparent"></div>
+      <div class="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-start">
+        <div>
+          <span class="font-mono text-[10px] tracking-[0.3em] text-violet-400/50 uppercase block mb-5">Our Solution</span>
+          <h3 class="text-2xl md:text-3xl lg:text-[2.75rem] font-extralight text-white leading-[1.12] tracking-tight">A private market<br>for compute</h3>
         </div>
-
-        <!-- Zone 2: Our Solution (center focus) -->
-        <div id="zone-solution" class="darkpool-zone group relative flex flex-col justify-end p-8 md:p-10 cursor-crosshair border-r border-white/[0.03] transition-all duration-700" data-zone="solution">
-          <div class="absolute inset-0 bg-gradient-to-b from-transparent to-[#030305]/80 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
-          
-          <div class="absolute top-8 left-8 flex items-center gap-2 opacity-30 group-hover:opacity-80 transition-all duration-500">
-            <div class="w-2 h-2 rounded-full bg-emerald-500/80 group-hover:shadow-[0_0_12px_rgba(16,185,129,0.6)] transition-all duration-500"></div>
-            <span class="font-mono text-[9px] tracking-[0.3em] text-white/30 group-hover:text-emerald-400/70 uppercase transition-colors duration-500">Dark Pool</span>
-          </div>
-
-          <div class="relative z-10 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-700 ease-out">
-            <span class="font-mono text-[10px] tracking-[0.25em] text-emerald-400/70 uppercase mb-3 block">Our Solution</span>
-            <h3 class="text-xl md:text-2xl font-light text-white/90 mb-3 leading-snug">A dark pool for compute</h3>
-            <p class="text-sm text-white/50 leading-relaxed font-light">
-              Encrypted bids enter batch auctions every 30–60 seconds. Zero-knowledge proofs verify fairness without revealing individual orders. Settlement happens in USDC on Base L2.
-            </p>
-          </div>
-
-          <div class="relative z-10 group-hover:opacity-0 transition-opacity duration-500">
-            <span class="font-mono text-[10px] tracking-[0.2em] text-white/15 uppercase">Hover to reveal</span>
-          </div>
+        <div class="flex flex-col gap-4">
+          <p class="text-[15px] text-white/50 leading-[1.8] font-light">
+            Encrypted bids enter batch auctions every 30–60 seconds. Zero-knowledge proofs verify fairness without exposing individual orders. Settlement happens instantly on Base.
+          </p>
+          <p class="text-[15px] text-white/35 leading-[1.8] font-light italic">
+            No data leakage. No visibility. No compromise.
+          </p>
         </div>
-
-        <!-- Zone 3: Why It Matters -->
-        <div id="zone-market" class="darkpool-zone group relative flex flex-col justify-end p-8 md:p-10 cursor-crosshair transition-all duration-700" data-zone="market">
-          <div class="absolute inset-0 bg-gradient-to-b from-transparent to-[#030305]/80 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
-          
-          <div class="absolute top-8 left-8 flex items-center gap-2 opacity-30 group-hover:opacity-80 transition-all duration-500">
-            <div class="w-2 h-2 rounded-full bg-cyan-500/80 group-hover:shadow-[0_0_12px_rgba(6,182,212,0.6)] transition-all duration-500"></div>
-            <span class="font-mono text-[9px] tracking-[0.3em] text-white/30 group-hover:text-cyan-400/70 uppercase transition-colors duration-500">Expansion</span>
-          </div>
-
-          <div class="relative z-10 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-700 ease-out">
-            <span class="font-mono text-[10px] tracking-[0.25em] text-cyan-400/70 uppercase mb-3 block">Why It Matters</span>
-            <h3 class="text-xl md:text-2xl font-light text-white/90 mb-3 leading-snug">Greenfield intersection</h3>
-            <p class="text-sm text-white/50 leading-relaxed font-light">
-              The GPU-as-a-Service market is valued at $5.7B and growing 35.8% per year. No one combines privacy, compute, and autonomous AI agents. A first-mover opportunity at the convergence of DeFi and AI.
-            </p>
-          </div>
-
-          <div class="relative z-10 group-hover:opacity-0 transition-opacity duration-500">
-            <span class="font-mono text-[10px] tracking-[0.2em] text-white/15 uppercase">Hover to reveal</span>
-          </div>
-        </div>
-
       </div>
+    </div>
 
-      <!-- Floating Metrics (overlaid on canvas) -->
-      <div class="absolute bottom-6 left-0 right-0 flex justify-center gap-8 md:gap-16 pointer-events-none" style="z-index:15;">
-        <div class="about-metric text-center opacity-0">
-          <span class="block text-2xl md:text-3xl font-extralight text-white/80 tabular-nums about-counter" data-target="5.7">0</span>
-          <span class="block text-[9px] font-mono tracking-[0.2em] text-white/25 uppercase mt-1">Market ($B)</span>
+    <!-- Panel 3: Why It Matters -->
+    <div class="about-panel rounded-2xl border border-white/[0.05] bg-white/[0.015] p-10 md:p-14 lg:p-16 relative overflow-hidden group">
+      <div class="absolute inset-0 opacity-[0.02] pointer-events-none" style="background-image: linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px); background-size: 48px 48px;"></div>
+      <div class="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-start">
+        <div>
+          <span class="font-mono text-[10px] tracking-[0.3em] text-white/25 uppercase block mb-5">Why It Matters</span>
+          <h3 class="text-2xl md:text-3xl lg:text-4xl font-extralight text-white/90 leading-[1.15] tracking-tight">A new market category</h3>
         </div>
-        <div class="about-metric text-center opacity-0">
-          <span class="block text-2xl md:text-3xl font-extralight text-white/80 tabular-nums about-counter" data-target="35.8">0</span>
-          <span class="block text-[9px] font-mono tracking-[0.2em] text-white/25 uppercase mt-1">CAGR (%)</span>
-        </div>
-        <div class="about-metric text-center opacity-0">
-          <span class="block text-2xl md:text-3xl font-extralight text-white/80 tabular-nums about-counter" data-target="30">0</span>
-          <span class="block text-[9px] font-mono tracking-[0.2em] text-white/25 uppercase mt-1">Batch (s)</span>
-        </div>
-        <div class="about-metric text-center opacity-0">
-          <span class="block text-2xl md:text-3xl font-extralight text-white/80 tabular-nums">0</span>
-          <span class="block text-[9px] font-mono tracking-[0.2em] text-white/25 uppercase mt-1">Competitors</span>
+        <div class="flex flex-col gap-4">
+          <p class="text-[15px] text-white/45 leading-[1.8] font-light">
+            The GPU-as-a-Service market is valued at $5.7B and growing 35.8% annually. No platform combines privacy, compute, and autonomous AI agents.
+          </p>
+          <p class="text-[15px] text-white/45 leading-[1.8] font-light">
+            This is a first-mover opportunity at the intersection of AI demand and decentralized infrastructure.
+          </p>
         </div>
       </div>
     </div>
 
   </div>
+
+  <!-- Metrics Strip -->
+  <div class="max-w-5xl mx-auto px-6 md:px-10 mt-20">
+    <div class="about-metrics flex items-baseline justify-between md:justify-center md:gap-24 border-t border-white/[0.04] pt-12">
+      <div class="text-center">
+        <span class="block text-3xl md:text-4xl font-extralight text-white/80 tabular-nums tracking-tight about-counter" data-target="5.7">0</span>
+        <span class="block text-[10px] font-mono tracking-[0.2em] text-white/20 uppercase mt-2">Market ($B)</span>
+      </div>
+      <div class="text-center">
+        <span class="block text-3xl md:text-4xl font-extralight text-white/80 tabular-nums tracking-tight about-counter" data-target="35.8">0</span>
+        <span class="block text-[10px] font-mono tracking-[0.2em] text-white/20 uppercase mt-2">CAGR (%)</span>
+      </div>
+      <div class="text-center">
+        <span class="block text-3xl md:text-4xl font-extralight text-white/80 tabular-nums tracking-tight about-counter" data-target="30">0</span>
+        <span class="block text-[10px] font-mono tracking-[0.2em] text-white/20 uppercase mt-2">Batch (s)</span>
+      </div>
+      <div class="text-center">
+        <span class="block text-3xl md:text-4xl font-extralight text-white/80 tabular-nums tracking-tight">0</span>
+        <span class="block text-[10px] font-mono tracking-[0.2em] text-white/20 uppercase mt-2">Competitors</span>
+      </div>
+    </div>
+  </div>
+
 </section>
 
-<!-- Invisible Market Styles -->
-<style>
-@keyframes scanVertical {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(600px); }
-}
-@keyframes scanHorizontal {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(100vw); }
-}
-</style>
-
-<!-- Dark Pool Network Canvas + Animations -->
+<!-- Structured Clarity GSAP Animations -->
 <script>
-(function() {
-  // Wait for DOM
-  document.addEventListener('DOMContentLoaded', function() {
-    var canvas = document.getElementById('darkpool-network');
-    if (!canvas) return;
-    var ctx = canvas.getContext('2d');
-    var dpr = window.devicePixelRatio || 1;
-    var W, H;
-    var nodes = [];
-    var signals = [];
-    var matches = [];
-    var activeZone = null;
-    var time = 0;
+document.addEventListener('DOMContentLoaded', function() {
+  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    // Header fade up
+    gsap.from('.about-header', {
+      y: 40, opacity: 0, duration: 1.2, ease: 'power3.out',
+      scrollTrigger: { trigger: '#about', start: 'top 80%', toggleActions: 'play none none none' }
+    });
 
-    function resize() {
-      var rect = canvas.parentElement.getBoundingClientRect();
-      W = rect.width;
-      H = rect.height;
-      canvas.width = W * dpr;
-      canvas.height = H * dpr;
-      ctx.scale(dpr, dpr);
-      canvas.style.width = W + 'px';
-      canvas.style.height = H + 'px';
-    }
-
-    function initNodes() {
-      nodes = [];
-      var count = Math.min(80, Math.floor(W * H / 8000));
-      for (var i = 0; i < count; i++) {
-        nodes.push({
-          x: Math.random() * W,
-          y: Math.random() * H,
-          vx: (Math.random() - 0.5) * 0.3,
-          vy: (Math.random() - 0.5) * 0.3,
-          radius: 1.5 + Math.random() * 2,
-          baseAlpha: 0.05 + Math.random() * 0.15,
-          alpha: 0,
-          pulse: Math.random() * Math.PI * 2,
-          visible: Math.random() > 0.7,
-          blurAmount: 2 + Math.random() * 4
-        });
-      }
-    }
-
-    function spawnSignal() {
-      if (signals.length > 15) return;
-      var a = nodes[Math.floor(Math.random() * nodes.length)];
-      var b = nodes[Math.floor(Math.random() * nodes.length)];
-      if (a === b) return;
-      signals.push({
-        ax: a.x, ay: a.y,
-        bx: b.x, by: b.y,
-        progress: 0,
-        speed: 0.003 + Math.random() * 0.005,
-        color: Math.random() > 0.5 ? 'violet' : 'emerald',
-        matched: false
-      });
-    }
-
-    function spawnMatch(x, y) {
-      matches.push({ x: x, y: y, life: 1.0, radius: 0 });
-    }
-
-    // Zone hover detection
-    document.querySelectorAll('.darkpool-zone').forEach(function(zone) {
-      zone.addEventListener('mouseenter', function() {
-        activeZone = zone.getAttribute('data-zone');
-      });
-      zone.addEventListener('mouseleave', function() {
-        activeZone = null;
+    // Panels staggered lift
+    gsap.utils.toArray('.about-panel').forEach(function(panel, i) {
+      gsap.from(panel, {
+        y: 60, opacity: 0, duration: 1, ease: 'power3.out',
+        delay: i * 0.15,
+        scrollTrigger: { trigger: panel, start: 'top 90%', toggleActions: 'play none none none' }
       });
     });
 
-    function update() {
-      time += 0.016;
+    // Metrics strip
+    gsap.from('.about-metrics', {
+      y: 30, opacity: 0, duration: 0.8, ease: 'power2.out',
+      scrollTrigger: { trigger: '.about-metrics', start: 'top 95%', toggleActions: 'play none none none' }
+    });
 
-      // Update nodes
-      for (var i = 0; i < nodes.length; i++) {
-        var n = nodes[i];
-        n.x += n.vx;
-        n.y += n.vy;
-        n.pulse += 0.02;
-
-        // Boundaries with wrapping
-        if (n.x < -20) n.x = W + 20;
-        if (n.x > W + 20) n.x = -20;
-        if (n.y < -20) n.y = H + 20;
-        if (n.y > H + 20) n.y = -20;
-
-        // Random visibility pulse
-        if (Math.random() < 0.002) n.visible = !n.visible;
-        var targetAlpha = n.visible ? n.baseAlpha * (0.5 + 0.5 * Math.sin(n.pulse)) : 0.02;
-
-        // Zone reactions
-        if (activeZone === 'problem') {
-          // Chaotic - nodes jitter
-          n.vx += (Math.random() - 0.5) * 0.15;
-          n.vy += (Math.random() - 0.5) * 0.15;
-          targetAlpha = Math.min(0.6, targetAlpha * 3);
-        } else if (activeZone === 'solution') {
-          // Dark & encrypted - nodes fade, smooth
-          targetAlpha *= 0.3;
-          n.vx *= 0.98;
-          n.vy *= 0.98;
-        } else if (activeZone === 'market') {
-          // Expansion - nodes spread and grow
-          var cx = W / 2, cy = H / 2;
-          var dx = n.x - cx, dy = n.y - cy;
-          var dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist > 0) {
-            n.vx += (dx / dist) * 0.02;
-            n.vy += (dy / dist) * 0.02;
-          }
-          targetAlpha = Math.min(0.5, targetAlpha * 2);
-        } else {
-          // Default - gentle drift
-          n.vx *= 0.995;
-          n.vy *= 0.995;
-        }
-
-        n.alpha += (targetAlpha - n.alpha) * 0.05;
-      }
-
-      // Spawn signals periodically
-      if (Math.random() < 0.03) spawnSignal();
-
-      // Update signals
-      for (var s = signals.length - 1; s >= 0; s--) {
-        var sig = signals[s];
-        sig.progress += sig.speed;
-
-        // Check for matching (two signals near each other)
-        if (!sig.matched && sig.progress > 0.4 && sig.progress < 0.6) {
-          for (var s2 = 0; s2 < signals.length; s2++) {
-            if (s2 === s || signals[s2].matched) continue;
-            var sp = signals[s2];
-            if (sp.progress > 0.4 && sp.progress < 0.6) {
-              var mx = sig.ax + (sig.bx - sig.ax) * sig.progress;
-              var my = sig.ay + (sig.by - sig.ay) * sig.progress;
-              var mx2 = sp.ax + (sp.bx - sp.ax) * sp.progress;
-              var my2 = sp.ay + (sp.by - sp.ay) * sp.progress;
-              var dd = Math.sqrt((mx - mx2) * (mx - mx2) + (my - my2) * (my - my2));
-              if (dd < 60) {
-                sig.matched = true;
-                sp.matched = true;
-                spawnMatch((mx + mx2) / 2, (my + my2) / 2);
-              }
+    // Counter animation
+    document.querySelectorAll('.about-counter').forEach(function(el) {
+      var target = parseFloat(el.getAttribute('data-target')) || 0;
+      ScrollTrigger.create({
+        trigger: el, start: 'top 95%',
+        onEnter: function() {
+          gsap.to(el, {
+            duration: 2, ease: 'power2.out',
+            onUpdate: function() {
+              var p = this.progress();
+              var c = target * p;
+              el.textContent = target % 1 !== 0 ? c.toFixed(1) : Math.round(c);
             }
-          }
-        }
-
-        if (sig.progress > 1 || sig.matched) {
-          signals.splice(s, 1);
-        }
-      }
-
-      // Update matches
-      for (var m = matches.length - 1; m >= 0; m--) {
-        matches[m].life -= 0.015;
-        matches[m].radius += 1.5;
-        if (matches[m].life <= 0) matches.splice(m, 1);
-      }
-    }
-
-    function draw() {
-      ctx.clearRect(0, 0, W, H);
-
-      // Draw connections between nearby nodes
-      for (var i = 0; i < nodes.length; i++) {
-        for (var j = i + 1; j < nodes.length; j++) {
-          var dx = nodes[i].x - nodes[j].x;
-          var dy = nodes[i].y - nodes[j].y;
-          var dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 120) {
-            var lineAlpha = (1 - dist / 120) * Math.min(nodes[i].alpha, nodes[j].alpha) * 0.5;
-            ctx.beginPath();
-            ctx.moveTo(nodes[i].x, nodes[i].y);
-            ctx.lineTo(nodes[j].x, nodes[j].y);
-            ctx.strokeStyle = 'rgba(139,92,246,' + lineAlpha + ')';
-            ctx.lineWidth = 0.5;
-            ctx.stroke();
-          }
-        }
-      }
-
-      // Draw nodes
-      for (var i = 0; i < nodes.length; i++) {
-        var n = nodes[i];
-        if (n.alpha < 0.01) continue;
-
-        // Outer glow
-        var grad = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.radius * 6);
-        grad.addColorStop(0, 'rgba(139,92,246,' + (n.alpha * 0.3) + ')');
-        grad.addColorStop(1, 'rgba(139,92,246,0)');
-        ctx.beginPath();
-        ctx.arc(n.x, n.y, n.radius * 6, 0, Math.PI * 2);
-        ctx.fillStyle = grad;
-        ctx.fill();
-
-        // Core
-        ctx.beginPath();
-        ctx.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(200,180,255,' + n.alpha + ')';
-        ctx.fill();
-      }
-
-      // Draw signals (light packets traveling between nodes)
-      for (var s = 0; s < signals.length; s++) {
-        var sig = signals[s];
-        var px = sig.ax + (sig.bx - sig.ax) * sig.progress;
-        var py = sig.ay + (sig.by - sig.ay) * sig.progress;
-        var sigAlpha = Math.sin(sig.progress * Math.PI) * 0.8;
-
-        var sigColor = sig.color === 'violet' ? '139,92,246' : '16,185,129';
-
-        // Trail
-        var trailGrad = ctx.createRadialGradient(px, py, 0, px, py, 12);
-        trailGrad.addColorStop(0, 'rgba(' + sigColor + ',' + (sigAlpha * 0.6) + ')');
-        trailGrad.addColorStop(1, 'rgba(' + sigColor + ',0)');
-        ctx.beginPath();
-        ctx.arc(px, py, 12, 0, Math.PI * 2);
-        ctx.fillStyle = trailGrad;
-        ctx.fill();
-
-        // Core packet
-        ctx.beginPath();
-        ctx.arc(px, py, 2, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(255,255,255,' + sigAlpha + ')';
-        ctx.fill();
-      }
-
-      // Draw match flashes
-      for (var m = 0; m < matches.length; m++) {
-        var match = matches[m];
-        // Flash ring
-        ctx.beginPath();
-        ctx.arc(match.x, match.y, match.radius, 0, Math.PI * 2);
-        ctx.strokeStyle = 'rgba(255,255,255,' + (match.life * 0.5) + ')';
-        ctx.lineWidth = 1;
-        ctx.stroke();
-
-        // Inner flash
-        var flashGrad = ctx.createRadialGradient(match.x, match.y, 0, match.x, match.y, match.radius * 0.5);
-        flashGrad.addColorStop(0, 'rgba(139,92,246,' + (match.life * 0.4) + ')');
-        flashGrad.addColorStop(1, 'rgba(139,92,246,0)');
-        ctx.beginPath();
-        ctx.arc(match.x, match.y, match.radius * 0.5, 0, Math.PI * 2);
-        ctx.fillStyle = flashGrad;
-        ctx.fill();
-      }
-    }
-
-    function loop() {
-      update();
-      draw();
-      requestAnimationFrame(loop);
-    }
-
-    resize();
-    initNodes();
-    window.addEventListener('resize', function() { resize(); initNodes(); });
-    loop();
-
-    // GSAP animations
-    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-      // Header with decrypt
-      gsap.from('.about-reveal', {
-        y: 60, opacity: 0, duration: 1, ease: 'power3.out',
-        stagger: 0.2,
-        scrollTrigger: { trigger: '#about', start: 'top 85%', toggleActions: 'play none none none' }
+          });
+        },
+        once: true
       });
-
-      // Decrypt text effect
-      var heading = document.getElementById('decrypt-heading');
-      if (heading) {
-        var original = heading.innerHTML;
-        var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&*';
-        ScrollTrigger.create({
-          trigger: '#about',
-          start: 'top 80%',
-          once: true,
-          onEnter: function() {
-            var text = heading.textContent;
-            var iterations = 0;
-            var interval = setInterval(function() {
-              heading.innerHTML = original.split('').map(function(char, idx) {
-                if (char === '<' || char === '>') return char;
-                if (idx < iterations) return original[idx];
-                if (char === ' ' || char === '\n') return char;
-                return chars[Math.floor(Math.random() * chars.length)];
-              }).join('');
-              iterations += 1.5;
-              if (iterations >= original.length) {
-                heading.innerHTML = original;
-                clearInterval(interval);
-              }
-            }, 30);
-          }
-        });
-      }
-
-      // Floating metrics fade in
-      gsap.to('.about-metric', {
-        opacity: 1, y: 0, duration: 0.8, ease: 'power2.out', stagger: 0.15,
-        scrollTrigger: { trigger: '.about-metric', start: 'top 95%', toggleActions: 'play none none none' }
-      });
-      gsap.set('.about-metric', { y: 20 });
-
-      // Counter animation
-      document.querySelectorAll('.about-counter').forEach(function(el) {
-        var target = parseFloat(el.getAttribute('data-target')) || 0;
-        ScrollTrigger.create({
-          trigger: el, start: 'top 95%',
-          onEnter: function() {
-            gsap.to(el, {
-              duration: 2, ease: 'power2.out',
-              onUpdate: function() {
-                var p = this.progress();
-                var c = target * p;
-                el.textContent = target % 1 !== 0 ? c.toFixed(1) : Math.round(c);
-              }
-            });
-          },
-          once: true
-        });
-      });
-    }
-  });
-})();
+    });
+  }
+});
 </script>
 
       <section class="z-10 w-full pt-32 pb-20 relative" id="how-it-works">

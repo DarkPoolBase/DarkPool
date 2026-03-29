@@ -2402,178 +2402,259 @@ document.addEventListener('DOMContentLoaded', function() {
         })();
         </script>
       </section>
-<section class="flex flex-col overflow-hidden divide-y divide-white/5 shadow-black/50 text-white/80 font-sans bg-[#050508]/90 w-full border-white/5 border rounded-[32px] mt-24 shadow-2xl backdrop-blur-3xl">
+  <!-- 2x2 Bento Grid -->
+  <section class="mt-24 w-full">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 w-full">
 
-  <style>
-    .section-row {
-      display: grid;
-      grid-template-columns: 60px 1fr 1fr auto 64px;
-      gap: 0 48px;
-      align-items: center;
-      padding: 64px 48px;
-    }
-    @media (max-width: 1023px) {
-      .section-row {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 24px;
-        padding: 48px 24px;
+      <!-- Card 1: AGENTS -->
+      <div class="rounded-2xl border border-white/10 bg-[#0a0a0f] overflow-hidden flex flex-col">
+        <div class="flex-1 min-h-[220px] bg-[#060609] border-b border-white/5 flex items-center justify-center p-6 overflow-hidden">
+          <div id="agent-terminal" class="w-full max-w-[440px] rounded-lg bg-[#0d0d12] border border-white/10 p-4 font-mono text-sm">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="w-2.5 h-2.5 rounded-full bg-red-500/60"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-yellow-500/60"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-green-500/60"></span>
+            </div>
+            <div class="text-white/40 text-xs mb-1">darkpool-cli v2.1.0</div>
+            <div class="flex items-center">
+              <span class="text-white/50 mr-2">></span>
+              <span id="agent-typed-text" class="text-white/80 whitespace-nowrap"></span>
+              <span id="agent-cursor" class="inline-block w-[2px] h-[14px] bg-[#6C3CE9] ml-[1px] animate-pulse"></span>
+            </div>
+          </div>
+        </div>
+        <div class="p-7">
+          <h3 class="text-xl font-bold text-white mb-2">AI Agents</h3>
+          <p class="text-sm text-white/50 leading-relaxed">Autonomous systems buying compute via API — programmatic, private, instant.</p>
+        </div>
+      </div>
+
+      <!-- Card 2: AUCTIONS -->
+      <div class="rounded-2xl border border-white/10 bg-[#0a0a0f] overflow-hidden flex flex-col">
+        <div class="flex-1 min-h-[220px] bg-[#060609] border-b border-white/5 flex items-center justify-center p-6">
+          <svg id="auction-svg" width="280" height="160" viewBox="0 0 280 160"></svg>
+        </div>
+        <div class="p-7">
+          <h3 class="text-xl font-bold text-white mb-2">Batch Auctions</h3>
+          <p class="text-sm text-white/50 leading-relaxed">Orders batch every 30–60 seconds and clear at a single fair price. No front-running, no information leakage.</p>
+        </div>
+      </div>
+
+      <!-- Card 3: ENTERPRISES -->
+      <div class="rounded-2xl border border-white/10 bg-[#0a0a0f] overflow-hidden flex flex-col">
+        <div class="flex-1 min-h-[220px] bg-[#060609] border-b border-white/5 flex items-center justify-center p-6">
+          <svg id="enterprise-svg" width="240" height="140" viewBox="0 0 240 140"></svg>
+        </div>
+        <div class="p-7">
+          <h3 class="text-xl font-bold text-white mb-2">Enterprise Privacy</h3>
+          <p class="text-sm text-white/50 leading-relaxed">Large-scale compute procurement without signaling intent to competitors. Block orders matched privately.</p>
+        </div>
+      </div>
+
+      <!-- Card 4: PROVIDERS -->
+      <div class="rounded-2xl border border-white/10 bg-[#0a0a0f] overflow-hidden flex flex-col">
+        <div class="flex-1 min-h-[220px] bg-[#060609] border-b border-white/5 flex items-center justify-center p-6">
+          <svg id="provider-svg" width="300" height="120" viewBox="0 0 300 120"></svg>
+        </div>
+        <div class="p-7">
+          <h3 class="text-xl font-bold text-white mb-2">GPU Providers</h3>
+          <p class="text-sm text-white/50 leading-relaxed">Monetize idle hardware with private pricing — no public rate sheets. Stake, benchmark, earn USDC.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Bento animations -->
+  <script>
+  (function(){
+    /* ── Card 1: Terminal typing ── */
+    const fullText = 'darkpool.buy_compute(gpu="H100", hours=24)';
+    const typedEl = document.getElementById('agent-typed-text');
+    let charIdx = 0, typing = true;
+    function typeLoop(){
+      if(!typedEl) return;
+      if(typing){
+        charIdx++;
+        typedEl.innerHTML = '<span class="text-white/50">></span> ' +
+          fullText.substring(0, charIdx).replace('darkpool.buy_compute', '<span style="color:#6C3CE9">darkpool.buy_compute</span>');
+        if(charIdx >= fullText.length){ typing = false; setTimeout(typeLoop, 2000); return; }
+        setTimeout(typeLoop, 45 + Math.random()*30);
+      } else {
+        charIdx = 0; typedEl.textContent = ''; typing = true;
+        setTimeout(typeLoop, 600);
       }
     }
-  </style>
+    // fix: remove the leading > since we already have one in HTML
+    function typeLoopFixed(){
+      if(!typedEl) return;
+      if(typing){
+        charIdx++;
+        const raw = fullText.substring(0, charIdx);
+        typedEl.innerHTML = raw.replace('darkpool.buy_compute', '<span style="color:#6C3CE9">darkpool.buy_compute</span>');
+        if(charIdx >= fullText.length){ typing = false; setTimeout(typeLoopFixed, 2000); return; }
+        setTimeout(typeLoopFixed, 45 + Math.random()*30);
+      } else {
+        charIdx = 0; typedEl.textContent = ''; typing = true;
+        setTimeout(typeLoopFixed, 600);
+      }
+    }
+    setTimeout(typeLoopFixed, 800);
 
-  <!-- Section 01: AGENTS -->
-  <div class="group w-full relative">
-    <div class="section-row">
-      <div class="shrink-0">
-        <span class="text-lg text-white/40 font-medium relative pb-2 inline-block after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-white/20">01</span>
-      </div>
+    /* ── Card 2: Auction dots converging ── */
+    const asvg = document.getElementById('auction-svg');
+    if(asvg){
+      const dots = [
+        {sx:30,sy:20},{sx:250,sy:30},{sx:50,sy:130},{sx:230,sy:140},{sx:140,sy:15},{sx:140,sy:145}
+      ];
+      const cy = 80, barY = 74, barH = 12;
+      // Create elements
+      dots.forEach((d,i)=>{
+        const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
+        c.setAttribute('cx', d.sx); c.setAttribute('cy', d.sy);
+        c.setAttribute('r','5'); c.setAttribute('fill','#6C3CE9'); c.setAttribute('opacity','0.8');
+        c.id = 'adot'+i;
+        asvg.appendChild(c);
+      });
+      const bar = document.createElementNS('http://www.w3.org/2000/svg','rect');
+      bar.setAttribute('x','40'); bar.setAttribute('y', barY);
+      bar.setAttribute('width','200'); bar.setAttribute('height', barH);
+      bar.setAttribute('rx','6'); bar.setAttribute('fill','#6C3CE9');
+      bar.setAttribute('opacity','0'); bar.id = 'abar';
+      asvg.appendChild(bar);
 
-      <div>
-        <h2 class="text-6xl md:text-8xl font-light tracking-tighter uppercase word-reveal text-white" style="white-space:nowrap;"><span style="display:inline-block;overflow:hidden;vertical-align:bottom;margin-right:0.2em;padding-bottom:0.1em;"><span class="word-inner" style="display:inline-block;">AGENTS</span></span></h2>
-      </div>
+      function animateAuction(){
+        // reset
+        dots.forEach((d,i)=>{
+          const el = document.getElementById('adot'+i);
+          if(el){ el.setAttribute('cx', d.sx); el.setAttribute('cy', d.sy); el.setAttribute('opacity','0.8'); el.setAttribute('r','5'); }
+        });
+        bar.setAttribute('opacity','0');
+        // converge
+        let frame = 0;
+        const dur = 60; // frames
+        function step(){
+          frame++;
+          const t = Math.min(frame/dur, 1);
+          const ease = t<0.5 ? 2*t*t : 1-Math.pow(-2*t+2,2)/2;
+          dots.forEach((d,i)=>{
+            const el = document.getElementById('adot'+i);
+            if(!el) return;
+            el.setAttribute('cx', d.sx + (140 - d.sx)*ease);
+            el.setAttribute('cy', d.sy + (cy - d.sy)*ease);
+            if(t > 0.8) el.setAttribute('opacity', String(1 - (t-0.8)*5));
+          });
+          if(t >= 1){
+            // show bar with glow
+            bar.setAttribute('opacity','1');
+            bar.innerHTML = '<animate attributeName="opacity" values="1;0.5;1" dur="0.6s" repeatCount="1"/>';
+            // create glow filter once
+            if(!document.getElementById('abar-glow')){
+              const defs = document.createElementNS('http://www.w3.org/2000/svg','defs');
+              defs.innerHTML = '<filter id="abar-glow"><feGaussianBlur stdDeviation="4" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>';
+              asvg.prepend(defs);
+            }
+            bar.setAttribute('filter','url(#abar-glow)');
+            setTimeout(animateAuction, 2000);
+            return;
+          }
+          requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }
+      setTimeout(animateAuction, 500);
+    }
 
-      <div class="flex items-start gap-5 min-w-[280px]">
-        <div class="w-12 h-12 rounded-full flex items-center justify-center shrink-0 text-white/80 bg-white/5 border border-white/10 backdrop-blur-md">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/></svg>
-        </div>
-        <p class="text-sm text-white/60 leading-relaxed font-extralight">AI agents autonomously procure GPU compute via REST API or x402 protocol. No human intervention — submit orders, get matched, access GPUs programmatically.</p>
-      </div>
+    /* ── Card 3: Enterprise bar chart ── */
+    const esvg = document.getElementById('enterprise-svg');
+    if(esvg){
+      esvg.innerHTML = `
+        <defs>
+          <filter id="ebar-glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <!-- bars -->
+        <rect x="40" y="60" width="40" height="60" rx="4" fill="rgba(255,255,255,0.08)" class="ebar" />
+        <rect x="100" y="30" width="40" height="90" rx="4" fill="#6C3CE9" filter="url(#ebar-glow)" class="ebar ebar-active" />
+        <rect x="160" y="50" width="40" height="70" rx="4" fill="rgba(255,255,255,0.08)" class="ebar" />
+        <!-- lock icon on active bar -->
+        <g transform="translate(112,38)" fill="none" stroke="white" stroke-width="1.5">
+          <rect x="2" y="6" width="10" height="8" rx="1.5"/>
+          <path d="M4 6V4a3 3 0 0 1 6 0v2"/>
+        </g>
+        <!-- clearing price line -->
+        <line x1="30" y1="45" x2="210" y2="45" stroke="white" stroke-opacity="0.15" stroke-dasharray="4 4" stroke-width="1"/>
+        <text x="215" y="48" fill="rgba(255,255,255,0.3)" font-size="9" font-family="monospace">CLEARING PRICE</text>
+      `;
+      // fade in bars
+      esvg.style.opacity = '0';
+      const obs = new IntersectionObserver(entries => {
+        if(entries[0].isIntersecting){
+          esvg.style.transition = 'opacity 1.2s ease';
+          esvg.style.opacity = '1';
+          obs.disconnect();
+        }
+      }, {threshold:0.3});
+      obs.observe(esvg);
+    }
 
-      <div class="flex flex-col gap-3 shrink-0">
-        <div class="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium text-white/80 w-fit bg-white/5 border border-white/10 backdrop-blur-md">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-violet-400"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-          REST API
-        </div>
-        <div class="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium text-white/80 w-fit bg-white/5 border border-white/10 backdrop-blur-md">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-violet-400"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
-          x402 PROTOCOL
-        </div>
-        <div class="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium text-white/80 w-fit bg-white/5 border border-white/10 backdrop-blur-md">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-violet-400"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          ZK VERIFIED
-        </div>
-      </div>
-
-      <div class="shrink-0 justify-self-end">
-        <a href="/dashboard" class="w-16 h-16 rounded-full flex items-center justify-center text-white bg-white/5 border border-white/10 backdrop-blur-md hover:bg-white/10 transition-colors group-hover:border-violet-400/50">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <!-- Section 02: AUCTIONS -->
-  <div class="group w-full relative">
-    <div class="section-row">
-      <div class="shrink-0">
-        <span class="text-lg text-white/40 font-medium relative pb-2 inline-block after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-white/20">02</span>
-      </div>
-
-      <div>
-        <h2 class="text-6xl md:text-8xl font-light tracking-tighter uppercase word-reveal text-white" style="white-space:nowrap;"><span style="display:inline-block;overflow:hidden;vertical-align:bottom;margin-right:0.2em;padding-bottom:0.1em;"><span class="word-inner" style="display:inline-block;">AUCTIONS</span></span></h2>
-      </div>
-
-      <div class="flex items-start gap-5 min-w-[280px]">
-        <div class="w-12 h-12 rounded-full flex items-center justify-center shrink-0 text-white/80 bg-white/5 border border-white/10 backdrop-blur-md">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        </div>
-        <p class="text-sm text-white/60 leading-relaxed font-extralight">Orders batch every 30–60 seconds. The matching engine finds a single clearing price — everyone pays the same fair rate. No front-running, no information leakage.</p>
-      </div>
-
-      <div class="flex flex-col gap-3 shrink-0">
-        <div class="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium text-white/80 w-fit bg-white/5 border border-white/10 backdrop-blur-md">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-violet-400"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          30-60 SEC BATCHES
-        </div>
-        <div class="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium text-white/80 w-fit bg-white/5 border border-white/10 backdrop-blur-md">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-violet-400"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          MEV PROTECTED
-        </div>
-      </div>
-
-      <div class="shrink-0 justify-self-end">
-        <a href="/marketplace" class="w-16 h-16 rounded-full flex items-center justify-center text-white bg-white/5 border border-white/10 backdrop-blur-md hover:bg-white/10 transition-colors group-hover:border-violet-400/50">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <!-- Section 03: ENTERPRISES -->
-  <div class="group w-full relative">
-    <div class="section-row">
-      <div class="shrink-0">
-        <span class="text-lg text-white/40 font-medium relative pb-2 inline-block after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-white/20">03</span>
-      </div>
-
-      <div>
-        <h2 class="text-6xl md:text-8xl font-light tracking-tighter uppercase word-reveal text-white" style="white-space:nowrap;"><span style="display:inline-block;overflow:hidden;vertical-align:bottom;margin-right:0.2em;padding-bottom:0.1em;"><span class="word-inner" style="display:inline-block;">ENTERPRISES</span></span></h2>
-      </div>
-
-      <div class="flex items-start gap-5 min-w-[280px]">
-        <div class="w-12 h-12 rounded-full flex items-center justify-center shrink-0 text-white/80 bg-white/5 border border-white/10 backdrop-blur-md">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-        </div>
-        <p class="text-sm text-white/60 leading-relaxed font-extralight">Large-scale compute procurement without signaling intent to competitors. Block orders for 1,000+ GPU-hours matched privately at a single clearing price.</p>
-      </div>
-
-      <div class="flex flex-col gap-3 shrink-0">
-        <div class="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium text-white/80 w-fit bg-white/5 border border-white/10 backdrop-blur-md">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-violet-400"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
-          BLOCK ORDERS
-        </div>
-        <div class="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium text-white/80 w-fit bg-white/5 border border-white/10 backdrop-blur-md">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-violet-400"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          SLA PROTECTED
-        </div>
-      </div>
-
-      <div class="shrink-0 justify-self-end">
-        <a href="/dashboard" class="w-16 h-16 rounded-full flex items-center justify-center text-white bg-white/5 border border-white/10 backdrop-blur-md hover:bg-white/10 transition-colors group-hover:border-violet-400/50">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <!-- Section 04: PROVIDERS -->
-  <div class="group w-full relative">
-    <div class="section-row">
-      <div class="shrink-0">
-        <span class="text-lg text-white/40 font-medium relative pb-2 inline-block after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-white/20">04</span>
-      </div>
-
-      <div>
-        <h2 class="text-6xl md:text-8xl font-light tracking-tighter uppercase word-reveal text-white" style="white-space:nowrap;"><span style="display:inline-block;overflow:hidden;vertical-align:bottom;margin-right:0.2em;padding-bottom:0.1em;"><span class="word-inner" style="display:inline-block;">PROVIDERS</span></span></h2>
-      </div>
-
-      <div class="flex items-start gap-5 min-w-[280px]">
-        <div class="w-12 h-12 rounded-full flex items-center justify-center shrink-0 text-white/80 bg-white/5 border border-white/10 backdrop-blur-md">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/></svg>
-        </div>
-        <p class="text-sm text-white/60 leading-relaxed font-extralight">Monetize idle GPUs with private pricing — competitors and buyers never see your rates. Stake collateral, pass a benchmark, and start earning USDC.</p>
-      </div>
-
-      <div class="flex flex-col gap-3 shrink-0">
-        <div class="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium text-white/80 w-fit bg-white/5 border border-white/10 backdrop-blur-md">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-violet-400"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
-          PRIVATE RATES
-        </div>
-        <div class="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium text-white/80 w-fit bg-white/5 border border-white/10 backdrop-blur-md">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-violet-400"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg>
-          USDC EARNINGS
-        </div>
-      </div>
-
-      <div class="shrink-0 justify-self-end">
-        <a href="/provider" class="w-16 h-16 rounded-full flex items-center justify-center text-white bg-white/5 border border-white/10 backdrop-blur-md hover:bg-white/10 transition-colors group-hover:border-violet-400/50">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-        </a>
-      </div>
-    </div>
-  </div>
+    /* ── Card 4: Provider USDC coin animation ── */
+    const psvg = document.getElementById('provider-svg');
+    if(psvg){
+      psvg.innerHTML = `
+        <defs>
+          <filter id="coin-glow"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <!-- dotted path -->
+        <line x1="50" y1="60" x2="220" y2="60" stroke="white" stroke-opacity="0.12" stroke-dasharray="5 5" stroke-width="1.5"/>
+        <!-- wallet icon -->
+        <g id="p-wallet" transform="translate(220,42)">
+          <rect x="0" y="4" width="32" height="28" rx="4" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
+          <rect x="20" y="14" width="12" height="8" rx="2" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
+          <circle cx="26" cy="18" r="1.5" fill="rgba(255,255,255,0.3)"/>
+        </g>
+        <!-- USDC coin -->
+        <g id="p-coin" filter="url(#coin-glow)">
+          <circle cx="50" cy="60" r="16" fill="none" stroke="white" stroke-width="1.5"/>
+          <text x="50" y="65" text-anchor="middle" fill="white" font-size="14" font-weight="bold" font-family="monospace">$</text>
+        </g>
+        <!-- checkmark (hidden) -->
+        <g id="p-check" opacity="0" transform="translate(236,36)">
+          <circle cx="10" cy="10" r="10" fill="#10B981"/>
+          <polyline points="6,10 9,13 14,7" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+      `;
+      function animateProvider(){
+        const coin = document.getElementById('p-coin');
+        const check = document.getElementById('p-check');
+        if(!coin || !check) return;
+        // reset
+        coin.setAttribute('transform','translate(0,0)');
+        check.setAttribute('opacity','0');
+        let frame = 0;
+        const dur = 80;
+        function step(){
+          frame++;
+          const t = Math.min(frame/dur,1);
+          const ease = t<0.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+          const tx = 170 * ease; // move from x=50 towards wallet at x=220
+          coin.setAttribute('transform', `translate(${tx},0)`);
+          if(t >= 1){
+            // show checkmark
+            check.setAttribute('opacity','1');
+            setTimeout(()=>{
+              check.setAttribute('opacity','0');
+              setTimeout(animateProvider, 800);
+            }, 1200);
+            return;
+          }
+          requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }
+      setTimeout(animateProvider, 1000);
+    }
+  })();
+  </script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" class=""></script>
   <script>

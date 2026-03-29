@@ -196,10 +196,10 @@ const Marketplace = () => {
               <GlassCard
                 key={product.id}
                 delay={0.2 + i * 0.06}
-                className="p-0 cursor-pointer group"
+                className="p-0 cursor-pointer group flex flex-col"
                 onClick={() => navigate(`/marketplace/${product.id}`)}
               >
-                <div className="p-4">
+                <div className="p-4 flex-1 flex flex-col">
                   {/* Header */}
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-4">

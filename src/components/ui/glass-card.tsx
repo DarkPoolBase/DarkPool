@@ -72,7 +72,7 @@ export function GlassCard({
           <div className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-white/[0.08] rounded-br-sm" />
         </>
       )}
-      <div className="relative z-10">{children}</div>
+      <div className="relative z-10 flex flex-col flex-1">{children}</div>
     </motion.div>
   );
 

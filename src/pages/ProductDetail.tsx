@@ -16,7 +16,7 @@ const productData: Record<string, {
   icon: typeof Cpu; benchmarks: { label: string; value: string; icon: typeof CheckCircle }[];
 }> = {
   h100: {
-    name: "NVIDIA H100", label: "Private Compute", price: "$0.21/hr", priceNum: 0.21,
+    name: "NVIDIA H100", label: "Private Compute", price: "$0.21/GPU-hour", priceNum: 0.21,
     providers: 47, vram: "80GB HBM3", workloads: ["Training", "Inference", "Fine-tuning", "Batch Jobs"],
     availability: 92, icon: Cpu,
     description: "Enterprise-grade GPU compute with encrypted order flow. Submit private bids through batch auctions with provable fairness and USDC settlement on Base.",
@@ -28,7 +28,7 @@ const productData: Record<string, {
     ],
   },
   a100: {
-    name: "NVIDIA A100", label: "Private Compute", price: "$0.15/hr", priceNum: 0.15,
+    name: "NVIDIA A100", label: "Private Compute", price: "$0.15/GPU-hour", priceNum: 0.15,
     providers: 89, vram: "80GB HBM2e", workloads: ["Training", "Fine-tuning", "Inference", "Research"],
     availability: 78, icon: Server,
     description: "High-performance compute for AI training workloads. Privacy-preserving batch auctions ensure fair pricing without exposing your demand.",
@@ -40,7 +40,7 @@ const productData: Record<string, {
     ],
   },
   rtx4090: {
-    name: "RTX 4090", label: "Private Compute", price: "$0.08/hr", priceNum: 0.08,
+    name: "RTX 4090", label: "Private Compute", price: "$0.08/GPU-hour", priceNum: 0.08,
     providers: 234, vram: "24GB GDDR6X", workloads: ["Inference", "Batch Jobs", "Fine-tuning", "Dev/Test"],
     availability: 65, icon: Zap,
     description: "Cost-efficient GPU compute for inference and development workloads. Ideal for teams scaling with privacy-preserving compute procurement.",
@@ -52,7 +52,7 @@ const productData: Record<string, {
     ],
   },
   "multi-gpu": {
-    name: "Multi-GPU Cluster", label: "Training Cluster", price: "$1.40/hr", priceNum: 1.40,
+    name: "Multi-GPU Cluster", label: "Training Cluster", price: "$1.40/GPU-hour", priceNum: 1.40,
     providers: 12, vram: "8×H100 (640GB)", workloads: ["Distributed Training", "Large Models", "Research", "Pre-training"],
     availability: 34, icon: Layers,
     description: "8×H100 clusters for distributed training at scale. Encrypted procurement ensures competitors cannot observe your infrastructure build-out.",
@@ -64,7 +64,7 @@ const productData: Record<string, {
     ],
   },
   "compute-credits": {
-    name: "Compute Credits", label: "Prepaid Compute", price: "$0.18/unit", priceNum: 0.18,
+    name: "Compute Credits", label: "Prepaid Compute", price: "$0.18/GPU-hour", priceNum: 0.18,
     providers: 387, vram: "Flexible", workloads: ["Any Workload", "Multi-GPU", "Burst Scaling", "Reserved"],
     availability: 100, icon: Activity,
     description: "Flexible compute credits redeemable across all GPU types. Pre-purchase at auction-determined rates with full privacy.",
@@ -76,7 +76,7 @@ const productData: Record<string, {
     ],
   },
   "h100-block": {
-    name: "24h H100 Block", label: "Reserved Compute", price: "$4.80/block", priceNum: 4.80,
+    name: "24h H100 Block", label: "Reserved Compute", price: "$4.80/GPU-hour", priceNum: 4.80,
     providers: 31, vram: "80GB HBM3", workloads: ["Long Training Runs", "Pre-training", "Research", "Continuous Inference"],
     availability: 56, icon: Clock,
     description: "24-hour reserved H100 compute blocks for uninterrupted workloads. Guaranteed availability with encrypted reservation flow.",

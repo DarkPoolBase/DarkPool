@@ -70,7 +70,7 @@ export function DashboardSidebar() {
       />
 
       {/* Logo area */}
-      <div className={`relative z-10 border-b border-white/[0.06] h-[68px] flex items-center ${collapsed ? 'px-2' : 'px-4'}`}>
+      <a href="/" className={`relative z-10 border-b border-white/[0.06] h-[68px] flex items-center ${collapsed ? 'px-2' : 'px-4'} cursor-pointer`}>
         <div className="absolute inset-0 bg-gradient-to-b from-violet-500/[0.06] to-transparent pointer-events-none" />
         <div className={`relative flex items-center ${collapsed ? 'justify-center' : 'gap-3'}`}>
           <div className="relative">
@@ -83,7 +83,7 @@ export function DashboardSidebar() {
             </span>
           )}
         </div>
-      </div>
+      </a>
 
       <SidebarContent className="pt-4 relative z-10">
         {!collapsed && (

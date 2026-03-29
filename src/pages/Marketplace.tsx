@@ -11,78 +11,84 @@ const computeProducts = [
     id: "h100",
     name: "NVIDIA H100",
     label: "Private Compute",
-    price: "$0.21/hr",
+    price: "$0.21/GPU-hour",
     providers: 47,
     vram: "80GB HBM3",
     workloads: "Training · Inference",
     availability: 92,
     badge: "Most Liquid",
     volume24h: "1,240 GPU-hrs",
+    volumeUsd: "$260",
     icon: Cpu,
   },
   {
     id: "a100",
     name: "NVIDIA A100",
     label: "Private Compute",
-    price: "$0.15/hr",
+    price: "$0.15/GPU-hour",
     providers: 89,
     vram: "80GB HBM2e",
     workloads: "Training · Fine-tuning",
     availability: 78,
     badge: "Active Market",
     volume24h: "2,870 GPU-hrs",
+    volumeUsd: "$430",
     icon: Server,
   },
   {
     id: "rtx4090",
     name: "RTX 4090",
     label: "Private Compute",
-    price: "$0.08/hr",
+    price: "$0.08/GPU-hour",
     providers: 234,
     vram: "24GB GDDR6X",
     workloads: "Inference · Batch Jobs",
     availability: 65,
     badge: null,
     volume24h: "4,120 GPU-hrs",
+    volumeUsd: "$330",
     icon: Zap,
   },
   {
     id: "multi-gpu",
     name: "Multi-GPU Cluster",
     label: "Training Cluster",
-    price: "$1.40/hr",
+    price: "$1.40/GPU-hour",
     providers: 12,
     vram: "8×H100 (640GB)",
     workloads: "Distributed Training",
     availability: 34,
     badge: "Fast Fill",
     volume24h: "96 GPU-hrs",
+    volumeUsd: "$134",
     icon: Layers,
   },
   {
     id: "compute-credits",
     name: "Compute Credits",
     label: "Prepaid Compute",
-    price: "$0.18/unit",
+    price: "$0.18/GPU-hour",
     providers: 387,
     vram: "Flexible",
     workloads: "Any Workload",
     availability: 100,
     badge: null,
     volume24h: "8,450 units",
+    volumeUsd: "$1,521",
     icon: Activity,
   },
   {
     id: "h100-block",
     name: "24h H100 Block",
     label: "Reserved Compute",
-    price: "$4.80/block",
+    price: "$4.80/GPU-hour",
     providers: 31,
     vram: "80GB HBM3",
     workloads: "Long Training Runs",
     availability: 56,
     badge: null,
     volume24h: "18 blocks",
+    volumeUsd: "$86",
     icon: Clock,
   },
 ];
@@ -131,7 +137,7 @@ const Marketplace = () => {
               </div>
               <div>
                 <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">Est. Market Price</p>
-                <p className="text-lg font-mono font-semibold text-foreground tabular-nums mt-1">$0.19<span className="text-xs text-muted-foreground">/hr</span></p>
+                <p className="text-lg font-mono font-semibold text-foreground tabular-nums mt-1">$0.19<span className="text-xs text-muted-foreground">/GPU-hour</span></p>
               </div>
             </div>
             <div className="mt-4 flex items-center gap-2">
@@ -237,7 +243,7 @@ const Marketplace = () => {
                   <div className="flex items-center justify-between mb-4">
                     <BatchCountdown />
                     <span className="font-mono text-[9px] text-muted-foreground">
-                      24h vol: <span className="text-foreground/60">{product.volume24h}</span>
+                      24h vol: <span className="text-foreground/60">{product.volume24h}</span> <span className="text-muted-foreground/50">({product.volumeUsd})</span>
                     </span>
                   </div>
 

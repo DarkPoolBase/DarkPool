@@ -30,7 +30,7 @@ const stats = [
   { label: "24h Volume", value: "12,450 GPU-hours ($2,487.50)" },
   { label: "Active Providers", value: "387" },
   { label: "Total GPUs Available", value: "1,240" },
-  { label: "Avg Clearing Price", value: "$0.19/GPU-hr" },
+  { label: "Avg Clearing Price", value: "$0.19/GPU-hour" },
   { label: "Price Range (24h)", value: "$0.15 - $0.28" },
   { label: "Orders Matched", value: "892" },
 ];

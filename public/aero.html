@@ -660,144 +660,149 @@ document.addEventListener('DOMContentLoaded', function() {
             ctx.strokeStyle = '#000'; ctx.stroke();
         });
 
-        // Auto Layout Visualization
-        setupCanvas('canvas-nodes', (ctx, t) => {
-            const w = 140 + Math.sin(t * 2) * 40;
-            const h = 200;
-            
-            ctx.translate(-w/2, -h/2);
-            
-            // Draw container bounding box
-            ctx.strokeStyle = 'rgba(255,255,255,0.3)';
-            ctx.setLineDash([4, 4]);
-            ctx.strokeRect(0, 0, w, h);
-            ctx.setLineDash([]);
-            
-            // Draw layout guides
-            ctx.strokeStyle = 'rgba(255,255,255,0.05)';
-            ctx.strokeRect(10, 10, w - 20, h - 20);
-            
-            // Header
-            ctx.fillStyle = 'rgba(255,255,255,0.1)';
-            ctx.fillRect(10, 10, w - 20, 20);
-            
-            // Reflowing items
-            const padding = 10;
-            const gap = 10;
-            const availableW = w - padding * 2;
-            
-            ctx.fillStyle = 'rgba(139,92,246,0.4)';
-            ctx.strokeStyle = 'rgba(139,92,246,0.8)';
-            
-            if (availableW > 120) {
-                // 2 columns
-                const itemW = (availableW - gap) / 2;
-                ctx.fillRect(padding, 40, itemW, 60);
-                ctx.strokeRect(padding, 40, itemW, 60);
-                
-                ctx.fillRect(padding + itemW + gap, 40, itemW, 60);
-                ctx.strokeRect(padding + itemW + gap, 40, itemW, 60);
-                
-                ctx.fillRect(padding, 110, itemW, 60);
-                ctx.strokeRect(padding, 110, itemW, 60);
-                
-                ctx.fillRect(padding + itemW + gap, 110, itemW, 60);
-                ctx.strokeRect(padding + itemW + gap, 110, itemW, 60);
-            } else {
-                // 1 column
-                ctx.fillRect(padding, 40, availableW, 30);
-                ctx.strokeRect(padding, 40, availableW, 30);
-                
-                ctx.fillRect(padding, 80, availableW, 30);
-                ctx.strokeRect(padding, 80, availableW, 30);
-                
-                ctx.fillRect(padding, 120, availableW, 30);
-                ctx.strokeRect(padding, 120, availableW, 30);
-                
-                ctx.fillRect(padding, 160, availableW, 30);
-                ctx.strokeRect(padding, 160, availableW, 30);
-            }
-            
-            // Dimensions label
-            ctx.fillStyle = 'rgba(255,255,255,0.5)';
-            ctx.font = '10px monospace';
-            ctx.textAlign = 'center';
-            ctx.fillText(`${Math.round(w)}px`, w/2, -8);
-        });
+        // ===== COMPUTE-01: Order Matching Animation =====
+        (function() {
+          const blocks = document.querySelectorAll('.order-block');
+          const bar = document.querySelector('.clearing-bar');
+          if (!blocks.length || !bar) return;
 
-        // Interactive Component State
-        setupCanvas('canvas-flow', (ctx, t) => {
-            const hover = Math.sin(t * 2.5) > 0;
-            const click = Math.sin(t * 2.5) > 0.8;
-            
-            const scale = click ? 0.95 : (hover ? 1.05 : 1);
-            const w = 120 * scale;
-            const h = 40 * scale;
-            
-            ctx.translate(-w/2, -h/2);
-            
-            // Base shadow
-            ctx.shadowColor = hover ? 'rgba(139, 92, 246, 0.4)' : 'transparent';
-            ctx.shadowBlur = 15;
-            ctx.shadowOffsetY = 5;
-            
-            ctx.fillStyle = hover ? 'rgba(139, 92, 246, 0.9)' : 'rgba(255,255,255,0.05)';
-            ctx.strokeStyle = hover ? 'rgba(139, 92, 246, 1)' : 'rgba(255,255,255,0.2)';
-            ctx.lineWidth = 1;
-            
-            drawRoundRect(ctx, 0, 0, w, h, 6);
-            ctx.fill();
-            ctx.stroke();
-            
-            ctx.shadowColor = 'transparent';
-            
-            ctx.fillStyle = hover ? '#ffffff' : 'rgba(255,255,255,0.5)';
-            ctx.font = '12px Inter, sans-serif';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(hover ? 'Hover State' : 'Default State', w/2, h/2);
-            
-            if (hover && !click) {
-                ctx.strokeStyle = '#a78bfa';
-                ctx.setLineDash([2, 2]);
-                ctx.strokeRect(-6, -6, w+12, h+12);
-                ctx.setLineDash([]);
-                
-                ctx.fillStyle = '#fff';
-                ctx.strokeStyle = '#a78bfa';
-                const drawHandle = (x, y) => {
-                    ctx.fillRect(x-3, y-3, 6, 6);
-                    ctx.strokeRect(x-3, y-3, 6, 6);
-                };
-                drawHandle(-6, -6);
-                drawHandle(w+6, -6);
-                drawHandle(-6, h+6);
-                drawHandle(w+6, h+6);
-                
-                ctx.fillStyle = '#a78bfa';
-                ctx.font = '9px monospace';
-                ctx.fillText('Padding: 16px', w/2, -15);
-            }
-            
-            const curX = hover ? w/2 + (click ? 0 : 10) : w + 40;
-            const curY = hover ? h/2 + (click ? 0 : 10) : h + 40;
-            
-            ctx.save();
-            ctx.translate(curX, curY);
-            if (click) ctx.scale(0.8, 0.8);
-            ctx.beginPath();
-            ctx.moveTo(0, 0);
-            ctx.lineTo(15, 10);
-            ctx.lineTo(5, 12);
-            ctx.lineTo(0, 20);
-            ctx.closePath();
-            ctx.fillStyle = '#fff';
-            ctx.fill();
-            ctx.strokeStyle = '#000';
-            ctx.lineWidth = 1;
-            ctx.stroke();
-            ctx.restore();
-        });
+          const originals = [];
+          blocks.forEach(b => {
+            originals.push({ top: b.style.top, left: b.style.left, opacity: '1' });
+          });
+
+          function runCycle() {
+            // Phase 1: Reset — blocks scattered, bar hidden
+            bar.style.opacity = '0';
+            bar.style.boxShadow = '0 0 0px rgba(108,60,233,0)';
+            blocks.forEach((b, i) => {
+              b.style.transition = 'none';
+              b.style.top = originals[i].top;
+              b.style.left = originals[i].left;
+              b.style.opacity = '0';
+            });
+
+            // Phase 2: Fade in scattered (0-2s)
+            blocks.forEach((b, i) => {
+              setTimeout(() => {
+                b.style.transition = 'opacity 0.4s ease';
+                b.style.opacity = '1';
+              }, i * 200);
+            });
+
+            // Phase 3: Slide to center (2s-3.5s)
+            setTimeout(() => {
+              blocks.forEach((b) => {
+                b.style.transition = 'all 1s cubic-bezier(0.4,0,0.2,1)';
+                b.style.top = 'calc(50% - 12px)';
+                b.style.left = 'calc(50% - 20px)';
+                b.style.opacity = '0';
+              });
+            }, 2000);
+
+            // Phase 4: Show clearing bar (3.5s)
+            setTimeout(() => {
+              bar.style.opacity = '1';
+            }, 3200);
+
+            // Phase 5: Purple glow pulse (4s)
+            setTimeout(() => {
+              bar.style.boxShadow = '0 0 20px rgba(108,60,233,0.7), 0 0 40px rgba(108,60,233,0.3)';
+            }, 3800);
+
+            // Phase 6: Fade glow and reset (5.5s)
+            setTimeout(() => {
+              bar.style.boxShadow = '0 0 0px rgba(108,60,233,0)';
+              bar.style.opacity = '0';
+            }, 5200);
+
+            // Restart at 6s
+            setTimeout(runCycle, 6000);
+          }
+          runCycle();
+        })();
+
+        // ===== ESCROW-02: USDC Coin Drop Animation =====
+        (function() {
+          const coin = document.querySelector('.escrow-coin');
+          if (!coin) return;
+
+          function runCycle() {
+            // Reset: coin at top
+            coin.style.transition = 'none';
+            coin.style.top = '-8px';
+            coin.style.left = '50%';
+            coin.style.transform = 'translateX(-50%)';
+            coin.style.opacity = '1';
+
+            // Drop into vault (0-0.8s)
+            setTimeout(() => {
+              coin.style.transition = 'top 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)';
+              coin.style.top = 'calc(50% - 16px)';
+            }, 200);
+
+            // Hold inside vault for 1.5s (0.8s-2.3s)
+
+            // Slide out right and fade (2.3s-3.3s)
+            setTimeout(() => {
+              coin.style.transition = 'left 0.8s ease-in, opacity 0.8s ease-in, transform 0.8s ease-in';
+              coin.style.left = '110%';
+              coin.style.opacity = '0';
+            }, 2500);
+
+            // Restart at 4s
+            setTimeout(runCycle, 4000);
+          }
+          runCycle();
+        })();
+
+        // ===== AGENT-03: Typewriter Terminal Animation =====
+        (function() {
+          const lines = document.querySelectorAll('.agent-line');
+          if (!lines.length) return;
+
+          function runCycle() {
+            // Clear all lines
+            lines.forEach(l => {
+              l.textContent = '';
+              l.style.textShadow = 'none';
+            });
+
+            let totalDelay = 0;
+
+            lines.forEach((line, lineIdx) => {
+              const text = line.dataset.text;
+              const lineDelay = totalDelay;
+
+              for (let i = 0; i <= text.length; i++) {
+                setTimeout(() => {
+                  line.textContent = text.substring(0, i) + (i < text.length ? '█' : '');
+                }, lineDelay + i * 35);
+              }
+
+              // Remove cursor after typing
+              setTimeout(() => {
+                line.textContent = text;
+              }, lineDelay + text.length * 35 + 100);
+
+              totalDelay += text.length * 35 + 500; // 0.5s pause between lines
+            });
+
+            // Green glow on last line
+            const lastLine = lines[lines.length - 1];
+            setTimeout(() => {
+              lastLine.style.textShadow = '0 0 8px rgba(74,222,128,0.5)';
+            }, totalDelay);
+
+            // Hold for 1.5s then restart
+            setTimeout(() => {
+              lastLine.style.textShadow = 'none';
+            }, totalDelay + 1200);
+
+            setTimeout(runCycle, totalDelay + 1800);
+          }
+          runCycle();
+        })();
 </script>
 
 </section>

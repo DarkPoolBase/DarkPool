@@ -123,7 +123,7 @@ const ProductDetail = () => {
   const estTotal = (quantity[0] * parseFloat(currentPrice || "0")).toFixed(2);
 
   return (
-    <div className="space-y-6 max-w-6xl">
+    <div className="space-y-6 max-w-7xl">
       {/* Back nav */}
       <button
         onClick={() => navigate("/marketplace")}

@@ -39,7 +39,7 @@ const Analytics = () => {
   const [timeframe, setTimeframe] = useState("1W");
 
   return (
-    <div className="space-y-6 max-w-6xl relative">
+    <div className="space-y-6 max-w-7xl relative">
       <GlowBlob className="-top-20 right-0 opacity-30" color="purple" size="lg" />
 
       <div>

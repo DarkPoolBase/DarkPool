@@ -26,17 +26,17 @@ const Dashboard = () => {
   const [tab, setTab] = useState<"overview" | "savings">("overview");
 
   return (
-    <div className="space-y-8 max-w-[1440px] relative">
+    <div className="space-y-6 md:space-y-8 max-w-[1440px] relative">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
         <div>
           <h1 className="text-2xl md:text-3xl font-thin tracking-tight text-white">Dashboard</h1>
           <p className="text-sm text-white/30 mt-2 font-mono text-[11px]">Portfolio overview · Market activity · GPU compute</p>
         </div>
-        <div className="flex gap-1 p-1 bg-white/[0.03] border border-white/[0.06] rounded-lg">
+        <div className="flex gap-1 p-1 bg-white/[0.03] border border-white/[0.06] rounded-lg w-full sm:w-auto">
           <button
             onClick={() => setTab("overview")}
-            className={`px-4 py-2 text-[10px] font-mono uppercase tracking-wider rounded-md transition-all duration-300 ${
+            className={`flex-1 sm:flex-initial px-3 md:px-4 py-2 text-[10px] font-mono uppercase tracking-wider rounded-md transition-all duration-300 ${
               tab === "overview"
                 ? "text-white bg-white/[0.06] border border-white/10"
                 : "text-white/30 border border-transparent hover:text-white/60"
@@ -46,14 +46,14 @@ const Dashboard = () => {
           </button>
           <button
             onClick={() => setTab("savings")}
-            className={`px-4 py-2 text-[10px] font-mono uppercase tracking-wider rounded-md transition-all duration-300 flex items-center gap-1.5 ${
+            className={`flex-1 sm:flex-initial px-3 md:px-4 py-2 text-[10px] font-mono uppercase tracking-wider rounded-md transition-all duration-300 flex items-center justify-center gap-1.5 ${
               tab === "savings"
                 ? "text-white bg-white/[0.06] border border-white/10"
                 : "text-white/30 border border-transparent hover:text-white/60"
             }`}
           >
             <Calculator className="w-3 h-3" />
-            Savings Calculator
+            Savings
           </button>
         </div>
       </div>
@@ -86,13 +86,13 @@ const Dashboard = () => {
       </div>
 
       {/* Portfolio Chart — 24px padding */}
-      <GlassCard delay={0.15} className="p-6">
-        <div className="flex items-center justify-between mb-6">
+      <GlassCard delay={0.15} className="p-4 md:p-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 md:mb-6 gap-3">
           <div>
             <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40 block mb-2">Portfolio Value</span>
-            <div className="flex items-end gap-4">
-              <AnimatedNumber value={2450} prefix="$" decimals={2} className="text-3xl font-mono font-semibold tracking-tight text-white tabular-nums" />
-              <span className="inline-flex items-center px-2 py-1 rounded-full text-[10px] font-mono font-medium border bg-emerald-500/10 text-emerald-400 border-emerald-500/20 mb-1">
+            <div className="flex items-end gap-3">
+              <AnimatedNumber value={2450} prefix="$" decimals={2} className="text-2xl md:text-3xl font-mono font-semibold tracking-tight text-white tabular-nums" />
+              <span className="inline-flex items-center px-2 py-1 rounded-full text-[10px] font-mono font-medium border bg-emerald-500/10 text-emerald-400 border-emerald-500/20 mb-0.5">
                 +8.2% (7d)
               </span>
             </div>
@@ -101,7 +101,7 @@ const Dashboard = () => {
             {["1D", "1W", "1M", "ALL"].map((tf, i) => (
               <button
                 key={tf}
-                className={`px-4 py-2 text-[10px] font-mono tracking-wider rounded-full border transition-all duration-300 ${
+                className={`px-3 md:px-4 py-1.5 md:py-2 text-[10px] font-mono tracking-wider rounded-full border transition-all duration-300 ${
                   i === 1
                     ? "text-white bg-white/[0.06] border-white/10"
                     : "text-white/30 border-transparent hover:text-white/60 hover:bg-white/[0.03]"
@@ -113,7 +113,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="h-[224px]">
+        <div className="h-[180px] md:h-[224px]">
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={portfolioData}>
               <defs>

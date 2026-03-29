@@ -86,13 +86,13 @@ const Dashboard = () => {
       </div>
 
       {/* Portfolio Chart — 24px padding */}
-      <GlassCard delay={0.15} className="p-6">
-        <div className="flex items-center justify-between mb-6">
+      <GlassCard delay={0.15} className="p-4 md:p-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 md:mb-6 gap-3">
           <div>
             <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40 block mb-2">Portfolio Value</span>
-            <div className="flex items-end gap-4">
-              <AnimatedNumber value={2450} prefix="$" decimals={2} className="text-3xl font-mono font-semibold tracking-tight text-white tabular-nums" />
-              <span className="inline-flex items-center px-2 py-1 rounded-full text-[10px] font-mono font-medium border bg-emerald-500/10 text-emerald-400 border-emerald-500/20 mb-1">
+            <div className="flex items-end gap-3">
+              <AnimatedNumber value={2450} prefix="$" decimals={2} className="text-2xl md:text-3xl font-mono font-semibold tracking-tight text-white tabular-nums" />
+              <span className="inline-flex items-center px-2 py-1 rounded-full text-[10px] font-mono font-medium border bg-emerald-500/10 text-emerald-400 border-emerald-500/20 mb-0.5">
                 +8.2% (7d)
               </span>
             </div>
@@ -101,7 +101,7 @@ const Dashboard = () => {
             {["1D", "1W", "1M", "ALL"].map((tf, i) => (
               <button
                 key={tf}
-                className={`px-4 py-2 text-[10px] font-mono tracking-wider rounded-full border transition-all duration-300 ${
+                className={`px-3 md:px-4 py-1.5 md:py-2 text-[10px] font-mono tracking-wider rounded-full border transition-all duration-300 ${
                   i === 1
                     ? "text-white bg-white/[0.06] border-white/10"
                     : "text-white/30 border-transparent hover:text-white/60 hover:bg-white/[0.03]"

@@ -126,7 +126,7 @@ const Dashboard = () => {
         {[
           { label: "24h Volume", value: "12,450 GPU-hrs", icon: TrendingUp },
           { label: "Active Providers", value: "387", icon: Zap },
-          { label: "Avg Clearing Price", value: "$0.19/hr", icon: BarChart3 },
+          { label: "Avg Clearing Price", value: "$0.19/GPU-hour", icon: BarChart3 },
           { label: "Orders Matched", value: "892", icon: CheckCircle },
         ].map((stat, i) => (
           <GlassCard key={stat.label} delay={0.5 + i * 0.05} className="p-4">

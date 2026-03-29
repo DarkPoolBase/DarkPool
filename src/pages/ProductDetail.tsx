@@ -76,7 +76,7 @@ const productData: Record<string, {
     ],
   },
   "h100-block": {
-    name: "24h H100 Block", label: "Reserved Compute", price: "$4.80/block", priceNum: 4.80,
+    name: "24h H100 Block", label: "Reserved Compute", price: "$4.80/GPU-hour", priceNum: 4.80,
     providers: 31, vram: "80GB HBM3", workloads: ["Long Training Runs", "Pre-training", "Research", "Continuous Inference"],
     availability: 56, icon: Clock,
     description: "24-hour reserved H100 compute blocks for uninterrupted workloads. Guaranteed availability with encrypted reservation flow.",

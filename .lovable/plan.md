@@ -1,39 +1,47 @@
 
 
-## Resize Product Detail Bentos to Fill Full Page Width
+## Make Price History Full-Width and Redesign Order Ticket Below It
 
 ### Problem
-The current layout uses a 2/3 + 1/3 grid (`lg:grid-cols-3` with `lg:col-span-2` for charts). The charts and info sections only fill ~66% of the page, leaving wasted space. Below the order ticket, the left-column bentos continue at 2/3 width with empty space on the right.
+The Price History chart sits in a 2/3 column with the Order Ticket beside it, leaving empty space below the chart. The Order Ticket is a tall sticky sidebar creating visual imbalance.
 
-### Solution
-Restructure the layout so the order ticket sits beside the hero/price chart at the top, and all remaining bento sections span the full page width below.
-
-### Layout Structure
+### New Layout
 
 ```text
-┌─────────────────────────────────┬──────────────┐
-│  Price History Chart            │  Order Ticket │
-│  (2/3 width)                    │  (1/3, sticky)│
-├─────────────────────────────────┴──────────────┤
-│  Supply vs Demand  (full width)                 │
-├────────────┬────────────┬──────────────────────┤
-│  Provider Quality       │  Recent Settlements   │
-│  (1/2 width)            │  (1/2 width)          │
+┌─────────────────────────────────────────────────┐
+│  Price History Chart (full width, taller)        │
 ├─────────────────────────────────────────────────┤
-│  Privacy & Fair Execution (full width, 3-col)   │
+│  Order Ticket — horizontal redesign (full width) │
+│  ┌──────────┬──────────┬──────────┬────────────┐│
+│  │ BUY/SELL │ Quantity │ Price    │ Submit Btn  ││
+│  │ toggle   │ + preset │ + dur.  │ + est total ││
+│  └──────────┴──────────┴──────────┴────────────┘│
+├─────────────────────────────────────────────────┤
+│  Supply vs Demand (full width)                   │
+│  ... rest unchanged ...                          │
 └─────────────────────────────────────────────────┘
 ```
 
 ### Changes — `src/pages/ProductDetail.tsx`
 
-1. **Remove `max-w-[1440px]`** from the outer container — let the dashboard layout control max width.
+1. **Price History** — Remove the `lg:grid-cols-3` wrapper. Make the chart a standalone full-width `GlassCard` with height increased to `h-[280px]`.
 
-2. **Keep the 3-column grid** (lines 172–400) but move only the Price History chart + Order Ticket into it. End the grid after those two items.
+2. **Order Ticket** — Redesign as a full-width horizontal card below the chart:
+   - Use a `grid grid-cols-1 md:grid-cols-4 gap-6` layout inside a single `GlassCard`
+   - **Column 1**: BUY/SELL toggle + GPU type display
+   - **Column 2**: Quantity slider with preset buttons
+   - **Column 3**: Price input + Duration select
+   - **Column 4**: Est. Total, Submit button, privacy note
+   - Remove `sticky top-8` since it's no longer a sidebar
+   - Keep the same animated BUY/SELL toggle, same styling tokens
 
-3. **Move the remaining sections** (Supply vs Demand, Provider Quality, Recent Settlements, Privacy) outside the grid so they span full width:
-   - Supply vs Demand: full width
-   - Provider Quality + Recent Settlements: side by side in a `grid-cols-2` layout
-   - Privacy & Fair Execution: full width, keeping its internal 3-column grid
+3. No changes to sections below (Supply vs Demand, Provider Quality, Settlements, Privacy).
 
-4. **Increase chart heights** from `h-[200px]` to `h-[280px]` for the Supply vs Demand chart since it now has full width.
+### Technical Details
+
+| Action | Location | Details |
+|--------|----------|---------|
+| Edit | Lines 172–299 | Replace the `lg:grid-cols-3` grid with two sequential full-width `GlassCard` blocks |
+| Increase | Chart height | `h-[200px]` → `h-[280px]` |
+| Redesign | Order ticket | Horizontal 4-column grid layout inside single card |
 

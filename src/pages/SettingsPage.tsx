@@ -13,7 +13,7 @@ const SettingsPage = () => {
       </div>
 
       {/* Wallet */}
-      <GlassCard delay={0.1} className="p-6 space-y-4">
+      <GlassCard delay={0.1} className="p-6 space-y-6">
         <SectionLabel>Connected Wallet</SectionLabel>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
@@ -30,7 +30,7 @@ const SettingsPage = () => {
       </GlassCard>
 
       {/* API Keys */}
-      <GlassCard delay={0.2} gradient className="p-6 space-y-4">
+      <GlassCard delay={0.2} gradient className="p-6 space-y-6">
         <SectionLabel>API Keys</SectionLabel>
         {[
           { label: "Production Key", key: "sk_live_****************************" },
@@ -55,7 +55,7 @@ const SettingsPage = () => {
       </GlassCard>
 
       {/* Notifications */}
-      <GlassCard delay={0.3} className="p-6 space-y-4">
+      <GlassCard delay={0.3} className="p-6 space-y-6">
         <SectionLabel>Notification Preferences</SectionLabel>
         {[
           { label: "Order filled", defaultChecked: true },

@@ -1,47 +1,45 @@
 
 
-## Make Price History Full-Width and Redesign Order Ticket Below It
+## Redesign Private Order Section
 
 ### Problem
-The Price History chart sits in a 2/3 column with the Order Ticket beside it, leaving empty space below the chart. The Order Ticket is a tall sticky sidebar creating visual imbalance.
+The current Private Order ticket (lines 205–295) is a 4-column grid that feels cramped and poorly structured — the columns don't have clear visual hierarchy, the Buy/Sell toggle is squeezed alongside GPU info, and the Est. Total / Submit area lacks prominence.
 
-### New Layout
+### New Design
 
 ```text
-┌─────────────────────────────────────────────────┐
-│  Price History Chart (full width, taller)        │
-├─────────────────────────────────────────────────┤
-│  Order Ticket — horizontal redesign (full width) │
-│  ┌──────────┬──────────┬──────────┬────────────┐│
-│  │ BUY/SELL │ Quantity │ Price    │ Submit Btn  ││
-│  │ toggle   │ + preset │ + dur.  │ + est total ││
-│  └──────────┴──────────┴──────────┴────────────┘│
-├─────────────────────────────────────────────────┤
-│  Supply vs Demand (full width)                   │
-│  ... rest unchanged ...                          │
-└─────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────┐
+│  PRIVATE ORDER                                               │
+│                                                              │
+│  ┌─────────── BUY ──────────┬─────────── SELL ─────────────┐│
+│  │          (full-width animated toggle)                     ││
+│  └───────────────────────────┴──────────────────────────────┘│
+│                                                              │
+│  ┌──── GPU Type ────┬──── Quantity ────┬──── Price/Dur ────┐ │
+│  │ H100 · 80GB HBM3 │ Slider + presets │ Price + Duration  │ │
+│  └──────────────────┴─────────────────┴───────────────────┘ │
+│                                                              │
+│  ┌──── Summary Bar ────────────────────────────────────────┐ │
+│  │ 24 GPU-hrs × $0.21 = $5.04 USDC  [Submit Encrypted Order]│ │
+│  └─────────────────────────────────────────────────────────┘ │
+│  Orders remain encrypted until verified settlement.          │
+└─────────────────────────────────────────────────────────────┘
 ```
 
-### Changes — `src/pages/ProductDetail.tsx`
+### Changes — `src/pages/ProductDetail.tsx` (lines 205–295)
 
-1. **Price History** — Remove the `lg:grid-cols-3` wrapper. Make the chart a standalone full-width `GlassCard` with height increased to `h-[280px]`.
+1. **Full-width Buy/Sell toggle** — Move out of the 4-col grid, make it a standalone row at the top with larger touch targets (`py-3`, `text-base`).
 
-2. **Order Ticket** — Redesign as a full-width horizontal card below the chart:
-   - Use a `grid grid-cols-1 md:grid-cols-4 gap-6` layout inside a single `GlassCard`
-   - **Column 1**: BUY/SELL toggle + GPU type display
-   - **Column 2**: Quantity slider with preset buttons
-   - **Column 3**: Price input + Duration select
-   - **Column 4**: Est. Total, Submit button, privacy note
-   - Remove `sticky top-8` since it's no longer a sidebar
-   - Keep the same animated BUY/SELL toggle, same styling tokens
+2. **3-column form grid** — Replace the 4-col layout with a cleaner 3-column grid:
+   - **Col 1**: GPU type card (name + VRAM + market label)
+   - **Col 2**: Quantity slider with preset buttons
+   - **Col 3**: Price input + Duration select (stacked)
 
-3. No changes to sections below (Supply vs Demand, Provider Quality, Settlements, Privacy).
+3. **Summary + Submit bar** — A full-width bottom row with:
+   - Left: breakdown text like "24 GPU-hrs × $0.21/hr"
+   - Center: Est. Total prominently displayed
+   - Right: Submit button (full gradient CTA)
+   - Below: privacy note centered
 
-### Technical Details
-
-| Action | Location | Details |
-|--------|----------|---------|
-| Edit | Lines 172–299 | Replace the `lg:grid-cols-3` grid with two sequential full-width `GlassCard` blocks |
-| Increase | Chart height | `h-[200px]` → `h-[280px]` |
-| Redesign | Order ticket | Horizontal 4-column grid layout inside single card |
+4. **Consistent 8-point spacing** — `gap-6` between major sections, `space-y-4` within columns, `p-6` card padding.
 

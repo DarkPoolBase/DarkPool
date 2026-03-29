@@ -49,21 +49,21 @@ export function GlassCard({
         mass: 0.6,
         delay,
       }}
-      style={{ willChange: "transform, opacity" }}
+      style={{
+        willChange: "transform, opacity",
+        boxShadow: glow
+          ? "0 8px 32px rgba(0,0,0,0.2), 0 0 30px rgba(108,60,233,0.15)"
+          : "0 8px 32px rgba(0,0,0,0.2)",
+      }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       className={cn(
         "relative rounded-2xl bg-white/[0.04] backdrop-blur-xl overflow-hidden",
         "border border-white/[0.06]",
-        "hover:border-white/[0.1] transition-all duration-500",
+        "hover:border-white/[0.1] transition-[border-color] duration-500",
         glow && "shadow-[0_0_30px_rgba(108,60,233,0.15)]",
         className
       )}
-      style={{
-        boxShadow: glow
-          ? "0 8px 32px rgba(0,0,0,0.2), 0 0 30px rgba(108,60,233,0.15)"
-          : "0 8px 32px rgba(0,0,0,0.2)",
-      }}
       {...props}
     >
       {/* Mouse-following border glow */}

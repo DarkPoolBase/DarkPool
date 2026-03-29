@@ -5,7 +5,7 @@ import React, { useRef, useCallback } from "react";
 interface GlassCardProps extends HTMLMotionProps<"div"> {
   glow?: boolean;
   gradient?: boolean;
-  corners?: boolean;
+  corners?: boolean; // deprecated, kept for API compat but no longer renders
   delay?: number;
   children: React.ReactNode;
 }

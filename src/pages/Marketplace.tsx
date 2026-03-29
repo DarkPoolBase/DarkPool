@@ -6,15 +6,17 @@ import { motion } from "framer-motion";
 import { AuctionTimer } from "@/components/dashboard/AuctionTimer";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
+type MarketCategory = "spot" | "reserved" | "credits" | "clusters";
+
 const computeProducts = [
   {
     id: "h100",
     name: "NVIDIA H100",
-    label: "Private Compute",
+    category: "spot" as MarketCategory,
     price: "$0.21/GPU-hour",
+    subtitle: "Best for training",
     providers: 47,
     vram: "80GB HBM3",
-    workloads: "Training · Inference",
     availability: 92,
     badge: "Most Liquid",
     volume24h: "1,240 GPU-hrs",
@@ -24,13 +26,13 @@ const computeProducts = [
   {
     id: "a100",
     name: "NVIDIA A100",
-    label: "Private Compute",
+    category: "spot" as MarketCategory,
     price: "$0.15/GPU-hour",
+    subtitle: "Best for fine-tuning",
     providers: 89,
     vram: "80GB HBM2e",
-    workloads: "Training · Fine-tuning",
     availability: 78,
-    badge: "Active Market",
+    badge: "Low Price",
     volume24h: "2,870 GPU-hrs",
     volumeUsd: "$430",
     icon: Server,
@@ -38,25 +40,67 @@ const computeProducts = [
   {
     id: "rtx4090",
     name: "RTX 4090",
-    label: "Private Compute",
+    category: "spot" as MarketCategory,
     price: "$0.08/GPU-hour",
+    subtitle: "Lowest cost inference",
     providers: 234,
     vram: "24GB GDDR6X",
-    workloads: "Inference · Batch Jobs",
     availability: 65,
-    badge: null,
+    badge: "High Demand",
     volume24h: "4,120 GPU-hrs",
     volumeUsd: "$330",
     icon: Zap,
   },
   {
+    id: "h100-block",
+    name: "24h H100 Block",
+    category: "reserved" as MarketCategory,
+    price: "$4.80/GPU-hour",
+    subtitle: "Guaranteed capacity",
+    providers: 31,
+    vram: "80GB HBM3",
+    availability: 56,
+    badge: "Fast Fill",
+    volume24h: "18 blocks",
+    volumeUsd: "$86",
+    icon: Clock,
+  },
+  {
+    id: "a100-block",
+    name: "48h A100 Block",
+    category: "reserved" as MarketCategory,
+    price: "$3.20/GPU-hour",
+    subtitle: "Extended training runs",
+    providers: 24,
+    vram: "80GB HBM2e",
+    availability: 42,
+    badge: null,
+    volume24h: "12 blocks",
+    volumeUsd: "$61",
+    icon: Clock,
+  },
+  {
+    id: "compute-credits",
+    name: "Compute Credits",
+    category: "credits" as MarketCategory,
+    price: "$0.18/GPU-hour",
+    subtitle: "Any workload, flexible",
+    providers: 387,
+    vram: "Flexible",
+    availability: 100,
+    badge: "Most Liquid",
+    volume24h: "8,450 units",
+    volumeUsd: "$1,521",
+    icon: Activity,
+  },
+  {
     id: "multi-gpu",
     name: "Multi-GPU Cluster",
-    label: "Training Cluster",
+    category: "clusters" as MarketCategory,
     price: "$1.40/GPU-hour",
+    subtitle: "Distributed training",
     providers: 12,
     vram: "8×H100 (640GB)",
-    workloads: "Distributed Training",
     availability: 34,
     badge: "Fast Fill",
     volume24h: "96 GPU-hrs",
@@ -64,32 +108,18 @@ const computeProducts = [
     icon: Layers,
   },
   {
-    id: "compute-credits",
-    name: "Compute Credits",
-    label: "Prepaid Compute",
-    price: "$0.18/GPU-hour",
-    providers: 387,
-    vram: "Flexible",
-    workloads: "Any Workload",
-    availability: 100,
+    id: "a100-cluster",
+    name: "A100 Cluster",
+    category: "clusters" as MarketCategory,
+    price: "$0.95/GPU-hour",
+    subtitle: "Cost-efficient scale",
+    providers: 18,
+    vram: "4×A100 (320GB)",
+    availability: 48,
     badge: null,
-    volume24h: "8,450 units",
-    volumeUsd: "$1,521",
-    icon: Activity,
-  },
-  {
-    id: "h100-block",
-    name: "24h H100 Block",
-    label: "Reserved Compute",
-    price: "$4.80/GPU-hour",
-    providers: 31,
-    vram: "80GB HBM3",
-    workloads: "Long Training Runs",
-    availability: 56,
-    badge: null,
-    volume24h: "18 blocks",
-    volumeUsd: "$86",
-    icon: Clock,
+    volume24h: "144 GPU-hrs",
+    volumeUsd: "$137",
+    icon: Layers,
   },
 ];
 
@@ -98,6 +128,13 @@ const recentSettlements = [
   { pair: "A100 / USDC", qty: "120 GPU-hrs", price: "$0.14", time: "4m ago" },
   { pair: "RTX 4090 / USDC", qty: "72 GPU-hrs", price: "$0.09", time: "7m ago" },
   { pair: "H100 / USDC", qty: "24 GPU-hrs", price: "$0.22", time: "11m ago" },
+];
+
+const categories: { key: MarketCategory; label: string }[] = [
+  { key: "spot", label: "Spot Markets" },
+  { key: "reserved", label: "Reserved Blocks" },
+  { key: "credits", label: "Credits" },
+  { key: "clusters", label: "Clusters" },
 ];
 
 const BatchCountdown = () => {
@@ -114,8 +151,21 @@ const BatchCountdown = () => {
   );
 };
 
+const badgeColor = (badge: string) => {
+  switch (badge) {
+    case "Most Liquid": return "bg-emerald-500/10 text-emerald-400 border-emerald-500/20";
+    case "Low Price": return "bg-sky-500/10 text-sky-400 border-sky-500/20";
+    case "High Demand": return "bg-amber-500/10 text-amber-400 border-amber-500/20";
+    case "Fast Fill": return "bg-primary/10 text-primary border-primary/20";
+    default: return "bg-emerald-500/10 text-emerald-400 border-emerald-500/20";
+  }
+};
+
 const Marketplace = () => {
   const navigate = useNavigate();
+  const [activeCategory, setActiveCategory] = useState<MarketCategory>("spot");
+
+  const filteredProducts = computeProducts.filter(p => p.category === activeCategory);
 
   return (
     <TooltipProvider>
@@ -188,80 +238,60 @@ const Marketplace = () => {
           </GlassCard>
         </div>
 
-        {/* Compute Products Grid */}
+        {/* Category Tabs + Products */}
         <div>
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground block mb-2">Private Compute Markets</span>
-              <p className="text-[11px] text-muted-foreground/60 font-mono">Encrypted bids · Batch auctions · USDC settlement on Base</p>
-            </div>
+          <div className="flex items-center gap-1 mb-6 p-1 rounded-xl bg-white/[0.03] border border-white/[0.06] w-fit">
+            {categories.map(cat => (
+              <button
+                key={cat.key}
+                onClick={() => setActiveCategory(cat.key)}
+                className={`px-4 py-2 rounded-lg font-mono text-[11px] transition-all duration-200 ${
+                  activeCategory === cat.key
+                    ? "bg-primary/15 text-primary border border-primary/20 shadow-sm shadow-primary/10"
+                    : "text-muted-foreground hover:text-foreground/70 border border-transparent"
+                }`}
+              >
+                {cat.label}
+                <span className="ml-2 text-[9px] opacity-60">{computeProducts.filter(p => p.category === cat.key).length}</span>
+              </button>
+            ))}
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {computeProducts.map((product, i) => (
+            {filteredProducts.map((product, i) => (
               <GlassCard
                 key={product.id}
-                delay={0.2 + i * 0.06}
+                delay={0.1 + i * 0.06}
                 className="p-0 cursor-pointer group flex flex-col"
                 onClick={() => navigate(`/marketplace/${product.id}`)}
               >
                 <div className="p-4 flex-1 flex flex-col">
-                  {/* Header */}
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex items-center gap-4">
+                  {/* Header: Name + Badge */}
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-xl bg-primary/[0.08] border border-primary/[0.12] flex items-center justify-center group-hover:bg-primary/[0.14] transition-colors duration-500">
                         <product.icon className="w-5 h-5 text-primary" />
                       </div>
                       <div>
                         <h3 className="text-sm font-medium text-foreground">{product.name}</h3>
-                        <span className="font-mono text-[10px] text-primary/70 tracking-wider">{product.label}</span>
+                        <span className="font-mono text-[10px] text-muted-foreground/60">{product.vram}</span>
                       </div>
                     </div>
                     {product.badge && (
-                      <span className="px-2 py-1 rounded-full text-[9px] font-mono font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                      <span className={`px-2 py-1 rounded-full text-[9px] font-mono font-medium border ${badgeColor(product.badge)}`}>
                         {product.badge.toUpperCase()}
                       </span>
                     )}
                   </div>
 
-                  {/* Price & Providers */}
-                  <div className="flex items-end justify-between mb-4">
-                    <div>
-                      <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-muted-foreground mb-1">Est. Clearing Price</p>
-                      <p className="font-mono text-xl font-semibold text-foreground tabular-nums">{product.price}</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-muted-foreground mb-1">Verified Providers</p>
-                      <p className="font-mono text-sm text-foreground/70 tabular-nums flex items-center justify-end gap-1">
-                        <Shield className="w-3 h-3 text-emerald-400/60" />
-                        {product.providers}
-                      </p>
-                    </div>
+                  {/* Price + Subtitle */}
+                  <div className="mb-3">
+                    <p className="font-mono text-xl font-semibold text-foreground tabular-nums">{product.price}</p>
+                    <p className="font-mono text-[10px] text-primary/60 mt-0.5">{product.subtitle}</p>
                   </div>
 
-                  {/* Batch countdown + 24h volume */}
-                  <div className="flex items-center justify-between mb-4">
-                    <BatchCountdown />
-                    <span className="font-mono text-[9px] text-muted-foreground">
-                      24h vol: <span className="text-foreground/60">{product.volume24h}</span> <span className="text-muted-foreground/50">({product.volumeUsd})</span>
-                    </span>
-                  </div>
-
-                  {/* Meta */}
-                  <div className="flex items-center gap-2 mb-4 flex-wrap">
-                    <span className="px-2 py-1 rounded-lg text-[10px] font-mono bg-white/[0.03] border border-white/[0.06] text-muted-foreground">
-                      {product.vram}
-                    </span>
-                    <span className="px-2 py-1 rounded-lg text-[10px] font-mono bg-white/[0.03] border border-white/[0.06] text-muted-foreground">
-                      {product.workloads}
-                    </span>
-                    <span className="px-2 py-1 rounded-lg text-[10px] font-mono bg-white/[0.03] border border-white/[0.06] text-muted-foreground">
-                      USDC on Base
-                    </span>
-                  </div>
-
-                  {/* Fill Likelihood bar */}
-                  <div className="space-y-2 mt-auto">
+                  {/* Fill Likelihood */}
+                  <div className="space-y-1.5 mb-3">
                     <div className="flex justify-between font-mono text-[10px] items-center">
                       <Tooltip>
                         <TooltipTrigger asChild>
@@ -274,7 +304,7 @@ const Marketplace = () => {
                           Probability your order fills in the next batch auction, based on current market depth and demand.
                         </TooltipContent>
                       </Tooltip>
-                      <span className={`${product.availability >= 70 ? "text-emerald-400" : product.availability >= 40 ? "text-amber-400" : "text-rose-400"}`}>
+                      <span className={`font-semibold ${product.availability >= 70 ? "text-emerald-400" : product.availability >= 40 ? "text-amber-400" : "text-rose-400"}`}>
                         {product.availability}%
                       </span>
                     </div>
@@ -282,7 +312,7 @@ const Marketplace = () => {
                       <motion.div
                         initial={{ width: 0 }}
                         animate={{ width: `${product.availability}%` }}
-                        transition={{ duration: 1, delay: 0.5 + i * 0.08 }}
+                        transition={{ duration: 1, delay: 0.3 + i * 0.08 }}
                         className={`h-full rounded-full ${
                           product.availability >= 70
                             ? "bg-gradient-to-r from-emerald-500 to-emerald-400/50"
@@ -293,13 +323,27 @@ const Marketplace = () => {
                       />
                     </div>
                   </div>
+
+                  {/* Providers + Batch timer */}
+                  <div className="flex items-center justify-between mb-3 mt-auto">
+                    <span className="font-mono text-[10px] text-muted-foreground flex items-center gap-1">
+                      <Shield className="w-3 h-3 text-emerald-400/60" />
+                      {product.providers} verified
+                    </span>
+                    <BatchCountdown />
+                  </div>
+
+                  {/* 24h Volume */}
+                  <div className="font-mono text-[9px] text-muted-foreground/60">
+                    24h vol: <span className="text-foreground/50">{product.volume24h}</span> <span className="text-muted-foreground/40">({product.volumeUsd})</span>
+                  </div>
                 </div>
 
-                {/* Footer CTA — Buy / Sell */}
+                {/* Footer: Buy (primary) / Sell (secondary) / View Market (tertiary) */}
                 <div className="px-4 py-2 border-t border-white/[0.04] flex items-center gap-2 group-hover:bg-white/[0.02] transition-colors duration-500">
                   <button
                     onClick={(e) => { e.stopPropagation(); navigate(`/marketplace/${product.id}?side=buy`); }}
-                    className="flex-1 py-2 rounded-lg text-[10px] font-mono font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20 transition-colors"
+                    className="flex-[2] py-2 rounded-lg text-[11px] font-mono font-semibold bg-emerald-500/15 text-emerald-400 border border-emerald-500/25 hover:bg-emerald-500/25 transition-colors"
                   >
                     Buy
                   </button>
@@ -309,10 +353,13 @@ const Marketplace = () => {
                   >
                     Sell
                   </button>
-                  <div className="ml-auto flex items-center gap-2">
-                    <span className="font-mono text-[9px] text-muted-foreground group-hover:text-foreground/70 transition-colors">Details</span>
-                    <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-0.5 transition-all duration-300" />
-                  </div>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); navigate(`/marketplace/${product.id}`); }}
+                    className="ml-auto flex items-center gap-1.5 px-2 py-2 text-[9px] font-mono text-muted-foreground hover:text-foreground/70 transition-colors"
+                  >
+                    View Market
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform duration-300" />
+                  </button>
                 </div>
               </GlassCard>
             ))}

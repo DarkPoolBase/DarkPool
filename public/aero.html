@@ -19,10 +19,10 @@ gtag('config', 'G-2M6V79H761');
 <!-- aura-ga4-end -->
 </head>
   <body class="min-h-screen selection:bg-indigo-500/30 selection:text-white antialiased overflow-x-hidden text-white font-['Inter'] bg-[#030305]">
-    <nav class="fixed flex z-50 font-['Inter'] bg-[#030305]/50 w-full border-white/5 border-b pt-6 pr-6 pb-6 pl-6 top-0 left-0 backdrop-blur-md items-center justify-between">
-      <a href="#" class="inline-flex items-center gap-2.5">
-        <img src="/images/darkpool-logo.png" alt="DARKPOOL" class="w-8 h-8 object-contain" />
-        <span class="font-['JetBrains_Mono'] text-[11px] font-semibold tracking-[0.15em] uppercase text-white/80">DARKPOOL</span>
+    <nav class="fixed flex z-50 font-['Inter'] bg-[#030305]/80 w-full border-white/5 border-b py-4 px-4 md:pt-6 md:pr-6 md:pb-6 md:pl-6 top-0 left-0 backdrop-blur-md items-center justify-between">
+      <a href="#" class="inline-flex items-center gap-2.5 z-10">
+        <img src="/images/darkpool-logo.png" alt="DARKPOOL" class="w-7 h-7 md:w-8 md:h-8 object-contain" />
+        <span class="font-['JetBrains_Mono'] text-[10px] md:text-[11px] font-semibold tracking-[0.15em] uppercase text-white/80">DARKPOOL</span>
       </a>
        <div class="hidden md:flex items-center gap-8 text-sm text-white/60 font-light absolute left-1/2 -translate-x-1/2">
          <a href="#about" class="hover:text-white transition-colors">About</a>
@@ -32,7 +32,7 @@ gtag('config', 'G-2M6V79H761');
          <a href="#roadmap-section" class="hover:text-white transition-colors">Roadmap</a>
          <a href="#faq" class="hover:text-white transition-colors">FAQ</a>
        </div>
-      <div class="flex items-center gap-3">
+      <div class="hidden md:flex items-center gap-3">
         <button onclick="document.getElementById('wallet-modal').classList.remove('hidden')" class="px-5 py-2.5 text-sm rounded-full font-medium transition-all flex items-center gap-2" style="background: rgba(255,255,255,0.06); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.15); box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-violet-400"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2.5"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg>
           <span class="text-white/90">Connect Wallet</span>
@@ -41,7 +41,62 @@ gtag('config', 'G-2M6V79H761');
           Launch App →
         </a>
       </div>
+      <!-- Mobile hamburger -->
+      <button id="mobile-menu-btn" class="md:hidden flex flex-col gap-[5px] z-10 p-2" onclick="toggleMobileMenu()">
+        <span class="mobile-bar block w-5 h-[1.5px] bg-white/70 transition-all duration-300 origin-center"></span>
+        <span class="mobile-bar block w-5 h-[1.5px] bg-white/70 transition-all duration-300 origin-center"></span>
+        <span class="mobile-bar block w-5 h-[1.5px] bg-white/70 transition-all duration-300 origin-center"></span>
+      </button>
     </nav>
+
+    <!-- Mobile menu overlay -->
+    <div id="mobile-menu" class="fixed inset-0 z-40 pointer-events-none opacity-0 transition-opacity duration-300">
+      <div class="absolute inset-0 bg-[#030305]/95 backdrop-blur-xl"></div>
+      <div class="relative z-10 flex flex-col items-center justify-center h-full gap-6 pt-20">
+        <a href="#about" onclick="closeMobileMenu()" class="text-2xl font-extralight text-white/80 hover:text-white transition-colors">About</a>
+        <a href="#why-privacy" onclick="closeMobileMenu()" class="text-2xl font-extralight text-white/80 hover:text-white transition-colors">Why Privacy</a>
+        <a href="#how-it-works" onclick="closeMobileMenu()" class="text-2xl font-extralight text-white/80 hover:text-white transition-colors">Capabilities</a>
+        <a href="#quant-analytics" onclick="closeMobileMenu()" class="text-2xl font-extralight text-white/80 hover:text-white transition-colors">Protocol</a>
+        <a href="#roadmap-section" onclick="closeMobileMenu()" class="text-2xl font-extralight text-white/80 hover:text-white transition-colors">Roadmap</a>
+        <a href="#faq" onclick="closeMobileMenu()" class="text-2xl font-extralight text-white/80 hover:text-white transition-colors">FAQ</a>
+        <div class="flex flex-col gap-3 mt-8 items-center">
+          <a href="/dashboard" class="px-8 py-3 bg-gradient-to-r from-[#6C3CE9] to-[#9D6FFF] text-white text-sm rounded-full font-medium shadow-[0_0_20px_rgba(108,60,233,0.4)]">
+            Launch App →
+          </a>
+          <button onclick="closeMobileMenu(); document.getElementById('wallet-modal').classList.remove('hidden')" class="px-6 py-2.5 text-sm text-white/70 rounded-full border border-white/10">
+            Connect Wallet
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function toggleMobileMenu() {
+        var menu = document.getElementById('mobile-menu');
+        var bars = document.querySelectorAll('.mobile-bar');
+        var isOpen = menu.classList.contains('pointer-events-auto');
+        if (isOpen) {
+          closeMobileMenu();
+        } else {
+          menu.classList.remove('pointer-events-none', 'opacity-0');
+          menu.classList.add('pointer-events-auto', 'opacity-100');
+          document.body.style.overflow = 'hidden';
+          bars[0].style.transform = 'rotate(45deg) translateY(3.25px)';
+          bars[1].style.opacity = '0';
+          bars[2].style.transform = 'rotate(-45deg) translateY(-3.25px)';
+        }
+      }
+      function closeMobileMenu() {
+        var menu = document.getElementById('mobile-menu');
+        var bars = document.querySelectorAll('.mobile-bar');
+        menu.classList.add('pointer-events-none', 'opacity-0');
+        menu.classList.remove('pointer-events-auto', 'opacity-100');
+        document.body.style.overflow = '';
+        bars[0].style.transform = '';
+        bars[1].style.opacity = '';
+        bars[2].style.transform = '';
+      }
+    </script>
 
     <div class="fixed inset-0 z-0 pointer-events-none opacity-40 mix-blend-screen">
       <canvas id="glcanvas" class="w-full h-full" width="1568" height="1021"></canvas>

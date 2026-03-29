@@ -163,10 +163,12 @@ const computeProducts = [
 ];
 
 const recentSettlements = [
-  { pair: "H100 / USDC", qty: "48 GPU-hrs", price: "$0.21", time: "2m ago" },
-  { pair: "A100 / USDC", qty: "120 GPU-hrs", price: "$0.14", time: "4m ago" },
-  { pair: "RTX 4090 / USDC", qty: "72 GPU-hrs", price: "$0.09", time: "7m ago" },
-  { pair: "H100 / USDC", qty: "24 GPU-hrs", price: "$0.22", time: "11m ago" },
+  { name: "NVIDIA H100", price: "$0.21", unit: "GPU-hr", qty: "48 GPU-hrs", time: "2m ago" },
+  { name: "NVIDIA A100", price: "$0.14", unit: "GPU-hr", qty: "120 GPU-hrs", time: "4m ago" },
+  { name: "RTX 4090", price: "$0.09", unit: "GPU-hr", qty: "72 GPU-hrs", time: "7m ago" },
+  { name: "NVIDIA H100", price: "$0.22", unit: "GPU-hr", qty: "24 GPU-hrs", time: "5m ago" },
+  { name: "NVIDIA L40S", price: "$0.11", unit: "GPU-hr", qty: "96 GPU-hrs", time: "9m ago" },
+  { name: "RTX 3090", price: "$0.04", unit: "GPU-hr", qty: "210 GPU-hrs", time: "12m ago" },
 ];
 
 const categories: { key: MarketCategory; label: string }[] = [

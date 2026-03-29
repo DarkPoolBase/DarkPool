@@ -2643,7 +2643,244 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }, 100);
   </script>
-</section><section class="flex flex-col gap-12 z-10 w-full mt-32 mb-12 relative gap-x-12 gap-y-12" id="faq">
+<!-- ============ ROADMAP SECTION ============ -->
+<section class="relative w-full py-32 md:py-40 overflow-hidden" id="roadmap-section">
+  <div class="max-w-[1280px] mx-auto px-6 md:px-10 relative z-10">
+
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row justify-between items-start mb-20 md:mb-32 gap-8">
+      <div>
+        <div class="flex items-center gap-3 mb-4">
+          <span class="font-mono text-[11px] tracking-[0.3em] text-white/30">05</span>
+          <div class="w-8 h-px bg-white/20"></div>
+          <span class="font-mono text-[10px] tracking-[0.3em] text-white/30 uppercase">Post-V1 Roadmap</span>
+        </div>
+        <h2 class="text-3xl md:text-5xl lg:text-6xl font-extralight text-white/95 tracking-tight leading-[1.1]">
+          Build Trajectory
+        </h2>
+      </div>
+      <div class="md:text-right md:max-w-xs">
+        <span class="text-white/20 text-sm">→</span>
+        <p class="text-sm text-white/30 font-light leading-relaxed mt-1">Each update ships independently post-launch. ZK proofs first, then payments, reputation, analytics, and audit.</p>
+      </div>
+    </div>
+
+    <!-- Stacked Isometric Layers -->
+    <div class="relative flex flex-col lg:flex-row gap-12 lg:gap-20">
+      
+      <!-- Left: Visual Stack -->
+      <div class="flex-1 relative" style="perspective: 1200px;">
+        
+        <!-- V1 Shipped (top layer) -->
+        <div class="roadmap-layer opacity-0" data-layer="0" style="transform: rotateX(14deg) rotateY(-6deg) rotateZ(1.5deg); transform-style: preserve-3d; margin-bottom: 14px; cursor: pointer; transition: all 0.5s cubic-bezier(0.25,0.46,0.45,0.94);">
+          <div class="relative bg-[#0d0d14] border border-white/[0.08] rounded-lg p-6 md:p-8 hover:border-violet-500/30 transition-colors duration-300" style="box-shadow: 6px 6px 0 rgba(6,6,12,0.9), 6px 6px 0 1px rgba(255,255,255,0.03);">
+            <div class="absolute top-4 right-4 w-2 h-2 rounded-full bg-emerald-400/60 animate-pulse"></div>
+            <div class="font-mono text-[10px] tracking-[0.3em] text-emerald-400/50 uppercase mb-3">V1 — Shipped</div>
+            <h3 class="text-lg md:text-xl font-light text-white/90 mb-4">Core Protocol</h3>
+            <div class="grid grid-cols-2 gap-2">
+              <span class="text-[10px] font-mono text-white/25 flex items-center gap-1.5"><span class="text-emerald-400/50">✓</span> Commit-reveal orders</span>
+              <span class="text-[10px] font-mono text-white/25 flex items-center gap-1.5"><span class="text-emerald-400/50">✓</span> Batch auctions (30s)</span>
+              <span class="text-[10px] font-mono text-white/25 flex items-center gap-1.5"><span class="text-emerald-400/50">✓</span> USDC escrow</span>
+              <span class="text-[10px] font-mono text-white/25 flex items-center gap-1.5"><span class="text-emerald-400/50">✓</span> Wallet integration</span>
+              <span class="text-[10px] font-mono text-white/25 flex items-center gap-1.5"><span class="text-emerald-400/50">✓</span> Agent REST API</span>
+              <span class="text-[10px] font-mono text-white/25 flex items-center gap-1.5"><span class="text-emerald-400/50">✓</span> Provider benchmarks</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Update 1: ZK Proofs -->
+        <div class="roadmap-layer opacity-0" data-layer="1" style="transform: rotateX(14deg) rotateY(-6deg) rotateZ(1.5deg); transform-style: preserve-3d; margin-bottom: 14px; cursor: pointer; transition: all 0.5s cubic-bezier(0.25,0.46,0.45,0.94);">
+          <div class="relative bg-[#0a0a12] border border-white/[0.06] rounded-lg p-6 md:p-8 hover:border-violet-500/30 transition-colors duration-300" style="box-shadow: 6px 6px 0 rgba(6,6,12,0.9), 6px 6px 0 1px rgba(255,255,255,0.03);">
+            <div class="font-mono text-[10px] tracking-[0.3em] text-violet-400/50 uppercase mb-3">Update 01 — Weeks 1–3</div>
+            <h3 class="text-lg md:text-xl font-light text-white/90 mb-3">ZK Proof Integration</h3>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="px-2 py-0.5 rounded text-[9px] font-mono text-amber-400/50 bg-amber-500/8 border border-amber-500/10">NOIR</span>
+              <span class="px-2 py-0.5 rounded text-[9px] font-mono text-amber-400/50 bg-amber-500/8 border border-amber-500/10">BB.JS</span>
+              <span class="px-2 py-0.5 rounded text-[9px] font-mono text-amber-400/50 bg-amber-500/8 border border-amber-500/10">ULTRAHONK</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Update 2: Payments -->
+        <div class="roadmap-layer opacity-0" data-layer="2" style="transform: rotateX(14deg) rotateY(-6deg) rotateZ(1.5deg); transform-style: preserve-3d; margin-bottom: 14px; cursor: pointer; transition: all 0.5s cubic-bezier(0.25,0.46,0.45,0.94);">
+          <div class="relative bg-[#08080f] border border-white/[0.05] rounded-lg p-6 md:p-8 hover:border-violet-500/30 transition-colors duration-300" style="box-shadow: 6px 6px 0 rgba(6,6,12,0.9), 6px 6px 0 1px rgba(255,255,255,0.03);">
+            <div class="font-mono text-[10px] tracking-[0.3em] text-pink-400/50 uppercase mb-3">Update 02 — Weeks 4–5</div>
+            <h3 class="text-lg md:text-xl font-light text-white/90 mb-3">Payments & Fiat On-Ramp</h3>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="px-2 py-0.5 rounded text-[9px] font-mono text-pink-400/50 bg-pink-500/8 border border-pink-500/10">x402</span>
+              <span class="px-2 py-0.5 rounded text-[9px] font-mono text-pink-400/50 bg-pink-500/8 border border-pink-500/10">STRIPE</span>
+              <span class="px-2 py-0.5 rounded text-[9px] font-mono text-pink-400/50 bg-pink-500/8 border border-pink-500/10">SDK</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Update 3: Reputation -->
+        <div class="roadmap-layer opacity-0" data-layer="3" style="transform: rotateX(14deg) rotateY(-6deg) rotateZ(1.5deg); transform-style: preserve-3d; margin-bottom: 14px; cursor: pointer; transition: all 0.5s cubic-bezier(0.25,0.46,0.45,0.94);">
+          <div class="relative bg-[#070710] border border-white/[0.04] rounded-lg p-6 md:p-8 hover:border-violet-500/30 transition-colors duration-300" style="box-shadow: 6px 6px 0 rgba(6,6,12,0.9), 6px 6px 0 1px rgba(255,255,255,0.03);">
+            <div class="font-mono text-[10px] tracking-[0.3em] text-teal-400/50 uppercase mb-3">Update 03 — Weeks 6–7</div>
+            <h3 class="text-lg md:text-xl font-light text-white/90 mb-3">Reputation & SLAs</h3>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="px-2 py-0.5 rounded text-[9px] font-mono text-teal-400/50 bg-teal-500/8 border border-teal-500/10">STAKING</span>
+              <span class="px-2 py-0.5 rounded text-[9px] font-mono text-teal-400/50 bg-teal-500/8 border border-teal-500/10">SLA</span>
+              <span class="px-2 py-0.5 rounded text-[9px] font-mono text-teal-400/50 bg-teal-500/8 border border-teal-500/10">TIERS</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Update 4: Analytics -->
+        <div class="roadmap-layer opacity-0" data-layer="4" style="transform: rotateX(14deg) rotateY(-6deg) rotateZ(1.5deg); transform-style: preserve-3d; margin-bottom: 14px; cursor: pointer; transition: all 0.5s cubic-bezier(0.25,0.46,0.45,0.94);">
+          <div class="relative bg-[#06060d] border border-white/[0.04] rounded-lg p-6 md:p-8 hover:border-violet-500/30 transition-colors duration-300" style="box-shadow: 6px 6px 0 rgba(6,6,12,0.9), 6px 6px 0 1px rgba(255,255,255,0.03);">
+            <div class="font-mono text-[10px] tracking-[0.3em] text-blue-400/50 uppercase mb-3">Update 04 — Weeks 8–9</div>
+            <h3 class="text-lg md:text-xl font-light text-white/90 mb-3">Analytics & Indexing</h3>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="px-2 py-0.5 rounded text-[9px] font-mono text-blue-400/50 bg-blue-500/8 border border-blue-500/10">PONDER</span>
+              <span class="px-2 py-0.5 rounded text-[9px] font-mono text-blue-400/50 bg-blue-500/8 border border-blue-500/10">DASHBOARD</span>
+              <span class="px-2 py-0.5 rounded text-[9px] font-mono text-blue-400/50 bg-blue-500/8 border border-blue-500/10">API</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Update 5: Audit -->
+        <div class="roadmap-layer opacity-0" data-layer="5" style="transform: rotateX(14deg) rotateY(-6deg) rotateZ(1.5deg); transform-style: preserve-3d; margin-bottom: 14px; cursor: pointer; transition: all 0.5s cubic-bezier(0.25,0.46,0.45,0.94);">
+          <div class="relative bg-[#050509] border border-white/[0.03] rounded-lg p-6 md:p-8 hover:border-violet-500/30 transition-colors duration-300" style="box-shadow: 6px 6px 0 rgba(6,6,12,0.9), 6px 6px 0 1px rgba(255,255,255,0.03);">
+            <div class="font-mono text-[10px] tracking-[0.3em] text-white/30 uppercase mb-3">Update 05 — Weeks 10–12</div>
+            <h3 class="text-lg md:text-xl font-light text-white/90 mb-3">Security Audit & Hardening</h3>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="px-2 py-0.5 rounded text-[9px] font-mono text-white/30 bg-white/5 border border-white/8">AUDIT</span>
+              <span class="px-2 py-0.5 rounded text-[9px] font-mono text-white/30 bg-white/5 border border-white/8">IMMUNEFI</span>
+              <span class="px-2 py-0.5 rounded text-[9px] font-mono text-white/30 bg-white/5 border border-white/8">PROD</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Connecting flow line (left side) -->
+        <div class="absolute -left-8 top-0 bottom-0 hidden lg:flex flex-col items-center">
+          <svg class="w-px h-full" viewBox="0 0 2 600" preserveAspectRatio="none">
+            <line x1="1" y1="0" x2="1" y2="600" stroke="url(#roadmap-line-grad)" stroke-width="1.5"/>
+            <defs>
+              <linearGradient id="roadmap-line-grad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="rgba(16,185,129,0.4)"/>
+                <stop offset="20%" stop-color="rgba(108,60,233,0.3)"/>
+                <stop offset="50%" stop-color="rgba(108,60,233,0.15)"/>
+                <stop offset="100%" stop-color="rgba(255,255,255,0.05)"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Right: Detail Labels -->
+      <div class="lg:w-[340px] flex flex-col justify-between py-4">
+        
+        <div class="roadmap-label opacity-0 border-b border-white/[0.06] pb-5 mb-5" data-label="0">
+          <div class="font-mono text-[10px] tracking-[0.2em] text-emerald-400/60 uppercase mb-2 font-semibold">V1 Baseline — Shipped</div>
+          <p class="text-xs text-white/35 leading-relaxed font-light">Encrypted order submission, batch auction engine, USDC escrow & settlement, full wallet integration and marketplace dashboard.</p>
+        </div>
+
+        <div class="roadmap-label opacity-0 border-b border-white/[0.06] pb-5 mb-5" data-label="1">
+          <div class="font-mono text-[10px] tracking-[0.2em] text-violet-400/60 uppercase mb-2 font-semibold">ZK Proofs</div>
+          <p class="text-xs text-white/35 leading-relaxed font-light">Replace trusted relayer with Noir ZK proofs. Browser-side proof generation — order data never leaves the client. Sub-5s proofs.</p>
+          <p class="text-[10px] text-violet-400/30 font-mono mt-2 border-l-2 border-violet-500/20 pl-2">Ship: House-blind matching, no relayer dependency</p>
+        </div>
+
+        <div class="roadmap-label opacity-0 border-b border-white/[0.06] pb-5 mb-5" data-label="2">
+          <div class="font-mono text-[10px] tracking-[0.2em] text-pink-400/60 uppercase mb-2 font-semibold">Payments & Fiat</div>
+          <p class="text-xs text-white/35 leading-relaxed font-light">Coinbase x402 for agent HTTP payments. Stripe fiat on-ramp. SDK one-liners for LangChain, AutoGPT, CrewAI.</p>
+          <p class="text-[10px] text-pink-400/30 font-mono mt-2 border-l-2 border-pink-500/20 pl-2">Ship: 250K+ agents and traditional companies can transact</p>
+        </div>
+
+        <div class="roadmap-label opacity-0 border-b border-white/[0.06] pb-5 mb-5" data-label="3">
+          <div class="font-mono text-[10px] tracking-[0.2em] text-teal-400/60 uppercase mb-2 font-semibold">Reputation & SLAs</div>
+          <p class="text-xs text-white/35 leading-relaxed font-light">On-chain reputation scoring. SLA contracts with auto-refunds. Provider staking with slashing. Subscription tiers.</p>
+          <p class="text-[10px] text-teal-400/30 font-mono mt-2 border-l-2 border-teal-500/20 pl-2">Ship: Trust layer + recurring revenue</p>
+        </div>
+
+        <div class="roadmap-label opacity-0 border-b border-white/[0.06] pb-5 mb-5" data-label="4">
+          <div class="font-mono text-[10px] tracking-[0.2em] text-blue-400/60 uppercase mb-2 font-semibold">Analytics & Indexing</div>
+          <p class="text-xs text-white/35 leading-relaxed font-light">Ponder event indexer. Public analytics dashboard with anonymized volume and price trends. Historical data API.</p>
+          <p class="text-[10px] text-blue-400/30 font-mono mt-2 border-l-2 border-blue-500/20 pl-2">Ship: Transparent market data attracting liquidity</p>
+        </div>
+
+        <div class="roadmap-label opacity-0" data-label="5">
+          <div class="font-mono text-[10px] tracking-[0.2em] text-white/40 uppercase mb-2 font-semibold">Security Audit</div>
+          <p class="text-xs text-white/35 leading-relaxed font-light">External smart contract audit. ZK circuit audit. Bug bounty via Immunefi. Production-grade infrastructure hardening.</p>
+          <p class="text-[10px] text-white/25 font-mono mt-2 border-l-2 border-white/10 pl-2">Ship: Audited contracts, active bounty, prod infra</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Future Vision Bar -->
+    <div class="mt-20 md:mt-28 border-t border-white/[0.06] pt-10">
+      <div class="font-mono text-[10px] tracking-[0.3em] text-white/20 uppercase mb-6">Future — V2 / V3</div>
+      <div class="flex flex-wrap gap-3">
+        <span class="px-3 py-1.5 rounded-full text-[10px] font-mono text-white/25 border border-white/[0.06] bg-white/[0.02]">Multi-GPU Clusters</span>
+        <span class="px-3 py-1.5 rounded-full text-[10px] font-mono text-white/25 border border-white/[0.06] bg-white/[0.02]">Compute Futures</span>
+        <span class="px-3 py-1.5 rounded-full text-[10px] font-mono text-white/25 border border-white/[0.06] bg-white/[0.02]">Full MPC Matching</span>
+        <span class="px-3 py-1.5 rounded-full text-[10px] font-mono text-white/25 border border-white/[0.06] bg-white/[0.02]">Cross-Chain Settlement</span>
+        <span class="px-3 py-1.5 rounded-full text-[10px] font-mono text-white/25 border border-white/[0.06] bg-white/[0.02]">DAO Governance</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Roadmap scroll-reveal animation -->
+<script>
+(function(){
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+    // Fallback: just show everything
+    document.querySelectorAll('.roadmap-layer, .roadmap-label').forEach(function(el){ el.style.opacity = '1'; });
+    return;
+  }
+  gsap.registerPlugin(ScrollTrigger);
+
+  var section = document.getElementById('roadmap-section');
+  if (!section) return;
+
+  // Stagger layers from top
+  gsap.utils.toArray('.roadmap-layer').forEach(function(layer, i){
+    gsap.fromTo(layer, 
+      { opacity: 0, y: 40 + i * 10 },
+      { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', delay: i * 0.12,
+        scrollTrigger: { trigger: layer, start: 'top 88%', toggleActions: 'play none none none' }
+      }
+    );
+  });
+
+  // Stagger labels from right
+  gsap.utils.toArray('.roadmap-label').forEach(function(label, i){
+    gsap.fromTo(label,
+      { opacity: 0, x: 30 },
+      { opacity: 1, x: 0, duration: 0.7, ease: 'power2.out', delay: 0.2 + i * 0.1,
+        scrollTrigger: { trigger: label, start: 'top 90%', toggleActions: 'play none none none' }
+      }
+    );
+  });
+
+  // Hover: lift layer + highlight matching label
+  document.querySelectorAll('.roadmap-layer').forEach(function(layer){
+    var idx = layer.getAttribute('data-layer');
+    layer.addEventListener('mouseenter', function(){
+      layer.style.transform = 'rotateX(14deg) rotateY(-6deg) rotateZ(1.5deg) translateY(-8px) translateZ(10px)';
+      layer.querySelector('div').style.borderColor = 'rgba(108,60,233,0.35)';
+      // Dim other labels
+      document.querySelectorAll('.roadmap-label').forEach(function(l){
+        l.style.transition = 'opacity 0.3s';
+        l.style.opacity = l.getAttribute('data-label') === idx ? '1' : '0.25';
+      });
+    });
+    layer.addEventListener('mouseleave', function(){
+      layer.style.transform = 'rotateX(14deg) rotateY(-6deg) rotateZ(1.5deg)';
+      layer.querySelector('div').style.borderColor = '';
+      document.querySelectorAll('.roadmap-label').forEach(function(l){
+        l.style.opacity = '1';
+      });
+    });
+  });
+})();
+</script>
+
+<section class="flex flex-col gap-12 z-10 w-full mt-32 mb-12 relative gap-x-12 gap-y-12" id="faq">
   <!-- Decorative Glow -->
   <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] rounded-full blur-[120px] pointer-events-none bg-violet-500/10"></div>
 

@@ -210,7 +210,7 @@ const Marketplace = () => {
 
   return (
     <TooltipProvider>
-      <div className="space-y-6 max-w-6xl">
+      <div className="space-y-6 max-w-7xl">
         {/* Header */}
         <div>
           <h1 className="text-2xl md:text-3xl font-thin tracking-tight text-foreground">Private Compute Markets</h1>

@@ -2643,208 +2643,242 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }, 100);
   </script>
-<!-- ============ PROTOCOL ARCHITECTURE ============ -->
-<section class="relative w-full py-32 md:py-40 overflow-hidden" id="protocol-stack">
+<!-- ============ ROADMAP SECTION ============ -->
+<section class="relative w-full py-32 md:py-40 overflow-hidden" id="roadmap-section">
   <div class="max-w-[1280px] mx-auto px-6 md:px-10 relative z-10">
 
     <!-- Header -->
-    <div class="flex flex-col md:flex-row justify-between items-start mb-20 md:mb-28 gap-8">
+    <div class="flex flex-col md:flex-row justify-between items-start mb-20 md:mb-32 gap-8">
       <div>
         <div class="flex items-center gap-3 mb-4">
           <span class="font-mono text-[11px] tracking-[0.3em] text-white/30">05</span>
           <div class="w-8 h-px bg-white/20"></div>
-          <span class="font-mono text-[10px] tracking-[0.3em] text-white/30 uppercase">Protocol Stack</span>
+          <span class="font-mono text-[10px] tracking-[0.3em] text-white/30 uppercase">Post-V1 Roadmap</span>
         </div>
         <h2 class="text-3xl md:text-5xl lg:text-6xl font-extralight text-white/95 tracking-tight leading-[1.1]">
-          How DarkPool Works
+          Build Trajectory
         </h2>
       </div>
       <div class="md:text-right md:max-w-xs">
         <span class="text-white/20 text-sm">→</span>
-        <p class="text-sm text-white/30 font-light leading-relaxed mt-1">Six layers from user to blockchain. Each layer is independent, upgradeable, and verifiable.</p>
+        <p class="text-sm text-white/30 font-light leading-relaxed mt-1">Each update ships independently post-launch. ZK proofs first, then payments, reputation, analytics, and audit.</p>
       </div>
     </div>
 
-    <!-- Stack Diagram -->
-    <div class="relative flex">
+    <!-- Stacked Isometric Layers -->
+    <div class="relative flex flex-col lg:flex-row gap-12 lg:gap-20">
+      
+      <!-- Left: Visual Stack -->
+      <div class="flex-1 relative">
+        
+        <!-- V1 Shipped (top layer) -->
+        <div class="roadmap-layer opacity-0" data-layer="0" style="transform: none; margin-bottom: 14px; cursor: pointer; transition: all 0.5s cubic-bezier(0.25,0.46,0.45,0.94);">
+          <div class="relative bg-[#0d0d14] border border-white/[0.08] rounded-lg p-6 md:p-8 hover:border-violet-500/30 transition-colors duration-300" style="">
+            <div class="absolute top-4 right-4 w-2 h-2 rounded-full bg-emerald-400/60 animate-pulse"></div>
+            <div class="font-mono text-[10px] tracking-[0.3em] text-emerald-400/50 uppercase mb-3">V1 — Shipped</div>
+            <h3 class="text-lg md:text-xl font-light text-white/90 mb-4">Core Protocol</h3>
+            <div class="grid grid-cols-2 gap-2">
+              <span class="text-[10px] font-mono text-white/25 flex items-center gap-1.5"><span class="text-emerald-400/50">✓</span> Commit-reveal orders</span>
+              <span class="text-[10px] font-mono text-white/25 flex items-center gap-1.5"><span class="text-emerald-400/50">✓</span> Batch auctions (30s)</span>
+              <span class="text-[10px] font-mono text-white/25 flex items-center gap-1.5"><span class="text-emerald-400/50">✓</span> USDC escrow</span>
+              <span class="text-[10px] font-mono text-white/25 flex items-center gap-1.5"><span class="text-emerald-400/50">✓</span> Wallet integration</span>
+              <span class="text-[10px] font-mono text-white/25 flex items-center gap-1.5"><span class="text-emerald-400/50">✓</span> Agent REST API</span>
+              <span class="text-[10px] font-mono text-white/25 flex items-center gap-1.5"><span class="text-emerald-400/50">✓</span> Provider benchmarks</span>
+            </div>
+          </div>
+        </div>
 
-      <!-- Left curved arrow -->
-      <div class="hidden lg:block absolute -left-2 top-[40px] bottom-[40px] w-[60px] z-0">
-        <svg class="w-full h-full" viewBox="0 0 60 600" preserveAspectRatio="none" fill="none">
-          <path d="M50 10 Q10 10 10 80 L10 520 Q10 590 50 590" stroke="#6C3CE9" stroke-width="1.5" stroke-opacity="0.25" fill="none"/>
-          <!-- Arrow head -->
-          <polygon points="45,585 55,590 45,595" fill="#6C3CE9" fill-opacity="0.25"/>
-        </svg>
-        <div class="absolute top-1/2 -translate-y-1/2 -left-1 -rotate-90 whitespace-nowrap font-mono text-[9px] tracking-[0.35em] text-white/15 uppercase" style="transform-origin: center center;">Order Flow</div>
+        <!-- Update 1: ZK Proofs -->
+        <div class="roadmap-layer opacity-0" data-layer="1" style="transform: none; margin-bottom: 14px; cursor: pointer; transition: all 0.5s cubic-bezier(0.25,0.46,0.45,0.94);">
+          <div class="relative bg-[#0a0a12] border border-white/[0.06] rounded-lg p-6 md:p-8 hover:border-violet-500/30 transition-colors duration-300" style="">
+            <div class="font-mono text-[10px] tracking-[0.3em] text-violet-400/50 uppercase mb-3">Update 01 — Weeks 1–3</div>
+            <h3 class="text-lg md:text-xl font-light text-white/90 mb-3">ZK Proof Integration</h3>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="px-2 py-0.5 rounded text-[9px] font-mono text-amber-400/50 bg-amber-500/8 border border-amber-500/10">NOIR</span>
+              <span class="px-2 py-0.5 rounded text-[9px] font-mono text-amber-400/50 bg-amber-500/8 border border-amber-500/10">BB.JS</span>
+              <span class="px-2 py-0.5 rounded text-[9px] font-mono text-amber-400/50 bg-amber-500/8 border border-amber-500/10">ULTRAHONK</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Update 2: Payments -->
+        <div class="roadmap-layer opacity-0" data-layer="2" style="transform: none; margin-bottom: 14px; cursor: pointer; transition: all 0.5s cubic-bezier(0.25,0.46,0.45,0.94);">
+          <div class="relative bg-[#08080f] border border-white/[0.05] rounded-lg p-6 md:p-8 hover:border-violet-500/30 transition-colors duration-300" style="">
+            <div class="font-mono text-[10px] tracking-[0.3em] text-pink-400/50 uppercase mb-3">Update 02 — Weeks 4–5</div>
+            <h3 class="text-lg md:text-xl font-light text-white/90 mb-3">Payments & Fiat On-Ramp</h3>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="px-2 py-0.5 rounded text-[9px] font-mono text-pink-400/50 bg-pink-500/8 border border-pink-500/10">x402</span>
+              <span class="px-2 py-0.5 rounded text-[9px] font-mono text-pink-400/50 bg-pink-500/8 border border-pink-500/10">STRIPE</span>
+              <span class="px-2 py-0.5 rounded text-[9px] font-mono text-pink-400/50 bg-pink-500/8 border border-pink-500/10">SDK</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Update 3: Reputation -->
+        <div class="roadmap-layer opacity-0" data-layer="3" style="transform: none; margin-bottom: 14px; cursor: pointer; transition: all 0.5s cubic-bezier(0.25,0.46,0.45,0.94);">
+          <div class="relative bg-[#070710] border border-white/[0.04] rounded-lg p-6 md:p-8 hover:border-violet-500/30 transition-colors duration-300" style="">
+            <div class="font-mono text-[10px] tracking-[0.3em] text-teal-400/50 uppercase mb-3">Update 03 — Weeks 6–7</div>
+            <h3 class="text-lg md:text-xl font-light text-white/90 mb-3">Reputation & SLAs</h3>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="px-2 py-0.5 rounded text-[9px] font-mono text-teal-400/50 bg-teal-500/8 border border-teal-500/10">STAKING</span>
+              <span class="px-2 py-0.5 rounded text-[9px] font-mono text-teal-400/50 bg-teal-500/8 border border-teal-500/10">SLA</span>
+              <span class="px-2 py-0.5 rounded text-[9px] font-mono text-teal-400/50 bg-teal-500/8 border border-teal-500/10">TIERS</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Update 4: Analytics -->
+        <div class="roadmap-layer opacity-0" data-layer="4" style="transform: none; margin-bottom: 14px; cursor: pointer; transition: all 0.5s cubic-bezier(0.25,0.46,0.45,0.94);">
+          <div class="relative bg-[#06060d] border border-white/[0.04] rounded-lg p-6 md:p-8 hover:border-violet-500/30 transition-colors duration-300" style="">
+            <div class="font-mono text-[10px] tracking-[0.3em] text-blue-400/50 uppercase mb-3">Update 04 — Weeks 8–9</div>
+            <h3 class="text-lg md:text-xl font-light text-white/90 mb-3">Analytics & Indexing</h3>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="px-2 py-0.5 rounded text-[9px] font-mono text-blue-400/50 bg-blue-500/8 border border-blue-500/10">PONDER</span>
+              <span class="px-2 py-0.5 rounded text-[9px] font-mono text-blue-400/50 bg-blue-500/8 border border-blue-500/10">DASHBOARD</span>
+              <span class="px-2 py-0.5 rounded text-[9px] font-mono text-blue-400/50 bg-blue-500/8 border border-blue-500/10">API</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Update 5: Audit -->
+        <div class="roadmap-layer opacity-0" data-layer="5" style="transform: none; margin-bottom: 14px; cursor: pointer; transition: all 0.5s cubic-bezier(0.25,0.46,0.45,0.94);">
+          <div class="relative bg-[#050509] border border-white/[0.03] rounded-lg p-6 md:p-8 hover:border-violet-500/30 transition-colors duration-300" style="">
+            <div class="font-mono text-[10px] tracking-[0.3em] text-white/30 uppercase mb-3">Update 05 — Weeks 10–12</div>
+            <h3 class="text-lg md:text-xl font-light text-white/90 mb-3">Security Audit & Hardening</h3>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="px-2 py-0.5 rounded text-[9px] font-mono text-white/30 bg-white/5 border border-white/8">AUDIT</span>
+              <span class="px-2 py-0.5 rounded text-[9px] font-mono text-white/30 bg-white/5 border border-white/8">IMMUNEFI</span>
+              <span class="px-2 py-0.5 rounded text-[9px] font-mono text-white/30 bg-white/5 border border-white/8">PROD</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Connecting flow line (left side) -->
+        <div class="absolute -left-8 top-0 bottom-0 hidden lg:flex flex-col items-center">
+          <svg class="w-px h-full" viewBox="0 0 2 600" preserveAspectRatio="none">
+            <line x1="1" y1="0" x2="1" y2="600" stroke="url(#roadmap-line-grad)" stroke-width="1.5"/>
+            <defs>
+              <linearGradient id="roadmap-line-grad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="rgba(16,185,129,0.4)"/>
+                <stop offset="20%" stop-color="rgba(108,60,233,0.3)"/>
+                <stop offset="50%" stop-color="rgba(108,60,233,0.15)"/>
+                <stop offset="100%" stop-color="rgba(255,255,255,0.05)"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
       </div>
 
-      <!-- Main stack area -->
-      <div class="flex-1 lg:pl-16 flex flex-col" style="gap: 20px;">
-
-        <!-- Layer 1: User Interface -->
-        <div class="stack-layer opacity-0 flex flex-col md:flex-row items-start gap-6 md:gap-10" data-stack="0">
-          <div class="flex-1 relative rounded-xl border border-white/[0.08] bg-[#0c0c14] p-5 md:p-6 flex items-center gap-5 transition-all duration-300 hover:border-violet-500/25" style="box-shadow: 0 8px 30px -10px rgba(108,60,233,0.12), 0 1px 0 rgba(108,60,233,0.06);">
-            <!-- Connector dot top -->
-            <div class="hidden md:block absolute -bottom-[22px] left-1/2 -translate-x-1/2 z-10">
-              <div class="w-px h-[22px] border-l border-dashed border-white/10"></div>
-            </div>
-            <div class="w-10 h-10 rounded-lg bg-violet-500/10 border border-violet-500/15 flex items-center justify-center flex-shrink-0">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
-            </div>
-            <div>
-              <h3 class="text-sm md:text-base font-medium text-white/90 font-mono tracking-wide">USER INTERFACE</h3>
-              <p class="text-[11px] text-white/25 font-mono mt-0.5">Layer 01</p>
-            </div>
-          </div>
-          <div class="md:w-[280px] lg:w-[320px] flex-shrink-0 pt-1">
-            <div class="font-mono text-[10px] tracking-[0.2em] text-violet-400/60 uppercase mb-1.5 font-semibold">Frontend</div>
-            <p class="text-xs text-white/35 leading-relaxed font-light">Next.js dashboard. Connect wallet, place encrypted orders, view analytics.</p>
-          </div>
+      <!-- Right: Detail Labels -->
+      <div class="lg:w-[340px] flex flex-col justify-between py-4">
+        
+        <div class="roadmap-label opacity-0 border-b border-white/[0.06] pb-5 mb-5" data-label="0">
+          <div class="font-mono text-[10px] tracking-[0.2em] text-emerald-400/60 uppercase mb-2 font-semibold">V1 Baseline — Shipped</div>
+          <p class="text-xs text-white/35 leading-relaxed font-light">Encrypted order submission, batch auction engine, USDC escrow & settlement, full wallet integration and marketplace dashboard.</p>
         </div>
 
-        <!-- Layer 2: API Gateway -->
-        <div class="stack-layer opacity-0 flex flex-col md:flex-row items-start gap-6 md:gap-10" data-stack="1">
-          <div class="flex-1 relative rounded-xl border border-white/[0.07] bg-[#0b0b12] p-5 md:p-6 flex items-center gap-5 transition-all duration-300 hover:border-violet-500/25" style="box-shadow: 0 8px 30px -10px rgba(108,60,233,0.10), 0 1px 0 rgba(108,60,233,0.05);">
-            <div class="hidden md:block absolute -bottom-[22px] left-1/2 -translate-x-1/2 z-10">
-              <div class="w-px h-[22px] border-l border-dashed border-white/10"></div>
-            </div>
-            <div class="w-10 h-10 rounded-lg bg-violet-500/10 border border-violet-500/15 flex items-center justify-center flex-shrink-0">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-            </div>
-            <div>
-              <h3 class="text-sm md:text-base font-medium text-white/90 font-mono tracking-wide">API GATEWAY</h3>
-              <p class="text-[11px] text-white/25 font-mono mt-0.5">Layer 02</p>
-            </div>
-          </div>
-          <div class="md:w-[280px] lg:w-[320px] flex-shrink-0 pt-1">
-            <div class="font-mono text-[10px] tracking-[0.2em] text-violet-400/60 uppercase mb-1.5 font-semibold">REST API + WebSocket</div>
-            <p class="text-xs text-white/35 leading-relaxed font-light">Order submission, status checks, real-time updates. x402 endpoint for AI agents.</p>
-          </div>
+        <div class="roadmap-label opacity-0 border-b border-white/[0.06] pb-5 mb-5" data-label="1">
+          <div class="font-mono text-[10px] tracking-[0.2em] text-violet-400/60 uppercase mb-2 font-semibold">ZK Proofs</div>
+          <p class="text-xs text-white/35 leading-relaxed font-light">Replace trusted relayer with Noir ZK proofs. Browser-side proof generation — order data never leaves the client. Sub-5s proofs.</p>
+          <p class="text-[10px] text-violet-400/30 font-mono mt-2 border-l-2 border-violet-500/20 pl-2">Ship: House-blind matching, no relayer dependency</p>
         </div>
 
-        <!-- Layer 3: Matching Engine -->
-        <div class="stack-layer opacity-0 flex flex-col md:flex-row items-start gap-6 md:gap-10" data-stack="2">
-          <div class="flex-1 relative rounded-xl border border-white/[0.06] bg-[#0a0a10] p-5 md:p-6 flex items-center gap-5 transition-all duration-300 hover:border-violet-500/25" style="box-shadow: 0 8px 30px -10px rgba(108,60,233,0.09), 0 1px 0 rgba(108,60,233,0.04);">
-            <div class="hidden md:block absolute -bottom-[22px] left-1/2 -translate-x-1/2 z-10">
-              <div class="w-px h-[22px] border-l border-dashed border-white/10"></div>
-            </div>
-            <div class="w-10 h-10 rounded-lg bg-violet-500/10 border border-violet-500/15 flex items-center justify-center flex-shrink-0">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3h5v5"/><path d="M8 3H3v5"/><path d="M12 22v-8.3a4 4 0 0 0-1.172-2.872L3 3"/><path d="m15 9 6-6"/></svg>
-            </div>
-            <div>
-              <h3 class="text-sm md:text-base font-medium text-white/90 font-mono tracking-wide">MATCHING ENGINE</h3>
-              <p class="text-[11px] text-white/25 font-mono mt-0.5">Layer 03</p>
-            </div>
-          </div>
-          <div class="md:w-[280px] lg:w-[320px] flex-shrink-0 pt-1">
-            <div class="font-mono text-[10px] tracking-[0.2em] text-violet-400/60 uppercase mb-1.5 font-semibold">Batch Auction Engine</div>
-            <p class="text-xs text-white/35 leading-relaxed font-light">Collects sealed orders every 30–60s. Computes uniform clearing price. MEV-protected.</p>
-          </div>
+        <div class="roadmap-label opacity-0 border-b border-white/[0.06] pb-5 mb-5" data-label="2">
+          <div class="font-mono text-[10px] tracking-[0.2em] text-pink-400/60 uppercase mb-2 font-semibold">Payments & Fiat</div>
+          <p class="text-xs text-white/35 leading-relaxed font-light">Coinbase x402 for agent HTTP payments. Stripe fiat on-ramp. SDK one-liners for LangChain, AutoGPT, CrewAI.</p>
+          <p class="text-[10px] text-pink-400/30 font-mono mt-2 border-l-2 border-pink-500/20 pl-2">Ship: 250K+ agents and traditional companies can transact</p>
         </div>
 
-        <!-- Layer 4: ZK Verification -->
-        <div class="stack-layer opacity-0 flex flex-col md:flex-row items-start gap-6 md:gap-10" data-stack="3">
-          <div class="flex-1 relative rounded-xl border border-white/[0.06] bg-[#09090e] p-5 md:p-6 flex items-center gap-5 transition-all duration-300 hover:border-violet-500/25" style="box-shadow: 0 8px 30px -10px rgba(108,60,233,0.08), 0 1px 0 rgba(108,60,233,0.04);">
-            <div class="hidden md:block absolute -bottom-[22px] left-1/2 -translate-x-1/2 z-10">
-              <div class="w-px h-[22px] border-l border-dashed border-white/10"></div>
-            </div>
-            <div class="w-10 h-10 rounded-lg bg-violet-500/10 border border-violet-500/15 flex items-center justify-center flex-shrink-0">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            </div>
-            <div>
-              <h3 class="text-sm md:text-base font-medium text-white/90 font-mono tracking-wide">ZK VERIFICATION</h3>
-              <p class="text-[11px] text-white/25 font-mono mt-0.5">Layer 04</p>
-            </div>
-          </div>
-          <div class="md:w-[280px] lg:w-[320px] flex-shrink-0 pt-1">
-            <div class="font-mono text-[10px] tracking-[0.2em] text-violet-400/60 uppercase mb-1.5 font-semibold">Zero-Knowledge Proofs</div>
-            <p class="text-xs text-white/35 leading-relaxed font-light">Noir circuits verify matching correctness without revealing order data. House-blind execution.</p>
-          </div>
+        <div class="roadmap-label opacity-0 border-b border-white/[0.06] pb-5 mb-5" data-label="3">
+          <div class="font-mono text-[10px] tracking-[0.2em] text-teal-400/60 uppercase mb-2 font-semibold">Reputation & SLAs</div>
+          <p class="text-xs text-white/35 leading-relaxed font-light">On-chain reputation scoring. SLA contracts with auto-refunds. Provider staking with slashing. Subscription tiers.</p>
+          <p class="text-[10px] text-teal-400/30 font-mono mt-2 border-l-2 border-teal-500/20 pl-2">Ship: Trust layer + recurring revenue</p>
         </div>
 
-        <!-- Layer 5: Settlement -->
-        <div class="stack-layer opacity-0 flex flex-col md:flex-row items-start gap-6 md:gap-10" data-stack="4">
-          <div class="flex-1 relative rounded-xl border border-white/[0.05] bg-[#08080c] p-5 md:p-6 flex items-center gap-5 transition-all duration-300 hover:border-violet-500/25" style="box-shadow: 0 8px 30px -10px rgba(108,60,233,0.07), 0 1px 0 rgba(108,60,233,0.03);">
-            <div class="hidden md:block absolute -bottom-[22px] left-1/2 -translate-x-1/2 z-10">
-              <div class="w-px h-[22px] border-l border-dashed border-white/10"></div>
-            </div>
-            <div class="w-10 h-10 rounded-lg bg-violet-500/10 border border-violet-500/15 flex items-center justify-center flex-shrink-0">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-            </div>
-            <div>
-              <h3 class="text-sm md:text-base font-medium text-white/90 font-mono tracking-wide">SETTLEMENT</h3>
-              <p class="text-[11px] text-white/25 font-mono mt-0.5">Layer 05</p>
-            </div>
-          </div>
-          <div class="md:w-[280px] lg:w-[320px] flex-shrink-0 pt-1">
-            <div class="font-mono text-[10px] tracking-[0.2em] text-violet-400/60 uppercase mb-1.5 font-semibold">On-Chain Settlement</div>
-            <p class="text-xs text-white/35 leading-relaxed font-light">USDC escrow, automatic fund release, ~$0.001 per transaction on Base L2.</p>
-          </div>
+        <div class="roadmap-label opacity-0 border-b border-white/[0.06] pb-5 mb-5" data-label="4">
+          <div class="font-mono text-[10px] tracking-[0.2em] text-blue-400/60 uppercase mb-2 font-semibold">Analytics & Indexing</div>
+          <p class="text-xs text-white/35 leading-relaxed font-light">Ponder event indexer. Public analytics dashboard with anonymized volume and price trends. Historical data API.</p>
+          <p class="text-[10px] text-blue-400/30 font-mono mt-2 border-l-2 border-blue-500/20 pl-2">Ship: Transparent market data attracting liquidity</p>
         </div>
 
-        <!-- Layer 6: Blockchain (anchored) -->
-        <div class="stack-layer opacity-0 flex flex-col md:flex-row items-start gap-6 md:gap-10" data-stack="5">
-          <div class="flex-1 relative rounded-xl border border-violet-500/20 bg-[#07070b] p-5 md:p-6 flex items-center gap-5 transition-all duration-300 hover:border-violet-500/35" style="box-shadow: 0 8px 40px -10px rgba(108,60,233,0.18), 0 1px 0 rgba(108,60,233,0.08), inset 0 1px 0 rgba(108,60,233,0.06);">
-            <div class="w-10 h-10 rounded-lg bg-violet-500/15 border border-violet-500/25 flex items-center justify-center flex-shrink-0">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="14" y="3" rx="1"/><path d="M10 21V8a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H3"/></svg>
-            </div>
-            <div>
-              <h3 class="text-sm md:text-base font-medium text-white/90 font-mono tracking-wide">BLOCKCHAIN</h3>
-              <p class="text-[11px] text-white/25 font-mono mt-0.5">Layer 06</p>
-            </div>
-          </div>
-          <div class="md:w-[280px] lg:w-[320px] flex-shrink-0 pt-1">
-            <div class="font-mono text-[10px] tracking-[0.2em] text-violet-400/60 uppercase mb-1.5 font-semibold">Base L2</div>
-            <p class="text-xs text-white/35 leading-relaxed font-light">DarkPool.sol, Escrow.sol, SettlementVerifier.sol, TokenRegistry.sol, FeeCollector.sol</p>
-          </div>
+        <div class="roadmap-label opacity-0" data-label="5">
+          <div class="font-mono text-[10px] tracking-[0.2em] text-white/40 uppercase mb-2 font-semibold">Security Audit</div>
+          <p class="text-xs text-white/35 leading-relaxed font-light">External smart contract audit. ZK circuit audit. Bug bounty via Immunefi. Production-grade infrastructure hardening.</p>
+          <p class="text-[10px] text-white/25 font-mono mt-2 border-l-2 border-white/10 pl-2">Ship: Audited contracts, active bounty, prod infra</p>
         </div>
+      </div>
+    </div>
 
+    <!-- Future Vision Bar -->
+    <div class="mt-20 md:mt-28 border-t border-white/[0.06] pt-10">
+      <div class="font-mono text-[10px] tracking-[0.3em] text-white/20 uppercase mb-6">Future — V2 / V3</div>
+      <div class="flex flex-wrap gap-3">
+        <span class="px-3 py-1.5 rounded-full text-[10px] font-mono text-white/25 border border-white/[0.06] bg-white/[0.02]">Multi-GPU Clusters</span>
+        <span class="px-3 py-1.5 rounded-full text-[10px] font-mono text-white/25 border border-white/[0.06] bg-white/[0.02]">Compute Futures</span>
+        <span class="px-3 py-1.5 rounded-full text-[10px] font-mono text-white/25 border border-white/[0.06] bg-white/[0.02]">Full MPC Matching</span>
+        <span class="px-3 py-1.5 rounded-full text-[10px] font-mono text-white/25 border border-white/[0.06] bg-white/[0.02]">Cross-Chain Settlement</span>
+        <span class="px-3 py-1.5 rounded-full text-[10px] font-mono text-white/25 border border-white/[0.06] bg-white/[0.02]">DAO Governance</span>
       </div>
     </div>
 
   </div>
 </section>
 
-<!-- Protocol stack scroll reveal -->
+<!-- Roadmap scroll-reveal animation -->
 <script>
 (function(){
-  var layers = document.querySelectorAll('.stack-layer');
-  if(!layers.length) return;
-
-  if(typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined'){
-    gsap.registerPlugin(ScrollTrigger);
-    layers.forEach(function(layer, i){
-      gsap.fromTo(layer,
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', delay: i * 0.1,
-          scrollTrigger: { trigger: layer, start: 'top 90%', toggleActions: 'play none none none' }
-        }
-      );
-    });
-  } else {
-    // Fallback: simple IntersectionObserver
-    if(typeof IntersectionObserver !== 'undefined'){
-      layers.forEach(function(layer, i){
-        var obs = new IntersectionObserver(function(entries){
-          if(entries[0].isIntersecting){
-            setTimeout(function(){
-              layer.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
-              layer.style.opacity = '1';
-              layer.style.transform = 'translateY(0)';
-            }, i * 100);
-            obs.disconnect();
-          }
-        }, {threshold: 0.1});
-        layer.style.transform = 'translateY(30px)';
-        obs.observe(layer);
-      });
-    } else {
-      layers.forEach(function(l){ l.style.opacity='1'; });
-    }
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+    // Fallback: just show everything
+    document.querySelectorAll('.roadmap-layer, .roadmap-label').forEach(function(el){ el.style.opacity = '1'; });
+    return;
   }
+  gsap.registerPlugin(ScrollTrigger);
+
+  var section = document.getElementById('roadmap-section');
+  if (!section) return;
+
+  // Stagger layers from top
+  gsap.utils.toArray('.roadmap-layer').forEach(function(layer, i){
+    gsap.fromTo(layer, 
+      { opacity: 0, y: 40 + i * 10 },
+      { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', delay: i * 0.12,
+        scrollTrigger: { trigger: layer, start: 'top 88%', toggleActions: 'play none none none' }
+      }
+    );
+  });
+
+  // Stagger labels from right
+  gsap.utils.toArray('.roadmap-label').forEach(function(label, i){
+    gsap.fromTo(label,
+      { opacity: 0, x: 30 },
+      { opacity: 1, x: 0, duration: 0.7, ease: 'power2.out', delay: 0.2 + i * 0.1,
+        scrollTrigger: { trigger: label, start: 'top 90%', toggleActions: 'play none none none' }
+      }
+    );
+  });
+
+  // Hover: lift layer + highlight matching label
+  document.querySelectorAll('.roadmap-layer').forEach(function(layer){
+    var idx = layer.getAttribute('data-layer');
+    layer.addEventListener('mouseenter', function(){
+      layer.style.transform = 'translateY(-6px)';
+      layer.querySelector('div').style.borderColor = 'rgba(108,60,233,0.35)';
+      // Dim other labels
+      document.querySelectorAll('.roadmap-label').forEach(function(l){
+        l.style.transition = 'opacity 0.3s';
+        l.style.opacity = l.getAttribute('data-label') === idx ? '1' : '0.25';
+      });
+    });
+    layer.addEventListener('mouseleave', function(){
+      layer.style.transform = 'none';
+      layer.querySelector('div').style.borderColor = '';
+      document.querySelectorAll('.roadmap-label').forEach(function(l){
+        l.style.opacity = '1';
+      });
+    });
+  });
 })();
 </script>
-
 
 <section class="flex flex-col gap-12 z-10 w-full mt-32 mb-12 relative gap-x-12 gap-y-12" id="faq">
   <!-- Decorative Glow -->

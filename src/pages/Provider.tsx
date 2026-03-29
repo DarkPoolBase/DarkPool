@@ -183,7 +183,7 @@ const Provider = () => {
               </div>
 
               {/* Current Job */}
-              <div className="flex items-center justify-between rounded-xl bg-white/[0.02] border border-white/[0.06] p-4">
+              <div className="flex items-center justify-between rounded-xl bg-white/[0.03] p-4">
                 <div>
                   <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Current Job</span>
                   <p className="font-mono text-sm text-foreground mt-1">Order <span className="text-primary">#4521</span> — 18 hrs remaining</p>

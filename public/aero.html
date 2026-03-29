@@ -21,10 +21,51 @@ gtag('config', 'G-2M6V79H761');
   html, body { overflow-x: hidden; max-width: 100vw; }
   @media (max-width: 767px) {
     .hash-scroll { animation: none !important; overflow: hidden; text-overflow: ellipsis; }
-    .about-metrics { gap: 1rem !important; }
-    .about-metrics > div span:first-child { font-size: 1.5rem !important; }
-    #main-container { margin-bottom: 4rem !important; }
+    .about-metrics { gap: 0.75rem !important; flex-wrap: wrap; justify-content: center !important; }
+    .about-metrics > div { min-width: 40%; text-align: center; }
+    .about-metrics > div span:first-child { font-size: 1.25rem !important; }
+    #main-container { margin-bottom: 3rem !important; }
     .roadmap-layer .grid-cols-2 { grid-template-columns: 1fr !important; }
+    /* Fix bento right panel icons overlapping text */
+    .bento-right .absolute.bottom-8,
+    .bento-br .absolute.bottom-8 { left: 1rem !important; right: 1rem !important; bottom: 1rem !important; }
+    .bento-right .absolute.top-6 { top: 0.75rem !important; left: 0.75rem !important; }
+    .bento-right header, .bento-br header { margin-bottom: 1rem !important; }
+    /* Fix right bento card minimum height on mobile */
+    .bento-right, .bento-br { min-height: 350px; }
+    /* About panels padding */
+    .about-panel { padding: 1.5rem !important; }
+    /* Hero article card text overlap fix */
+    article .absolute.top-8 { top: 1rem !important; left: 1rem !important; }
+    article .absolute.bottom-8 { bottom: 1rem !important; left: 1rem !important; right: 1rem !important; }
+    /* Why privacy closing text */
+    .wpm-closing { font-size: 1.25rem !important; }
+    /* WPM detail text container */
+    #wpm-details { min-height: 280px !important; padding: 0 0.5rem; }
+    /* Capabilities right panels */
+    .md\\:w-2\\/3 { width: 100% !important; }
+    /* Capability panels reduce padding */
+    [data-scroll-section] .p-6,
+    [data-scroll-section] .p-10 { padding: 1rem !important; }
+    [data-scroll-section] .md\\:p-10 { padding: 1rem !important; }
+    /* Fix order form min height */
+    [data-scroll-section] .min-h-\\[500px\\] { min-height: 400px !important; }
+    [data-scroll-section] .min-h-\\[600px\\] { min-height: 400px !important; }
+    /* Roadmap section */
+    .roadmap-layer .p-6 { padding: 1rem !important; }
+    /* Footer grid fix */
+    footer .grid { gap: 1.5rem !important; }
+    /* FAQ items */
+    .faq-item .p-6 { padding: 1rem !important; }
+    /* CTA section */
+    #final-cta { padding-top: 4rem !important; padding-bottom: 4rem !important; }
+    #final-cta h2 { font-size: 1.75rem !important; }
+    /* Seq line text wrapping */
+    .seq-line { white-space: normal !important; font-size: 8px !important; }
+    /* Protocol section cards */
+    .quant-card-panel { height: auto !important; min-height: 400px !important; }
+    /* Bento left sidebar padding for absolute layers */
+    .bento-layer { padding-right: 0 !important; }
   }
 </style>
 </head>
@@ -146,38 +187,38 @@ gtag('config', 'G-2M6V79H761');
       </div>
     </h1>
     <p id="split-text" class="text-lg md:text-xl font-extralight text-white/40 max-w-lg leading-relaxed"><span class="inline-flex overflow-hidden align-top mr-2 pb-1"><span class="gsap-desc-word translate-y-full inline-block" style="translate: none; rotate: none; scale: none; transform: translate(0px, 100%);">Buy and sell compute resources without revealing your orders. Dark pool auctions for AI agents and developers on Base. 70% cheaper than AWS.</span></span></p>
-    <div class="flex gap-4 mt-4">
-      <a href="/dashboard" class="px-6 py-3 bg-gradient-to-r from-[#6C3CE9] to-[#9D6FFF] text-white text-sm rounded-full font-medium hover:opacity-90 transition-all shadow-[0_0_25px_rgba(108,60,233,0.4)] inline-flex items-center gap-2">
+    <div class="flex flex-wrap gap-3 mt-4">
+      <a href="/dashboard" class="px-5 md:px-6 py-3 bg-gradient-to-r from-[#6C3CE9] to-[#9D6FFF] text-white text-sm rounded-full font-medium hover:opacity-90 transition-all shadow-[0_0_25px_rgba(108,60,233,0.4)] inline-flex items-center gap-2">
         Launch App →
       </a>
-      <a href="#diagnostics-section" class="px-6 py-3 border border-white/10 text-white/70 text-sm rounded-full font-light hover:border-white/30 hover:text-white transition-all inline-flex items-center gap-2">
+      <a href="#about" class="px-5 md:px-6 py-3 border border-white/10 text-white/70 text-sm rounded-full font-light hover:border-white/30 hover:text-white transition-all inline-flex items-center gap-2">
         Learn More
       </a>
     </div>
   </div>
   
   <article class="lg:col-span-7 flex flex-col min-h-[400px] overflow-hidden bg-[#030303]/90 border-white/5 border rounded-3xl relative shadow-2xl backdrop-blur-md">
-    <div class="absolute top-8 left-8 z-20">
-      <header class="text-[10px] text-white/30 uppercase tracking-[0.2em] flex items-center gap-3 font-extralight" style="font-family: 'JetBrains Mono', monospace;">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]">
+    <div class="absolute top-4 left-4 md:top-8 md:left-8 z-20">
+      <header class="text-[9px] md:text-[10px] text-white/30 uppercase tracking-[0.2em] flex items-center gap-2 md:gap-3 font-extralight" style="font-family: 'JetBrains Mono', monospace;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)] shrink-0">
           <path d="m12 19 7-7 3 3-7 7-3-3z"></path>
           <path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
           <path d="m2 2 7.586 7.586"></path>
           <circle cx="11" cy="11" r="2"></circle>
         </svg>
-        BATCH-01 / MATCHING ENGINE
+        <span class="truncate">BATCH-01 / MATCHING ENGINE</span>
       </header>
     </div>
     
     <!-- Aura Glow Behind Canvas -->
     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-white/5 blur-[80px] rounded-full pointer-events-none"></div>
     
-    <div class="flex min-h-[400px] bg-gradient-to-br from-[#030303] to-white/[0.01] w-full h-full relative items-center justify-center">
+    <div class="flex min-h-[300px] md:min-h-[400px] bg-gradient-to-br from-[#030303] to-white/[0.01] w-full h-full relative items-center justify-center">
       <canvas class="w-full h-full absolute top-0 right-0 bottom-0 left-0" style="touch-action: none" width="1337" height="800" id="canvas-layers"></canvas>
     </div>
     
-    <div class="absolute bottom-8 left-8 right-8 z-20 pointer-events-none">
-      <p class="text-xs text-white/40 leading-relaxed font-extralight max-w-md font-sans">Encrypted orders matched every 30-60 seconds via batch auction. Zero-knowledge proofs verify fairness without revealing individual bids.</p>
+    <div class="absolute bottom-4 left-4 right-4 md:bottom-8 md:left-8 md:right-8 z-20 pointer-events-none">
+      <p class="text-[11px] md:text-xs text-white/40 leading-relaxed font-extralight max-w-md font-sans">Encrypted orders matched every 30-60 seconds via batch auction. Zero-knowledge proofs verify fairness without revealing individual bids.</p>
     </div>
   </article>
 </section>
@@ -190,7 +231,7 @@ gtag('config', 'G-2M6V79H761');
     <div class="about-header mb-8 text-center">
       <span class="inline-block font-mono text-[11px] tracking-[0.3em] text-white/30 uppercase mb-2">01</span>
       <span class="block font-mono text-[11px] tracking-[0.3em] text-white/30 uppercase mb-6">About the Protocol</span>
-      <h2 class="text-4xl md:text-6xl lg:text-7xl font-extralight text-white/90 tracking-tight leading-[1.08] mb-6">
+      <h2 class="text-3xl md:text-6xl lg:text-7xl font-extralight text-white/90 tracking-tight leading-[1.08] mb-4 md:mb-6">
         Privacy-first compute<br class="hidden md:block"> for the agentic era
       </h2>
       <p class="text-base md:text-lg font-light text-white/40 max-w-2xl mx-auto leading-relaxed">

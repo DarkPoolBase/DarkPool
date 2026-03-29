@@ -8,7 +8,7 @@ import { SectionLabel } from "@/components/ui/section-label";
 import { motion, AnimatePresence } from "framer-motion";
 
 const orders = [
-  { id: "#4521", side: "BUY", gpu: "H100", qty: "24 hrs", price: "$0.22", status: "FILLED" as const, submitted: "Mar 26, 2026 14:32:15 UTC", filled: "Mar 26, 2026 14:33:00 UTC (Batch #4521)", clearing: "$0.21/GPU-hr", total: "$5.04 USDC", tx: "0x7a3b...f82c", access: "ssh://compute-xyz123.darkpool.io" },
+  { id: "#4521", side: "BUY", gpu: "H100", qty: "24 hrs", price: "$0.22", status: "FILLED" as const, submitted: "Mar 26, 2026 14:32:15 UTC", filled: "Mar 26, 2026 14:33:00 UTC (Batch #4521)", clearing: "$0.21/GPU-hour", total: "$5.04 USDC", tx: "0x7a3b...f82c", access: "ssh://compute-xyz123.darkpool.io" },
   { id: "#4520", side: "BUY", gpu: "A100", qty: "48 hrs", price: "$0.18", status: "ACTIVE" as const, submitted: "Mar 26, 2026 13:15:00 UTC" },
   { id: "#4519", side: "BUY", gpu: "A100", qty: "72 hrs", price: "$0.19", status: "CANCELLED" as const, submitted: "Mar 26, 2026 12:00:00 UTC" },
   { id: "#4518", side: "SELL", gpu: "RTX 4090", qty: "24 hrs", price: "$0.09", status: "FILLED" as const, submitted: "Mar 25, 2026 22:00:00 UTC", filled: "Mar 25, 2026 22:01:00 UTC (Batch #4518)", clearing: "$0.08/GPU-hr", total: "$1.92 USDC", tx: "0x9c1a...d43e" },

@@ -244,7 +244,7 @@ const ProductDetail = () => {
             {/* Col 2: Quantity */}
             <div className="flex flex-col gap-4">
               <SectionLabel>Quantity (GPU-hours): <span className="text-foreground/70">{quantity[0]}</span></SectionLabel>
-              <div className="flex-1 flex flex-col justify-center gap-5">
+              <div className="flex-1 flex flex-col justify-center gap-4">
                 <Slider value={quantity} onValueChange={setQuantity} min={1} max={168} step={1} />
                 <div className="flex gap-2">
                   {[24, 48, 72, 168].map((v) => (

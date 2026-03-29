@@ -1825,312 +1825,170 @@ document.addEventListener('DOMContentLoaded', function() {
       <section id="telemetry" class="text-neutral-400 font-['Inter'] w-full max-w-6xl rounded-[25px] mt-12 mr-auto ml-auto pt-[1px] pr-[1px] pb-[1px] pl-[1px] relative shadow-[0_0_120px_rgba(6,182,212,0.03)]" style="background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.01) 100%); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale">
         <div class="overflow-hidden bg-[#050505] w-full rounded-[24px] shadow-inner" style="box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.05)">
           <div class="flex flex-col md:p-10 lg:p-12 pt-6 pr-6 pb-6 pl-6 gap-x-10 gap-y-10">
-            <header class="flex flex-col gap-10 xl:flex-row xl:items-end xl:justify-between">
-              <div class="flex flex-col gap-4">
-                <div class="flex items-center gap-3">
-                  <span class="font-mono text-[11px] tracking-[0.3em] text-white/30 uppercase">04</span>
-                  <span class="font-mono text-[11px] tracking-[0.3em] text-white/30 uppercase">Network Performance</span>
-                </div>
-                <div class="flex items-center gap-3">
-                  <div class="relative flex h-1.5 w-1.5 items-center justify-center">
-                    <span class="absolute inline-flex h-full w-full animate-ping rounded-full opacity-60 bg-amber-400" style="animation-duration: 3s;"></span>
-                    <span class="relative inline-flex h-1.5 w-1.5 rounded-full shadow-[0_0_8px_rgba(251,191,36,0.8)] bg-amber-400"></span>
-                  </div>
-                  <span class="font-['JetBrains_Mono'] text-xs font-light uppercase tracking-[0.2em] text-amber-400/90">
-                    Simulation Mode
-                  </span>
-                </div>
 
-                <h1 class="flex flex-wrap gap-2 text-3xl font-extralight tracking-tight text-neutral-100 md:text-5xl" id="reveal-title" style="line-height: 1.1;">
-                  <span style="overflow: hidden; display: inline-block;" class="">
-                    <span class="reveal-word" style="display: inline-block;">
-                      Batch
-                    </span>
-                  </span>
-                  <span style="overflow: hidden; display: inline-block;" class="">
-                    <span class="reveal-word" style="display: inline-block;">
-                      Auction
-                    </span>
-                  </span>
-                  <span style="overflow: hidden; display: inline-block;" class="">
-                    <span class="reveal-word" style="display: inline-block; text-neutral-500;">
-                      Simulator
-                    </span>
-                  </span>
-                </h1>
+            <header class="flex flex-col gap-4">
+              <div class="flex items-center gap-3">
+                <span class="font-mono text-[11px] tracking-[0.3em] text-white/30 uppercase">04</span>
+                <span class="font-mono text-[11px] tracking-[0.3em] text-white/30 uppercase">Compute Savings</span>
               </div>
-
-              <div class="grid grid-cols-2 gap-x-8 gap-y-6 md:flex md:gap-12 xl:pb-2">
-                <div class="relative flex flex-col gap-2">
-                  <div class="absolute -top-3 left-0 h-[1px] w-4 bg-violet-500/40"></div>
-                  <span class="font-['JetBrains_Mono'] text-xs font-light uppercase tracking-wider text-neutral-600">
-                    Orders in Batch
-                  </span>
-                  <div class="flex items-baseline gap-1.5">
-                    <span class="font-['JetBrains_Mono'] text-2xl font-light tracking-tight text-neutral-200 md:text-3xl">
-                      24
-                    </span>
-                  </div>
-                </div>
-                <div class="relative flex flex-col gap-2">
-                  <div class="absolute -top-3 left-0 h-[1px] w-4 bg-white/10"></div>
-                  <span class="font-['JetBrains_Mono'] text-xs font-light uppercase tracking-wider text-neutral-600">
-                    Clearing Price
-                  </span>
-                  <div class="flex items-baseline gap-1.5">
-                    <span class="font-['JetBrains_Mono'] text-2xl font-light tracking-tight text-neutral-200 md:text-3xl">
-                      $0.22
-                    </span>
-                    <span class="font-['JetBrains_Mono'] text-sm font-light text-neutral-500">
-                      /hr
-                    </span>
-                  </div>
-                </div>
-                <div class="relative flex flex-col gap-2">
-                  <div class="absolute -top-3 left-0 h-[1px] w-4 bg-white/10"></div>
-                  <span class="font-['JetBrains_Mono'] text-xs font-light uppercase tracking-wider text-neutral-600">
-                    GPU-Hrs Matched
-                  </span>
-                  <div class="flex items-baseline gap-1.5">
-                    <span class="font-['JetBrains_Mono'] text-2xl font-light tracking-tight text-neutral-200 md:text-3xl">
-                      340
-                    </span>
-                  </div>
-                </div>
-                <div class="relative flex flex-col gap-2">
-                  <div class="absolute -top-3 left-0 h-[1px] w-4 bg-white/10"></div>
-                  <span class="font-['JetBrains_Mono'] text-xs font-light uppercase tracking-wider text-neutral-600">
-                    Settlement Time
-                  </span>
-                  <div class="flex items-baseline gap-1.5">
-                    <span class="font-['JetBrains_Mono'] text-2xl font-light tracking-tight text-neutral-200 md:text-3xl">
-                      1.2
-                    </span>
-                    <span class="font-['JetBrains_Mono'] text-sm font-light text-neutral-500">
-                      s
-                    </span>
-                  </div>
-                </div>
-              </div>
+              <h1 class="text-3xl font-extralight tracking-tight text-neutral-100 md:text-5xl" style="line-height: 1.1;">See What You'd Save</h1>
+              <p class="text-sm font-light text-neutral-500 max-w-lg leading-relaxed">Compare your current GPU costs against dark pool batch auction pricing on Base.</p>
             </header>
 
-            <div class="relative w-full rounded-2xl p-[1px]" style="background: linear-gradient(135deg, rgba(6,182,212,0.15) 0%, rgba(255,255,255,0.02) 100%);">
-              <div class="absolute inset-0 rounded-2xl bg-[#080808] opacity-80 backdrop-blur-xl"></div>
-              <section class="relative z-10 flex flex-col items-start justify-between gap-6 rounded-[15px] bg-gradient-to-b from-white/[0.03] to-transparent p-5 md:flex-row md:items-center md:p-6">
-                <div class="flex items-start gap-4">
-                  <div class="mt-0.5 flex shrink-0 items-center justify-center rounded-lg border border-white/5 bg-black/50 p-2 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] text-violet-400">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-cpu">
-                      <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
-                      <rect x="9" y="9" width="6" height="6"></rect>
-                      <line x1="9" y1="1" x2="9" y2="4"></line>
-                      <line x1="15" y1="1" x2="15" y2="4"></line>
-                      <line x1="9" y1="20" x2="9" y2="23"></line>
-                      <line x1="15" y1="20" x2="15" y2="23"></line>
-                      <line x1="20" y1="9" x2="23" y2="9"></line>
-                      <line x1="20" y1="14" x2="23" y2="14"></line>
-                      <line x1="1" y1="9" x2="4" y2="9"></line>
-                      <line x1="1" y1="14" x2="4" y2="14"></line>
-                    </svg>
-                  </div>
-                  <p class="max-w-xl font-['Inter'] text-sm font-thin leading-relaxed text-neutral-400">
-                    Live simulation of a single batch auction cycle. Orders are collected, matched at a uniform clearing price, and settled on Base L2 — all in under 2 seconds.
-                  </p>
+            <div class="flex flex-col md:flex-row gap-4 md:items-end">
+              <div class="flex gap-1 p-1 bg-white/[0.03] border border-white/[0.06] rounded-lg">
+                <button id="calc-buy" onclick="setCalcMode('buy')" class="px-4 py-2 text-xs font-mono uppercase tracking-wider rounded-md transition-all duration-300 bg-[#6C3CE9]/20 text-[#6C3CE9] border border-[#6C3CE9]/30">I Buy Compute</button>
+                <button id="calc-sell" onclick="setCalcMode('sell')" class="px-4 py-2 text-xs font-mono uppercase tracking-wider rounded-md transition-all duration-300 text-white/30 hover:text-white/50">I Sell Compute</button>
+              </div>
+              <div class="flex flex-col gap-1.5">
+                <label class="font-mono text-[10px] text-white/30 uppercase tracking-widest">GPU Type</label>
+                <select id="calc-gpu" onchange="updateCalc()" class="bg-[#0B0C0E] border border-white/[0.08] rounded-lg px-3 py-2 text-sm text-white/80 font-mono focus:border-[#6C3CE9]/50 focus:outline-none transition-colors appearance-none cursor-pointer" style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%23666%22 stroke-width=%222%22><polyline points=%226 9 12 15 18 9%22/></svg>'); background-repeat: no-repeat; background-position: right 10px center; padding-right: 32px;">
+                  <option value="H100">H100</option>
+                  <option value="A100">A100</option>
+                  <option value="RTX4090">RTX 4090</option>
+                </select>
+              </div>
+              <div class="flex flex-col gap-1.5 flex-1 max-w-xs">
+                <div class="flex justify-between">
+                  <label class="font-mono text-[10px] text-white/30 uppercase tracking-widest">Monthly GPU Hours</label>
+                  <span id="calc-hours-display" class="font-mono text-[10px] text-[#6C3CE9]">500</span>
                 </div>
-                <a href="/dashboard" class="group inline-flex shrink-0 items-center gap-2.5 rounded-full bg-neutral-100 px-5 py-2.5 text-sm font-light text-black transition-all duration-300 hover:bg-white hover:shadow-[0_0_20px_rgba(255,255,255,0.2)] focus:outline-none">
-                  <span class="relative flex h-2 w-2">
-                    <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-black opacity-30"></span>
-                    <span class="relative inline-flex h-2 w-2 rounded-full bg-black"></span>
-                  </span>
-                  Run Simulation
-                </a>
-              </section>
+                <input type="range" id="calc-hours" min="100" max="10000" value="500" step="50" oninput="updateCalc()" class="w-full h-1 bg-white/[0.06] rounded-full appearance-none cursor-pointer" style="accent-color: #6C3CE9;">
+                <div class="flex justify-between font-mono text-[9px] text-white/15"><span>100</span><span>10,000</span></div>
+              </div>
             </div>
 
+            <div id="calc-stats" class="grid grid-cols-2 gap-x-8 gap-y-6 md:flex md:gap-12"></div>
+
             <section class="flex flex-col gap-6 pt-2">
-              <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-                <div class="flex flex-wrap items-center gap-6 font-['JetBrains_Mono'] text-xs font-light uppercase tracking-wider text-neutral-500">
-                  <div class="flex items-center gap-2.5">
-                    <span class="block h-[1px] w-3 shadow-[0_0_6px_rgba(6,182,212,0.8)] bg-violet-400"></span>
-                    <span>Buy Orders</span>
-                  </div>
-                  <div class="flex items-center gap-2.5">
-                    <span class="block h-[1px] w-3 bg-emerald-500"></span>
-                    <span class="">Sell Orders</span>
-                  </div>
-                  <div class="flex items-center gap-2.5">
-                    <span class="block h-[1px] w-3 bg-neutral-700"></span>
-                    <span class="">Clearing Price</span>
-                  </div>
-                </div>
-
-                <div class="flex flex-wrap gap-3">
-                  <button class="inline-flex items-center gap-3 rounded-md border border-white/5 bg-black/40 px-3 py-1.5 font-['JetBrains_Mono'] text-xs font-light uppercase tracking-wider text-neutral-400 transition-colors hover:bg-white/5 hover:text-neutral-200">
-                    Network: Base L2
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="opacity-50 lucide lucide-chevron-down">
-                      <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                  </button>
-                  <button class="inline-flex items-center gap-3 rounded-md border border-white/5 bg-black/40 px-3 py-1.5 font-['JetBrains_Mono'] text-xs font-light uppercase tracking-wider text-neutral-400 transition-colors hover:bg-white/5 hover:text-neutral-200">
-                    Demo Data
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="opacity-50 lucide lucide-chevron-down">
-                      <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                  </button>
-                </div>
-              </div>
-
               <div class="relative flex flex-col gap-3">
-                <div class="relative h-72 w-full overflow-hidden rounded-xl border border-white/[0.02] bg-[#020202] shadow-[inset_0_0_60px_rgba(0,0,0,0.8)]" id="chart-container">
+                <div class="relative h-72 w-full overflow-hidden rounded-xl border border-white/[0.02] bg-[#020202] shadow-[inset_0_0_60px_rgba(0,0,0,0.8)]" id="calc-chart-container">
                   <div class="pointer-events-none absolute inset-0 opacity-[0.03]" style="background-image: radial-gradient(circle at 1px 1px, white 1px, transparent 0); background-size: 24px 24px;"></div>
-
-                  <canvas id="quantumChart" class="absolute inset-0 block h-full w-full mix-blend-screen" width="2104" height="572" style="display: block; box-sizing: border-box; height: 286px; width: 1052px;"></canvas>
-
+                  <div class="absolute inset-0 flex items-end justify-center gap-12 md:gap-20 px-16 pb-12 pt-8" id="calc-bars">
+                    <div class="flex flex-col items-center gap-3 flex-1 max-w-[140px]">
+                      <div id="bar-market" class="w-full rounded-t-md transition-all duration-700 ease-out" style="height: 0%; background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 100%); border: 1px solid rgba(255,255,255,0.08);"></div>
+                      <span id="bar-market-label" class="font-mono text-[10px] text-white/40 uppercase tracking-wider whitespace-nowrap">AWS / Market</span>
+                      <span id="bar-market-val" class="font-mono text-sm text-white/60">bash</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-3 flex-1 max-w-[140px]">
+                      <div id="bar-dp" class="w-full rounded-t-md transition-all duration-700 ease-out" style="height: 0%; background: linear-gradient(180deg, rgba(108,60,233,0.5) 0%, rgba(108,60,233,0.2) 100%); border: 1px solid rgba(108,60,233,0.3);"></div>
+                      <span class="font-mono text-[10px] text-[#6C3CE9]/60 uppercase tracking-wider">Dark Pool</span>
+                      <span id="bar-dp-val" class="font-mono text-sm text-[#6C3CE9]">bash</span>
+                    </div>
+                  </div>
+                  <div class="absolute left-3 top-1/2 -translate-y-1/2 -rotate-90 font-mono text-[9px] text-white/15 uppercase tracking-widest whitespace-nowrap">Monthly Cost (USD)</div>
+                  <div id="calc-gpu-label" class="absolute bottom-3 left-1/2 -translate-x-1/2 font-mono text-[10px] text-white/20 uppercase tracking-widest">H100</div>
                   <div class="pointer-events-none absolute inset-0" style="box-shadow: inset 0 0 100px #020202;"></div>
-                  <div class="pointer-events-none absolute bottom-0 left-0 w-full h-1/3" style="background: linear-gradient(0deg, #020202 0%, transparent 100%);"></div>
-
                   <div class="absolute left-4 top-4 h-2 w-2 border-l border-t border-white/20"></div>
                   <div class="absolute right-4 top-4 h-2 w-2 border-r border-t border-white/20"></div>
                   <div class="absolute bottom-4 left-4 h-2 w-2 border-b border-l border-white/20"></div>
                   <div class="absolute bottom-4 right-4 h-2 w-2 border-b border-r border-white/20"></div>
                 </div>
-
-                <div class="flex justify-between px-2 font-['JetBrains_Mono'] text-xs font-light uppercase tracking-[0.15em] text-neutral-600">
-                  <span class="">Batch 1</span>
-                  <span class="hidden sm:block">Batch 2</span>
-                  <span>Batch 3</span>
-                  <span class="hidden sm:block">Batch 4</span>
-                  <span class="text-violet-600">Latest</span>
-                </div>
-                <p class="text-[11px] font-light text-neutral-600 mt-2 px-2" style="font-family: 'Inter', sans-serif;">Simulated data for demonstration purposes. Testnet launch coming Q3 2026.</p>
               </div>
             </section>
+
+            <div class="relative w-full rounded-2xl p-[1px]" style="background: linear-gradient(135deg, rgba(108,60,233,0.15) 0%, rgba(255,255,255,0.02) 100%);">
+              <div class="absolute inset-0 rounded-2xl bg-[#080808] opacity-80 backdrop-blur-xl"></div>
+              <div class="relative z-10 flex flex-col items-start justify-between gap-6 rounded-[15px] bg-gradient-to-b from-white/[0.03] to-transparent p-5 md:flex-row md:items-center md:p-6">
+                <div class="flex items-start gap-4">
+                  <div class="mt-0.5 flex shrink-0 items-center justify-center rounded-lg border border-white/5 bg-black/50 p-2 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] text-[#6C3CE9]">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                  </div>
+                  <p class="max-w-xl font-['Inter'] text-sm font-thin leading-relaxed text-neutral-400">Early providers and buyers get priority matching and reduced fees at launch.</p>
+                </div>
+                <div class="flex flex-col items-center gap-2 shrink-0">
+                  <a href="#" class="inline-flex items-center gap-2.5 rounded-full bg-[#6C3CE9] px-6 py-2.5 text-sm font-light text-white transition-all duration-300 hover:bg-[#7C4CF9] hover:shadow-[0_0_20px_rgba(108,60,233,0.4)] focus:outline-none">
+                    <span class="relative flex h-2 w-2"><span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-30"></span><span class="relative inline-flex h-2 w-2 rounded-full bg-white"></span></span>
+                    Join Early Access
+                  </a>
+                  <span class="font-mono text-[10px] text-white/20">No wallet required. 1,200+ on the waitlist.</span>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
 
         <script>
-          (function() {
-              const initTelemetry = () => {
-                  if (typeof gsap !== 'undefined') {
-                      gsap.to(".reveal-word", {
-                          y: "0%",
-                          duration: 1.2,
-                          stagger: 0.15,
-                          ease: "power4.out",
-                          scrollTrigger: {
-                              trigger: "#reveal-title",
-                              start: "top 85%",
-                          }
-                      });
-                  }
+        (function() {
+          var mode = 'buy';
+          var prices = {
+            H100:    { market: 6.00, dp: 0.85, sell: 0.70 },
+            A100:    { market: 3.50, dp: 0.45, sell: 0.35 },
+            RTX4090: { market: 1.50, dp: 0.20, sell: 0.15 }
+          };
 
-                  const canvas = document.getElementById('quantumChart');
-                  if (!canvas) return;
-                  const ctx = canvas.getContext('2d');
+          window.setCalcMode = function(m) {
+            mode = m;
+            var buyBtn = document.getElementById('calc-buy');
+            var sellBtn = document.getElementById('calc-sell');
+            if (m === 'buy') {
+              buyBtn.className = 'px-4 py-2 text-xs font-mono uppercase tracking-wider rounded-md transition-all duration-300 bg-[#6C3CE9]/20 text-[#6C3CE9] border border-[#6C3CE9]/30';
+              sellBtn.className = 'px-4 py-2 text-xs font-mono uppercase tracking-wider rounded-md transition-all duration-300 text-white/30 hover:text-white/50';
+            } else {
+              sellBtn.className = 'px-4 py-2 text-xs font-mono uppercase tracking-wider rounded-md transition-all duration-300 bg-[#6C3CE9]/20 text-[#6C3CE9] border border-[#6C3CE9]/30';
+              buyBtn.className = 'px-4 py-2 text-xs font-mono uppercase tracking-wider rounded-md transition-all duration-300 text-white/30 hover:text-white/50';
+            }
+            updateCalc();
+          };
 
-                  const initChartJS = () => {
-                      const gradient1 = ctx.createLinearGradient(0, 0, 0, canvas.clientHeight || 300);
-                      gradient1.addColorStop(0, 'rgba(139, 92, 246, 0.4)');
-                      gradient1.addColorStop(1, 'rgba(139, 92, 246, 0.0)');
+          function fmt(n) { return '$' + n.toLocaleString('en-US', {minimumFractionDigits:0, maximumFractionDigits:0}); }
 
-                      const gradient2 = ctx.createLinearGradient(0, 0, 0, canvas.clientHeight || 300);
-                      gradient2.addColorStop(0, 'rgba(34, 197, 94, 0.4)');
-                      gradient2.addColorStop(1, 'rgba(34, 197, 94, 0.0)');
+          window.updateCalc = function() {
+            var gpu = document.getElementById('calc-gpu').value;
+            var hours = parseInt(document.getElementById('calc-hours').value);
+            var p = prices[gpu];
+            document.getElementById('calc-hours-display').textContent = hours.toLocaleString();
+            document.getElementById('calc-gpu-label').textContent = gpu === 'RTX4090' ? 'RTX 4090' : gpu;
 
-                      const numPoints = 180;
-                      const labels = Array.from({length: numPoints}, (_, i) => i);
-                      
-                      const generateData = (freq, phase, baseHeight, amp) => {
-                          const time = Date.now() * 0.001;
-                          return labels.map(i => {
-                              const normalizedX = i / numPoints;
-                              const envelope = Math.sin(normalizedX * Math.PI);
-                              const noise1 = Math.sin(i * freq + time + phase);
-                              const noise2 = Math.cos(i * freq * 0.5 - time * 1.2);
-                              const noise3 = Math.sin(i * freq * 2 + time * 0.8);
-                              let value = (noise1 * 0.5 + noise2 * 0.3 + noise3 * 0.2);
-                              return baseHeight + (value * amp * envelope);
-                          });
-                      };
+            var statsEl = document.getElementById('calc-stats');
+            var barMarket = document.getElementById('bar-market');
+            var barDp = document.getElementById('bar-dp');
+            var barMarketVal = document.getElementById('bar-market-val');
+            var barDpVal = document.getElementById('bar-dp-val');
+            var barMarketLabel = document.getElementById('bar-market-label');
 
-                      if (window.quantumChartInstance) {
-                          window.quantumChartInstance.destroy();
-                      }
+            if (mode === 'buy') {
+              var awsCost = hours * p.market;
+              var dpCost = hours * p.dp;
+              var saved = awsCost - dpCost;
+              var pct = Math.round((saved / awsCost) * 100);
+              statsEl.innerHTML = '<div class="relative flex flex-col gap-2"><div class="absolute -top-3 left-0 h-[1px] w-4 bg-white/10"></div><span class="font-mono text-xs font-light uppercase tracking-wider text-neutral-600">AWS Cost</span><span class="font-mono text-2xl font-light tracking-tight text-neutral-200 md:text-3xl">' + fmt(awsCost) + '</span></div>'
+                + '<div class="relative flex flex-col gap-2"><div class="absolute -top-3 left-0 h-[1px] w-4 bg-[#4ADE80]/40"></div><span class="font-mono text-xs font-light uppercase tracking-wider text-neutral-600">Dark Pool Est.</span><span class="font-mono text-2xl font-light tracking-tight text-[#4ADE80] md:text-3xl">' + fmt(dpCost) + '</span></div>'
+                + '<div class="relative flex flex-col gap-2"><div class="absolute -top-3 left-0 h-[1px] w-4 bg-[#4ADE80]/40"></div><span class="font-mono text-xs font-light uppercase tracking-wider text-neutral-600">You Save</span><span class="font-mono text-2xl font-medium tracking-tight text-[#4ADE80] md:text-3xl">' + fmt(saved) + ' <span class="text-lg font-light">(' + pct + '%)</span></span></div>'
+                + '<div class="relative flex flex-col gap-2"><div class="absolute -top-3 left-0 h-[1px] w-4 bg-[#6C3CE9]/40"></div><span class="font-mono text-xs font-light uppercase tracking-wider text-neutral-600">Cost Per Hour</span><span class="font-mono text-2xl font-light tracking-tight text-[#6C3CE9] md:text-3xl">$' + p.dp.toFixed(2) + '</span></div>';
+              barMarket.style.height = '80%';
+              barDp.style.height = Math.round((dpCost / awsCost) * 80) + '%';
+              barMarketVal.textContent = fmt(awsCost);
+              barDpVal.textContent = fmt(dpCost);
+              barMarketLabel.textContent = 'AWS / Market';
+              barMarket.style.background = 'linear-gradient(180deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 100%)';
+              barMarket.style.border = '1px solid rgba(255,255,255,0.08)';
+            } else {
+              var revenue = hours * p.sell;
+              var annual = revenue * 12;
+              statsEl.innerHTML = '<div class="relative flex flex-col gap-2"><div class="absolute -top-3 left-0 h-[1px] w-4 bg-[#4ADE80]/40"></div><span class="font-mono text-xs font-light uppercase tracking-wider text-neutral-600">Idle GPU Revenue</span><span class="font-mono text-2xl font-light tracking-tight text-[#4ADE80] md:text-3xl">' + fmt(revenue) + '</span></div>'
+                + '<div class="relative flex flex-col gap-2"><div class="absolute -top-3 left-0 h-[1px] w-4 bg-[#4ADE80]/40"></div><span class="font-mono text-xs font-light uppercase tracking-wider text-neutral-600">Monthly Earnings</span><span class="font-mono text-2xl font-light tracking-tight text-[#4ADE80] md:text-3xl">' + fmt(revenue) + '</span></div>'
+                + '<div class="relative flex flex-col gap-2"><div class="absolute -top-3 left-0 h-[1px] w-4 bg-[#6C3CE9]/40"></div><span class="font-mono text-xs font-light uppercase tracking-wider text-neutral-600">Annual Projection</span><span class="font-mono text-2xl font-light tracking-tight text-[#6C3CE9] md:text-3xl">' + fmt(annual) + '</span></div>'
+                + '<div class="relative flex flex-col gap-2"><div class="absolute -top-3 left-0 h-[1px] w-4 bg-[#4ADE80]/40"></div><span class="font-mono text-xs font-light uppercase tracking-wider text-neutral-600">Network Demand</span><div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-[#4ADE80] animate-pulse"></span><span class="font-mono text-2xl font-light tracking-tight text-[#4ADE80] md:text-3xl">HIGH</span></div></div>';
+              barMarket.style.height = '30%';
+              barDp.style.height = '80%';
+              barMarketVal.textContent = 'bash';
+              barDpVal.textContent = fmt(revenue) + '/mo';
+              barMarketLabel.textContent = 'Without Dark Pool';
+              barMarket.style.background = 'linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)';
+              barMarket.style.border = '1px solid rgba(255,255,255,0.04)';
+            }
+            barDp.style.boxShadow = '0 0 20px rgba(108,60,233,0.3)';
+            setTimeout(function() { barDp.style.boxShadow = 'none'; }, 700);
+          };
 
-                      window.quantumChartInstance = new Chart(ctx, {
-                          type: 'line',
-                          data: {
-                              labels: labels,
-                              datasets: [
-                                  {
-                                      data: generateData(0.06, 200, 30, 40),
-                                      borderColor: 'rgba(139, 92, 246, 0.9)',
-                                      backgroundColor: gradient1,
-                                      borderWidth: 2,
-                                      fill: true,
-                                      tension: 0.4,
-                                      pointRadius: 0
-                                  },
-                                  {
-                                      data: generateData(0.04, 100, 50, 30),
-                                      borderColor: 'rgba(34, 197, 94, 0.6)',
-                                      backgroundColor: gradient2,
-                                      borderWidth: 1.5,
-                                      fill: true,
-                                      tension: 0.4,
-                                      pointRadius: 0
-                                  },
-                                  {
-                                      data: generateData(0.02, 0, 70, 20),
-                                      borderColor: 'rgba(55, 65, 81, 0.4)',
-                                      borderWidth: 1,
-                                      fill: false,
-                                      tension: 0.4,
-                                      pointRadius: 0
-                                  }
-                              ]
-                          },
-                          options: {
-                              responsive: true,
-                              maintainAspectRatio: false,
-                              animation: false,
-                              plugins: {
-                                  legend: { display: false },
-                                  tooltip: { enabled: false }
-                              },
-                              scales: {
-                                  x: { display: false },
-                                  y: { display: false, min: 0, max: 100 }
-                              },
-                              layout: { padding: 0 }
-                          }
-                      });
-
-                      const animate = () => {
-                          window.quantumChartInstance.data.datasets[0].data = generateData(0.06, 200, 30, 40);
-                          window.quantumChartInstance.data.datasets[1].data = generateData(0.04, 100, 50, 30);
-                          window.quantumChartInstance.data.datasets[2].data = generateData(0.02, 0, 70, 20);
-                          window.quantumChartInstance.update('none');
-                          requestAnimationFrame(animate);
-                      };
-                      animate();
-                  };
-
-                  if (typeof Chart === 'undefined') {
-                      const script = document.createElement('script');
-                      script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
-                      script.onload = initChartJS;
-                      document.head.appendChild(script);
-                  } else {
-                      initChartJS();
-                  }
-              };
-
-              if (document.readyState === 'complete' || document.readyState === 'interactive') {
-                  setTimeout(initTelemetry, 100);
-              } else {
-                  document.addEventListener('DOMContentLoaded', initTelemetry);
-              }
-          })();
+          if (document.readyState === 'complete' || document.readyState === 'interactive') {
+            setTimeout(updateCalc, 100);
+          } else {
+            document.addEventListener('DOMContentLoaded', function() { updateCalc(); });
+          }
+        })();
         </script>
       </section>
       <section class="flex flex-col gap-8 w-full mt-24 gap-x-8 gap-y-8" id="quant-analytics">

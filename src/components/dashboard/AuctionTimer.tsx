@@ -26,14 +26,14 @@ export function AuctionTimer() {
     <GlassCard
       delay={0.3}
       glow={isUrgent}
-      className="p-5"
+      className="p-4"
     >
       <div className="flex items-center gap-4">
         <div className="relative shrink-0">
-          <svg width="60" height="60" className="-rotate-90">
-            <circle cx="30" cy="30" r={radius} fill="none" stroke="rgba(255,255,255,0.04)" strokeWidth="2" />
+          <svg width="56" height="56" className="-rotate-90">
+            <circle cx="28" cy="28" r={radius} fill="none" stroke="rgba(255,255,255,0.04)" strokeWidth="2" />
             <motion.circle
-              cx="30" cy="30" r={radius} fill="none"
+              cx="28" cy="28" r={radius} fill="none"
               stroke={isUrgent ? "rgb(245,158,11)" : "rgb(139,92,246)"}
               strokeWidth="2" strokeLinecap="round"
               strokeDasharray={circumference}

@@ -52,7 +52,7 @@ const productData: Record<string, {
     ],
   },
   "multi-gpu": {
-    name: "Multi-GPU Cluster", label: "Training Cluster", price: "$1.40/hr", priceNum: 1.40,
+    name: "Multi-GPU Cluster", label: "Training Cluster", price: "$1.40/GPU-hour", priceNum: 1.40,
     providers: 12, vram: "8×H100 (640GB)", workloads: ["Distributed Training", "Large Models", "Research", "Pre-training"],
     availability: 34, icon: Layers,
     description: "8×H100 clusters for distributed training at scale. Encrypted procurement ensures competitors cannot observe your infrastructure build-out.",

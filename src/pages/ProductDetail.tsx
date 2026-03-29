@@ -64,7 +64,7 @@ const productData: Record<string, {
     ],
   },
   "compute-credits": {
-    name: "Compute Credits", label: "Prepaid Compute", price: "$0.18/unit", priceNum: 0.18,
+    name: "Compute Credits", label: "Prepaid Compute", price: "$0.18/GPU-hour", priceNum: 0.18,
     providers: 387, vram: "Flexible", workloads: ["Any Workload", "Multi-GPU", "Burst Scaling", "Reserved"],
     availability: 100, icon: Activity,
     description: "Flexible compute credits redeemable across all GPU types. Pre-purchase at auction-determined rates with full privacy.",

@@ -123,7 +123,7 @@ const ProductDetail = () => {
   const estTotal = (quantity[0] * parseFloat(currentPrice || "0")).toFixed(2);
 
   return (
-    <div className="space-y-8 max-w-[1440px]">
+    <div className="space-y-6 max-w-[1440px]">
       {/* Back nav */}
       <button
         onClick={() => navigate("/marketplace")}
@@ -134,47 +134,42 @@ const ProductDetail = () => {
       </button>
 
       {/* Hero */}
-      <GlassCard delay={0} glow className="p-6 md:p-8">
-        <div className="flex flex-col lg:flex-row lg:items-start gap-8">
-          <div className="flex-1">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="w-12 h-12 rounded-2xl bg-primary/[0.08] border border-primary/[0.12] flex items-center justify-center">
-                <product.icon className="w-6 h-6 text-primary" />
-              </div>
-              <div>
-                <h1 className="text-2xl md:text-3xl font-thin tracking-tight text-foreground">{product.name}</h1>
-                <span className="font-mono text-xs text-primary/70 tracking-wider">{product.label}</span>
-              </div>
-            </div>
-            <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl mb-8">{product.description}</p>
-
-            {/* Key stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="p-4 rounded-xl bg-white/[0.02]">
-                <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">Est. Clearing</p>
-                <p className="font-mono text-lg font-semibold text-foreground tabular-nums mt-1">{product.price}</p>
-              </div>
-              <div className="p-4 rounded-xl bg-white/[0.02]">
-                <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">Verified Providers</p>
-                <p className="font-mono text-lg font-semibold text-foreground tabular-nums mt-1">{product.providers}</p>
-              </div>
-              <div className="p-4 rounded-xl bg-white/[0.02]">
-                <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">VRAM</p>
-                <p className="font-mono text-lg font-semibold text-foreground tabular-nums mt-1">{product.vram}</p>
-              </div>
-              <div className="p-4 rounded-xl bg-white/[0.02]">
-                <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">Liquidity</p>
-                <p className={`font-mono text-lg font-semibold tabular-nums mt-1 ${
-                  product.availability >= 70 ? "text-emerald-400" : product.availability >= 40 ? "text-amber-400" : "text-rose-400"
-                }`}>{product.availability}%</p>
-              </div>
-            </div>
+      <GlassCard delay={0} glow className="p-6">
+        <div className="flex items-center gap-4 mb-4">
+          <div className="w-12 h-12 rounded-2xl bg-primary/[0.08] border border-primary/[0.12] flex items-center justify-center">
+            <product.icon className="w-6 h-6 text-primary" />
           </div>
+          <div>
+            <h1 className="text-2xl md:text-3xl font-thin tracking-tight text-foreground">{product.name}</h1>
+            <span className="font-mono text-xs text-primary/70 tracking-wider">{product.label}</span>
+          </div>
+        </div>
+        <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl mb-6">{product.description}</p>
 
+        {/* Key stats */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div className="p-4 rounded-xl bg-white/[0.03]">
+            <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">Est. Clearing</p>
+            <p className="font-mono text-lg font-semibold text-foreground tabular-nums mt-1">{product.price}</p>
+          </div>
+          <div className="p-4 rounded-xl bg-white/[0.03]">
+            <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">Verified Providers</p>
+            <p className="font-mono text-lg font-semibold text-foreground tabular-nums mt-1">{product.providers}</p>
+          </div>
+          <div className="p-4 rounded-xl bg-white/[0.03]">
+            <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">VRAM</p>
+            <p className="font-mono text-lg font-semibold text-foreground tabular-nums mt-1">{product.vram}</p>
+          </div>
+          <div className="p-4 rounded-xl bg-white/[0.03]">
+            <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">Liquidity</p>
+            <p className={`font-mono text-lg font-semibold tabular-nums mt-1 ${
+              product.availability >= 70 ? "text-emerald-400" : product.availability >= 40 ? "text-amber-400" : "text-rose-400"
+            }`}>{product.availability}%</p>
+          </div>
         </div>
       </GlassCard>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left column: Charts */}
         <div className="lg:col-span-2 space-y-4">
           {/* Price History */}

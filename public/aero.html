@@ -1680,28 +1680,28 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
                 <div class="flex items-center gap-3">
                   <div class="relative flex h-1.5 w-1.5 items-center justify-center">
-                    <span class="absolute inline-flex h-full w-full animate-ping rounded-full opacity-60 bg-violet-400" style="animation-duration: 3s;"></span>
-                    <span class="relative inline-flex h-1.5 w-1.5 rounded-full shadow-[0_0_8px_rgba(6,182,212,0.8)] bg-violet-500"></span>
+                    <span class="absolute inline-flex h-full w-full animate-ping rounded-full opacity-60 bg-amber-400" style="animation-duration: 3s;"></span>
+                    <span class="relative inline-flex h-1.5 w-1.5 rounded-full shadow-[0_0_8px_rgba(251,191,36,0.8)] bg-amber-400"></span>
                   </div>
-                  <span class="font-['JetBrains_Mono'] text-xs font-light uppercase tracking-[0.2em] text-violet-500/90">
-                    Protocol Live
+                  <span class="font-['JetBrains_Mono'] text-xs font-light uppercase tracking-[0.2em] text-amber-400/90">
+                    Simulation Mode
                   </span>
                 </div>
 
                 <h1 class="flex flex-wrap gap-2 text-3xl font-extralight tracking-tight text-neutral-100 md:text-5xl" id="reveal-title" style="line-height: 1.1;">
                   <span style="overflow: hidden; display: inline-block;" class="">
                     <span class="reveal-word" style="display: inline-block;">
-                      Dark
+                      Batch
                     </span>
                   </span>
                   <span style="overflow: hidden; display: inline-block;" class="">
                     <span class="reveal-word" style="display: inline-block;">
-                      Pool
+                      Auction
                     </span>
                   </span>
                   <span style="overflow: hidden; display: inline-block;" class="">
                     <span class="reveal-word" style="display: inline-block; text-neutral-500;">
-                      Telemetry
+                      Simulator
                     </span>
                   </span>
                 </h1>
@@ -1711,43 +1711,43 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="relative flex flex-col gap-2">
                   <div class="absolute -top-3 left-0 h-[1px] w-4 bg-violet-500/40"></div>
                   <span class="font-['JetBrains_Mono'] text-xs font-light uppercase tracking-wider text-neutral-600">
-                    Orders Matched
+                    Orders in Batch
                   </span>
                   <div class="flex items-baseline gap-1.5">
                     <span class="font-['JetBrains_Mono'] text-2xl font-light tracking-tight text-neutral-200 md:text-3xl">
-                      12,847
+                      24
                     </span>
                   </div>
                 </div>
                 <div class="relative flex flex-col gap-2">
                   <div class="absolute -top-3 left-0 h-[1px] w-4 bg-white/10"></div>
                   <span class="font-['JetBrains_Mono'] text-xs font-light uppercase tracking-wider text-neutral-600">
-                    Fill Rate
+                    Clearing Price
                   </span>
                   <div class="flex items-baseline gap-1.5">
                     <span class="font-['JetBrains_Mono'] text-2xl font-light tracking-tight text-neutral-200 md:text-3xl">
-                      94
+                      $0.22
                     </span>
                     <span class="font-['JetBrains_Mono'] text-sm font-light text-neutral-500">
-                      %
+                      /hr
                     </span>
                   </div>
                 </div>
                 <div class="relative flex flex-col gap-2">
                   <div class="absolute -top-3 left-0 h-[1px] w-4 bg-white/10"></div>
                   <span class="font-['JetBrains_Mono'] text-xs font-light uppercase tracking-wider text-neutral-600">
-                    Active Agents
+                    GPU-Hrs Matched
                   </span>
                   <div class="flex items-baseline gap-1.5">
                     <span class="font-['JetBrains_Mono'] text-2xl font-light tracking-tight text-neutral-200 md:text-3xl">
-                      1,892
+                      340
                     </span>
                   </div>
                 </div>
                 <div class="relative flex flex-col gap-2">
                   <div class="absolute -top-3 left-0 h-[1px] w-4 bg-white/10"></div>
                   <span class="font-['JetBrains_Mono'] text-xs font-light uppercase tracking-wider text-neutral-600">
-                    Settlement
+                    Settlement Time
                   </span>
                   <div class="flex items-baseline gap-1.5">
                     <span class="font-['JetBrains_Mono'] text-2xl font-light tracking-tight text-neutral-200 md:text-3xl">
@@ -1780,9 +1780,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     </svg>
                   </div>
                   <p class="max-w-xl font-['Inter'] text-sm font-thin leading-relaxed text-neutral-400">
-                    Real-time protocol telemetry across all active batch windows.
-                    Monitoring order flow, fill rates, and settlement performance
-                    on Base L2.
+                    Live simulation of a single batch auction cycle. Orders are collected, matched at a uniform clearing price, and settled on Base L2 — all in under 2 seconds.
                   </p>
                 </div>
                 <a href="/dashboard" class="group inline-flex shrink-0 items-center gap-2.5 rounded-full bg-neutral-100 px-5 py-2.5 text-sm font-light text-black transition-all duration-300 hover:bg-white hover:shadow-[0_0_20px_rgba(255,255,255,0.2)] focus:outline-none">
@@ -1790,7 +1788,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-black opacity-30"></span>
                     <span class="relative inline-flex h-2 w-2 rounded-full bg-black"></span>
                   </span>
-                  Launch Terminal
+                  Run Simulation
                 </a>
               </section>
             </div>
@@ -1800,15 +1798,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="flex flex-wrap items-center gap-6 font-['JetBrains_Mono'] text-xs font-light uppercase tracking-wider text-neutral-500">
                   <div class="flex items-center gap-2.5">
                     <span class="block h-[1px] w-3 shadow-[0_0_6px_rgba(6,182,212,0.8)] bg-violet-400"></span>
-                    <span>Order Flow</span>
+                    <span>Buy Orders</span>
                   </div>
                   <div class="flex items-center gap-2.5">
                     <span class="block h-[1px] w-3 bg-emerald-500"></span>
-                    <span class="">Fill Rate</span>
+                    <span class="">Sell Orders</span>
                   </div>
                   <div class="flex items-center gap-2.5">
                     <span class="block h-[1px] w-3 bg-neutral-700"></span>
-                    <span class="">Settlement</span>
+                    <span class="">Clearing Price</span>
                   </div>
                 </div>
 
@@ -1820,7 +1818,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     </svg>
                   </button>
                   <button class="inline-flex items-center gap-3 rounded-md border border-white/5 bg-black/40 px-3 py-1.5 font-['JetBrains_Mono'] text-xs font-light uppercase tracking-wider text-neutral-400 transition-colors hover:bg-white/5 hover:text-neutral-200">
-                    Live Sync
+                    Demo Data
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="opacity-50 lucide lucide-chevron-down">
                       <polyline points="6 9 12 15 18 9"></polyline>
                     </svg>
@@ -1844,12 +1842,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
 
                 <div class="flex justify-between px-2 font-['JetBrains_Mono'] text-xs font-light uppercase tracking-[0.15em] text-neutral-600">
-                  <span class="">T-12:00</span>
-                  <span class="hidden sm:block">T-09:00</span>
-                  <span>T-06:00</span>
-                  <span class="hidden sm:block">T-03:00</span>
-                  <span class="text-violet-600">PRESNT</span>
+                  <span class="">Batch 1</span>
+                  <span class="hidden sm:block">Batch 2</span>
+                  <span>Batch 3</span>
+                  <span class="hidden sm:block">Batch 4</span>
+                  <span class="text-violet-600">Latest</span>
                 </div>
+                <p class="text-[11px] font-light text-neutral-600 mt-2 px-2" style="font-family: 'Inter', sans-serif;">Simulated data for demonstration purposes. Testnet launch coming Q3 2026.</p>
               </div>
             </section>
           </div>

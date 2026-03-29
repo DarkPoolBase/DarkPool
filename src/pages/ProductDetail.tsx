@@ -123,7 +123,7 @@ const ProductDetail = () => {
   const estTotal = (quantity[0] * parseFloat(currentPrice || "0")).toFixed(2);
 
   return (
-    <div className="space-y-6 max-w-[1440px]">
+    <div className="space-y-6">
       {/* Back nav */}
       <button
         onClick={() => navigate("/marketplace")}
@@ -169,235 +169,232 @@ const ProductDetail = () => {
         </div>
       </GlassCard>
 
+      {/* Price History + Order Ticket grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Left column: Charts */}
-        <div className="lg:col-span-2 space-y-6">
-          {/* Price History */}
-          <GlassCard delay={0.1} className="p-6">
-            <div className="flex items-center justify-between mb-4">
-              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Price History (24h)</span>
-              <span className="font-mono text-[10px] text-muted-foreground/50">USDC / GPU-hr</span>
-            </div>
-            <div className="h-[200px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={priceHistory}>
-                  <defs>
-                    <linearGradient id="priceGrad" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="hsl(263,70%,58%)" stopOpacity={0.25} />
-                      <stop offset="100%" stopColor="hsl(263,70%,58%)" stopOpacity={0} />
-                    </linearGradient>
-                  </defs>
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.03)" />
-                  <XAxis dataKey="time" tick={{ fontSize: 10, fill: "rgba(255,255,255,0.2)", fontFamily: "JetBrains Mono" }} axisLine={false} tickLine={false} />
-                  <YAxis tick={{ fontSize: 10, fill: "rgba(255,255,255,0.2)", fontFamily: "JetBrains Mono" }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${v}`} domain={["auto", "auto"]} />
-                  <Tooltip
-                    contentStyle={{
-                      background: "rgba(5,5,8,0.95)", border: "1px solid rgba(255,255,255,0.06)",
-                      borderRadius: 12, fontSize: 11, fontFamily: "JetBrains Mono",
-                      backdropFilter: "blur(16px)", boxShadow: "0 0 30px rgba(108,60,233,0.15)",
-                    }}
-                    labelStyle={{ color: "rgba(255,255,255,0.3)" }}
-                    formatter={(value: number) => [`$${value.toFixed(3)}`, "Price"]}
-                  />
-                  <Area type="monotone" dataKey="price" stroke="hsl(263,70%,58%)" strokeWidth={2} fill="url(#priceGrad)" />
-                </AreaChart>
-              </ResponsiveContainer>
-            </div>
-          </GlassCard>
+        {/* Price History */}
+        <GlassCard delay={0.1} className="p-6 lg:col-span-2">
+          <div className="flex items-center justify-between mb-4">
+            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Price History (24h)</span>
+            <span className="font-mono text-[10px] text-muted-foreground/50">USDC / GPU-hr</span>
+          </div>
+          <div className="h-[200px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart data={priceHistory}>
+                <defs>
+                  <linearGradient id="priceGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="hsl(263,70%,58%)" stopOpacity={0.25} />
+                    <stop offset="100%" stopColor="hsl(263,70%,58%)" stopOpacity={0} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.03)" />
+                <XAxis dataKey="time" tick={{ fontSize: 10, fill: "rgba(255,255,255,0.2)", fontFamily: "JetBrains Mono" }} axisLine={false} tickLine={false} />
+                <YAxis tick={{ fontSize: 10, fill: "rgba(255,255,255,0.2)", fontFamily: "JetBrains Mono" }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${v}`} domain={["auto", "auto"]} />
+                <Tooltip
+                  contentStyle={{
+                    background: "rgba(5,5,8,0.95)", border: "1px solid rgba(255,255,255,0.06)",
+                    borderRadius: 12, fontSize: 11, fontFamily: "JetBrains Mono",
+                    backdropFilter: "blur(16px)", boxShadow: "0 0 30px rgba(108,60,233,0.15)",
+                  }}
+                  labelStyle={{ color: "rgba(255,255,255,0.3)" }}
+                  formatter={(value: number) => [`$${value.toFixed(3)}`, "Price"]}
+                />
+                <Area type="monotone" dataKey="price" stroke="hsl(263,70%,58%)" strokeWidth={2} fill="url(#priceGrad)" />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+        </GlassCard>
 
-          {/* Supply vs Demand */}
-          <GlassCard delay={0.2} className="p-6">
-            <div className="flex items-center justify-between mb-4">
-              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Anonymized Supply vs Demand</span>
-            </div>
-            <div className="h-[200px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={supplyDemand} barGap={2}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.03)" />
-                  <XAxis dataKey="range" tick={{ fontSize: 10, fill: "rgba(255,255,255,0.2)", fontFamily: "JetBrains Mono" }} axisLine={false} tickLine={false} />
-                  <YAxis tick={{ fontSize: 10, fill: "rgba(255,255,255,0.2)", fontFamily: "JetBrains Mono" }} axisLine={false} tickLine={false} />
-                  <Tooltip
-                    contentStyle={{
-                      background: "rgba(5,5,8,0.95)", border: "1px solid rgba(255,255,255,0.06)",
-                      borderRadius: 12, fontSize: 11, fontFamily: "JetBrains Mono",
-                      backdropFilter: "blur(16px)",
-                    }}
-                    labelStyle={{ color: "rgba(255,255,255,0.3)" }}
-                  />
-                  <Bar dataKey="supply" fill="hsl(152,82%,45%)" radius={[4, 4, 0, 0]} opacity={0.7} name="Supply (GPU-hrs)" />
-                  <Bar dataKey="demand" fill="hsl(263,70%,58%)" radius={[4, 4, 0, 0]} opacity={0.7} name="Demand (GPU-hrs)" />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </GlassCard>
+        {/* Order Ticket */}
+        <GlassCard delay={0.15} glow className="p-6 space-y-5 sticky top-8">
+          <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground block">Private Order</span>
 
-          {/* Provider Quality */}
-          <GlassCard delay={0.3} className="p-6">
-            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground block mb-4">Provider Quality</span>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              {product.benchmarks.map((b, i) => (
-                <motion.div
-                  key={b.label}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 0.4 + i * 0.08 }}
-                  className="p-4 rounded-xl bg-white/[0.03] text-center"
-                >
-                  <b.icon className="w-4 h-4 text-primary mx-auto mb-2" />
-                  <p className="font-mono text-sm font-semibold text-foreground tabular-nums">{b.value}</p>
-                  <p className="font-mono text-[9px] text-muted-foreground mt-1">{b.label}</p>
-                </motion.div>
+          {/* Buy/Sell toggle */}
+          <div className="flex rounded-xl border border-white/[0.06] overflow-hidden bg-white/[0.02] relative">
+            <motion.div
+              className="absolute inset-y-0 w-1/2 rounded-xl"
+              animate={{ x: side === "sell" ? "100%" : "0%" }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              style={{
+                background: side === "buy"
+                  ? "linear-gradient(135deg, rgba(34,197,94,0.15), rgba(34,197,94,0.05))"
+                  : "linear-gradient(135deg, rgba(239,68,68,0.15), rgba(239,68,68,0.05))",
+              }}
+            />
+            <button
+              className={`flex-1 py-2 text-sm font-bold tracking-wider relative z-10 transition-colors ${side === "buy" ? "text-emerald-400" : "text-muted-foreground"}`}
+              onClick={() => setSide("buy")}
+            >BUY</button>
+            <button
+              className={`flex-1 py-2 text-sm font-bold tracking-wider relative z-10 transition-colors ${side === "sell" ? "text-rose-400" : "text-muted-foreground"}`}
+              onClick={() => setSide("sell")}
+            >SELL</button>
+          </div>
+
+          <div className="space-y-2">
+            <SectionLabel>GPU Type</SectionLabel>
+            <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] font-mono text-sm text-foreground/80">
+              {product.name} · {product.vram}
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <SectionLabel>Quantity (GPU-hours): <span className="text-foreground/70">{quantity[0]}</span></SectionLabel>
+            <Slider value={quantity} onValueChange={setQuantity} min={1} max={168} step={1} />
+            <div className="flex gap-2 mt-2">
+              {[24, 48, 72, 168].map((v) => (
+                <button
+                  key={v}
+                  onClick={() => setQuantity([v])}
+                  className={`text-[10px] font-mono px-2 py-1 rounded-lg border transition-all duration-300 ${
+                    quantity[0] === v
+                      ? "border-primary/40 text-primary bg-primary/10"
+                      : "border-white/[0.06] text-muted-foreground hover:border-white/10 hover:text-foreground/60"
+                  }`}
+                >{v}hr</button>
               ))}
             </div>
-          </GlassCard>
+          </div>
 
-          {/* Recent Settlements */}
-          <GlassCard delay={0.35} className="p-6">
-            <div className="flex items-center justify-between mb-4">
-              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Recent Settlements</span>
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="font-mono text-[10px] text-emerald-400/70">Live</span>
-              </div>
-            </div>
-            <div className="space-y-2">
-              {settlements.map((s, i) => (
-                <motion.div
-                  key={s.id}
-                  initial={{ opacity: 0, x: -8 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.3, delay: 0.4 + i * 0.06 }}
-                  className="flex items-center justify-between p-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.04] transition-all"
-                >
-                  <span className="font-mono text-[11px] text-primary/60">{s.id}</span>
-                  <span className="font-mono text-[11px] text-muted-foreground">{s.qty}</span>
-                  <span className="font-mono text-[11px] font-semibold text-emerald-400 tabular-nums">{s.price}</span>
-                  <span className="font-mono text-[10px] text-muted-foreground/50">{s.time}</span>
-                </motion.div>
-              ))}
-            </div>
-          </GlassCard>
+          <div className="space-y-2">
+            <SectionLabel>Duration</SectionLabel>
+            <Select value={duration} onValueChange={setDuration}>
+              <SelectTrigger className="border-white/[0.06] bg-white/[0.02] hover:border-white/[0.12] transition-colors">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="1h">1 Hour</SelectItem>
+                <SelectItem value="4h">4 Hours</SelectItem>
+                <SelectItem value="24h">24 Hours</SelectItem>
+                <SelectItem value="7d">7 Days</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
 
-          {/* Privacy section */}
-          <GlassCard delay={0.4} className="p-6">
-            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground block mb-4">Privacy & Fair Execution</span>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-              {[
-                { icon: Lock, title: "Encrypted Order Flow", desc: "All bids and asks are encrypted. No participant — including the platform — can see raw order data before settlement." },
-                { icon: Shield, title: "Provable Fairness", desc: "ZK proofs verify that batch auctions produce fair clearing prices without revealing individual orders." },
-                { icon: CheckCircle, title: "USDC Settlement", desc: "All settlements execute on Base in USDC. Transparent on-chain finality with private order details." },
-              ].map((item, i) => (
-                <motion.div
-                  key={item.title}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 0.5 + i * 0.1 }}
-                  className="p-4 rounded-xl bg-white/[0.03]"
-                >
-                  <item.icon className="w-5 h-5 text-primary mb-4" />
-                  <h4 className="text-sm font-medium text-foreground mb-2">{item.title}</h4>
-                  <p className="text-[11px] text-muted-foreground leading-relaxed">{item.desc}</p>
-                </motion.div>
-              ))}
-            </div>
-          </GlassCard>
-        </div>
+          <div className="space-y-2">
+            <SectionLabel>{side === "buy" ? "Max Price" : "Min Price"} (USDC / GPU-hr)</SectionLabel>
+            <Input
+              value={currentPrice}
+              onChange={(e) => setPrice(e.target.value)}
+              className="font-mono border-white/[0.06] bg-white/[0.02] hover:border-white/[0.12] transition-colors"
+              type="number"
+              step="0.01"
+              placeholder={defaultPrice}
+            />
+          </div>
 
-        {/* Right column: Order ticket */}
-        <div className="space-y-6">
-          <GlassCard delay={0.15} glow className="p-6 space-y-5 sticky top-8">
-            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground block">Private Order</span>
+          <div className="flex items-center justify-between py-4 border-t border-white/[0.06]">
+            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Est. Total</span>
+            <span className="font-mono text-lg font-semibold text-foreground">${estTotal} <span className="text-xs text-muted-foreground">USDC</span></span>
+          </div>
 
-            {/* Buy/Sell toggle */}
-            <div className="flex rounded-xl border border-white/[0.06] overflow-hidden bg-white/[0.02] relative">
-              <motion.div
-                className="absolute inset-y-0 w-1/2 rounded-xl"
-                animate={{ x: side === "sell" ? "100%" : "0%" }}
-                transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                style={{
-                  background: side === "buy"
-                    ? "linear-gradient(135deg, rgba(34,197,94,0.15), rgba(34,197,94,0.05))"
-                    : "linear-gradient(135deg, rgba(239,68,68,0.15), rgba(239,68,68,0.05))",
-                }}
-              />
-              <button
-                className={`flex-1 py-2 text-sm font-bold tracking-wider relative z-10 transition-colors ${side === "buy" ? "text-emerald-400" : "text-muted-foreground"}`}
-                onClick={() => setSide("buy")}
-              >BUY</button>
-              <button
-                className={`flex-1 py-2 text-sm font-bold tracking-wider relative z-10 transition-colors ${side === "sell" ? "text-rose-400" : "text-muted-foreground"}`}
-                onClick={() => setSide("sell")}
-              >SELL</button>
-            </div>
+          <Button className="w-full gap-2 bg-gradient-to-r from-primary to-[hsl(258,78%,65%)] hover:from-primary/90 hover:to-[hsl(258,78%,60%)] shadow-[0_0_20px_rgba(108,60,233,0.3)] hover:shadow-[0_0_30px_rgba(108,60,233,0.5)] transition-all duration-300 border-0 h-12">
+            <Lock className="h-4 w-4" />
+            Submit Encrypted Order
+          </Button>
 
-            <div className="space-y-2">
-              <SectionLabel>GPU Type</SectionLabel>
-              <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] font-mono text-sm text-foreground/80">
-                {product.name} · {product.vram}
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <SectionLabel>Quantity (GPU-hours): <span className="text-foreground/70">{quantity[0]}</span></SectionLabel>
-              <Slider value={quantity} onValueChange={setQuantity} min={1} max={168} step={1} />
-              <div className="flex gap-2 mt-2">
-                {[24, 48, 72, 168].map((v) => (
-                  <button
-                    key={v}
-                    onClick={() => setQuantity([v])}
-                    className={`text-[10px] font-mono px-2 py-1 rounded-lg border transition-all duration-300 ${
-                      quantity[0] === v
-                        ? "border-primary/40 text-primary bg-primary/10"
-                        : "border-white/[0.06] text-muted-foreground hover:border-white/10 hover:text-foreground/60"
-                    }`}
-                  >{v}hr</button>
-                ))}
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <SectionLabel>Duration</SectionLabel>
-              <Select value={duration} onValueChange={setDuration}>
-                <SelectTrigger className="border-white/[0.06] bg-white/[0.02] hover:border-white/[0.12] transition-colors">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="1h">1 Hour</SelectItem>
-                  <SelectItem value="4h">4 Hours</SelectItem>
-                  <SelectItem value="24h">24 Hours</SelectItem>
-                  <SelectItem value="7d">7 Days</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-2">
-              <SectionLabel>{side === "buy" ? "Max Price" : "Min Price"} (USDC / GPU-hr)</SectionLabel>
-              <Input
-                value={currentPrice}
-                onChange={(e) => setPrice(e.target.value)}
-                className="font-mono border-white/[0.06] bg-white/[0.02] hover:border-white/[0.12] transition-colors"
-                type="number"
-                step="0.01"
-                placeholder={defaultPrice}
-              />
-            </div>
-
-            <div className="flex items-center justify-between py-4 border-t border-white/[0.06]">
-              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Est. Total</span>
-              <span className="font-mono text-lg font-semibold text-foreground">${estTotal} <span className="text-xs text-muted-foreground">USDC</span></span>
-            </div>
-
-            <Button className="w-full gap-2 bg-gradient-to-r from-primary to-[hsl(258,78%,65%)] hover:from-primary/90 hover:to-[hsl(258,78%,60%)] shadow-[0_0_20px_rgba(108,60,233,0.3)] hover:shadow-[0_0_30px_rgba(108,60,233,0.5)] transition-all duration-300 border-0 h-12">
-              <Lock className="h-4 w-4" />
-              Submit Encrypted Order
-            </Button>
-
-            <p className="font-mono text-[10px] text-muted-foreground/50 leading-relaxed text-center">
-              Order details remain encrypted until verified settlement. No participant — including the platform — can see raw order data.
-            </p>
-          </GlassCard>
-        </div>
+          <p className="font-mono text-[10px] text-muted-foreground/50 leading-relaxed text-center">
+            Order details remain encrypted until verified settlement. No participant — including the platform — can see raw order data.
+          </p>
+        </GlassCard>
       </div>
+
+      {/* Supply vs Demand — full width */}
+      <GlassCard delay={0.2} className="p-6">
+        <div className="flex items-center justify-between mb-4">
+          <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Anonymized Supply vs Demand</span>
+        </div>
+        <div className="h-[280px]">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={supplyDemand} barGap={2}>
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.03)" />
+              <XAxis dataKey="range" tick={{ fontSize: 10, fill: "rgba(255,255,255,0.2)", fontFamily: "JetBrains Mono" }} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fontSize: 10, fill: "rgba(255,255,255,0.2)", fontFamily: "JetBrains Mono" }} axisLine={false} tickLine={false} />
+              <Tooltip
+                contentStyle={{
+                  background: "rgba(5,5,8,0.95)", border: "1px solid rgba(255,255,255,0.06)",
+                  borderRadius: 12, fontSize: 11, fontFamily: "JetBrains Mono",
+                  backdropFilter: "blur(16px)",
+                }}
+                labelStyle={{ color: "rgba(255,255,255,0.3)" }}
+              />
+              <Bar dataKey="supply" fill="hsl(152,82%,45%)" radius={[4, 4, 0, 0]} opacity={0.7} name="Supply (GPU-hrs)" />
+              <Bar dataKey="demand" fill="hsl(263,70%,58%)" radius={[4, 4, 0, 0]} opacity={0.7} name="Demand (GPU-hrs)" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      </GlassCard>
+
+      {/* Provider Quality + Recent Settlements — side by side */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <GlassCard delay={0.3} className="p-6">
+          <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground block mb-4">Provider Quality</span>
+          <div className="grid grid-cols-2 gap-3">
+            {product.benchmarks.map((b, i) => (
+              <motion.div
+                key={b.label}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.4 + i * 0.08 }}
+                className="p-4 rounded-xl bg-white/[0.03] text-center"
+              >
+                <b.icon className="w-4 h-4 text-primary mx-auto mb-2" />
+                <p className="font-mono text-sm font-semibold text-foreground tabular-nums">{b.value}</p>
+                <p className="font-mono text-[9px] text-muted-foreground mt-1">{b.label}</p>
+              </motion.div>
+            ))}
+          </div>
+        </GlassCard>
+
+        <GlassCard delay={0.35} className="p-6">
+          <div className="flex items-center justify-between mb-4">
+            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Recent Settlements</span>
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="font-mono text-[10px] text-emerald-400/70">Live</span>
+            </div>
+          </div>
+          <div className="space-y-2">
+            {settlements.map((s, i) => (
+              <motion.div
+                key={s.id}
+                initial={{ opacity: 0, x: -8 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3, delay: 0.4 + i * 0.06 }}
+                className="flex items-center justify-between p-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.04] transition-all"
+              >
+                <span className="font-mono text-[11px] text-primary/60">{s.id}</span>
+                <span className="font-mono text-[11px] text-muted-foreground">{s.qty}</span>
+                <span className="font-mono text-[11px] font-semibold text-emerald-400 tabular-nums">{s.price}</span>
+                <span className="font-mono text-[10px] text-muted-foreground/50">{s.time}</span>
+              </motion.div>
+            ))}
+          </div>
+        </GlassCard>
+      </div>
+
+      {/* Privacy & Fair Execution — full width */}
+      <GlassCard delay={0.4} className="p-6">
+        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground block mb-4">Privacy & Fair Execution</span>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+          {[
+            { icon: Lock, title: "Encrypted Order Flow", desc: "All bids and asks are encrypted. No participant — including the platform — can see raw order data before settlement." },
+            { icon: Shield, title: "Provable Fairness", desc: "ZK proofs verify that batch auctions produce fair clearing prices without revealing individual orders." },
+            { icon: CheckCircle, title: "USDC Settlement", desc: "All settlements execute on Base in USDC. Transparent on-chain finality with private order details." },
+          ].map((item, i) => (
+            <motion.div
+              key={item.title}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.5 + i * 0.1 }}
+              className="p-4 rounded-xl bg-white/[0.03]"
+            >
+              <item.icon className="w-5 h-5 text-primary mb-4" />
+              <h4 className="text-sm font-medium text-foreground mb-2">{item.title}</h4>
+              <p className="text-[11px] text-muted-foreground leading-relaxed">{item.desc}</p>
+            </motion.div>
+          ))}
+        </div>
+      </GlassCard>
     </div>
   );
 };

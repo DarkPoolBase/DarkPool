@@ -397,9 +397,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     <p class="text-xs text-white/40 leading-relaxed font-extralight font-sans">Funds lock on order placement and release automatically on verified delivery. Cancellations refund instantly. All settlement happens on Base at ~$0.001 per transaction — no custodial holding, no intermediaries, fully on-chain.</p>
                 </div>
                 <div class="w-full md:w-1/2 h-48 relative flex items-center justify-center order-1 md:order-2">
-                    <!-- Subtle Aura -->
-                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-white/5 blur-[40px] rounded-full pointer-events-none"></div>
-                    <canvas id="canvas-nodes" class="absolute inset-0 w-full h-full" style="touch-action: none;" width="222" height="384"></canvas>
+                    <!-- USDC Escrow Animation -->
+                    <div class="relative w-full h-full flex items-center justify-center" id="escrow-anim">
+                      <!-- Vault outline -->
+                      <div class="absolute w-24 h-20 rounded-lg border-2 border-dashed border-[#6C3CE9]/50 flex items-center justify-center">
+                        <span class="text-[8px] font-mono text-white/20 uppercase tracking-widest">Escrow</span>
+                      </div>
+                      <!-- USDC coin -->
+                      <div class="escrow-coin absolute w-8 h-8 rounded-full bg-white/90 flex items-center justify-center shadow-lg" style="top: -8px; left: 50%; transform: translateX(-50%);">
+                        <span class="text-[#0B0C0E] text-xs font-bold">U</span>
+                      </div>
+                    </div>
                 </div>
             </article>
 

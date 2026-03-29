@@ -16,7 +16,7 @@ const productData: Record<string, {
   icon: typeof Cpu; benchmarks: { label: string; value: string; icon: typeof CheckCircle }[];
 }> = {
   h100: {
-    name: "NVIDIA H100", label: "Private Compute", price: "$0.21/hr", priceNum: 0.21,
+    name: "NVIDIA H100", label: "Private Compute", price: "$0.21/GPU-hour", priceNum: 0.21,
     providers: 47, vram: "80GB HBM3", workloads: ["Training", "Inference", "Fine-tuning", "Batch Jobs"],
     availability: 92, icon: Cpu,
     description: "Enterprise-grade GPU compute with encrypted order flow. Submit private bids through batch auctions with provable fairness and USDC settlement on Base.",

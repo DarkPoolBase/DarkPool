@@ -30,7 +30,7 @@ const SettingsPage = () => {
       </GlassCard>
 
       {/* API Keys */}
-      <GlassCard delay={0.2} gradient className="p-6 space-y-6">
+      <GlassCard delay={0.2} gradient className="p-6 space-y-8">
         <SectionLabel>API Keys</SectionLabel>
         {[
           { label: "Production Key", key: "sk_live_****************************" },

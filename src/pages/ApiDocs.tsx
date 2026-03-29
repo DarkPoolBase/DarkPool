@@ -18,7 +18,7 @@ const methodColor: Record<string, string> = {
 
 const ApiDocs = () => {
   return (
-    <div className="space-y-8 max-w-[960px]">
+    <div className="space-y-8 max-w-[1200px]">
       <div>
         <h1 className="text-2xl md:text-3xl font-thin tracking-tight text-foreground">API Documentation</h1>
         <p className="text-sm text-muted-foreground mt-2 font-mono text-[11px]">For AI agents and developers</p>

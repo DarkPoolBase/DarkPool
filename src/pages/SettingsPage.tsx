@@ -68,7 +68,7 @@ const ApiKeyRow = ({ label, prefix, env, active }: { label: string; prefix: stri
 
 const SettingsPage = () => {
   return (
-    <div className="space-y-8 max-w-[800px]">
+    <div className="space-y-8 max-w-[1200px]">
       <div>
         <h1 className="text-2xl md:text-3xl font-thin tracking-tight text-foreground">Settings</h1>
         <p className="text-sm text-muted-foreground mt-2 font-mono text-[11px]">Manage your wallet, API keys, and notifications</p>

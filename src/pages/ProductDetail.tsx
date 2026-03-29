@@ -202,34 +202,40 @@ const ProductDetail = () => {
         </div>
       </GlassCard>
 
-      {/* Order Ticket — horizontal full width */}
-      <GlassCard delay={0.15} glow className="p-6">
-        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground block mb-5">Private Order</span>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          {/* Col 1: Buy/Sell + GPU type */}
-          <div className="space-y-4">
-            <div className="flex rounded-xl border border-white/[0.06] overflow-hidden bg-white/[0.02] relative">
-              <motion.div
-                className="absolute inset-y-0 w-1/2 rounded-xl"
-                animate={{ x: side === "sell" ? "100%" : "0%" }}
-                transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                style={{
-                  background: side === "buy"
-                    ? "linear-gradient(135deg, rgba(34,197,94,0.15), rgba(34,197,94,0.05))"
-                    : "linear-gradient(135deg, rgba(239,68,68,0.15), rgba(239,68,68,0.05))",
-                }}
-              />
-              <button
-                className={`flex-1 py-2 text-sm font-bold tracking-wider relative z-10 transition-colors ${side === "buy" ? "text-emerald-400" : "text-muted-foreground"}`}
-                onClick={() => setSide("buy")}
-              >BUY</button>
-              <button
-                className={`flex-1 py-2 text-sm font-bold tracking-wider relative z-10 transition-colors ${side === "sell" ? "text-rose-400" : "text-muted-foreground"}`}
-                onClick={() => setSide("sell")}
-              >SELL</button>
-            </div>
-            <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] font-mono text-sm text-foreground/80">
-              {product.name} · {product.vram}
+      {/* Order Ticket — redesigned */}
+      <GlassCard delay={0.15} glow className="p-6 space-y-6">
+        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground block">Private Order</span>
+
+        {/* Full-width Buy/Sell toggle */}
+        <div className="flex rounded-xl border border-white/[0.06] overflow-hidden bg-white/[0.02] relative">
+          <motion.div
+            className="absolute inset-y-0 w-1/2 rounded-xl"
+            animate={{ x: side === "sell" ? "100%" : "0%" }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            style={{
+              background: side === "buy"
+                ? "linear-gradient(135deg, rgba(34,197,94,0.15), rgba(34,197,94,0.05))"
+                : "linear-gradient(135deg, rgba(239,68,68,0.15), rgba(239,68,68,0.05))",
+            }}
+          />
+          <button
+            className={`flex-1 py-3 text-base font-bold tracking-wider relative z-10 transition-colors ${side === "buy" ? "text-emerald-400" : "text-muted-foreground"}`}
+            onClick={() => setSide("buy")}
+          >BUY</button>
+          <button
+            className={`flex-1 py-3 text-base font-bold tracking-wider relative z-10 transition-colors ${side === "sell" ? "text-rose-400" : "text-muted-foreground"}`}
+            onClick={() => setSide("sell")}
+          >SELL</button>
+        </div>
+
+        {/* 3-column form grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Col 1: GPU Type */}
+          <div className="space-y-2">
+            <SectionLabel>GPU Type</SectionLabel>
+            <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06]">
+              <p className="font-mono text-sm font-medium text-foreground">{product.name}</p>
+              <p className="font-mono text-xs text-muted-foreground mt-1">{product.vram} · Spot Market</p>
             </div>
           </div>
 
@@ -276,21 +282,26 @@ const ProductDetail = () => {
               </SelectContent>
             </Select>
           </div>
+        </div>
 
-          {/* Col 4: Total + Submit */}
-          <div className="flex flex-col justify-between space-y-3">
-            <div className="flex items-center justify-between py-3 border-b border-white/[0.06]">
-              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Est. Total</span>
-              <span className="font-mono text-lg font-semibold text-foreground">${estTotal} <span className="text-xs text-muted-foreground">USDC</span></span>
+        {/* Summary + Submit bar */}
+        <div className="rounded-xl bg-white/[0.02] border border-white/[0.06] p-4">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="font-mono text-xs text-muted-foreground">
+              {quantity[0]} GPU-hrs × ${currentPrice}/hr
             </div>
-            <Button className="w-full gap-2 bg-gradient-to-r from-primary to-[hsl(258,78%,65%)] hover:from-primary/90 hover:to-[hsl(258,78%,60%)] shadow-[0_0_20px_rgba(108,60,233,0.3)] hover:shadow-[0_0_30px_rgba(108,60,233,0.5)] transition-all duration-300 border-0 h-12">
+            <div className="flex items-center gap-2">
+              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Est. Total</span>
+              <span className="font-mono text-xl font-semibold text-foreground">${estTotal} <span className="text-xs text-muted-foreground">USDC</span></span>
+            </div>
+            <Button className="gap-2 bg-gradient-to-r from-primary to-[hsl(258,78%,65%)] hover:from-primary/90 hover:to-[hsl(258,78%,60%)] shadow-[0_0_20px_rgba(108,60,233,0.3)] hover:shadow-[0_0_30px_rgba(108,60,233,0.5)] transition-all duration-300 border-0 h-12 px-8">
               <Lock className="h-4 w-4" />
               Submit Encrypted Order
             </Button>
-            <p className="font-mono text-[10px] text-muted-foreground/50 leading-relaxed text-center">
-              Orders remain encrypted until verified settlement.
-            </p>
           </div>
+          <p className="font-mono text-[10px] text-muted-foreground/50 leading-relaxed text-center mt-3">
+            Orders remain encrypted until verified settlement.
+          </p>
         </div>
       </GlassCard>
 

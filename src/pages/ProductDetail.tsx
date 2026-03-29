@@ -240,7 +240,7 @@ const ProductDetail = () => {
           </div>
 
           {/* Col 2: Quantity */}
-          <div className="space-y-3">
+          <div className="space-y-4">
             <SectionLabel>Quantity (GPU-hours): <span className="text-foreground/70">{quantity[0]}</span></SectionLabel>
             <Slider value={quantity} onValueChange={setQuantity} min={1} max={168} step={1} />
             <div className="flex gap-2 mt-1">

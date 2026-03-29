@@ -234,7 +234,7 @@ const ProductDetail = () => {
           {/* Provider Quality */}
           <GlassCard delay={0.3} className="p-6">
             <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground block mb-4">Provider Quality</span>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {product.benchmarks.map((b, i) => (
                 <motion.div
                   key={b.label}

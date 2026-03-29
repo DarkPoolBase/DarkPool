@@ -21,10 +21,51 @@ gtag('config', 'G-2M6V79H761');
   html, body { overflow-x: hidden; max-width: 100vw; }
   @media (max-width: 767px) {
     .hash-scroll { animation: none !important; overflow: hidden; text-overflow: ellipsis; }
-    .about-metrics { gap: 1rem !important; }
-    .about-metrics > div span:first-child { font-size: 1.5rem !important; }
-    #main-container { margin-bottom: 4rem !important; }
+    .about-metrics { gap: 0.75rem !important; flex-wrap: wrap; justify-content: center !important; }
+    .about-metrics > div { min-width: 40%; text-align: center; }
+    .about-metrics > div span:first-child { font-size: 1.25rem !important; }
+    #main-container { margin-bottom: 3rem !important; }
     .roadmap-layer .grid-cols-2 { grid-template-columns: 1fr !important; }
+    /* Fix bento right panel icons overlapping text */
+    .bento-right .absolute.bottom-8,
+    .bento-br .absolute.bottom-8 { left: 1rem !important; right: 1rem !important; bottom: 1rem !important; }
+    .bento-right .absolute.top-6 { top: 0.75rem !important; left: 0.75rem !important; }
+    .bento-right header, .bento-br header { margin-bottom: 1rem !important; }
+    /* Fix right bento card minimum height on mobile */
+    .bento-right, .bento-br { min-height: 350px; }
+    /* About panels padding */
+    .about-panel { padding: 1.5rem !important; }
+    /* Hero article card text overlap fix */
+    article .absolute.top-8 { top: 1rem !important; left: 1rem !important; }
+    article .absolute.bottom-8 { bottom: 1rem !important; left: 1rem !important; right: 1rem !important; }
+    /* Why privacy closing text */
+    .wpm-closing { font-size: 1.25rem !important; }
+    /* WPM detail text container */
+    #wpm-details { min-height: 280px !important; padding: 0 0.5rem; }
+    /* Capabilities right panels */
+    .md\\:w-2\\/3 { width: 100% !important; }
+    /* Capability panels reduce padding */
+    [data-scroll-section] .p-6,
+    [data-scroll-section] .p-10 { padding: 1rem !important; }
+    [data-scroll-section] .md\\:p-10 { padding: 1rem !important; }
+    /* Fix order form min height */
+    [data-scroll-section] .min-h-\\[500px\\] { min-height: 400px !important; }
+    [data-scroll-section] .min-h-\\[600px\\] { min-height: 400px !important; }
+    /* Roadmap section */
+    .roadmap-layer .p-6 { padding: 1rem !important; }
+    /* Footer grid fix */
+    footer .grid { gap: 1.5rem !important; }
+    /* FAQ items */
+    .faq-item .p-6 { padding: 1rem !important; }
+    /* CTA section */
+    #final-cta { padding-top: 4rem !important; padding-bottom: 4rem !important; }
+    #final-cta h2 { font-size: 1.75rem !important; }
+    /* Seq line text wrapping */
+    .seq-line { white-space: normal !important; font-size: 8px !important; }
+    /* Protocol section cards */
+    .quant-card-panel { height: auto !important; min-height: 400px !important; }
+    /* Bento left sidebar padding for absolute layers */
+    .bento-layer { padding-right: 0 !important; }
   }
 </style>
 </head>

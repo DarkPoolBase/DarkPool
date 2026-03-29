@@ -209,7 +209,7 @@ const ProductDetail = () => {
           <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Private Order</span>
 
           {/* Full-width Buy/Sell toggle */}
-          <div className="flex rounded-xl border border-white/[0.06] overflow-hidden bg-white/[0.02] relative h-14">
+          <div className="flex rounded-xl border border-white/[0.06] overflow-hidden bg-white/[0.02] relative h-12">
             <motion.div
               className="absolute inset-y-0 w-1/2 rounded-xl"
               animate={{ x: side === "sell" ? "100%" : "0%" }}

@@ -2189,16 +2189,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="relative h-80 w-full overflow-hidden rounded-xl border border-white/[0.02] bg-[#020202] shadow-[inset_0_0_60px_rgba(0,0,0,0.8)]" id="calc-chart-container">
                   <div class="pointer-events-none absolute inset-0 opacity-[0.03]" style="background-image: radial-gradient(circle at 1px 1px, white 1px, transparent 0); background-size: 24px 24px;"></div>
                   <div class="absolute inset-0 flex items-end justify-center px-16 pb-16 pt-8" id="calc-bars">
-                    <div class="flex items-end justify-center gap-10 h-full w-full max-w-[300px]">
-                      <div class="flex flex-col items-center gap-3 w-[100px]">
-                        <span id="bar-market-val" class="font-mono text-xs text-white/50">$0</span>
-                        <div id="bar-market" class="w-full rounded-t-md transition-all duration-700 ease-out" style="height: 0%; min-width: 80px; background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 100%); border: 1px solid rgba(255,255,255,0.08);"></div>
-                        <span id="bar-market-label" class="font-mono text-[10px] text-white/40 uppercase tracking-wider whitespace-nowrap text-center">AWS / Market</span>
+                    <div class="flex items-end justify-center gap-10 w-full max-w-[300px]" style="height: 100%;">
+                      <div class="flex flex-col items-center w-[100px] h-full">
+                        <span id="bar-market-val" class="font-mono text-xs text-white/50 mb-2">$0</span>
+                        <div class="flex-1 w-full flex items-end">
+                          <div id="bar-market" class="w-full rounded-t-md transition-all duration-700 ease-out" style="height: 0%; min-width: 80px; background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 100%); border: 1px solid rgba(255,255,255,0.08);"></div>
+                        </div>
+                        <span id="bar-market-label" class="font-mono text-[10px] text-white/40 uppercase tracking-wider whitespace-nowrap text-center mt-3">AWS / Market</span>
                       </div>
-                      <div class="flex flex-col items-center gap-3 w-[100px]">
-                        <span id="bar-dp-val" class="font-mono text-xs text-[#6C3CE9]">$0</span>
-                        <div id="bar-dp" class="w-full rounded-t-md transition-all duration-700 ease-out" style="height: 0%; min-width: 80px; background: linear-gradient(180deg, rgba(108,60,233,0.5) 0%, rgba(108,60,233,0.2) 100%); border: 1px solid rgba(108,60,233,0.3);"></div>
-                        <span class="font-mono text-[10px] text-[#6C3CE9]/60 uppercase tracking-wider text-center">Dark Pool</span>
+                      <div class="flex flex-col items-center w-[100px] h-full">
+                        <span id="bar-dp-val" class="font-mono text-xs text-[#6C3CE9] mb-2">$0</span>
+                        <div class="flex-1 w-full flex items-end">
+                          <div id="bar-dp" class="w-full rounded-t-md transition-all duration-700 ease-out" style="height: 0%; min-width: 80px; background: linear-gradient(180deg, rgba(108,60,233,0.5) 0%, rgba(108,60,233,0.2) 100%); border: 1px solid rgba(108,60,233,0.3);"></div>
+                        </div>
+                        <span class="font-mono text-[10px] text-[#6C3CE9]/60 uppercase tracking-wider text-center mt-3">Dark Pool</span>
                       </div>
                     </div>
                   </div>

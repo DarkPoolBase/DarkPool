@@ -1,4 +1,3 @@
-// @ts-ignore - viem may not have type declarations
 import { keccak256, encodePacked } from 'viem';
 
 /**

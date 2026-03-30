@@ -58,7 +58,9 @@ export function GlassCard({
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       className={cn(
-        "liquid-glass rounded-2xl",
+        "relative rounded-2xl bg-white/[0.04] backdrop-blur-xl overflow-hidden",
+        "border border-white/[0.06]",
+        "hover:border-white/[0.1] transition-[border-color] duration-500",
         glow && "shadow-[0_0_30px_rgba(108,60,233,0.15)]",
         className
       )}

@@ -29,3 +29,4 @@ packages/backend/dist/
 .env
 packages/backend/node_modules/
 packages/contracts/.env
+.env*.local

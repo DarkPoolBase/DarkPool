@@ -1,0 +1,7 @@
+[package]
+name = "private_identity"
+type = "bin"
+authors = ["DarkPoolBase"]
+compiler_version = ">=0.30.0"
+
+[dependencies]

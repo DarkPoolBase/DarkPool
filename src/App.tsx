@@ -13,6 +13,7 @@ import Orders from "./pages/Orders";
 import Analytics from "./pages/Analytics";
 import Provider from "./pages/Provider";
 import ApiDocs from "./pages/ApiDocs";
+import SdkDocs from "./pages/SdkDocs";
 import SettingsPage from "./pages/SettingsPage";
 
 const queryClient = new QueryClient();
@@ -33,6 +34,7 @@ const App = () => (
             <Route path="/analytics" element={<Analytics />} />
             <Route path="/provider" element={<Provider />} />
             <Route path="/api-docs" element={<ApiDocs />} />
+            <Route path="/sdk-docs" element={<SdkDocs />} />
             <Route path="/settings" element={<SettingsPage />} />
           </Route>
           <Route path="*" element={<NotFound />} />

@@ -1,0 +1,2035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentic Dark Pool - Developer Work Assignment</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+        :root {
+            --primary: #6C3CE9;
+            --primary-light: #8B5CF6;
+            --primary-dark: #5226CC;
+            --bg-dark: #0A0A0F;
+            --bg-card: #111118;
+            --bg-card-alt: #16161F;
+            --border: rgba(108, 60, 233, 0.15);
+            --border-light: rgba(255, 255, 255, 0.06);
+            --text: #E4E4E7;
+            --text-muted: #71717A;
+            --text-bright: #FAFAFA;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --cyan: #06B6D4;
+            --sorrowz: #8B5CF6;
+            --powerz: #06B6D4;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        @media print {
+            body {
+                background: white;
+                color: #1a1a1a;
+                font-size: 11px;
+                line-height: 1.5;
+            }
+            .page-break { page-break-before: always; }
+            .no-print { display: none; }
+            .card { border: 1px solid #ddd !important; background: #fafafa !important; }
+            .cover { background: linear-gradient(135deg, #6C3CE9, #3B82F6) !important; }
+            h1, h2, h3 { color: #1a1a1a !important; }
+            .badge-sorrowz { background: #8B5CF6 !important; }
+            .badge-powerz { background: #06B6D4 !important; }
+        }
+
+        /* ============ COVER PAGE ============ */
+        .cover {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: radial-gradient(ellipse at 30% 20%, rgba(108, 60, 233, 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at 70% 80%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
+                        var(--bg-dark);
+            padding: 60px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cover::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), var(--cyan), transparent);
+        }
+
+        .cover-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--primary-light);
+            margin-bottom: 32px;
+            padding: 8px 24px;
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            backdrop-filter: blur(10px);
+        }
+
+        .cover h1 {
+            font-size: 52px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FAFAFA 0%, #A78BFA 50%, #06B6D4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+            letter-spacing: -1.5px;
+        }
+
+        .cover h2 {
+            font-size: 20px;
+            font-weight: 400;
+            color: var(--text-muted);
+            margin-bottom: 48px;
+            max-width: 600px;
+        }
+
+        .cover-meta {
+            display: flex;
+            gap: 40px;
+            margin-top: 40px;
+            padding-top: 40px;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .cover-meta-item {
+            text-align: center;
+        }
+
+        .cover-meta-item .label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+
+        .cover-meta-item .value {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-bright);
+        }
+
+        .cover-devs {
+            display: flex;
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .cover-dev {
+            padding: 20px 32px;
+            border-radius: 16px;
+            border: 1px solid var(--border-light);
+            backdrop-filter: blur(10px);
+            background: rgba(255,255,255,0.02);
+        }
+
+        .cover-dev .dev-name {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .cover-dev .dev-role {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .dev-sorrowz { border-color: rgba(139, 92, 246, 0.3) !important; }
+        .dev-powerz { border-color: rgba(6, 182, 212, 0.3) !important; }
+        .dev-sorrowz .dev-name { color: var(--sorrowz); }
+        .dev-powerz .dev-name { color: var(--powerz); }
+
+        /* ============ LAYOUT ============ */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 80px 40px;
+        }
+
+        /* ============ SECTIONS ============ */
+        .section-header {
+            margin-bottom: 48px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .section-number {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--primary-light);
+            margin-bottom: 12px;
+        }
+
+        .section-header h2 {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-bright);
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+
+        .section-header p {
+            font-size: 15px;
+            color: var(--text-muted);
+            max-width: 700px;
+        }
+
+        /* ============ CARDS ============ */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 24px;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-bright);
+        }
+
+        .card h4 {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-bright);
+            margin-bottom: 12px;
+            margin-top: 20px;
+        }
+
+        .card h4:first-child {
+            margin-top: 0;
+        }
+
+        .card p, .card li {
+            color: var(--text);
+            font-size: 13.5px;
+        }
+
+        .card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .card ul li {
+            padding: 6px 0 6px 20px;
+            position: relative;
+        }
+
+        .card ul li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 14px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--primary-light);
+        }
+
+        /* ============ BADGES ============ */
+        .badge {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .badge-sorrowz {
+            background: rgba(139, 92, 246, 0.15);
+            color: var(--sorrowz);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+
+        .badge-powerz {
+            background: rgba(6, 182, 212, 0.15);
+            color: var(--powerz);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+        }
+
+        .badge-shared {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--warning);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .badge-priority {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--danger);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        /* ============ TABLES ============ */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 13px;
+        }
+
+        thead th {
+            text-align: left;
+            padding: 12px 16px;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border-light);
+            background: var(--bg-card-alt);
+        }
+
+        thead th:first-child {
+            border-radius: 8px 0 0 0;
+        }
+
+        thead th:last-child {
+            border-radius: 0 8px 0 0;
+        }
+
+        tbody td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-light);
+            vertical-align: top;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* ============ CODE BLOCKS ============ */
+        .code-block {
+            background: var(--bg-card-alt);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin: 16px 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            line-height: 1.8;
+            overflow-x: auto;
+            color: #C4B5FD;
+        }
+
+        .code-block .comment { color: #6B7280; }
+        .code-block .keyword { color: #C084FC; }
+        .code-block .string { color: #34D399; }
+        .code-block .type { color: #67E8F9; }
+        .code-block .func { color: #FCD34D; }
+
+        /* ============ SPLIT OVERVIEW ============ */
+        .split-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin: 24px 0;
+        }
+
+        .split-card {
+            border-radius: 16px;
+            padding: 32px;
+            border: 1px solid var(--border-light);
+        }
+
+        .split-card.sorrowz {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.08) 0%, var(--bg-card) 100%);
+            border-color: rgba(139, 92, 246, 0.2);
+        }
+
+        .split-card.powerz {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.08) 0%, var(--bg-card) 100%);
+            border-color: rgba(6, 182, 212, 0.2);
+        }
+
+        .split-card .dev-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        .split-card.sorrowz .dev-icon {
+            background: rgba(139, 92, 246, 0.2);
+            color: var(--sorrowz);
+        }
+
+        .split-card.powerz .dev-icon {
+            background: rgba(6, 182, 212, 0.2);
+            color: var(--powerz);
+        }
+
+        .split-card h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .split-card.sorrowz h3 { color: var(--sorrowz); }
+        .split-card.powerz h3 { color: var(--powerz); }
+
+        .split-card .role {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .split-card .domain-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .split-card .domain-list li {
+            padding: 8px 0;
+            font-size: 13.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .split-card .domain-list li .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .split-card.sorrowz .domain-list li .dot { background: var(--sorrowz); }
+        .split-card.powerz .domain-list li .dot { background: var(--powerz); }
+
+        /* ============ WORKLOAD CHART ============ */
+        .workload-bar {
+            height: 8px;
+            border-radius: 4px;
+            background: var(--bg-card-alt);
+            margin: 8px 0 4px 0;
+            overflow: hidden;
+        }
+
+        .workload-bar .fill {
+            height: 100%;
+            border-radius: 4px;
+        }
+
+        .workload-bar .fill.sorrowz { background: var(--sorrowz); }
+        .workload-bar .fill.powerz { background: var(--powerz); }
+
+        .workload-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        /* ============ TIMELINE ============ */
+        .timeline {
+            position: relative;
+            padding-left: 32px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border-light);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 32px;
+            padding: 20px 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -29px;
+            top: 24px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+            background: var(--bg-dark);
+        }
+
+        .timeline-item .week {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--primary-light);
+            margin-bottom: 6px;
+        }
+
+        .timeline-item h4 {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-bright);
+            margin-bottom: 8px;
+            margin-top: 0;
+        }
+
+        .timeline-item p {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .timeline-badges {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        /* ============ DEPENDENCY DIAGRAM ============ */
+        .diagram {
+            background: var(--bg-card-alt);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            padding: 32px;
+            margin: 24px 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            line-height: 2;
+            text-align: center;
+            white-space: pre;
+            overflow-x: auto;
+        }
+
+        /* ============ CALLOUT ============ */
+        .callout {
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin: 20px 0;
+            font-size: 13.5px;
+        }
+
+        .callout-info {
+            background: rgba(108, 60, 233, 0.08);
+            border-left: 3px solid var(--primary);
+        }
+
+        .callout-warning {
+            background: rgba(245, 158, 11, 0.08);
+            border-left: 3px solid var(--warning);
+        }
+
+        .callout-success {
+            background: rgba(16, 185, 129, 0.08);
+            border-left: 3px solid var(--success);
+        }
+
+        .callout strong {
+            color: var(--text-bright);
+        }
+
+        /* ============ FOOTER ============ */
+        .doc-footer {
+            text-align: center;
+            padding: 48px 40px;
+            border-top: 1px solid var(--border-light);
+            color: var(--text-muted);
+            font-size: 12px;
+        }
+
+        .doc-footer .logo-text {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--primary-light);
+            margin-bottom: 8px;
+        }
+
+        /* ============ INTERFACE SPEC ============ */
+        .interface-block {
+            background: var(--bg-card-alt);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 16px 0;
+        }
+
+        .interface-block h5 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            color: var(--primary-light);
+            margin-bottom: 12px;
+        }
+
+        .field-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            font-size: 12.5px;
+        }
+
+        .field-row:last-child { border-bottom: none; }
+
+        .field-name {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-bright);
+        }
+
+        .field-type {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-muted);
+        }
+
+        /* Utility */
+        .mt-16 { margin-top: 16px; }
+        .mt-24 { margin-top: 24px; }
+        .mt-32 { margin-top: 32px; }
+        .mb-16 { margin-bottom: 16px; }
+        .text-center { text-align: center; }
+        .text-muted { color: var(--text-muted); }
+        .text-bright { color: var(--text-bright); }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+    </style>
+</head>
+<body>
+
+<!-- ============================== COVER PAGE ============================== -->
+<div class="cover">
+    <div class="cover-label">Confidential &mdash; Internal Development Document</div>
+    <h1>Developer Work<br>Assignment</h1>
+    <h2>Backend, Smart Contracts & Integration &mdash; Complete implementation guide with 50/50 work distribution</h2>
+
+    <div class="cover-devs">
+        <div class="cover-dev dev-sorrowz">
+            <div class="dev-name">SORROWZ</div>
+            <div class="dev-role">Core Trading & Settlement</div>
+        </div>
+        <div class="cover-dev dev-powerz">
+            <div class="dev-name">POWERZ</div>
+            <div class="dev-role">Infrastructure & Services</div>
+        </div>
+    </div>
+
+    <div class="cover-meta">
+        <div class="cover-meta-item">
+            <div class="label">Project</div>
+            <div class="value">Agentic Dark Pool</div>
+        </div>
+        <div class="cover-meta-item">
+            <div class="label">Version</div>
+            <div class="value">V1 &mdash; MVP</div>
+        </div>
+        <div class="cover-meta-item">
+            <div class="label">Date</div>
+            <div class="value">March 29, 2026</div>
+        </div>
+        <div class="cover-meta-item">
+            <div class="label">Classification</div>
+            <div class="value">Internal Only</div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================== TABLE OF CONTENTS ============================== -->
+<div class="container page-break">
+    <div class="section-header">
+        <div class="section-number">Overview</div>
+        <h2>Table of Contents</h2>
+        <p>This document defines the complete work assignment for the Agentic Dark Pool backend implementation, split equally between two developers.</p>
+    </div>
+
+    <div class="card">
+        <table>
+            <thead>
+                <tr>
+                    <th>Section</th>
+                    <th>Title</th>
+                    <th>Relevance</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="font-weight:600; color: var(--primary-light);">01</td>
+                    <td>Work Split Overview</td>
+                    <td><span class="badge badge-shared">Both</span></td>
+                </tr>
+                <tr>
+                    <td style="font-weight:600; color: var(--primary-light);">02</td>
+                    <td>Shared Setup & Standards</td>
+                    <td><span class="badge badge-shared">Both</span></td>
+                </tr>
+                <tr>
+                    <td style="font-weight:600; color: var(--primary-light);">03</td>
+                    <td>Sorrowz &mdash; Smart Contracts</td>
+                    <td><span class="badge badge-sorrowz">Sorrowz</span></td>
+                </tr>
+                <tr>
+                    <td style="font-weight:600; color: var(--primary-light);">04</td>
+                    <td>Sorrowz &mdash; Backend Services</td>
+                    <td><span class="badge badge-sorrowz">Sorrowz</span></td>
+                </tr>
+                <tr>
+                    <td style="font-weight:600; color: var(--primary-light);">05</td>
+                    <td>Sorrowz &mdash; Frontend Integration</td>
+                    <td><span class="badge badge-sorrowz">Sorrowz</span></td>
+                </tr>
+                <tr>
+                    <td style="font-weight:600; color: var(--primary-light);">06</td>
+                    <td>Powerz &mdash; Smart Contracts</td>
+                    <td><span class="badge badge-powerz">Powerz</span></td>
+                </tr>
+                <tr>
+                    <td style="font-weight:600; color: var(--primary-light);">07</td>
+                    <td>Powerz &mdash; Backend Services</td>
+                    <td><span class="badge badge-powerz">Powerz</span></td>
+                </tr>
+                <tr>
+                    <td style="font-weight:600; color: var(--primary-light);">08</td>
+                    <td>Powerz &mdash; Frontend Integration</td>
+                    <td><span class="badge badge-powerz">Powerz</span></td>
+                </tr>
+                <tr>
+                    <td style="font-weight:600; color: var(--primary-light);">09</td>
+                    <td>Shared Interfaces & Data Contracts</td>
+                    <td><span class="badge badge-shared">Both</span></td>
+                </tr>
+                <tr>
+                    <td style="font-weight:600; color: var(--primary-light);">10</td>
+                    <td>Timeline & Milestones</td>
+                    <td><span class="badge badge-shared">Both</span></td>
+                </tr>
+                <tr>
+                    <td style="font-weight:600; color: var(--primary-light);">11</td>
+                    <td>Dependency Map & Integration Points</td>
+                    <td><span class="badge badge-shared">Both</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- ============================== SECTION 01: WORK SPLIT OVERVIEW ============================== -->
+<div class="container page-break">
+    <div class="section-header">
+        <div class="section-number">Section 01</div>
+        <h2>Work Split Overview</h2>
+        <p>The implementation is divided into two domains of equal scope and complexity. Each developer owns their domain end-to-end: smart contracts, backend modules, database tables, and frontend wiring.</p>
+    </div>
+
+    <div class="split-grid">
+        <div class="split-card sorrowz">
+            <div class="dev-icon">S</div>
+            <h3>Sorrowz</h3>
+            <div class="role">Core Trading & Settlement Lead</div>
+            <ul class="domain-list">
+                <li><span class="dot"></span> DarkPool.sol &mdash; main contract</li>
+                <li><span class="dot"></span> Escrow.sol &mdash; fund management</li>
+                <li><span class="dot"></span> SettlementVerifier.sol &mdash; ZK verification</li>
+                <li><span class="dot"></span> Orders Module &mdash; CRUD + validation</li>
+                <li><span class="dot"></span> Matching Engine &mdash; batch auction algorithm</li>
+                <li><span class="dot"></span> Settlement Service &mdash; on-chain settlement</li>
+                <li><span class="dot"></span> Frontend: Order flow + contract hooks</li>
+                <li><span class="dot"></span> DB: orders, settlements, compute_jobs</li>
+            </ul>
+        </div>
+        <div class="split-card powerz">
+            <div class="dev-icon">P</div>
+            <h3>Powerz</h3>
+            <div class="role">Infrastructure & Services Lead</div>
+            <ul class="domain-list">
+                <li><span class="dot"></span> TokenRegistry.sol &mdash; token + GPU types</li>
+                <li><span class="dot"></span> ComputeCredit.sol &mdash; ERC-20 token</li>
+                <li><span class="dot"></span> FeeCollector.sol &mdash; fee distribution</li>
+                <li><span class="dot"></span> Auth Module &mdash; API keys + wallet auth</li>
+                <li><span class="dot"></span> Provider Module &mdash; registration + reputation</li>
+                <li><span class="dot"></span> Market Module &mdash; stats + analytics</li>
+                <li><span class="dot"></span> WebSocket Server &mdash; real-time updates</li>
+                <li><span class="dot"></span> Event Indexer &mdash; blockchain listener</li>
+                <li><span class="dot"></span> Frontend: Market data + provider + real-time</li>
+                <li><span class="dot"></span> DB: users, providers, api_keys</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Workload Comparison -->
+    <div class="card mt-32">
+        <h3>Workload Distribution</h3>
+        <div class="mt-16">
+            <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:600;">
+                <span>Smart Contracts</span>
+            </div>
+            <div class="workload-bar"><div class="fill sorrowz" style="width:50%"></div></div>
+            <div class="workload-label"><span>Sorrowz: 3 contracts</span><span>Powerz: 3 contracts</span></div>
+        </div>
+        <div class="mt-16">
+            <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:600;">
+                <span>Backend Modules</span>
+            </div>
+            <div class="workload-bar"><div class="fill powerz" style="width:55%"></div></div>
+            <div class="workload-label"><span>Sorrowz: 3 modules (complex)</span><span>Powerz: 5 modules (lighter)</span></div>
+        </div>
+        <div class="mt-16">
+            <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:600;">
+                <span>Database Tables</span>
+            </div>
+            <div class="workload-bar"><div class="fill sorrowz" style="width:50%"></div></div>
+            <div class="workload-label"><span>Sorrowz: 3 tables</span><span>Powerz: 3 tables</span></div>
+        </div>
+        <div class="mt-16">
+            <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:600;">
+                <span>Frontend Wiring</span>
+            </div>
+            <div class="workload-bar"><div class="fill sorrowz" style="width:45%"></div></div>
+            <div class="workload-label"><span>Sorrowz: Order flow + contracts</span><span>Powerz: Market + provider + WS</span></div>
+        </div>
+    </div>
+
+    <div class="callout callout-info">
+        <strong>Note on complexity balance:</strong> Sorrowz has fewer backend modules but they are significantly more complex (the matching engine alone is the hardest piece in the entire system). Powerz has more modules but they are standard CRUD/infra patterns. This balances to approximately equal effort.
+    </div>
+</div>
+
+<!-- ============================== SECTION 02: SHARED SETUP ============================== -->
+<div class="container page-break">
+    <div class="section-header">
+        <div class="section-number">Section 02</div>
+        <h2>Shared Setup & Standards</h2>
+        <p>Before either developer begins their assigned work, the following must be established collaboratively.</p>
+    </div>
+
+    <div class="card">
+        <h3>Monorepo Structure</h3>
+        <div class="code-block">
+<span class="comment">// Recommended project structure</span>
+darkpool/
+├── <span class="keyword">packages/</span>
+│   ├── <span class="type">contracts/</span>           <span class="comment">// Foundry project (both devs)</span>
+│   │   ├── src/
+│   │   │   ├── DarkPool.sol        <span class="comment">// Sorrowz</span>
+│   │   │   ├── Escrow.sol          <span class="comment">// Sorrowz</span>
+│   │   │   ├── SettlementVerifier.sol <span class="comment">// Sorrowz</span>
+│   │   │   ├── TokenRegistry.sol   <span class="comment">// Powerz</span>
+│   │   │   ├── ComputeCredit.sol   <span class="comment">// Powerz</span>
+│   │   │   └── FeeCollector.sol    <span class="comment">// Powerz</span>
+│   │   ├── test/
+│   │   ├── script/
+│   │   └── foundry.toml
+│   │
+│   ├── <span class="type">backend/</span>             <span class="comment">// NestJS project (both devs)</span>
+│   │   ├── src/
+│   │   │   ├── orders/             <span class="comment">// Sorrowz</span>
+│   │   │   ├── matching/           <span class="comment">// Sorrowz</span>
+│   │   │   ├── settlement/         <span class="comment">// Sorrowz</span>
+│   │   │   ├── auth/               <span class="comment">// Powerz</span>
+│   │   │   ├── providers/          <span class="comment">// Powerz</span>
+│   │   │   ├── market/             <span class="comment">// Powerz</span>
+│   │   │   ├── websocket/          <span class="comment">// Powerz</span>
+│   │   │   ├── indexer/            <span class="comment">// Powerz</span>
+│   │   │   └── shared/             <span class="comment">// Both (types, utils, config)</span>
+│   │   ├── prisma/
+│   │   └── package.json
+│   │
+│   └── <span class="type">frontend/</span>            <span class="comment">// Existing Vite + React app</span>
+│       ├── src/
+│       │   ├── hooks/
+│       │   │   ├── useOrders.ts    <span class="comment">// Sorrowz</span>
+│       │   │   ├── useContracts.ts <span class="comment">// Sorrowz</span>
+│       │   │   ├── useMarket.ts    <span class="comment">// Powerz</span>
+│       │   │   ├── useProviders.ts <span class="comment">// Powerz</span>
+│       │   │   └── useWebSocket.ts <span class="comment">// Powerz</span>
+│       │   └── ...
+│       └── package.json
+│
+├── <span class="keyword">docker-compose.yml</span>    <span class="comment">// PostgreSQL + Redis</span>
+├── <span class="keyword">turbo.json</span>            <span class="comment">// Turborepo config</span>
+└── package.json
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Technology Standards</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Layer</th>
+                    <th>Technology</th>
+                    <th>Version</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Smart Contracts</td><td>Foundry (forge) + Solidity</td><td>^0.8.24</td></tr>
+                <tr><td>Backend Framework</td><td>NestJS with Fastify adapter</td><td>^10.x</td></tr>
+                <tr><td>Database</td><td>PostgreSQL + Prisma ORM</td><td>^16 / ^5.x</td></tr>
+                <tr><td>Cache / PubSub</td><td>Redis (via Upstash or local)</td><td>^7</td></tr>
+                <tr><td>Blockchain RPC</td><td>viem (backend) + wagmi (frontend)</td><td>^2.x</td></tr>
+                <tr><td>WebSocket</td><td>Socket.io or @nestjs/websockets</td><td>^4.x</td></tr>
+                <tr><td>Testing</td><td>forge test (contracts) + Jest (backend)</td><td>&mdash;</td></tr>
+                <tr><td>Deployment Target</td><td>Base Sepolia (testnet) &rarr; Base (mainnet)</td><td>&mdash;</td></tr>
+                <tr><td>CI/CD</td><td>GitHub Actions</td><td>&mdash;</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card">
+        <h3>Coding Standards</h3>
+        <ul>
+            <li><strong>TypeScript strict mode</strong> everywhere &mdash; no <code>any</code> types</li>
+            <li><strong>Prettier + ESLint</strong> shared config in monorepo root</li>
+            <li><strong>Conventional Commits</strong> format: <code>feat(orders): add batch validation</code></li>
+            <li><strong>Branch naming</strong>: <code>sorrowz/feature-name</code> or <code>powerz/feature-name</code></li>
+            <li><strong>PR required</strong> for merging to <code>main</code> &mdash; other dev reviews</li>
+            <li><strong>Solidity</strong>: NatSpec comments on all public functions, OpenZeppelin where possible</li>
+            <li><strong>All API endpoints</strong> must have request/response TypeScript types defined in <code>shared/</code></li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h3>Environment Variables (Both Devs)</h3>
+        <div class="code-block">
+<span class="comment"># .env.example &mdash; both devs must have these</span>
+<span class="keyword">DATABASE_URL</span>=<span class="string">"postgresql://user:pass@localhost:5432/darkpool"</span>
+<span class="keyword">REDIS_URL</span>=<span class="string">"redis://localhost:6379"</span>
+<span class="keyword">BASE_SEPOLIA_RPC</span>=<span class="string">"https://sepolia.base.org"</span>
+<span class="keyword">DEPLOYER_PRIVATE_KEY</span>=<span class="string">"0x..."</span>
+<span class="keyword">USDC_CONTRACT_ADDRESS</span>=<span class="string">"0x036CbD53842c5426634e7929541eC2318f3dCF7e"</span>
+<span class="keyword">JWT_SECRET</span>=<span class="string">"..."</span>
+<span class="keyword">API_PORT</span>=<span class="string">"3001"</span>
+<span class="keyword">WS_PORT</span>=<span class="string">"3002"</span>
+        </div>
+    </div>
+</div>
+
+<!-- ============================== SECTION 03: SORROWZ CONTRACTS ============================== -->
+<div class="container page-break">
+    <div class="section-header">
+        <div class="section-number">Section 03 &nbsp;&mdash;&nbsp; <span class="badge badge-sorrowz">Sorrowz</span></div>
+        <h2>Smart Contracts: Core Trading</h2>
+        <p>These three contracts form the heart of the dark pool protocol &mdash; handling order submission, escrow management, and batch settlement verification.</p>
+    </div>
+
+    <!-- DarkPool.sol -->
+    <div class="card">
+        <div class="card-header">
+            <h3>DarkPool.sol</h3>
+            <span class="badge badge-priority">Critical Path</span>
+        </div>
+        <p>Main entry point for the protocol. Accepts encrypted order commitments, manages batch lifecycle, and coordinates settlement.</p>
+
+        <h4>Key Functions to Implement</h4>
+        <table>
+            <thead>
+                <tr><th>Function</th><th>Description</th><th>Access</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="font-mono">submitOrder(bytes32 commitment, uint256 escrowAmount)</td>
+                    <td>Accept an encrypted order commitment + lock escrow deposit. Emit <code>OrderSubmitted</code> event.</td>
+                    <td>Public</td>
+                </tr>
+                <tr>
+                    <td class="font-mono">cancelOrder(bytes32 orderId)</td>
+                    <td>Cancel an unfilled order and release escrowed funds back to the user.</td>
+                    <td>Order owner</td>
+                </tr>
+                <tr>
+                    <td class="font-mono">settleBatch(bytes32[] matchedOrders, uint256 clearingPrice, bytes proof)</td>
+                    <td>Called by the relayer after matching. Verifies proof via SettlementVerifier, then triggers Escrow transfers.</td>
+                    <td>Relayer only</td>
+                </tr>
+                <tr>
+                    <td class="font-mono">getCurrentBatchId()</td>
+                    <td>Returns current batch number (increments each settlement).</td>
+                    <td>View</td>
+                </tr>
+                <tr>
+                    <td class="font-mono">getOrderStatus(bytes32 orderId)</td>
+                    <td>Returns order status: PENDING, FILLED, CANCELLED, EXPIRED.</td>
+                    <td>View</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4>Commit-Reveal Scheme (V1)</h4>
+        <div class="code-block">
+<span class="comment">// User's browser computes this BEFORE sending to contract:</span>
+<span class="keyword">bytes32</span> commitment = <span class="func">keccak256</span>(<span class="func">abi.encodePacked</span>(
+    gpuType,      <span class="comment">// e.g., "H100"</span>
+    quantity,      <span class="comment">// e.g., 4</span>
+    pricePerHour,  <span class="comment">// e.g., 0.25 USDC (in wei)</span>
+    duration,      <span class="comment">// e.g., 24 hours</span>
+    side,          <span class="comment">// BUY or SELL</span>
+    secret         <span class="comment">// random 32 bytes (user keeps this)</span>
+));
+
+<span class="comment">// Only the commitment hash goes on-chain &mdash; order details stay private</span>
+<span class="comment">// The secret is sent encrypted to the matching engine off-chain</span>
+        </div>
+
+        <h4>Events to Emit</h4>
+        <ul>
+            <li><code>OrderSubmitted(bytes32 indexed orderId, address indexed user, uint256 escrowAmount)</code></li>
+            <li><code>OrderCancelled(bytes32 indexed orderId, address indexed user)</code></li>
+            <li><code>BatchSettled(uint256 indexed batchId, uint256 clearingPrice, uint256 matchedVolume)</code></li>
+            <li><code>OrderFilled(bytes32 indexed orderId, uint256 clearingPrice)</code></li>
+        </ul>
+
+        <div class="callout callout-warning">
+            <strong>Security requirements:</strong> Use OpenZeppelin's ReentrancyGuard on all fund-moving functions. Implement Pausable for emergency stops. Use AccessControl for relayer permissions.
+        </div>
+    </div>
+
+    <!-- Escrow.sol -->
+    <div class="card">
+        <div class="card-header">
+            <h3>Escrow.sol</h3>
+            <span class="badge badge-priority">Critical Path</span>
+        </div>
+        <p>Holds buyer USDC funds securely. Funds are locked when an order is placed, released to the seller on successful delivery, and returned to the buyer on cancellation.</p>
+
+        <h4>Key Functions</h4>
+        <table>
+            <thead>
+                <tr><th>Function</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="font-mono">deposit(uint256 amount)</td>
+                    <td>User deposits USDC into their escrow balance. Uses IERC20 transferFrom.</td>
+                </tr>
+                <tr>
+                    <td class="font-mono">withdraw(uint256 amount)</td>
+                    <td>User withdraws unlocked USDC from escrow.</td>
+                </tr>
+                <tr>
+                    <td class="font-mono">lockFunds(address user, uint256 amount, bytes32 orderId)</td>
+                    <td>Called by DarkPool.sol when order is submitted. Moves funds from available to locked.</td>
+                </tr>
+                <tr>
+                    <td class="font-mono">releaseFunds(address from, address to, uint256 amount, uint256 fee)</td>
+                    <td>Called during settlement. Transfers locked funds to seller, fee to FeeCollector.</td>
+                </tr>
+                <tr>
+                    <td class="font-mono">unlockFunds(address user, uint256 amount, bytes32 orderId)</td>
+                    <td>Called on cancellation. Returns locked funds to available balance.</td>
+                </tr>
+                <tr>
+                    <td class="font-mono">getBalance(address user)</td>
+                    <td>Returns (available, locked) balances.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="callout callout-info">
+            <strong>Integration point:</strong> Escrow.sol must accept calls from DarkPool.sol (via AccessControl). It interacts with Powerz's FeeCollector.sol for fee deduction during settlement.
+        </div>
+    </div>
+
+    <!-- SettlementVerifier.sol -->
+    <div class="card">
+        <div class="card-header">
+            <h3>SettlementVerifier.sol</h3>
+        </div>
+        <p>Verifies that the off-chain matching engine produced a correct result. For V1, this uses a trusted relayer pattern. In V2, this will verify ZK proofs.</p>
+
+        <h4>V1 Implementation (Trusted Relayer)</h4>
+        <div class="code-block">
+<span class="comment">// V1: Simple relayer verification</span>
+<span class="comment">// The relayer is a trusted address that submits settlement results</span>
+<span class="comment">// Verification = signature check from authorized relayer</span>
+
+<span class="keyword">function</span> <span class="func">verifySettlement</span>(
+    <span class="type">bytes32[]</span> matchedBuyOrders,
+    <span class="type">bytes32[]</span> matchedSellOrders,
+    <span class="type">uint256</span> clearingPrice,
+    <span class="type">bytes</span> relayerSignature
+) <span class="keyword">external view returns</span> (<span class="type">bool</span>) {
+    <span class="comment">// Verify the relayer signed this settlement data</span>
+    <span class="comment">// In V2: replace with ZK proof verification (Noir UltraHonk verifier)</span>
+}
+        </div>
+
+        <h4>V2 Upgrade Path (ZK Proofs)</h4>
+        <ul>
+            <li>Replace relayer signature check with on-chain ZK proof verification</li>
+            <li>Use Noir (Aztec) to write the matching circuit</li>
+            <li>The circuit proves: clearing price maximizes matched volume AND all matched buyers bid &ge; clearing price AND all matched sellers asked &le; clearing price</li>
+            <li>Generate a Solidity verifier from the Noir circuit using <code>nargo codegen-verifier</code></li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h3>Testing Requirements</h3>
+        <p>All contracts must have comprehensive Foundry tests. Minimum coverage: 90%.</p>
+        <table>
+            <thead>
+                <tr><th>Test Category</th><th>Examples</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Happy path</td><td>Submit order &rarr; batch settles &rarr; funds transfer correctly</td></tr>
+                <tr><td>Edge cases</td><td>Cancel already-filled order (should revert), withdraw more than available (should revert)</td></tr>
+                <tr><td>Access control</td><td>Non-relayer calling settleBatch (should revert), non-owner calling cancel (should revert)</td></tr>
+                <tr><td>Reentrancy</td><td>Attempt reentrancy on withdraw, releaseFunds</td></tr>
+                <tr><td>Fuzz tests</td><td>Random order amounts, random batch sizes, edge clearing prices</td></tr>
+                <tr><td>Integration</td><td>Full flow: deposit &rarr; submit &rarr; settle &rarr; verify balances changed correctly</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- ============================== SECTION 04: SORROWZ BACKEND ============================== -->
+<div class="container page-break">
+    <div class="section-header">
+        <div class="section-number">Section 04 &nbsp;&mdash;&nbsp; <span class="badge badge-sorrowz">Sorrowz</span></div>
+        <h2>Backend Services: Trading Core</h2>
+        <p>Three NestJS modules that handle the most complex business logic in the system &mdash; order management, the batch auction matching engine, and on-chain settlement.</p>
+    </div>
+
+    <!-- Orders Module -->
+    <div class="card">
+        <div class="card-header">
+            <h3>Orders Module</h3>
+            <span class="badge badge-priority">Critical Path</span>
+        </div>
+        <p>Handles order submission, validation, status tracking, and cancellation. This module receives encrypted order data from users and stores it for the matching engine.</p>
+
+        <h4>API Endpoints</h4>
+        <table>
+            <thead>
+                <tr><th>Method</th><th>Endpoint</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>POST</strong></td><td class="font-mono">/api/v1/orders</td><td>Submit a new encrypted order. Validate commitment, check escrow balance, forward to blockchain.</td></tr>
+                <tr><td><strong>GET</strong></td><td class="font-mono">/api/v1/orders</td><td>List user's orders with filtering (status, side, GPU type). Paginated.</td></tr>
+                <tr><td><strong>GET</strong></td><td class="font-mono">/api/v1/orders/:id</td><td>Get single order details + status.</td></tr>
+                <tr><td><strong>DELETE</strong></td><td class="font-mono">/api/v1/orders/:id</td><td>Cancel an active order. Triggers on-chain cancellation + escrow unlock.</td></tr>
+            </tbody>
+        </table>
+
+        <h4>Database Table: <code>orders</code></h4>
+        <div class="interface-block">
+            <h5>prisma schema &mdash; orders</h5>
+            <div class="field-row"><span class="field-name">id</span><span class="field-type">String @id @default(uuid())</span></div>
+            <div class="field-row"><span class="field-name">userId</span><span class="field-type">String (FK &rarr; users)</span></div>
+            <div class="field-row"><span class="field-name">commitmentHash</span><span class="field-type">String @unique</span></div>
+            <div class="field-row"><span class="field-name">side</span><span class="field-type">Enum (BUY, SELL)</span></div>
+            <div class="field-row"><span class="field-name">gpuType</span><span class="field-type">String (H100, A100, RTX4090)</span></div>
+            <div class="field-row"><span class="field-name">quantity</span><span class="field-type">Int</span></div>
+            <div class="field-row"><span class="field-name">pricePerHour</span><span class="field-type">Decimal</span></div>
+            <div class="field-row"><span class="field-name">duration</span><span class="field-type">Int (hours)</span></div>
+            <div class="field-row"><span class="field-name">escrowAmount</span><span class="field-type">Decimal</span></div>
+            <div class="field-row"><span class="field-name">status</span><span class="field-type">Enum (PENDING, ACTIVE, FILLED, CANCELLED, EXPIRED)</span></div>
+            <div class="field-row"><span class="field-name">batchId</span><span class="field-type">Int? (null until settled)</span></div>
+            <div class="field-row"><span class="field-name">clearingPrice</span><span class="field-type">Decimal? (null until filled)</span></div>
+            <div class="field-row"><span class="field-name">txHash</span><span class="field-type">String? (on-chain tx)</span></div>
+            <div class="field-row"><span class="field-name">createdAt</span><span class="field-type">DateTime @default(now())</span></div>
+            <div class="field-row"><span class="field-name">updatedAt</span><span class="field-type">DateTime @updatedAt</span></div>
+        </div>
+
+        <h4>Order Validation Rules</h4>
+        <ul>
+            <li>User must be authenticated (API key or wallet signature)</li>
+            <li>User must have sufficient available escrow balance &ge; <code>quantity &times; pricePerHour &times; duration</code></li>
+            <li>GPU type must exist in TokenRegistry (call Powerz's contract)</li>
+            <li>Quantity must be &ge; 1 and &le; 1000</li>
+            <li>Price must be within reasonable bounds (0.01 &ndash; 100 USDC/hr)</li>
+            <li>Duration must be 1 &ndash; 720 hours (30 days max)</li>
+        </ul>
+    </div>
+
+    <!-- Matching Engine -->
+    <div class="card">
+        <div class="card-header">
+            <h3>Matching Engine</h3>
+            <span class="badge badge-priority">Most Complex Module</span>
+        </div>
+        <p>The core algorithm that runs every 30&ndash;60 seconds, collecting all pending orders and finding the clearing price that maximizes matched volume.</p>
+
+        <h4>Batch Auction Algorithm</h4>
+        <div class="code-block">
+<span class="comment">// Pseudo-code for the clearing price algorithm</span>
+<span class="comment">// Runs as a NestJS cron job every 30-60 seconds</span>
+
+<span class="keyword">function</span> <span class="func">runBatchAuction</span>(pendingOrders: Order[]): BatchResult {
+  <span class="comment">// 1. Separate into buy orders and sell orders, grouped by GPU type</span>
+  <span class="keyword">const</span> buyOrders = orders.filter(o => o.side === <span class="string">'BUY'</span>).sort(byPriceDesc)
+  <span class="keyword">const</span> sellOrders = orders.filter(o => o.side === <span class="string">'SELL'</span>).sort(byPriceAsc)
+
+  <span class="comment">// 2. Find clearing price: the price where cumulative buy volume</span>
+  <span class="comment">//    meets cumulative sell volume (supply = demand intersection)</span>
+  <span class="keyword">for each</span> candidate price P:
+    buyVolume  = sum(qty) where buyOrders.price >= P
+    sellVolume = sum(qty) where sellOrders.price <= P
+    matchedVolume = min(buyVolume, sellVolume)
+
+  clearingPrice = P that maximizes matchedVolume
+
+  <span class="comment">// 3. Match orders at clearing price</span>
+  <span class="comment">// - All buyers who bid >= clearingPrice get filled</span>
+  <span class="comment">// - All sellers who asked <= clearingPrice get filled</span>
+  <span class="comment">// - Everyone pays/receives the SAME clearing price (uniform pricing)</span>
+
+  <span class="comment">// 4. Submit settlement on-chain via SettlementVerifier</span>
+  <span class="comment">// 5. Emit events via Powerz's WebSocket server</span>
+}
+        </div>
+
+        <h4>Implementation Details</h4>
+        <ul>
+            <li><strong>Cron schedule:</strong> Use <code>@nestjs/schedule</code> with a configurable interval (default 45 seconds)</li>
+            <li><strong>GPU-type separation:</strong> Run independent auctions per GPU type (H100 auction, A100 auction, etc.)</li>
+            <li><strong>Minimum batch size:</strong> Skip settlement if fewer than 2 orders (1 buy + 1 sell minimum)</li>
+            <li><strong>Redis locking:</strong> Use Redis distributed lock to prevent concurrent batch runs</li>
+            <li><strong>Partial fills:</strong> V1 supports all-or-nothing fills only. Partial fills in V2.</li>
+            <li><strong>Telemetry:</strong> Log batch results (matched volume, clearing price, order count) to database</li>
+        </ul>
+
+        <h4>Database Table: <code>settlements</code></h4>
+        <div class="interface-block">
+            <h5>prisma schema &mdash; settlements</h5>
+            <div class="field-row"><span class="field-name">id</span><span class="field-type">String @id @default(uuid())</span></div>
+            <div class="field-row"><span class="field-name">batchId</span><span class="field-type">Int @unique</span></div>
+            <div class="field-row"><span class="field-name">gpuType</span><span class="field-type">String</span></div>
+            <div class="field-row"><span class="field-name">clearingPrice</span><span class="field-type">Decimal</span></div>
+            <div class="field-row"><span class="field-name">matchedVolume</span><span class="field-type">Int (GPU-hours)</span></div>
+            <div class="field-row"><span class="field-name">buyOrderCount</span><span class="field-type">Int</span></div>
+            <div class="field-row"><span class="field-name">sellOrderCount</span><span class="field-type">Int</span></div>
+            <div class="field-row"><span class="field-name">totalValueUSDC</span><span class="field-type">Decimal</span></div>
+            <div class="field-row"><span class="field-name">protocolFee</span><span class="field-type">Decimal</span></div>
+            <div class="field-row"><span class="field-name">txHash</span><span class="field-type">String</span></div>
+            <div class="field-row"><span class="field-name">proofHash</span><span class="field-type">String?</span></div>
+            <div class="field-row"><span class="field-name">settledAt</span><span class="field-type">DateTime</span></div>
+        </div>
+    </div>
+
+    <!-- Settlement Service -->
+    <div class="card">
+        <h3>Settlement Service</h3>
+        <p>Bridges the off-chain matching engine with on-chain settlement. After the matching engine determines results, this service submits the transaction to Base.</p>
+
+        <h4>Responsibilities</h4>
+        <ul>
+            <li>Construct the settlement transaction with matched order IDs, clearing price, and proof</li>
+            <li>Submit to DarkPool.sol's <code>settleBatch()</code> via viem</li>
+            <li>Wait for transaction confirmation (Base block time ~2s)</li>
+            <li>Update order statuses in PostgreSQL to FILLED</li>
+            <li>Publish settlement event to Redis (Powerz's WebSocket server picks this up)</li>
+            <li>Handle failed transactions with retry logic (max 3 retries with exponential backoff)</li>
+        </ul>
+
+        <h4>Database Table: <code>compute_jobs</code></h4>
+        <div class="interface-block">
+            <h5>prisma schema &mdash; compute_jobs</h5>
+            <div class="field-row"><span class="field-name">id</span><span class="field-type">String @id @default(uuid())</span></div>
+            <div class="field-row"><span class="field-name">buyOrderId</span><span class="field-type">String (FK &rarr; orders)</span></div>
+            <div class="field-row"><span class="field-name">sellOrderId</span><span class="field-type">String (FK &rarr; orders)</span></div>
+            <div class="field-row"><span class="field-name">providerId</span><span class="field-type">String (FK &rarr; providers)</span></div>
+            <div class="field-row"><span class="field-name">gpuType</span><span class="field-type">String</span></div>
+            <div class="field-row"><span class="field-name">quantity</span><span class="field-type">Int</span></div>
+            <div class="field-row"><span class="field-name">duration</span><span class="field-type">Int</span></div>
+            <div class="field-row"><span class="field-name">pricePerHour</span><span class="field-type">Decimal (clearing price)</span></div>
+            <div class="field-row"><span class="field-name">totalCost</span><span class="field-type">Decimal</span></div>
+            <div class="field-row"><span class="field-name">status</span><span class="field-type">Enum (PROVISIONING, ACTIVE, COMPLETED, FAILED)</span></div>
+            <div class="field-row"><span class="field-name">accessEndpoint</span><span class="field-type">String? (encrypted SSH/API)</span></div>
+            <div class="field-row"><span class="field-name">startedAt</span><span class="field-type">DateTime?</span></div>
+            <div class="field-row"><span class="field-name">completedAt</span><span class="field-type">DateTime?</span></div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================== SECTION 05: SORROWZ FRONTEND ============================== -->
+<div class="container page-break">
+    <div class="section-header">
+        <div class="section-number">Section 05 &nbsp;&mdash;&nbsp; <span class="badge badge-sorrowz">Sorrowz</span></div>
+        <h2>Frontend Integration: Order Flow</h2>
+        <p>Wire the existing React frontend to real smart contracts and the orders backend API.</p>
+    </div>
+
+    <div class="card">
+        <h3>Scope of Work</h3>
+        <ul>
+            <li><strong>Install wagmi + viem + @tanstack/react-query</strong> in the frontend package</li>
+            <li><strong>Create contract hooks</strong> &mdash; <code>useDeposit()</code>, <code>useSubmitOrder()</code>, <code>useCancelOrder()</code>, <code>useEscrowBalance()</code></li>
+            <li><strong>Create API hooks</strong> &mdash; <code>useOrders()</code>, <code>useOrderDetail()</code>, <code>useSubmitOrderAPI()</code></li>
+            <li><strong>Wire ProductDetail.tsx</strong> &mdash; Replace mock order form with real submission (commit-reveal on client side)</li>
+            <li><strong>Wire Orders.tsx</strong> &mdash; Replace hardcoded orders with API data + real-time status updates</li>
+            <li><strong>Wire Dashboard.tsx</strong> &mdash; Real escrow balance from contract, real order history from API</li>
+            <li><strong>Commitment generation</strong> &mdash; Client-side keccak256 hash of order params + random secret</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h3>Key Files to Modify</h3>
+        <table>
+            <thead>
+                <tr><th>File</th><th>Changes</th></tr>
+            </thead>
+            <tbody>
+                <tr><td class="font-mono">src/pages/ProductDetail.tsx</td><td>Wire buy/sell form to real API + contract. Generate commitment, call deposit + submitOrder.</td></tr>
+                <tr><td class="font-mono">src/pages/Orders.tsx</td><td>Replace mock data with React Query hook. Add cancel button with contract call.</td></tr>
+                <tr><td class="font-mono">src/pages/Dashboard.tsx</td><td>Real escrow balance, real active orders count, real portfolio value.</td></tr>
+                <tr><td class="font-mono">src/hooks/useContracts.ts</td><td><strong>New file.</strong> wagmi hooks for DarkPool + Escrow contract interactions.</td></tr>
+                <tr><td class="font-mono">src/hooks/useOrders.ts</td><td><strong>New file.</strong> React Query hooks for orders API.</td></tr>
+                <tr><td class="font-mono">src/lib/commitment.ts</td><td><strong>New file.</strong> Client-side commitment hash generation.</td></tr>
+                <tr><td class="font-mono">src/config/contracts.ts</td><td><strong>New file.</strong> Contract addresses + ABIs for Base Sepolia.</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- ============================== SECTION 06: POWERZ CONTRACTS ============================== -->
+<div class="container page-break">
+    <div class="section-header">
+        <div class="section-number">Section 06 &nbsp;&mdash;&nbsp; <span class="badge badge-powerz">Powerz</span></div>
+        <h2>Smart Contracts: Token & Fees</h2>
+        <p>Three contracts that handle token management, compute credits, and protocol fee collection/distribution.</p>
+    </div>
+
+    <!-- TokenRegistry.sol -->
+    <div class="card">
+        <div class="card-header">
+            <h3>TokenRegistry.sol</h3>
+        </div>
+        <p>Manages whitelisted payment tokens (USDC) and GPU type definitions. Acts as the source of truth for what can be traded on the platform.</p>
+
+        <h4>Key Functions</h4>
+        <table>
+            <thead>
+                <tr><th>Function</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="font-mono">addToken(address token, string symbol)</td>
+                    <td>Whitelist a new payment token (initially just USDC).</td>
+                </tr>
+                <tr>
+                    <td class="font-mono">removeToken(address token)</td>
+                    <td>De-list a payment token.</td>
+                </tr>
+                <tr>
+                    <td class="font-mono">isTokenWhitelisted(address token)</td>
+                    <td>Check if a token is accepted for payment.</td>
+                </tr>
+                <tr>
+                    <td class="font-mono">addGpuType(string name, uint256 minPrice, uint256 maxPrice, uint256 benchmarkScore)</td>
+                    <td>Register a GPU type (H100, A100, RTX4090) with pricing bounds.</td>
+                </tr>
+                <tr>
+                    <td class="font-mono">getGpuType(string name)</td>
+                    <td>Return GPU type details.</td>
+                </tr>
+                <tr>
+                    <td class="font-mono">getAllGpuTypes()</td>
+                    <td>List all registered GPU types.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4>GPU Types to Register at Deployment</h4>
+        <table>
+            <thead><tr><th>GPU</th><th>Min Price</th><th>Max Price</th><th>VRAM</th></tr></thead>
+            <tbody>
+                <tr><td>NVIDIA H100</td><td>$0.10/hr</td><td>$10.00/hr</td><td>80 GB</td></tr>
+                <tr><td>NVIDIA A100</td><td>$0.08/hr</td><td>$5.00/hr</td><td>80 GB</td></tr>
+                <tr><td>NVIDIA RTX 4090</td><td>$0.05/hr</td><td>$2.00/hr</td><td>24 GB</td></tr>
+                <tr><td>NVIDIA L40S</td><td>$0.06/hr</td><td>$3.00/hr</td><td>48 GB</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ComputeCredit.sol -->
+    <div class="card">
+        <div class="card-header">
+            <h3>ComputeCredit.sol</h3>
+        </div>
+        <p>ERC-20 token representing standardized GPU-hours. Minted when providers deposit compute capacity, burned when compute is consumed.</p>
+
+        <h4>Key Functions</h4>
+        <table>
+            <thead><tr><th>Function</th><th>Description</th></tr></thead>
+            <tbody>
+                <tr><td class="font-mono">mint(address to, uint256 amount)</td><td>Mint credits when a provider registers compute capacity. Only callable by protocol.</td></tr>
+                <tr><td class="font-mono">burn(uint256 amount)</td><td>Burn credits when compute is consumed (job completed).</td></tr>
+                <tr><td class="font-mono">burnFrom(address from, uint256 amount)</td><td>Protocol burns credits on behalf of a user after job delivery.</td></tr>
+            </tbody>
+        </table>
+
+        <div class="callout callout-warning">
+            <strong>Legal note:</strong> This token must be structured as a pure utility token. It is consumed (burned) when used. Never reference it as an investment. Name: "DarkPool Compute Credit" (DPC). Follow SEC no-action letter guidance.
+        </div>
+
+        <h4>Implementation</h4>
+        <ul>
+            <li>Extend OpenZeppelin <code>ERC20</code>, <code>ERC20Burnable</code>, <code>AccessControl</code></li>
+            <li>MINTER_ROLE: assigned to the protocol (DarkPool.sol)</li>
+            <li>Token has 18 decimals. 1 DPC = 1 GPU-hour (standardized across GPU types)</li>
+            <li>Non-transferable in V1 (soulbound) &mdash; can be made transferable in V2 if needed</li>
+        </ul>
+    </div>
+
+    <!-- FeeCollector.sol -->
+    <div class="card">
+        <div class="card-header">
+            <h3>FeeCollector.sol</h3>
+        </div>
+        <p>Collects protocol fees from settlements and distributes them. Receives USDC from Escrow.sol during each batch settlement.</p>
+
+        <h4>Key Functions</h4>
+        <table>
+            <thead><tr><th>Function</th><th>Description</th></tr></thead>
+            <tbody>
+                <tr><td class="font-mono">collectFee(uint256 amount, uint256 batchId)</td><td>Called by Escrow.sol during settlement. Records fee collection.</td></tr>
+                <tr><td class="font-mono">setFeeRate(uint256 buyerFeeBps, uint256 sellerFeeBps)</td><td>Set fee rates in basis points. Default: buyer 80bps (0.8%), seller 20bps (0.2%).</td></tr>
+                <tr><td class="font-mono">getFeeRate()</td><td>Returns current (buyerFeeBps, sellerFeeBps).</td></tr>
+                <tr><td class="font-mono">withdraw(address to, uint256 amount)</td><td>Owner withdraws collected fees.</td></tr>
+                <tr><td class="font-mono">totalCollected()</td><td>View total fees collected to date.</td></tr>
+            </tbody>
+        </table>
+
+        <div class="callout callout-info">
+            <strong>Integration point:</strong> FeeCollector must accept calls from Sorrowz's Escrow.sol. Coordinate on the interface &mdash; Escrow calls <code>collectFee()</code> during <code>releaseFunds()</code>.
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Testing Requirements</h3>
+        <ul>
+            <li>Token whitelist/delist flows, GPU type registration/retrieval</li>
+            <li>Compute credit mint/burn lifecycle, access control on minting</li>
+            <li>Fee collection accuracy at various rates (0%, 0.5%, 1%, edge cases)</li>
+            <li>Fee withdrawal by owner only</li>
+            <li>Integration: fee deduction during a full settlement cycle (coordinate test with Sorrowz's contracts)</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h3>Deployment Script</h3>
+        <p>Powerz owns the deployment script for all 6 contracts (including Sorrowz's). Deploy order matters due to inter-contract references.</p>
+        <div class="code-block">
+<span class="comment">// Deploy order:</span>
+<span class="comment">// 1. TokenRegistry.sol  (standalone)</span>
+<span class="comment">// 2. ComputeCredit.sol  (standalone)</span>
+<span class="comment">// 3. FeeCollector.sol   (standalone)</span>
+<span class="comment">// 4. Escrow.sol         (needs FeeCollector address)</span>
+<span class="comment">// 5. SettlementVerifier.sol (standalone)</span>
+<span class="comment">// 6. DarkPool.sol       (needs Escrow + SettlementVerifier + TokenRegistry addresses)</span>
+<span class="comment">//</span>
+<span class="comment">// Post-deploy:</span>
+<span class="comment">// - Grant RELAYER_ROLE on DarkPool to the backend relayer wallet</span>
+<span class="comment">// - Grant DARKPOOL_ROLE on Escrow to DarkPool contract</span>
+<span class="comment">// - Grant MINTER_ROLE on ComputeCredit to DarkPool contract</span>
+<span class="comment">// - Register initial GPU types on TokenRegistry</span>
+<span class="comment">// - Whitelist USDC on TokenRegistry</span>
+        </div>
+    </div>
+</div>
+
+<!-- ============================== SECTION 07: POWERZ BACKEND ============================== -->
+<div class="container page-break">
+    <div class="section-header">
+        <div class="section-number">Section 07 &nbsp;&mdash;&nbsp; <span class="badge badge-powerz">Powerz</span></div>
+        <h2>Backend Services: Infrastructure</h2>
+        <p>Five NestJS modules that handle authentication, provider management, market data, real-time communications, and blockchain event indexing.</p>
+    </div>
+
+    <!-- Auth Module -->
+    <div class="card">
+        <div class="card-header">
+            <h3>Auth Module</h3>
+            <span class="badge badge-priority">Critical Path</span>
+        </div>
+        <p>Handles wallet-based authentication and API key management. Every other module depends on this for user identity.</p>
+
+        <h4>API Endpoints</h4>
+        <table>
+            <thead><tr><th>Method</th><th>Endpoint</th><th>Description</th></tr></thead>
+            <tbody>
+                <tr><td><strong>POST</strong></td><td class="font-mono">/api/v1/auth/nonce</td><td>Generate a random nonce for wallet signature (SIWE standard).</td></tr>
+                <tr><td><strong>POST</strong></td><td class="font-mono">/api/v1/auth/verify</td><td>Verify wallet signature, create/return user, issue JWT.</td></tr>
+                <tr><td><strong>POST</strong></td><td class="font-mono">/api/v1/auth/api-key</td><td>Generate API key pair (live + test). Requires authenticated session.</td></tr>
+                <tr><td><strong>DELETE</strong></td><td class="font-mono">/api/v1/auth/api-key/:id</td><td>Revoke an API key.</td></tr>
+                <tr><td><strong>GET</strong></td><td class="font-mono">/api/v1/auth/me</td><td>Return current user profile.</td></tr>
+            </tbody>
+        </table>
+
+        <h4>Authentication Flow</h4>
+        <div class="code-block">
+<span class="comment">// Sign-In With Ethereum (SIWE) flow:</span>
+<span class="comment">// 1. Frontend calls GET /auth/nonce &rarr; receives random nonce</span>
+<span class="comment">// 2. Frontend asks wallet to sign message: "Sign in to DarkPool\nNonce: {nonce}"</span>
+<span class="comment">// 3. Frontend sends POST /auth/verify { address, signature, nonce }</span>
+<span class="comment">// 4. Backend verifies signature using viem's verifyMessage()</span>
+<span class="comment">// 5. Backend creates user if new, issues JWT (24h expiry)</span>
+<span class="comment">// 6. All subsequent requests include: Authorization: Bearer {jwt}</span>
+<span class="comment">//</span>
+<span class="comment">// API Key flow (for AI agents):</span>
+<span class="comment">// 1. Authenticated user calls POST /auth/api-key</span>
+<span class="comment">// 2. Backend generates: sk_live_... and sk_test_...</span>
+<span class="comment">// 3. Store hashed key in DB. Return raw key ONCE.</span>
+<span class="comment">// 4. Agent sends: X-API-Key: sk_live_... with each request</span>
+        </div>
+
+        <h4>Database Table: <code>users</code></h4>
+        <div class="interface-block">
+            <h5>prisma schema &mdash; users</h5>
+            <div class="field-row"><span class="field-name">id</span><span class="field-type">String @id @default(uuid())</span></div>
+            <div class="field-row"><span class="field-name">walletAddress</span><span class="field-type">String @unique</span></div>
+            <div class="field-row"><span class="field-name">subscriptionTier</span><span class="field-type">Enum (FREE, PRO, ENTERPRISE)</span></div>
+            <div class="field-row"><span class="field-name">createdAt</span><span class="field-type">DateTime</span></div>
+        </div>
+
+        <div class="interface-block mt-16">
+            <h5>prisma schema &mdash; api_keys</h5>
+            <div class="field-row"><span class="field-name">id</span><span class="field-type">String @id @default(uuid())</span></div>
+            <div class="field-row"><span class="field-name">userId</span><span class="field-type">String (FK &rarr; users)</span></div>
+            <div class="field-row"><span class="field-name">keyHash</span><span class="field-type">String (bcrypt hash of key)</span></div>
+            <div class="field-row"><span class="field-name">prefix</span><span class="field-type">String (sk_live_ or sk_test_)</span></div>
+            <div class="field-row"><span class="field-name">environment</span><span class="field-type">Enum (LIVE, TEST)</span></div>
+            <div class="field-row"><span class="field-name">lastUsedAt</span><span class="field-type">DateTime?</span></div>
+            <div class="field-row"><span class="field-name">revokedAt</span><span class="field-type">DateTime?</span></div>
+            <div class="field-row"><span class="field-name">createdAt</span><span class="field-type">DateTime</span></div>
+        </div>
+
+        <h4>NestJS Guards to Export</h4>
+        <ul>
+            <li><code>JwtAuthGuard</code> &mdash; validates JWT from Authorization header</li>
+            <li><code>ApiKeyAuthGuard</code> &mdash; validates API key from X-API-Key header</li>
+            <li><code>CombinedAuthGuard</code> &mdash; accepts either JWT or API key (used by most endpoints)</li>
+            <li>Export a <code>@CurrentUser()</code> decorator that injects the authenticated user into route handlers</li>
+        </ul>
+
+        <div class="callout callout-info">
+            <strong>Critical:</strong> All of Sorrowz's endpoints depend on these guards. Export them from the auth module so Sorrowz can import and use <code>@UseGuards(CombinedAuthGuard)</code> on order routes.
+        </div>
+    </div>
+
+    <!-- Provider Module -->
+    <div class="card">
+        <h3>Provider Module</h3>
+        <p>GPU provider registration, benchmarking, reputation tracking, and listing management.</p>
+
+        <h4>API Endpoints</h4>
+        <table>
+            <thead><tr><th>Method</th><th>Endpoint</th><th>Description</th></tr></thead>
+            <tbody>
+                <tr><td><strong>POST</strong></td><td class="font-mono">/api/v1/providers</td><td>Register as a GPU provider. Submit hardware specs.</td></tr>
+                <tr><td><strong>GET</strong></td><td class="font-mono">/api/v1/providers/me</td><td>Get own provider profile, listings, earnings.</td></tr>
+                <tr><td><strong>PUT</strong></td><td class="font-mono">/api/v1/providers/me</td><td>Update provider profile/specs.</td></tr>
+                <tr><td><strong>POST</strong></td><td class="font-mono">/api/v1/providers/listings</td><td>Create a new GPU listing (available hours, min price).</td></tr>
+                <tr><td><strong>GET</strong></td><td class="font-mono">/api/v1/providers/listings</td><td>List active GPU offerings.</td></tr>
+                <tr><td><strong>DELETE</strong></td><td class="font-mono">/api/v1/providers/listings/:id</td><td>Remove a listing.</td></tr>
+                <tr><td><strong>GET</strong></td><td class="font-mono">/api/v1/providers/earnings</td><td>Earnings history + payout records.</td></tr>
+            </tbody>
+        </table>
+
+        <h4>Database Table: <code>providers</code></h4>
+        <div class="interface-block">
+            <h5>prisma schema &mdash; providers</h5>
+            <div class="field-row"><span class="field-name">id</span><span class="field-type">String @id @default(uuid())</span></div>
+            <div class="field-row"><span class="field-name">userId</span><span class="field-type">String @unique (FK &rarr; users)</span></div>
+            <div class="field-row"><span class="field-name">gpuModel</span><span class="field-type">String</span></div>
+            <div class="field-row"><span class="field-name">gpuCount</span><span class="field-type">Int</span></div>
+            <div class="field-row"><span class="field-name">vram</span><span class="field-type">Int (GB)</span></div>
+            <div class="field-row"><span class="field-name">bandwidth</span><span class="field-type">Int (Gbps)</span></div>
+            <div class="field-row"><span class="field-name">location</span><span class="field-type">String (region)</span></div>
+            <div class="field-row"><span class="field-name">benchmarkScore</span><span class="field-type">Float?</span></div>
+            <div class="field-row"><span class="field-name">reputationScore</span><span class="field-type">Float @default(0)</span></div>
+            <div class="field-row"><span class="field-name">totalEarnings</span><span class="field-type">Decimal @default(0)</span></div>
+            <div class="field-row"><span class="field-name">stakedAmount</span><span class="field-type">Decimal @default(0)</span></div>
+            <div class="field-row"><span class="field-name">uptime</span><span class="field-type">Float @default(0) (percentage)</span></div>
+            <div class="field-row"><span class="field-name">status</span><span class="field-type">Enum (PENDING, ACTIVE, SUSPENDED)</span></div>
+            <div class="field-row"><span class="field-name">createdAt</span><span class="field-type">DateTime</span></div>
+        </div>
+    </div>
+
+    <!-- Market Module -->
+    <div class="card">
+        <h3>Market Module</h3>
+        <p>Aggregated, anonymized market statistics and analytics. Powers the Analytics page and public market data.</p>
+
+        <h4>API Endpoints</h4>
+        <table>
+            <thead><tr><th>Method</th><th>Endpoint</th><th>Description</th></tr></thead>
+            <tbody>
+                <tr><td><strong>GET</strong></td><td class="font-mono">/api/v1/market/stats</td><td>Overall stats: 24h volume, total providers, total GPU-hours, avg clearing prices.</td></tr>
+                <tr><td><strong>GET</strong></td><td class="font-mono">/api/v1/market/depth</td><td>Anonymized depth: aggregated buy/sell pressure per GPU type (no individual orders).</td></tr>
+                <tr><td><strong>GET</strong></td><td class="font-mono">/api/v1/market/price-history</td><td>Historical clearing prices by GPU type. Params: gpuType, timeframe (1h, 24h, 7d, 30d).</td></tr>
+                <tr><td><strong>GET</strong></td><td class="font-mono">/api/v1/market/settlements</td><td>Recent batch settlements (public data: batch ID, clearing price, volume, timestamp).</td></tr>
+                <tr><td><strong>GET</strong></td><td class="font-mono">/api/v1/account/balance</td><td>User's escrow balance (reads from Escrow contract via viem).</td></tr>
+            </tbody>
+        </table>
+
+        <h4>Data Sources</h4>
+        <ul>
+            <li>Query <code>settlements</code> table (written by Sorrowz's matching engine) for price history</li>
+            <li>Query <code>orders</code> table for aggregated depth (count pending buys/sells per GPU type at price bands)</li>
+            <li>Cache frequently-accessed stats in Redis with 15-second TTL</li>
+            <li>Read escrow balance directly from blockchain via viem <code>readContract</code></li>
+        </ul>
+    </div>
+
+    <!-- WebSocket Server -->
+    <div class="card">
+        <h3>WebSocket Server</h3>
+        <p>Pushes real-time updates to connected frontends and API consumers. Subscribes to Redis pub/sub channels for events.</p>
+
+        <h4>WebSocket Events (Server &rarr; Client)</h4>
+        <table>
+            <thead><tr><th>Event</th><th>Payload</th><th>Who Receives</th></tr></thead>
+            <tbody>
+                <tr><td class="font-mono">batch:settled</td><td>{ batchId, gpuType, clearingPrice, matchedVolume, timestamp }</td><td>All connected clients</td></tr>
+                <tr><td class="font-mono">order:filled</td><td>{ orderId, clearingPrice, batchId }</td><td>Order owner only</td></tr>
+                <tr><td class="font-mono">order:cancelled</td><td>{ orderId }</td><td>Order owner only</td></tr>
+                <tr><td class="font-mono">market:update</td><td>{ gpuType, currentPrice, volume24h }</td><td>All connected clients</td></tr>
+                <tr><td class="font-mono">provider:matched</td><td>{ orderId, buyerDetails (encrypted) }</td><td>Provider only</td></tr>
+            </tbody>
+        </table>
+
+        <h4>Implementation</h4>
+        <ul>
+            <li>Use <code>@nestjs/websockets</code> with Socket.io adapter</li>
+            <li>Subscribe to Redis pub/sub channel <code>darkpool:events</code></li>
+            <li>Sorrowz's settlement service publishes events to this channel after each batch</li>
+            <li>Authenticate WebSocket connections using JWT (sent in handshake query params)</li>
+            <li>Room-based routing: <code>user:{userId}</code> for private events, <code>market</code> for public</li>
+        </ul>
+    </div>
+
+    <!-- Event Indexer -->
+    <div class="card">
+        <h3>Event Indexer</h3>
+        <p>Listens to smart contract events on Base and syncs on-chain state to the PostgreSQL database.</p>
+
+        <h4>Events to Index</h4>
+        <ul>
+            <li><code>OrderSubmitted</code> &rarr; Update order status to ACTIVE in DB</li>
+            <li><code>OrderCancelled</code> &rarr; Update order status to CANCELLED in DB</li>
+            <li><code>BatchSettled</code> &rarr; Create settlement record in DB, update matched orders to FILLED</li>
+            <li><code>OrderFilled</code> &rarr; Update individual order with clearing price and batch ID</li>
+            <li><code>Transfer</code> (USDC) &rarr; Track deposit/withdrawal events for balance history</li>
+        </ul>
+
+        <h4>Implementation</h4>
+        <ul>
+            <li>Use viem's <code>watchContractEvent</code> for real-time listening</li>
+            <li>Implement a block cursor (store last processed block in Redis) for crash recovery</li>
+            <li>On startup, backfill any missed blocks since last cursor</li>
+            <li>Publish indexed events to Redis pub/sub for WebSocket distribution</li>
+        </ul>
+    </div>
+</div>
+
+<!-- ============================== SECTION 08: POWERZ FRONTEND ============================== -->
+<div class="container page-break">
+    <div class="section-header">
+        <div class="section-number">Section 08 &nbsp;&mdash;&nbsp; <span class="badge badge-powerz">Powerz</span></div>
+        <h2>Frontend Integration: Market & Real-Time</h2>
+        <p>Wire the existing React frontend to market data, provider management, and real-time WebSocket feeds.</p>
+    </div>
+
+    <div class="card">
+        <h3>Scope of Work</h3>
+        <ul>
+            <li><strong>Create API hooks</strong> &mdash; <code>useMarketStats()</code>, <code>usePriceHistory()</code>, <code>useMarketDepth()</code></li>
+            <li><strong>Create provider hooks</strong> &mdash; <code>useProviderProfile()</code>, <code>useProviderListings()</code>, <code>useProviderEarnings()</code></li>
+            <li><strong>Create WebSocket hook</strong> &mdash; <code>useWebSocket()</code> with auto-reconnect and event subscription</li>
+            <li><strong>Wire Marketplace.tsx</strong> &mdash; Real GPU listings from API instead of hardcoded 24 products</li>
+            <li><strong>Wire Analytics.tsx</strong> &mdash; Real price history charts, real market stats</li>
+            <li><strong>Wire Provider.tsx</strong> &mdash; Real registration form, real earnings data</li>
+            <li><strong>Wire DashboardSidebar.tsx</strong> &mdash; Real-time batch count in live feed</li>
+            <li><strong>Wire SettingsPage.tsx</strong> &mdash; Real API key generation/revocation via auth endpoints</li>
+            <li><strong>Wire LiveFeed component</strong> &mdash; Real-time settlement feed from WebSocket</li>
+            <li><strong>Wire AuctionTimer</strong> &mdash; Sync countdown with actual backend batch cycle</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h3>Key Files to Modify</h3>
+        <table>
+            <thead><tr><th>File</th><th>Changes</th></tr></thead>
+            <tbody>
+                <tr><td class="font-mono">src/pages/Marketplace.tsx</td><td>Replace 24 hardcoded products with API data from /market/stats + /providers/listings.</td></tr>
+                <tr><td class="font-mono">src/pages/Analytics.tsx</td><td>Replace mock chart data with /market/price-history, /market/stats.</td></tr>
+                <tr><td class="font-mono">src/pages/Provider.tsx</td><td>Wire registration form to POST /providers, wire earnings to GET /providers/earnings.</td></tr>
+                <tr><td class="font-mono">src/pages/SettingsPage.tsx</td><td>Wire API key CRUD to /auth/api-key endpoints.</td></tr>
+                <tr><td class="font-mono">src/components/dashboard/LiveFeed.tsx</td><td>Replace mock feed with WebSocket batch:settled events.</td></tr>
+                <tr><td class="font-mono">src/components/dashboard/AuctionTimer.tsx</td><td>Sync with backend batch cycle timing.</td></tr>
+                <tr><td class="font-mono">src/hooks/useMarket.ts</td><td><strong>New file.</strong> React Query hooks for market endpoints.</td></tr>
+                <tr><td class="font-mono">src/hooks/useProviders.ts</td><td><strong>New file.</strong> React Query hooks for provider endpoints.</td></tr>
+                <tr><td class="font-mono">src/hooks/useWebSocket.ts</td><td><strong>New file.</strong> Socket.io client with auto-reconnect + event typing.</td></tr>
+                <tr><td class="font-mono">src/lib/api.ts</td><td><strong>New file.</strong> Axios/fetch instance with auth interceptor (JWT + API key).</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- ============================== SECTION 09: SHARED INTERFACES ============================== -->
+<div class="container page-break">
+    <div class="section-header">
+        <div class="section-number">Section 09</div>
+        <h2>Shared Interfaces & Data Contracts</h2>
+        <p>Both developers must agree on these TypeScript interfaces. They live in <code>packages/backend/src/shared/types/</code> and are the contract between modules.</p>
+    </div>
+
+    <div class="card">
+        <h3>Order Types</h3>
+        <div class="code-block">
+<span class="comment">// shared/types/order.types.ts</span>
+
+<span class="keyword">export enum</span> <span class="type">OrderSide</span> { BUY = <span class="string">'BUY'</span>, SELL = <span class="string">'SELL'</span> }
+
+<span class="keyword">export enum</span> <span class="type">OrderStatus</span> {
+  PENDING = <span class="string">'PENDING'</span>,     <span class="comment">// Submitted to backend, not yet on-chain</span>
+  ACTIVE = <span class="string">'ACTIVE'</span>,       <span class="comment">// Confirmed on-chain, waiting for batch</span>
+  FILLED = <span class="string">'FILLED'</span>,       <span class="comment">// Matched in a batch auction</span>
+  CANCELLED = <span class="string">'CANCELLED'</span>, <span class="comment">// Cancelled by user</span>
+  EXPIRED = <span class="string">'EXPIRED'</span>,     <span class="comment">// Passed expiry time without fill</span>
+}
+
+<span class="keyword">export enum</span> <span class="type">GpuType</span> {
+  H100 = <span class="string">'H100'</span>, A100 = <span class="string">'A100'</span>, RTX4090 = <span class="string">'RTX4090'</span>, L40S = <span class="string">'L40S'</span>
+}
+
+<span class="keyword">export interface</span> <span class="type">CreateOrderDto</span> {
+  side: OrderSide;
+  gpuType: GpuType;
+  quantity: <span class="type">number</span>;
+  pricePerHour: <span class="type">number</span>;      <span class="comment">// in USDC (e.g., 0.25)</span>
+  duration: <span class="type">number</span>;          <span class="comment">// in hours</span>
+  commitmentHash: <span class="type">string</span>;   <span class="comment">// keccak256 from client</span>
+  encryptedDetails: <span class="type">string</span>; <span class="comment">// encrypted order params for matching engine</span>
+}
+
+<span class="keyword">export interface</span> <span class="type">OrderResponse</span> {
+  id: <span class="type">string</span>;
+  side: OrderSide;
+  gpuType: GpuType;
+  quantity: <span class="type">number</span>;
+  pricePerHour: <span class="type">number</span>;
+  duration: <span class="type">number</span>;
+  escrowAmount: <span class="type">number</span>;
+  status: OrderStatus;
+  batchId?: <span class="type">number</span>;
+  clearingPrice?: <span class="type">number</span>;
+  txHash?: <span class="type">string</span>;
+  createdAt: <span class="type">string</span>;
+}
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Settlement Types</h3>
+        <div class="code-block">
+<span class="comment">// shared/types/settlement.types.ts</span>
+
+<span class="keyword">export interface</span> <span class="type">BatchResult</span> {
+  batchId: <span class="type">number</span>;
+  gpuType: GpuType;
+  clearingPrice: <span class="type">number</span>;
+  matchedBuyOrders: <span class="type">string[]</span>;   <span class="comment">// order IDs</span>
+  matchedSellOrders: <span class="type">string[]</span>;  <span class="comment">// order IDs</span>
+  matchedVolume: <span class="type">number</span>;        <span class="comment">// total GPU-hours</span>
+  totalValueUSDC: <span class="type">number</span>;
+  protocolFee: <span class="type">number</span>;
+}
+
+<span class="comment">// Published to Redis channel "darkpool:events" by Sorrowz's settlement service</span>
+<span class="comment">// Consumed by Powerz's WebSocket server</span>
+<span class="keyword">export interface</span> <span class="type">SettlementEvent</span> {
+  type: <span class="string">'batch:settled'</span> | <span class="string">'order:filled'</span> | <span class="string">'order:cancelled'</span>;
+  payload: BatchResult | { orderId: <span class="type">string</span>; clearingPrice?: <span class="type">number</span> };
+  timestamp: <span class="type">number</span>;
+}
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Market & Provider Types</h3>
+        <div class="code-block">
+<span class="comment">// shared/types/market.types.ts</span>
+
+<span class="keyword">export interface</span> <span class="type">MarketStats</span> {
+  totalVolume24h: <span class="type">number</span>;
+  totalProviders: <span class="type">number</span>;
+  totalGpuHours: <span class="type">number</span>;
+  avgClearingPrices: Record&lt;GpuType, <span class="type">number</span>&gt;;
+  batchCount24h: <span class="type">number</span>;
+}
+
+<span class="keyword">export interface</span> <span class="type">PriceHistoryPoint</span> {
+  timestamp: <span class="type">string</span>;
+  price: <span class="type">number</span>;
+  volume: <span class="type">number</span>;
+}
+
+<span class="comment">// shared/types/provider.types.ts</span>
+
+<span class="keyword">export interface</span> <span class="type">RegisterProviderDto</span> {
+  gpuModel: GpuType;
+  gpuCount: <span class="type">number</span>;
+  vram: <span class="type">number</span>;
+  bandwidth: <span class="type">number</span>;
+  location: <span class="type">string</span>;
+}
+
+<span class="keyword">export interface</span> <span class="type">ProviderResponse</span> {
+  id: <span class="type">string</span>;
+  gpuModel: GpuType;
+  gpuCount: <span class="type">number</span>;
+  reputationScore: <span class="type">number</span>;
+  totalEarnings: <span class="type">number</span>;
+  uptime: <span class="type">number</span>;
+  status: <span class="string">'PENDING'</span> | <span class="string">'ACTIVE'</span> | <span class="string">'SUSPENDED'</span>;
+}
+        </div>
+    </div>
+
+    <div class="callout callout-success">
+        <strong>Integration protocol:</strong> When either developer needs to publish or consume data from the other's domain, they use Redis pub/sub with the <code>SettlementEvent</code> interface. Never call another dev's module functions directly &mdash; use the shared event bus.
+    </div>
+</div>
+
+<!-- ============================== SECTION 10: TIMELINE ============================== -->
+<div class="container page-break">
+    <div class="section-header">
+        <div class="section-number">Section 10</div>
+        <h2>Timeline & Milestones</h2>
+        <p>Both developers work in parallel. Integration checkpoints ensure the pieces fit together.</p>
+    </div>
+
+    <div class="timeline">
+        <div class="timeline-item">
+            <div class="week">Week 1&ndash;2</div>
+            <h4>Foundation</h4>
+            <p><strong>Sorrowz:</strong> DarkPool.sol + Escrow.sol + SettlementVerifier.sol with full test suite. Deploy to Base Sepolia.</p>
+            <p class="mt-16"><strong>Powerz:</strong> NestJS project setup + Auth module + TokenRegistry.sol + ComputeCredit.sol + FeeCollector.sol. Deploy to Base Sepolia.</p>
+            <div class="timeline-badges">
+                <span class="badge badge-sorrowz">3 Contracts</span>
+                <span class="badge badge-powerz">3 Contracts + Auth</span>
+                <span class="badge badge-shared">Integration: Deploy all 6 contracts together</span>
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="week">Week 3&ndash;4</div>
+            <h4>Core Backend</h4>
+            <p><strong>Sorrowz:</strong> Orders module + Matching engine (batch auction algorithm). Unit tests for matching logic.</p>
+            <p class="mt-16"><strong>Powerz:</strong> Provider module + Market module + Database migrations. Set up Redis.</p>
+            <div class="timeline-badges">
+                <span class="badge badge-sorrowz">Orders + Matching</span>
+                <span class="badge badge-powerz">Providers + Market</span>
+                <span class="badge badge-shared">Integration: Test order flow end-to-end</span>
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="week">Week 5&ndash;6</div>
+            <h4>Real-Time & Settlement</h4>
+            <p><strong>Sorrowz:</strong> Settlement service (on-chain submission). Connect matching engine &rarr; settlement &rarr; Redis events.</p>
+            <p class="mt-16"><strong>Powerz:</strong> WebSocket server + Event indexer. Subscribe to Redis events, push to clients.</p>
+            <div class="timeline-badges">
+                <span class="badge badge-sorrowz">Settlement</span>
+                <span class="badge badge-powerz">WebSocket + Indexer</span>
+                <span class="badge badge-shared">Integration: Full cycle test (order &rarr; match &rarr; settle &rarr; WS notification)</span>
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="week">Week 7&ndash;8</div>
+            <h4>Frontend Integration</h4>
+            <p><strong>Sorrowz:</strong> Wire order flow (ProductDetail, Orders, Dashboard) to real API + contracts. Client-side commitment generation.</p>
+            <p class="mt-16"><strong>Powerz:</strong> Wire market data, provider pages, settings, live feed, auction timer to real API + WebSocket.</p>
+            <div class="timeline-badges">
+                <span class="badge badge-sorrowz">Order UI</span>
+                <span class="badge badge-powerz">Market + Provider UI</span>
+                <span class="badge badge-shared">Integration: Full UI walkthrough on testnet</span>
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="week">Week 9&ndash;10</div>
+            <h4>Testing & Polish</h4>
+            <p><strong>Both:</strong> End-to-end testing, bug fixes, error handling, loading states, edge cases. Prepare for testnet launch.</p>
+            <div class="timeline-badges">
+                <span class="badge badge-shared">Joint: E2E testing + bug bash</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================== SECTION 11: DEPENDENCY MAP ============================== -->
+<div class="container page-break">
+    <div class="section-header">
+        <div class="section-number">Section 11</div>
+        <h2>Dependency Map & Integration Points</h2>
+        <p>Where the two developers' work touches. These are the critical handoff points that require coordination.</p>
+    </div>
+
+    <div class="diagram">
+                    <span style="color: var(--text-bright); font-weight: 700;">SYSTEM ARCHITECTURE</span>
+
+    <span style="color: var(--text-muted);">Frontend (React + Vite)</span>
+    ┌─────────────────────────────────────────────────────────────────┐
+    │  <span style="color: var(--sorrowz);">Order Flow (Sorrowz)</span>          <span style="color: var(--powerz);">Market + Provider (Powerz)</span>       │
+    │  ProductDetail.tsx             Marketplace.tsx                  │
+    │  Orders.tsx                    Analytics.tsx                    │
+    │  Dashboard.tsx                 Provider.tsx                     │
+    │  useContracts.ts               useWebSocket.ts                  │
+    │  useOrders.ts                  useMarket.ts                     │
+    └─────────────────────────┬───────────────────────────────────────┘
+                              │ HTTP + WebSocket
+    ┌─────────────────────────┴───────────────────────────────────────┐
+    │                    <span style="color: var(--text-bright);">NestJS Backend</span>                                │
+    │                                                                 │
+    │  <span style="color: var(--sorrowz);">┌─────────────┐</span>   <span style="color: var(--warning);">Redis</span>    <span style="color: var(--powerz);">┌──────────────┐</span>            │
+    │  <span style="color: var(--sorrowz);">│ Orders      │──publish──&gt;│ darkpool:    │──subscribe──&gt;│ WebSocket    │</span>            │
+    │  <span style="color: var(--sorrowz);">│ Matching    │</span>          │ events       │            <span style="color: var(--powerz);">│ Server       │</span>            │
+    │  <span style="color: var(--sorrowz);">│ Settlement  │</span>          <span style="color: var(--warning);">└──────────────┘</span>            <span style="color: var(--powerz);">│ Indexer      │</span>            │
+    │  <span style="color: var(--sorrowz);">└──────┬──────┘</span>                                    <span style="color: var(--powerz);">│ Auth         │</span>            │
+    │         │                                          <span style="color: var(--powerz);">│ Providers    │</span>            │
+    │         │              <span style="color: var(--warning);">PostgreSQL</span>                    <span style="color: var(--powerz);">│ Market       │</span>            │
+    │         └──────────────┤ orders     ├──────────────<span style="color: var(--powerz);">└──────┬───────┘</span>            │
+    │                        │ settlements│                      │                    │
+    │                        │ compute_jobs│                     │                    │
+    │                        │ users      ├──────────────────────┘                    │
+    │                        │ providers  │                                           │
+    │                        │ api_keys   │                                           │
+    └────────────────────────┴────────────┴───────────────────────────────────────────┘
+                              │
+    ┌─────────────────────────┴───────────────────────────────────────┐
+    │                    <span style="color: var(--text-bright);">Base Blockchain</span>                               │
+    │                                                                 │
+    │  <span style="color: var(--sorrowz);">DarkPool.sol  Escrow.sol  SettlementVerifier.sol</span>                │
+    │  <span style="color: var(--powerz);">TokenRegistry.sol  ComputeCredit.sol  FeeCollector.sol</span>          │
+    │                                                                 │
+    └─────────────────────────────────────────────────────────────────┘
+    </div>
+
+    <div class="card">
+        <h3>Critical Integration Points</h3>
+        <table>
+            <thead>
+                <tr><th>#</th><th>Integration</th><th>Owner</th><th>Depends On</th><th>Protocol</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td><strong>Auth guards on order endpoints</strong></td>
+                    <td class="badge-sorrowz" style="color:var(--sorrowz)">Sorrowz uses</td>
+                    <td class="badge-powerz" style="color:var(--powerz)">Powerz builds</td>
+                    <td>Import <code>CombinedAuthGuard</code> from auth module</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td><strong>Settlement &rarr; WebSocket events</strong></td>
+                    <td class="badge-sorrowz" style="color:var(--sorrowz)">Sorrowz publishes</td>
+                    <td class="badge-powerz" style="color:var(--powerz)">Powerz subscribes</td>
+                    <td>Redis pub/sub channel <code>darkpool:events</code></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td><strong>Escrow &rarr; FeeCollector</strong></td>
+                    <td class="badge-sorrowz" style="color:var(--sorrowz)">Sorrowz calls</td>
+                    <td class="badge-powerz" style="color:var(--powerz)">Powerz builds</td>
+                    <td>Solidity: <code>IFeeCollector.collectFee()</code></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td><strong>Orders &rarr; TokenRegistry validation</strong></td>
+                    <td class="badge-sorrowz" style="color:var(--sorrowz)">Sorrowz reads</td>
+                    <td class="badge-powerz" style="color:var(--powerz)">Powerz builds</td>
+                    <td>Solidity: <code>ITokenRegistry.getGpuType()</code></td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td><strong>Market module reads settlements</strong></td>
+                    <td class="badge-powerz" style="color:var(--powerz)">Powerz reads</td>
+                    <td class="badge-sorrowz" style="color:var(--sorrowz)">Sorrowz writes</td>
+                    <td>PostgreSQL: <code>settlements</code> table</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td><strong>Contract deployment script</strong></td>
+                    <td class="badge-powerz" style="color:var(--powerz)">Powerz owns</td>
+                    <td class="badge-shared" style="color:var(--warning)">Both contracts</td>
+                    <td>Foundry deploy script with correct ordering</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="callout callout-warning">
+        <strong>Coordination rule:</strong> Before either developer merges changes that affect an integration point, they must notify the other developer and ensure the shared interface hasn't changed. All shared types live in <code>packages/backend/src/shared/</code> &mdash; changes to this directory require both devs' approval.
+    </div>
+
+    <div class="card">
+        <h3>Communication Protocol</h3>
+        <ul>
+            <li><strong>Daily sync:</strong> Brief check-in on what was completed and any blockers at integration points</li>
+            <li><strong>PR reviews:</strong> Each developer reviews the other's PRs before merge to main</li>
+            <li><strong>Integration tests:</strong> At each milestone (end of Week 2, 4, 6, 8), run the full integration test suite together</li>
+            <li><strong>Shared types changes:</strong> Any change to <code>shared/types/</code> must be communicated and approved by both</li>
+            <li><strong>Contract interface changes:</strong> If a Solidity function signature changes, both devs must update their dependent code</li>
+        </ul>
+    </div>
+</div>
+
+<!-- ============================== FOOTER ============================== -->
+<div class="doc-footer">
+    <div class="logo-text">AGENTIC DARK POOL</div>
+    <p>Internal Development Document &mdash; Confidential</p>
+    <p style="margin-top: 8px;">Version 1.0 &mdash; March 29, 2026</p>
+    <p style="margin-top: 4px; font-size: 11px; color: var(--text-muted);">This document defines the complete work assignment for backend implementation. Both developers should reference the original Research & Build Guide for product context and business requirements.</p>
+</div>
+
+</body>
+</html>

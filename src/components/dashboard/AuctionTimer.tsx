@@ -2,9 +2,22 @@ import { useEffect, useState } from "react";
 import { Timer } from "lucide-react";
 import { motion } from "framer-motion";
 import { GlassCard } from "@/components/ui/glass-card";
+import { useWebSocket } from "@/hooks/useWebSocket";
 
 export function AuctionTimer() {
   const [seconds, setSeconds] = useState(32);
+  const [phase, setPhase] = useState<string>("collecting");
+  const { subscribe } = useWebSocket();
+
+  useEffect(() => {
+    const unsub = subscribe("batch:phase", (data: unknown) => {
+      const event = data as { batchId: number; phase: string; endsAt: number };
+      setPhase(event.phase);
+      const remaining = Math.max(0, Math.floor((event.endsAt - Date.now()) / 1000));
+      setSeconds(remaining);
+    });
+    return unsub;
+  }, [subscribe]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -21,6 +34,11 @@ export function AuctionTimer() {
   const radius = 24;
   const circumference = 2 * Math.PI * radius;
   const strokeDashoffset = circumference * (1 - progress);
+
+  const phaseLabel =
+    phase === "matching" ? "Matching orders" :
+    phase === "settling" ? "Settling batch" :
+    isUrgent ? "Closing soon" : "Accepting orders";
 
   return (
     <GlassCard
@@ -50,7 +68,7 @@ export function AuctionTimer() {
             {String(mins).padStart(2, "0")}:{String(secs).padStart(2, "0")}
           </p>
           <p className="font-mono text-[9px] text-white/20 mt-1 uppercase tracking-wider">
-            {isUrgent ? "Closing soon" : "Accepting orders"}
+            {phaseLabel}
           </p>
         </div>
       </div>

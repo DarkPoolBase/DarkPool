@@ -17,6 +17,8 @@ import { ValidatorsModule } from './validators/validators.module';
 import { TeeComputeModule } from './tee-compute/tee-compute.module';
 import { ComplianceModule } from './compliance/compliance.module';
 import { SdkIntegrationsModule } from './sdk-integrations/sdk-integrations.module';
+import { AgentTreasuryModule } from './agent-treasury/agent-treasury.module';
+import { AgentEconomyModule } from './agent-economy/agent-economy.module';
 
 @Module({
   imports: [
@@ -40,6 +42,8 @@ import { SdkIntegrationsModule } from './sdk-integrations/sdk-integrations.modul
     TeeComputeModule,
     ComplianceModule,
     SdkIntegrationsModule,
+    AgentTreasuryModule,
+    AgentEconomyModule,
   ],
 })
 export class AppModule {}

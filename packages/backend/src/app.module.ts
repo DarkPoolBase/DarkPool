@@ -13,6 +13,7 @@ import { RedisModule } from './redis/redis.module';
 import { PaymentsModule } from './payments/payments.module';
 import { AgentsModule } from './agents/agents.module';
 import { DataMarketplaceModule } from './data-marketplace/data-marketplace.module';
+import { ValidatorsModule } from './validators/validators.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { DataMarketplaceModule } from './data-marketplace/data-marketplace.modul
     PaymentsModule,
     AgentsModule,
     DataMarketplaceModule,
+    ValidatorsModule,
   ],
 })
 export class AppModule {}

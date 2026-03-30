@@ -1,0 +1,20 @@
+# Sorrowz owns core trading
+packages/contracts/src/DarkPool.sol @sorrowz
+packages/contracts/src/Escrow.sol @sorrowz
+packages/contracts/src/SettlementVerifier.sol @sorrowz
+packages/backend/src/orders/ @sorrowz
+packages/backend/src/matching/ @sorrowz
+packages/backend/src/settlement/ @sorrowz
+
+# Powerz owns infrastructure
+packages/contracts/src/TokenRegistry.sol @powerz
+packages/contracts/src/ComputeCredit.sol @powerz
+packages/contracts/src/FeeCollector.sol @powerz
+packages/backend/src/auth/ @powerz
+packages/backend/src/providers/ @powerz
+packages/backend/src/market/ @powerz
+packages/backend/src/websocket/ @powerz
+packages/backend/src/indexer/ @powerz
+
+# Shared - both must approve
+packages/backend/src/shared/ @sorrowz @powerz

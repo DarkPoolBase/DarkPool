@@ -1,0 +1,15 @@
+name: Format Check
+
+on: [pull_request]
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: foundry-rs/foundry-toolchain@v1
+      - name: Check Solidity formatting
+        working-directory: packages/contracts
+        run: forge fmt --check

@@ -1,3 +1,8 @@
-# Welcome to your Lovable project
+# Agentic Dark Pool - Monorepo
 
-TODO: Document your project here
+Privacy-preserving GPU compute marketplace on Base.
+
+## Structure
+- `packages/contracts/` - Solidity smart contracts (Foundry)
+- `packages/backend/` - NestJS API server (coming soon)
+- Root - Vite + React frontend

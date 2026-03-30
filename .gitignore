@@ -27,3 +27,5 @@ packages/contracts/out/
 packages/contracts/cache/
 packages/backend/dist/
 .env
+packages/backend/node_modules/
+packages/contracts/.env

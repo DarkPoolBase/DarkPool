@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+.vercel
+packages/contracts/out/
+packages/contracts/cache/
+packages/backend/dist/
+.env

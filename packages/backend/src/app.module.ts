@@ -14,6 +14,9 @@ import { PaymentsModule } from './payments/payments.module';
 import { AgentsModule } from './agents/agents.module';
 import { DataMarketplaceModule } from './data-marketplace/data-marketplace.module';
 import { ValidatorsModule } from './validators/validators.module';
+import { TeeComputeModule } from './tee-compute/tee-compute.module';
+import { ComplianceModule } from './compliance/compliance.module';
+import { SdkIntegrationsModule } from './sdk-integrations/sdk-integrations.module';
 
 @Module({
   imports: [
@@ -34,6 +37,9 @@ import { ValidatorsModule } from './validators/validators.module';
     AgentsModule,
     DataMarketplaceModule,
     ValidatorsModule,
+    TeeComputeModule,
+    ComplianceModule,
+    SdkIntegrationsModule,
   ],
 })
 export class AppModule {}

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { IntroLoader } from "@/components/IntroLoader";
+import { LiquidGlassHero } from "@/components/LiquidGlassHero";
 
 const Index = () => {
   const [loaderDone, setLoaderDone] = useState(false);
@@ -12,8 +13,8 @@ const Index = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: loaderDone ? 1 : 0 }}
         transition={{ duration: 1, ease: [0.4, 0, 0.2, 1] }}
-        className="w-full h-screen"
       >
+        <LiquidGlassHero />
         <iframe
           src="/aero.html"
           className="w-full h-screen border-0"

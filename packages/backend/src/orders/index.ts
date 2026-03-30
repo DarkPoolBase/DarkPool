@@ -1,0 +1,11 @@
+// Orders Module - Public API
+export { OrdersModule } from './orders.module';
+export { OrdersService } from './orders.service';
+export { Order } from './entities/order.entity';
+export { OrderStatus } from './entities/order-status.enum';
+export { OrderSide } from './entities/order-side.enum';
+export { GpuType } from './entities/gpu-type.enum';
+export { OrderMetricsService } from './services/order-metrics.service';
+export { OrderOwnerGuard } from './guards/order-owner.guard';
+export { ParseOrderIdPipe } from './pipes/parse-order-id.pipe';
+export { CurrentOrder } from './decorators/current-order.decorator';

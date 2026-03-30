@@ -10,16 +10,17 @@ import {
   Request,
 } from '@nestjs/common';
 import { OrdersService, CreateOrderInput } from './orders.service';
+import { OrderMetricsService } from './services/order-metrics.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { ParseOrderIdPipe } from './pipes/parse-order-id.pipe';
 
 @Controller('orders')
 export class OrdersController {
-  constructor(private readonly ordersService: OrdersService) {}
+  constructor(
+    private readonly ordersService: OrdersService,
+    private readonly metricsService: OrderMetricsService,
+  ) {}
 
-  /**
-   * POST /api/orders
-   * Submit a new encrypted order
-   */
   @Post()
   @UseGuards(JwtAuthGuard)
   async create(
@@ -29,10 +30,6 @@ export class OrdersController {
     return this.ordersService.create(req.user.sub, req.user.wallet, body);
   }
 
-  /**
-   * GET /api/orders
-   * List current user's orders with optional filters
-   */
   @Get()
   @UseGuards(JwtAuthGuard)
   async findAll(
@@ -52,37 +49,30 @@ export class OrdersController {
     });
   }
 
-  /**
-   * GET /api/orders/stats
-   * Get order count by status for the current user
-   */
   @Get('stats')
   @UseGuards(JwtAuthGuard)
   async getStats(@Request() req: { user: { sub: string } }) {
     return this.ordersService.countByStatus(req.user.sub);
   }
 
-  /**
-   * GET /api/orders/:id
-   * Get a single order by ID (must belong to current user)
-   */
+  @Get('metrics')
+  async getMetrics() {
+    return this.metricsService.getMetrics();
+  }
+
   @Get(':id')
   @UseGuards(JwtAuthGuard)
   async findById(
-    @Param('id') id: string,
+    @Param('id', ParseOrderIdPipe) id: string,
     @Request() req: { user: { sub: string } },
   ) {
     return this.ordersService.findById(id, req.user.sub);
   }
 
-  /**
-   * DELETE /api/orders/:id
-   * Cancel an active order
-   */
   @Delete(':id')
   @UseGuards(JwtAuthGuard)
   async cancel(
-    @Param('id') id: string,
+    @Param('id', ParseOrderIdPipe) id: string,
     @Request() req: { user: { sub: string } },
   ) {
     return this.ordersService.cancel(id, req.user.sub);

@@ -1,7 +1,16 @@
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { GlassCard } from "@/components/ui/glass-card";
+import { useWebSocket } from "@/hooks/useWebSocket";
 
-const feedItems = [
+interface FeedItem {
+  title: string;
+  detail: string;
+  time: string;
+  highlight: boolean;
+}
+
+const defaultFeedItems: FeedItem[] = [
   { title: "Batch #4521 settled", detail: "340 GPU-hrs @ $0.21/hr — 23 orders matched", time: "Just now", highlight: false },
   { title: "Your order #4521 filled!", detail: "24 H100-hours @ $0.22/hr", time: "2 min ago", highlight: true },
   { title: "Batch #4520 settled", detail: "520 GPU-hrs @ $0.19/hr — 41 orders matched", time: "5 min ago", highlight: false },
@@ -10,21 +19,77 @@ const feedItems = [
   { title: "Batch #4518 settled", detail: "290 GPU-hrs @ $0.20/hr — 18 orders matched", time: "45 min ago", highlight: false },
 ];
 
+function formatTimeAgo(timestamp: number): string {
+  const diff = Math.floor((Date.now() - timestamp) / 1000);
+  if (diff < 60) return "Just now";
+  if (diff < 3600) return `${Math.floor(diff / 60)} min ago`;
+  return `${Math.floor(diff / 3600)}h ago`;
+}
+
 export function LiveFeed() {
+  const [feedItems, setFeedItems] = useState<FeedItem[]>(defaultFeedItems);
+  const { subscribe, connected } = useWebSocket();
+
+  useEffect(() => {
+    const unsubs: (() => void)[] = [];
+
+    unsubs.push(
+      subscribe("batch:settled", (data: unknown) => {
+        const event = data as {
+          batchId: number;
+          clearingPrice: string;
+          matchedVolume: string;
+          timestamp: number;
+        };
+        const newItem: FeedItem = {
+          title: `Batch #${event.batchId} settled`,
+          detail: `${event.matchedVolume} GPU-hrs @ $${event.clearingPrice}/hr`,
+          time: formatTimeAgo(event.timestamp),
+          highlight: false,
+        };
+        setFeedItems((prev) => [newItem, ...prev.slice(0, 9)]);
+      })
+    );
+
+    unsubs.push(
+      subscribe("order:status", (data: unknown) => {
+        const event = data as {
+          orderId: string;
+          status: string;
+          fillPrice?: string;
+          fillQty?: number;
+        };
+        if (event.status === "FILLED") {
+          const newItem: FeedItem = {
+            title: `Your order filled!`,
+            detail: `${event.fillQty ?? 0} GPU-hrs @ $${event.fillPrice ?? "0"}/hr`,
+            time: "Just now",
+            highlight: true,
+          };
+          setFeedItems((prev) => [newItem, ...prev.slice(0, 9)]);
+        }
+      })
+    );
+
+    return () => unsubs.forEach((fn) => fn());
+  }, [subscribe]);
+
   return (
     <GlassCard delay={0.4} className="h-full">
       <div className="flex items-center gap-2 p-4">
         <span className="relative flex h-2 w-2">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-          <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+          <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${connected ? "bg-emerald-400" : "bg-amber-400"} opacity-75`} />
+          <span className={`relative inline-flex rounded-full h-2 w-2 ${connected ? "bg-emerald-400" : "bg-amber-400"}`} />
         </span>
-        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">Live Batch Settlements</span>
+        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">
+          Live Batch Settlements {!connected && "(connecting...)"}
+        </span>
       </div>
       <div className="divide-y divide-white/5 max-h-[440px] overflow-y-auto">
         <AnimatePresence>
           {feedItems.map((item, i) => (
             <motion.div
-              key={i}
+              key={`${item.title}-${i}`}
               initial={{ opacity: 0, x: -12 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: i * 0.08, duration: 0.4, ease: "easeOut" }}

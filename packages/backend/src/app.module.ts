@@ -12,6 +12,7 @@ import { IndexerModule } from './indexer/indexer.module';
 import { RedisModule } from './redis/redis.module';
 import { PaymentsModule } from './payments/payments.module';
 import { AgentsModule } from './agents/agents.module';
+import { DataMarketplaceModule } from './data-marketplace/data-marketplace.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { AgentsModule } from './agents/agents.module';
     IndexerModule,
     PaymentsModule,
     AgentsModule,
+    DataMarketplaceModule,
   ],
 })
 export class AppModule {}

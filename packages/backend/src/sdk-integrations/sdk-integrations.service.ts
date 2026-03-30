@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { SdkGrant } from './entities/sdk-grant.entity';
 import { RedisService } from '../redis/redis.service';
 
-interface SdkPackage {
+export interface SdkPackage {
   name: string;
   version: string;
   description: string;
@@ -12,7 +12,7 @@ interface SdkPackage {
   registeredAt: string;
 }
 
-interface SponsoredTxParams {
+export interface SponsoredTxParams {
   paymasterUrl: string;
   paymasterData: string;
   maxGasLimit: string;

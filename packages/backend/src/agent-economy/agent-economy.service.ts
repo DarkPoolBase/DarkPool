@@ -16,7 +16,7 @@ interface RewardInput {
   amount: string;
 }
 
-interface EpochSummary {
+export interface EpochSummary {
   epoch: number;
   totalDistributed: string;
   rewardCount: number;

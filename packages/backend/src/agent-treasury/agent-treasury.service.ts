@@ -31,7 +31,7 @@ interface UpdateLimitsDto {
   approvalThreshold?: string;
 }
 
-interface YieldStats {
+export interface YieldStats {
   allocated: string;
   estimatedApy: number;
   projectedMonthlyYield: string;

@@ -10,6 +10,8 @@ import { MarketModule } from './market/market.module';
 import { WebsocketModule } from './websocket/websocket.module';
 import { IndexerModule } from './indexer/indexer.module';
 import { RedisModule } from './redis/redis.module';
+import { PaymentsModule } from './payments/payments.module';
+import { AgentsModule } from './agents/agents.module';
 
 @Module({
   imports: [
@@ -26,6 +28,8 @@ import { RedisModule } from './redis/redis.module';
     MarketModule,
     WebsocketModule,
     IndexerModule,
+    PaymentsModule,
+    AgentsModule,
   ],
 })
 export class AppModule {}

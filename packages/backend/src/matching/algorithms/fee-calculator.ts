@@ -19,3 +19,4 @@ export function calculateBatchValue(
 ): number {
   return matchedVolume * clearingPrice;
 }
+

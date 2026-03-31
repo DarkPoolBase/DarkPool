@@ -123,7 +123,7 @@ const ProductDetail = () => {
   const [duration, setDuration] = useState("1h");
 
   const { connected, setShowModal } = useWallet();
-  const { isAuthenticated } = useAutoAuth();
+  const { isAuthenticated, authenticate } = useAutoAuth();
   const createOrder = useCreateOrder();
 
   const product = productData[productId || "h100"] || productData.h100;
@@ -149,7 +149,12 @@ const ProductDetail = () => {
 
   const handleSubmitOrder = async () => {
     if (!connected) { setShowModal(true); return; }
-    if (!isAuthenticated) { toast.error('Authenticating... please try again in a moment.'); return; }
+
+    // Authenticate with SIWE if not already (will prompt wallet signature)
+    if (!isAuthenticated) {
+      const success = await authenticate();
+      if (!success) { toast.error('Authentication failed or was rejected.'); return; }
+    }
 
     try {
       const gpuType = gpuTypeMap[productId || 'h100'] || 'H100';

@@ -40,18 +40,11 @@ export function useAuth() {
         params: { address },
       });
 
-      const message = [
-        'Agentic Dark Pool wants you to sign in with your Ethereum account:',
-        address,
-        '',
-        'Sign in to the Dark Pool protocol.',
-        '',
-        `URI: ${window.location.origin}`,
-        'Version: 1',
-        `Chain ID: 8453`,
-        `Nonce: ${nonce}`,
-        `Issued At: ${new Date().toISOString()}`,
-      ].join('\n');
+      // EIP-4361 SIWE message format (required by Phantom)
+      const domain = window.location.host;
+      const origin = window.location.origin;
+      const issuedAt = new Date().toISOString();
+      const message = `${domain} wants you to sign in with your Ethereum account:\n${address}\n\nSign in to Agentic Dark Pool\n\nURI: ${origin}\nVersion: 1\nChain ID: 8453\nNonce: ${nonce}\nIssued At: ${issuedAt}`;
 
       const signature = await signMessage(message);
 

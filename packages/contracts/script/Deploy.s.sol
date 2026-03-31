@@ -81,3 +81,4 @@ contract DeployScript is Script {
         console.log("Burn Address:", burnAddress);
     }
 }
+

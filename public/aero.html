@@ -83,13 +83,13 @@ gtag('config', 'G-2M6V79H761');
          <a href="#faq" class="hover:text-white transition-colors">FAQ</a>
        </div>
       <div class="hidden md:flex items-center gap-3">
-        <a href="/dashboard" class="px-5 py-2.5 text-sm rounded-full font-medium transition-all flex items-center gap-2 no-underline" style="background: rgba(255,255,255,0.06); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.15); box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);" onclick="try{window.top.location.href='/dashboard';return false;}catch(e){}">
+        <button onclick="window.parent.postMessage('open-wallet-modal','*')" class="px-5 py-2.5 text-sm rounded-full font-medium transition-all flex items-center gap-2 cursor-pointer" style="background: rgba(255,255,255,0.06); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.15); box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-violet-400"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2.5"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg>
           <span class="text-white/90">Connect Wallet</span>
-        </a>
-        <a href="/dashboard" onclick="try{window.top.location.href='/dashboard';return false;}catch(e){}" class="px-4 py-2 bg-gradient-to-r from-[#6C3CE9] to-[#9D6FFF] text-white text-sm rounded-full font-medium hover:opacity-90 transition-all shadow-[0_0_20px_rgba(108,60,233,0.4)] no-underline">
+        </button>
+        <button onclick="window.parent.postMessage('launch-app','*')" class="px-4 py-2 bg-gradient-to-r from-[#6C3CE9] to-[#9D6FFF] text-white text-sm rounded-full font-medium hover:opacity-90 transition-all shadow-[0_0_20px_rgba(108,60,233,0.4)] cursor-pointer border-0">
           Launch App →
-        </a>
+        </button>
       </div>
       <!-- Mobile hamburger -->
       <button id="mobile-menu-btn" class="md:hidden flex flex-col gap-[5px] z-10 p-2" onclick="toggleMobileMenu()">
@@ -110,10 +110,10 @@ gtag('config', 'G-2M6V79H761');
         <a href="#roadmap-section" onclick="closeMobileMenu()" class="text-2xl font-extralight text-white/80 hover:text-white transition-colors">Roadmap</a>
         <a href="#faq" onclick="closeMobileMenu()" class="text-2xl font-extralight text-white/80 hover:text-white transition-colors">FAQ</a>
         <div class="flex flex-col gap-3 mt-8 items-center">
-          <a href="/dashboard" class="px-8 py-3 bg-gradient-to-r from-[#6C3CE9] to-[#9D6FFF] text-white text-sm rounded-full font-medium shadow-[0_0_20px_rgba(108,60,233,0.4)]">
+          <a href="#" onclick="window.parent.postMessage('launch-app','*');return false;" class="px-8 py-3 bg-gradient-to-r from-[#6C3CE9] to-[#9D6FFF] text-white text-sm rounded-full font-medium shadow-[0_0_20px_rgba(108,60,233,0.4)]">
             Launch App →
           </a>
-          <a href="/dashboard" onclick="try{window.top.location.href='/dashboard';return false;}catch(e){}" class="px-6 py-2.5 text-sm text-white/70 rounded-full border border-white/10 no-underline inline-block text-center">
+          <button onclick="closeMobileMenu(); window.parent.postMessage('open-wallet-modal','*')" class="px-6 py-2.5 text-sm text-white/70 rounded-full border border-white/10 cursor-pointer bg-transparent">
             Connect Wallet
           </button>
         </div>
@@ -187,7 +187,7 @@ gtag('config', 'G-2M6V79H761');
     </h1>
     <p id="split-text" class="text-lg md:text-xl font-extralight text-white/40 max-w-lg leading-relaxed"><span class="inline-flex overflow-hidden align-top mr-2 pb-1"><span class="gsap-desc-word translate-y-full inline-block" style="translate: none; rotate: none; scale: none; transform: translate(0px, 100%);">Buy and sell compute resources without revealing your orders. Dark pool auctions for AI agents and developers on Base. 70% cheaper than AWS.</span></span></p>
     <div class="flex flex-wrap gap-3 mt-6">
-      <a href="/dashboard" class="px-5 md:px-6 py-3 bg-gradient-to-r from-[#6C3CE9] to-[#9D6FFF] text-white text-sm rounded-full font-medium hover:opacity-90 transition-all shadow-[0_0_25px_rgba(108,60,233,0.4)] inline-flex items-center gap-2">
+      <a href="#" onclick="window.parent.postMessage('launch-app','*');return false;" class="px-5 md:px-6 py-3 bg-gradient-to-r from-[#6C3CE9] to-[#9D6FFF] text-white text-sm rounded-full font-medium hover:opacity-90 transition-all shadow-[0_0_25px_rgba(108,60,233,0.4)] inline-flex items-center gap-2">
         Launch App →
       </a>
       <a href="#about" class="px-5 md:px-6 py-3 border border-white/10 text-white/70 text-sm rounded-full font-light hover:border-white/30 hover:text-white transition-all inline-flex items-center gap-2">
@@ -1534,7 +1534,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <p class="text-xs text-zinc-400 font-light leading-relaxed">
               Submit sealed bids and asks. Nobody sees your order details — not even the platform. ZK proofs verify everything is legitimate.
             </p>
-            <a href="/dashboard" class="inline-flex items-center gap-1.5 text-xs text-white hover:text-zinc-300 transition-colors font-normal">
+            <a href="#" onclick="window.parent.postMessage('launch-app','*');return false;" class="inline-flex items-center gap-1.5 text-xs text-white hover:text-zinc-300 transition-colors font-normal">
               Start trading
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg>
             </a>
@@ -3448,7 +3448,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
               <!-- CTA Button -->
               <div class="cta-reveal opacity-0">
-                <a href="/dashboard" class="group relative inline-flex items-center gap-3 px-10 py-4 rounded-full font-medium text-white text-base overflow-hidden transition-all duration-300 hover:shadow-[0_0_40px_rgba(108,60,233,0.5)]" style="background: linear-gradient(135deg, #6C3CE9, #8B5CF6); box-shadow: 0 0 25px rgba(108,60,233,0.3);">
+                <a href="#" onclick="window.parent.postMessage('launch-app','*');return false;" class="group relative inline-flex items-center gap-3 px-10 py-4 rounded-full font-medium text-white text-base overflow-hidden transition-all duration-300 hover:shadow-[0_0_40px_rgba(108,60,233,0.5)]" style="background: linear-gradient(135deg, #6C3CE9, #8B5CF6); box-shadow: 0 0 25px rgba(108,60,233,0.3);">
                   <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style="background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.15) 45%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,0.15) 55%, transparent 60%); background-size: 200% 100%; animation: cta-shimmer 1.5s ease-in-out infinite;"></div>
                   <span class="relative z-10">Launch App</span>
                   <svg class="relative z-10 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
@@ -3540,7 +3540,7 @@ document.addEventListener('DOMContentLoaded', function() {
            </div>
            <div class="flex flex-col gap-3">
              <h4 class="text-white/80 font-medium mb-1">Platform</h4>
-             <a href="/dashboard" class="hover:text-white transition-colors">Dashboard</a>
+             <a href="#" onclick="window.parent.postMessage('launch-app','*');return false;" class="hover:text-white transition-colors">Dashboard</a>
              <a href="/marketplace" class="hover:text-white transition-colors">Marketplace</a>
              <a href="/provider" class="hover:text-white transition-colors">Provide GPUs</a>
              <a href="/analytics" class="hover:text-white transition-colors">Analytics</a>

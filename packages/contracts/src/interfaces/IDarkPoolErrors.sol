@@ -15,3 +15,4 @@ interface IDarkPoolErrors {
     error InsufficientBalance(address user, uint256 available, uint256 required);
     error FeeTooHigh(uint256 feeBps, uint256 maxFeeBps);
 }
+

@@ -15,3 +15,4 @@ interface IEscrow {
     function releaseFunds(address from, address to, uint256 amount, uint256 fee) external;
     function getBalance(address user) external view returns (uint256 available, uint256 locked);
 }
+

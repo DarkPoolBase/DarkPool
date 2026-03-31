@@ -54,3 +54,4 @@ export function WalletGate({ children }: { children: ReactNode }) {
     </div>
   );
 }
+

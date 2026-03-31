@@ -2,6 +2,7 @@ import { Bell, Wallet, LogOut, Copy, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useWallet } from "@/contexts/WalletContext";
 import metamaskLogo from "@/assets/metamask-logo.png";
@@ -13,6 +14,7 @@ export function DashboardHeader() {
     walletType, networkStatus, connect, disconnect, showModal, setShowModal,
   } = useWallet();
 
+  const navigate = useNavigate();
   const [copied, setCopied] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
 
@@ -92,7 +94,7 @@ export function DashboardHeader() {
                       </button>
                     </div>
                     <button
-                      onClick={() => { disconnect(); setShowDropdown(false); }}
+                      onClick={() => { disconnect(); setShowDropdown(false); navigate('/'); }}
                       className="w-full flex items-center gap-2 px-3 py-2.5 text-xs text-red-400 hover:bg-red-500/10 transition-colors"
                     >
                       <LogOut className="h-3.5 w-3.5" />

@@ -3845,9 +3845,10 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(function(accounts) {
           var addr = accounts[0];
           var formatted = addr.slice(0, 6) + '...' + addr.slice(-4);
-          localStorage.setItem('adp_wallet', JSON.stringify({ type: 'metamask', address: formatted, fullAddress: addr }));
+          var walletData = JSON.stringify({ type: 'metamask', address: formatted, fullAddress: addr });
+          try { window.top.localStorage.setItem('adp_wallet', walletData); } catch(e) { localStorage.setItem('adp_wallet', walletData); }
           document.getElementById('wallet-modal').classList.add('hidden');
-          window.location.href = '/dashboard';
+          try { window.top.location.href = '/dashboard'; } catch(e) { window.location.href = '/dashboard'; }
         })
         .catch(function(err) { if (err.code !== 4001) console.error('MetaMask error:', err); });
     } else {
@@ -3861,9 +3862,10 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(function(accounts) {
           var addr = accounts[0];
           var formatted = addr.slice(0, 6) + '...' + addr.slice(-4);
-          localStorage.setItem('adp_wallet', JSON.stringify({ type: 'phantom', address: formatted, fullAddress: addr }));
+          var walletData = JSON.stringify({ type: 'phantom', address: formatted, fullAddress: addr });
+          try { window.top.localStorage.setItem('adp_wallet', walletData); } catch(e) { localStorage.setItem('adp_wallet', walletData); }
           document.getElementById('wallet-modal').classList.add('hidden');
-          window.location.href = '/dashboard';
+          try { window.top.location.href = '/dashboard'; } catch(e) { window.location.href = '/dashboard'; }
         })
         .catch(function(err) {
           if (err.code !== 4001) {

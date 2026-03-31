@@ -43,3 +43,4 @@ contract SettlementVerifier is Ownable {
         emit RelayerUpdated(old, _newRelayer);
     }
 }
+

@@ -49,3 +49,4 @@ contract GasTest is Test {
         assertTrue(gasUsed < 100_000);
     }
 }
+

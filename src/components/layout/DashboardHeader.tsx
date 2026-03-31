@@ -165,7 +165,7 @@ export function DashboardHeader() {
                       <div className="text-sm font-medium text-white/90">MetaMask</div>
                       <div className="text-[10px] text-white/30 font-mono mt-0.5">Browser Extension</div>
                     </div>
-                    {getMetaMaskProvider() && (
+                    {typeof window !== 'undefined' && (window as any).ethereum?.isMetaMask && (
                       <span className="text-[10px] font-mono text-emerald-400/70 uppercase tracking-wider px-2 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20">Detected</span>
                     )}
                   </button>
@@ -180,7 +180,7 @@ export function DashboardHeader() {
                       <div className="text-sm font-medium text-white/90">Phantom</div>
                       <div className="text-[10px] text-white/30 font-mono mt-0.5">Multi-Chain Wallet</div>
                     </div>
-                    {getPhantomEVMProvider() && (
+                    {typeof window !== 'undefined' && (window as any).phantom?.ethereum?.isPhantom && (
                       <span className="text-[10px] font-mono text-emerald-400/70 uppercase tracking-wider px-2 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20">Detected</span>
                     )}
                   </button>

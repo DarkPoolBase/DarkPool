@@ -3840,13 +3840,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <script>
   function connectMetaMask() {
-    if (typeof window.ethereum !== 'undefined') {
+    if (typeof window.ethereum !== 'undefined' && window.ethereum.isMetaMask) {
       window.ethereum.request({ method: 'eth_requestAccounts' })
-        .then(accounts => {
+        .then(function(accounts) {
+          var addr = accounts[0];
+          var formatted = addr.slice(0, 6) + '...' + addr.slice(-4);
+          localStorage.setItem('adp_wallet', JSON.stringify({ type: 'metamask', address: formatted, fullAddress: addr }));
           document.getElementById('wallet-modal').classList.add('hidden');
           window.location.href = '/dashboard';
         })
-        .catch(err => console.error('MetaMask error:', err));
+        .catch(function(err) { if (err.code !== 4001) console.error('MetaMask error:', err); });
     } else {
       window.open('https://metamask.io/download/', '_blank');
     }
@@ -3856,6 +3859,9 @@ document.addEventListener('DOMContentLoaded', function() {
     if (provider) {
       provider.request({ method: 'eth_requestAccounts' })
         .then(function(accounts) {
+          var addr = accounts[0];
+          var formatted = addr.slice(0, 6) + '...' + addr.slice(-4);
+          localStorage.setItem('adp_wallet', JSON.stringify({ type: 'phantom', address: formatted, fullAddress: addr }));
           document.getElementById('wallet-modal').classList.add('hidden');
           window.location.href = '/dashboard';
         })

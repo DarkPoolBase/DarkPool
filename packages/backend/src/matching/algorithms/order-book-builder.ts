@@ -38,3 +38,4 @@ export function buildOrderBook(gpuType: string, orders: Order[]): OrderBook {
     depth: { bids: bids.length, asks: asks.length },
   };
 }
+

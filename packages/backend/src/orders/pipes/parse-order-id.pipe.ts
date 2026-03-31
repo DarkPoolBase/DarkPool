@@ -11,3 +11,4 @@ export class ParseOrderIdPipe implements PipeTransform<string> {
     return value;
   }
 }
+

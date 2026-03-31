@@ -20,3 +20,4 @@ export function IsValidGpuType(validationOptions?: ValidationOptions) {
     });
   };
 }
+

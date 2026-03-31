@@ -23,3 +23,4 @@ export class InvalidOrderInputError extends BadRequestException {
     super(`Invalid ${field}: ${message}`);
   }
 }
+

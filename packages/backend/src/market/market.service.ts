@@ -98,3 +98,4 @@ export class MarketService {
     return stats;
   }
 }
+

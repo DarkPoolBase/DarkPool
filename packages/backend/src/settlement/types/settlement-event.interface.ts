@@ -17,3 +17,4 @@ export interface SettlementFailedEvent {
   reason: string;
   timestamp: number;
 }
+

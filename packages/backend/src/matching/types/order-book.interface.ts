@@ -16,3 +16,4 @@ export interface OrderBook {
   spread: number | null;
   depth: { bids: number; asks: number };
 }
+

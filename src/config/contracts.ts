@@ -12,3 +12,4 @@ export const CHAIN_CONFIG = {
   rpcUrl: 'https://sepolia.base.org',
   blockExplorer: 'https://sepolia.basescan.org',
 } as const;
+

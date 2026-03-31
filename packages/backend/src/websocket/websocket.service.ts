@@ -67,3 +67,4 @@ export class WebsocketService {
     this.server.to('public').emit(event, data);
   }
 }
+

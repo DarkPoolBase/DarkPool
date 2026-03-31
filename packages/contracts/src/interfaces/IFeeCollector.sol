@@ -24,3 +24,4 @@ interface IFeeCollector {
     function pendingDistribution() external view returns (uint256);
     function feeRate() external view returns (uint256);
 }
+

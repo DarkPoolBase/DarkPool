@@ -30,3 +30,4 @@ export class CreateOrderDto {
   @IsString()
   encryptedDetails?: string;
 }
+

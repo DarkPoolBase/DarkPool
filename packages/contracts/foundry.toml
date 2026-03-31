@@ -21,3 +21,4 @@ tab_width = 4
 
 [profile.ci]
 fuzz = { runs = 1000 }
+

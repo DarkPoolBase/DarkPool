@@ -5,3 +5,4 @@ export const SETTLEMENT_CONSTANTS = {
   REDIS_SETTLEMENT_CHANNEL: 'adp:events:settlement',
   SIMULATED_TX_PREFIX: '0x',
 } as const;
+

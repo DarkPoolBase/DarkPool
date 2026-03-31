@@ -18,15 +18,12 @@ export function useAutoAuth() {
     const signMessage = async (message: string): Promise<string> => {
       const provider = getProvider();
       if (!provider) throw new Error('No wallet provider');
-      // Phantom requires params as [address, message], MetaMask as [message, address]
-      // Use eth_sign-style ordering that works with both
-      const isPhantom = (provider as any).isPhantom;
-      const params = isPhantom
-        ? [fullWalletAddress, message]
-        : [message, fullWalletAddress];
+      // Convert message to hex for compatibility with all wallets
+      const hexMessage = '0x' + Array.from(new TextEncoder().encode(message))
+        .map(b => b.toString(16).padStart(2, '0')).join('');
       return (await provider.request({
         method: 'personal_sign',
-        params,
+        params: [hexMessage, fullWalletAddress],
       })) as string;
     };
 

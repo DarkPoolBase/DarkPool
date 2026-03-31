@@ -15,20 +15,25 @@ export function useAutoAuth() {
     if (isAuthenticated) return true;
     if (!fullWalletAddress || !connected) return false;
 
+    const provider = getProvider();
+    if (!provider) return false;
+
+    // Get the current address directly from the provider to avoid stale/case-mismatched state
+    const accounts = (await provider.request({ method: 'eth_accounts' })) as string[];
+    const currentAddress = accounts[0];
+    if (!currentAddress) return false;
+
     const signMessage = async (message: string): Promise<string> => {
-      const provider = getProvider();
-      if (!provider) throw new Error('No wallet provider');
-      // Convert message to hex for compatibility with all wallets
       const hexMessage = '0x' + Array.from(new TextEncoder().encode(message))
         .map(b => b.toString(16).padStart(2, '0')).join('');
       return (await provider.request({
         method: 'personal_sign',
-        params: [hexMessage, fullWalletAddress],
+        params: [hexMessage, currentAddress],
       })) as string;
     };
 
     try {
-      await login(fullWalletAddress, signMessage);
+      await login(currentAddress, signMessage);
       return true;
     } catch (err: any) {
       if (err?.code !== 4001) {

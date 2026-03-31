@@ -5,6 +5,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { WebGLBackground } from "@/components/ui/webgl-background";
 import { WalletGate } from "@/components/WalletGate";
+import { Github } from "lucide-react";
 
 export function DashboardLayout() {
   const location = useLocation();
@@ -38,6 +39,18 @@ export function DashboardLayout() {
               </AnimatePresence>
             </main>
           </WalletGate>
+          <footer className="border-t border-white/[0.06] px-6 py-3 flex items-center justify-between text-xs text-white/40">
+            <span>© {new Date().getFullYear()} DarkPool</span>
+            <a
+              href="https://github.com/DarkPoolBase/DarkPool"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 hover:text-white/70 transition-colors"
+            >
+              <Github className="w-3.5 h-3.5" />
+              GitHub
+            </a>
+          </footer>
         </div>
       </div>
     </SidebarProvider>

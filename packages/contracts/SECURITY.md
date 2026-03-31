@@ -15,3 +15,4 @@
 - Trusted relayer model (not fully trustless)
 - No ZK proof verification yet (V2)
 - Single clearing price per batch (no partial fills)
+

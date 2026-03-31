@@ -15,3 +15,4 @@ export function simulateSettlementTx(batch: BatchResult): string {
 export function isSimulatedTx(txHash: string): boolean {
   return txHash.startsWith('0x000000000000000000000000000000000000000000000000000000000000');
 }
+

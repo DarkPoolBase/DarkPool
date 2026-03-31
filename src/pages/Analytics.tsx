@@ -7,17 +7,33 @@ import { AnimatedNumber } from "@/components/ui/animated-number";
 import { GlowBlob } from "@/components/ui/glow-blob";
 import { motion } from "framer-motion";
 
-const priceData = [
-  { date: "Mar 20", price: 0.22 },
-  { date: "Mar 21", price: 0.25 },
-  { date: "Mar 22", price: 0.23 },
-  { date: "Mar 23", price: 0.19 },
-  { date: "Mar 24", price: 0.18 },
-  { date: "Mar 25", price: 0.20 },
-  { date: "Mar 26", price: 0.21 },
-  { date: "Mar 27", price: 0.24 },
-  { date: "Mar 28", price: 0.22 },
-];
+const priceDataByTimeframe: Record<string, { date: string; price: number }[]> = {
+  "1D": [
+    { date: "00:00", price: 0.21 }, { date: "03:00", price: 0.20 },
+    { date: "06:00", price: 0.19 }, { date: "09:00", price: 0.20 },
+    { date: "12:00", price: 0.22 }, { date: "15:00", price: 0.23 },
+    { date: "18:00", price: 0.22 }, { date: "21:00", price: 0.21 },
+    { date: "Now", price: 0.21 },
+  ],
+  "1W": [
+    { date: "Mar 25", price: 0.20 }, { date: "Mar 26", price: 0.21 },
+    { date: "Mar 27", price: 0.24 }, { date: "Mar 28", price: 0.22 },
+    { date: "Mar 29", price: 0.19 }, { date: "Mar 30", price: 0.20 },
+    { date: "Mar 31", price: 0.21 },
+  ],
+  "1M": [
+    { date: "Mar 1", price: 0.18 }, { date: "Mar 5", price: 0.16 },
+    { date: "Mar 9", price: 0.17 }, { date: "Mar 13", price: 0.19 },
+    { date: "Mar 17", price: 0.22 }, { date: "Mar 21", price: 0.25 },
+    { date: "Mar 25", price: 0.23 }, { date: "Mar 28", price: 0.20 },
+    { date: "Mar 31", price: 0.21 },
+  ],
+  "ALL": [
+    { date: "Oct", price: 0.32 }, { date: "Nov", price: 0.28 },
+    { date: "Dec", price: 0.25 }, { date: "Jan", price: 0.22 },
+    { date: "Feb", price: 0.19 }, { date: "Mar", price: 0.21 },
+  ],
+};
 
 const utilizationData = [
   { name: "H100", value: 78, color: "from-primary to-[hsl(258,78%,70%)]" },
@@ -74,7 +90,7 @@ const Analytics = () => {
         </div>
         <div className="h-[296px]">
           <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={priceData}>
+            <AreaChart data={priceDataByTimeframe[timeframe]}>
               <defs>
                 <linearGradient id="priceGradient" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%" stopColor="hsl(258, 78%, 56%)" stopOpacity={0.3} />

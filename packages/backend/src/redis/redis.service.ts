@@ -58,3 +58,4 @@ export class RedisService implements OnModuleDestroy {
     await this.subscriber.quit();
   }
 }
+

@@ -23,3 +23,4 @@ export interface OrderVolumeResult {
   orderCount: number;
   avgPrice: number;
 }
+

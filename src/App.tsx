@@ -16,6 +16,7 @@ import Provider from "./pages/Provider";
 import ApiDocs from "./pages/ApiDocs";
 import SdkDocs from "./pages/SdkDocs";
 import SettingsPage from "./pages/SettingsPage";
+import Notifications from "./pages/Notifications";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +38,7 @@ const App = () => (
             <Route path="/provider" element={<Provider />} />
             <Route path="/api-docs" element={<ApiDocs />} />
             <Route path="/sdk-docs" element={<SdkDocs />} />
+            <Route path="/notifications" element={<Notifications />} />
             <Route path="/settings" element={<SettingsPage />} />
           </Route>
           <Route path="*" element={<NotFound />} />

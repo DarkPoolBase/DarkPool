@@ -5,17 +5,11 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useWallet } from "@/contexts/WalletContext";
+import { useNotifications, type NotificationType } from "@/hooks/useNotifications";
 import metamaskLogo from "@/assets/metamask-logo.png";
 import phantomLogo from "@/assets/phantom-logo.jpg";
 
-const notifications = [
-  { id: 1, type: 'order' as const, title: 'Order Filled', message: '48 GPU-hrs H100 filled at $0.21/hr', time: '2m ago', unread: true },
-  { id: 2, type: 'settlement' as const, title: 'Settlement Confirmed', message: 'Tx 0x3f…a91c settled on Base', time: '8m ago', unread: true },
-  { id: 3, type: 'alert' as const, title: 'Price Alert', message: 'H100 spot price dropped below $0.20', time: '1h ago', unread: false },
-  { id: 4, type: 'system' as const, title: 'Auction Complete', message: 'Batch #142 cleared — 12 orders matched', time: '3h ago', unread: false },
-];
-
-const notifIcon = {
+const notifIcon: Record<NotificationType, typeof Package> = {
   order: Package,
   settlement: ArrowRightLeft,
   alert: AlertTriangle,
@@ -29,6 +23,7 @@ export function DashboardHeader() {
   } = useWallet();
 
   const navigate = useNavigate();
+  const { notifications, unreadCount, markAllRead, markRead } = useNotifications();
   const [copied, setCopied] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
@@ -71,7 +66,7 @@ export function DashboardHeader() {
               className="relative text-white/30 hover:text-white/70 hover:bg-white/[0.04] transition-all duration-300"
             >
               <Bell className="h-4 w-4" />
-              {notifications.some(n => n.unread) && (
+              {unreadCount > 0 && (
                 <span className="absolute top-2 right-2 h-1.5 w-1.5 rounded-full bg-violet-500 shadow-[0_0_8px_rgba(139,92,246,0.8)]" />
               )}
             </Button>
@@ -86,14 +81,15 @@ export function DashboardHeader() {
                 >
                   <div className="p-3 border-b border-white/[0.06] flex items-center justify-between">
                     <span className="text-[10px] font-mono text-white/30 uppercase tracking-wider">Notifications</span>
-                    <span className="text-[10px] font-mono text-violet-400 cursor-pointer hover:text-violet-300 transition-colors">Mark all read</span>
+                    <span onClick={markAllRead} className="text-[10px] font-mono text-violet-400 cursor-pointer hover:text-violet-300 transition-colors">Mark all read</span>
                   </div>
                   <div className="max-h-80 overflow-y-auto">
-                    {notifications.map((n) => {
+                    {notifications.slice(0, 4).map((n) => {
                       const Icon = notifIcon[n.type];
                       return (
                         <div
                           key={n.id}
+                          onClick={() => markRead(n.id)}
                           className={`flex items-start gap-3 px-3 py-3 hover:bg-white/[0.03] transition-colors cursor-pointer border-b border-white/[0.04] last:border-0 ${n.unread ? 'bg-violet-500/[0.03]' : ''}`}
                         >
                           <div className={`mt-0.5 w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${
@@ -117,7 +113,10 @@ export function DashboardHeader() {
                     })}
                   </div>
                   <div className="p-2 border-t border-white/[0.06]">
-                    <button className="w-full text-center text-[10px] font-mono text-violet-400 hover:text-violet-300 py-1.5 transition-colors">
+                    <button
+                      onClick={() => { setShowNotifications(false); navigate('/notifications'); }}
+                      className="w-full text-center text-[10px] font-mono text-violet-400 hover:text-violet-300 py-1.5 transition-colors"
+                    >
                       View All Notifications
                     </button>
                   </div>

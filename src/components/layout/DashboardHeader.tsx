@@ -15,8 +15,13 @@ export function DashboardHeader() {
       try {
         await eth.request({ method: "eth_requestAccounts" });
         setModalOpen(false);
-      } catch (e) {
-        console.error("MetaMask error:", e);
+      } catch (e: any) {
+        if (e?.code === 4001) {
+          // User rejected — don't show error
+        } else {
+          console.error("MetaMask error:", e);
+          alert("Failed to connect. Make sure MetaMask is unlocked.");
+        }
       }
     } else {
       window.open("https://metamask.io/download/", "_blank");
@@ -25,12 +30,19 @@ export function DashboardHeader() {
 
   const connectPhantom = async () => {
     const phantom = (window as any).phantom;
-    if (phantom?.ethereum) {
+    // Try Phantom's EVM provider first, then fall back to generic ethereum
+    const provider = phantom?.ethereum ?? (window as any).ethereum;
+    if (provider) {
       try {
-        await phantom.ethereum.request({ method: "eth_requestAccounts" });
+        await provider.request({ method: "eth_requestAccounts" });
         setModalOpen(false);
-      } catch (e) {
-        console.error("Phantom error:", e);
+      } catch (e: any) {
+        if (e?.code === 4001) {
+          // User rejected — don't show error
+        } else {
+          console.error("Phantom error:", e);
+          alert("Failed to connect. Make sure Phantom is unlocked and set to Ethereum/Base network.");
+        }
       }
     } else {
       window.open("https://phantom.app/download", "_blank");

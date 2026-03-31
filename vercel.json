@@ -1,4 +1,7 @@
 {
+  "rewrites": [
+    { "source": "/((?!api|assets|aero\\.html|.*\\..*).*)", "destination": "/index.html" }
+  ],
   "headers": [
     {
       "source": "/(.*)",

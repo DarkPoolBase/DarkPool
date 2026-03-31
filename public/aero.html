@@ -3596,17 +3596,7 @@ document.addEventListener('DOMContentLoaded', function() {
               stagger: 0.025
           });
 
-          gsap.to(".gsap-card", {
-              scrollTrigger: {
-                  trigger: "#metrics-grid",
-                  start: "top 80%",
-              },
-              y: 0,
-              opacity: 1,
-              duration: 1.2,
-              ease: "expo.out",
-              stagger: 0.1
-          });
+          // gsap-card and metrics-grid animations removed (elements don't exist)
       });
     </script>
 
@@ -3862,13 +3852,19 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
   function connectPhantom() {
-    if (window.phantom?.ethereum) {
-      window.phantom.ethereum.request({ method: 'eth_requestAccounts' })
-        .then(accounts => {
+    var provider = (window.phantom && window.phantom.ethereum) || window.ethereum;
+    if (provider) {
+      provider.request({ method: 'eth_requestAccounts' })
+        .then(function(accounts) {
           document.getElementById('wallet-modal').classList.add('hidden');
           window.location.href = '/dashboard';
         })
-        .catch(err => console.error('Phantom error:', err));
+        .catch(function(err) {
+          if (err.code !== 4001) {
+            console.error('Phantom error:', err);
+            alert('Failed to connect. Make sure Phantom is unlocked and set to Ethereum/Base network.');
+          }
+        });
     } else {
       window.open('https://phantom.app/download', '_blank');
     }

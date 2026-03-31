@@ -18,33 +18,33 @@ export function useAutoAuth() {
     const provider = getProvider();
     if (!provider) return false;
 
-    // Use eth_requestAccounts to ensure the EVM side is actively connected
+    // Debug: log all address sources to find the mismatch
     const accounts = (await provider.request({ method: 'eth_requestAccounts' })) as string[];
-    const currentAddress = accounts[0];
+    const selectedAddr = (provider as any).selectedAddress;
+    console.log('[AutoAuth] Debug addresses:', {
+      'eth_requestAccounts': accounts[0],
+      'selectedAddress': selectedAddr,
+      'fullWalletAddress (context)': fullWalletAddress,
+      'walletType': walletType,
+      'provider.isPhantom': (provider as any).isPhantom,
+      'window.ethereum?.selectedAddress': (window.ethereum as any)?.selectedAddress,
+    });
+
+    // Use selectedAddress (Phantom's internal value) if available, then eth_requestAccounts
+    const currentAddress = selectedAddr || accounts[0];
     if (!currentAddress) return false;
 
     const signMessage = async (message: string): Promise<string> => {
-      const msgBytes = new TextEncoder().encode(message);
-      const hexMessage = '0x' + Array.from(msgBytes)
+      const hexMessage = '0x' + Array.from(new TextEncoder().encode(message))
         .map(b => b.toString(16).padStart(2, '0')).join('');
 
-      // Phantom's EVM provider can be strict about personal_sign address matching.
-      // Try personal_sign first, fall back to eth_sign if Phantom rejects.
-      try {
-        return (await provider.request({
-          method: 'personal_sign',
-          params: [hexMessage, currentAddress.toLowerCase()],
-        })) as string;
-      } catch (firstErr: any) {
-        // If Phantom rejects due to address mismatch, retry with checksummed address
-        if (firstErr?.message?.includes('address') || firstErr?.code === -32602) {
-          return (await provider.request({
-            method: 'personal_sign',
-            params: [hexMessage, currentAddress],
-          })) as string;
-        }
-        throw firstErr;
-      }
+      console.log('[AutoAuth] Signing with address:', currentAddress);
+      console.log('[AutoAuth] Message preview:', message.substring(0, 120));
+
+      return (await provider.request({
+        method: 'personal_sign',
+        params: [hexMessage, currentAddress],
+      })) as string;
     };
 
     try {

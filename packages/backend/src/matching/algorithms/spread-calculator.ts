@@ -26,3 +26,4 @@ export function calculateVWAP(entries: OrderBookEntry[]): number | null {
   const totalVolume = entries.reduce((sum, e) => sum + e.gpuHours, 0);
   return totalVolume > 0 ? totalValue / totalVolume : null;
 }
+

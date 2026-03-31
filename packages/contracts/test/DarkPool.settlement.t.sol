@@ -123,3 +123,4 @@ contract DarkPoolSettlementTest is Test {
         darkPool.settleBatch(settlement, proof);
     }
 }
+

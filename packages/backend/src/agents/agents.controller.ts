@@ -42,3 +42,4 @@ export class AgentsController {
     return this.agentsService.getAgentBalance(req.user.wallet);
   }
 }
+

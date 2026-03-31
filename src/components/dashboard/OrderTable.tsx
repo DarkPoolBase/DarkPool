@@ -2,8 +2,10 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { OrderStatusBadge } from "./OrderStatusBadge";
 import { useNavigate } from "react-router-dom";
 import { GlassCard } from "@/components/ui/glass-card";
+import { useOrders } from "@/hooks/useOrders";
+import { useAutoAuth } from "@/hooks/useAutoAuth";
 
-const orders = [
+const mockOrders = [
   { id: "#4521", side: "BUY", gpu: "H100", qty: "24 hrs", price: "$0.22", status: "FILLED" as const, time: "2 min ago" },
   { id: "#4520", side: "SELL", gpu: "RTX 4090", qty: "48 hrs", price: "$0.18", status: "ACTIVE" as const, time: "Waiting" },
   { id: "#4519", side: "BUY", gpu: "A100", qty: "72 hrs", price: "$0.19", status: "PENDING" as const, time: "5 min ago" },
@@ -13,6 +15,20 @@ const orders = [
 
 export function OrderTable() {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAutoAuth();
+  const { data: apiOrders } = useOrders({ limit: 5 }, isAuthenticated);
+
+  const orders = apiOrders?.data?.length
+    ? apiOrders.data.map((o) => ({
+        id: o.id.slice(0, 8),
+        side: o.side,
+        gpu: o.gpuType,
+        qty: `${o.duration} hrs`,
+        price: `$${parseFloat(o.pricePerHour).toFixed(2)}`,
+        status: o.status as "ACTIVE" | "FILLED" | "CANCELLED" | "EXPIRED" | "PENDING",
+        time: new Date(o.createdAt).toLocaleTimeString(),
+      }))
+    : mockOrders;
 
   return (
     <GlassCard delay={0.2}>

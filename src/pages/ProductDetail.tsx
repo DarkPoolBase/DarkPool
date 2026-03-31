@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, Cpu, Server, Zap, Layers, Activity, Clock, Lock, Shield, BarChart3, CheckCircle, TrendingUp, Users } from "lucide-react";
+import { ArrowLeft, Cpu, Server, Zap, Layers, Activity, Clock, Lock, Shield, BarChart3, CheckCircle, TrendingUp, Users, Loader2 } from "lucide-react";
+import { useCreateOrder } from "@/hooks/useOrders";
+import { useAutoAuth } from "@/hooks/useAutoAuth";
+import { useWallet } from "@/contexts/WalletContext";
+import { generateCommitment, generateSecret } from "@/lib/commitment";
+import { toast } from "sonner";
 import { GlassCard } from "@/components/ui/glass-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -117,10 +122,66 @@ const ProductDetail = () => {
   const [price, setPrice] = useState("");
   const [duration, setDuration] = useState("1h");
 
+  const { connected, setShowModal } = useWallet();
+  const { isAuthenticated } = useAutoAuth();
+  const createOrder = useCreateOrder();
+
   const product = productData[productId || "h100"] || productData.h100;
   const defaultPrice = product.priceNum.toFixed(2);
   const currentPrice = price || defaultPrice;
-  const estTotal = (quantity[0] * parseFloat(currentPrice || "0")).toFixed(2);
+
+  // Map productId to valid GPU type for the API
+  const gpuTypeMap: Record<string, string> = {
+    h100: 'H100', a100: 'A100', rtx4090: 'RTX4090', 'multi-gpu': 'H100',
+    'compute-credits': 'H100', 'h100-block': 'H100', 'a100-48h': 'A100',
+    'h100-7d': 'H100', 'training-credits': 'H100', 'burst-credits': 'A100',
+    'inference-credits': 'RTX4090', '8xh100': 'H100', 'a100-cluster': 'A100',
+    'h100-mega': 'H100',
+  };
+
+  // Map duration string to hours
+  const durationMap: Record<string, number> = {
+    '1h': 1, '4h': 4, '24h': 24, '7d': 168, '30d': 720,
+  };
+
+  const durationHours = durationMap[duration] || 1;
+  const estTotal = (quantity[0] * parseFloat(currentPrice || "0") * durationHours).toFixed(2);
+
+  const handleSubmitOrder = async () => {
+    if (!connected) { setShowModal(true); return; }
+    if (!isAuthenticated) { toast.error('Authenticating... please try again in a moment.'); return; }
+
+    try {
+      const gpuType = gpuTypeMap[productId || 'h100'] || 'H100';
+      const secret = generateSecret();
+      const commitmentHash = generateCommitment({
+        gpuType,
+        quantity: quantity[0],
+        pricePerHour: BigInt(Math.round(parseFloat(currentPrice) * 1e6)),
+        duration: durationHours,
+        isBuy: side === 'buy',
+        secret,
+      });
+
+      // Save secret locally so user can prove their order later
+      localStorage.setItem(`adp_secret_${commitmentHash}`, secret);
+
+      await createOrder.mutateAsync({
+        side: side.toUpperCase(),
+        gpuType,
+        quantity: quantity[0],
+        pricePerHour: parseFloat(currentPrice),
+        duration: durationHours,
+        commitmentHash,
+        encryptedDetails: JSON.stringify({ productId, side, secret: '(stored locally)' }),
+      });
+
+      toast.success('Order submitted! View it on the Orders page.');
+      navigate('/orders');
+    } catch (err: any) {
+      toast.error(err?.message || 'Failed to submit order');
+    }
+  };
 
   return (
     <div className="space-y-6 max-w-7xl">
@@ -302,9 +363,13 @@ const ProductDetail = () => {
                 <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Est. Total</span>
                 <span className="font-mono text-xl font-semibold text-foreground">${estTotal} <span className="text-xs text-muted-foreground">USDC</span></span>
               </div>
-              <Button className="gap-2 bg-gradient-to-r from-primary to-[hsl(258,78%,65%)] hover:from-primary/90 hover:to-[hsl(258,78%,60%)] shadow-[0_0_20px_rgba(108,60,233,0.3)] hover:shadow-[0_0_30px_rgba(108,60,233,0.5)] transition-all duration-300 border-0 h-12 px-8">
-                <Lock className="h-4 w-4" />
-                Submit Encrypted Order
+              <Button
+                onClick={handleSubmitOrder}
+                disabled={createOrder.isPending}
+                className="gap-2 bg-gradient-to-r from-primary to-[hsl(258,78%,65%)] hover:from-primary/90 hover:to-[hsl(258,78%,60%)] shadow-[0_0_20px_rgba(108,60,233,0.3)] hover:shadow-[0_0_30px_rgba(108,60,233,0.5)] transition-all duration-300 border-0 h-12 px-8 disabled:opacity-50"
+              >
+                {createOrder.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Lock className="h-4 w-4" />}
+                {!connected ? 'Connect Wallet' : createOrder.isPending ? 'Submitting...' : 'Submit Encrypted Order'}
               </Button>
             </div>
             <p className="font-mono text-[10px] text-muted-foreground/50 leading-relaxed text-center mt-4">

@@ -32,3 +32,5 @@ packages/contracts/.env
 .env*.local
 .lovable/
 docs/
+packages/contracts/broadcast/
+dist/

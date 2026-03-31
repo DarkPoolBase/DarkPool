@@ -60,3 +60,4 @@ export class AuthController {
     return { success: true };
   }
 }
+

@@ -11,3 +11,4 @@
 | withdraw | ~40,000 | <$0.001 |
 
 *Gas costs on Base are negligible for users.*
+

@@ -43,3 +43,4 @@ export function useAutoAuth() {
 
   return { isAuthenticated, user, loading };
 }
+

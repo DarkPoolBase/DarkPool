@@ -8,3 +8,4 @@ export const ORDER_CONSTANTS = {
   COMMITMENT_HASH_REGEX: /^0x[a-fA-F0-9]{64}$/,
   REDIS_CHANNEL: 'adp:events:order',
 } as const;
+

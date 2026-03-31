@@ -35,3 +35,4 @@ interface IDarkPool {
     );
     event OrderFilled(bytes32 indexed orderId, uint256 clearingPrice, uint256 batchId);
 }
+// V2 upgrade path documented

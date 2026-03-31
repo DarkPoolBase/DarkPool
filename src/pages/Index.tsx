@@ -1,15 +1,38 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { IntroLoader } from "@/components/IntroLoader";
 import { useWallet } from "@/contexts/WalletContext";
+import { LogOut, Copy, Check } from "lucide-react";
 import metamaskLogo from "@/assets/metamask-logo.png";
 import phantomLogo from "@/assets/phantom-logo.jpg";
 
 const Index = () => {
   const [loaderDone, setLoaderDone] = useState(false);
-  const { connected, connecting, walletAddress, connect, showModal, setShowModal } = useWallet();
+  const {
+    connected, connecting, walletAddress, fullWalletAddress,
+    walletType, networkStatus, connect, disconnect, showModal, setShowModal,
+  } = useWallet();
   const navigate = useNavigate();
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+
+  // Tell the iframe to hide/show its nav buttons based on wallet state
+  useEffect(() => {
+    const iframe = iframeRef.current;
+    if (!iframe?.contentWindow) return;
+    const msg = connected ? 'wallet-connected' : 'wallet-disconnected';
+    iframe.contentWindow.postMessage(msg, '*');
+  }, [connected]);
+
+  const copyAddress = () => {
+    if (fullWalletAddress) {
+      navigator.clipboard.writeText(fullWalletAddress);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
 
   // Listen for messages from the iframe (aero.html)
   useEffect(() => {
@@ -35,12 +58,100 @@ const Index = () => {
         className="w-full h-screen relative"
       >
         <iframe
+          ref={iframeRef}
           src="/aero.html"
           className="w-full h-screen border-0"
           title="Agentic Dark Pool"
+          onLoad={() => {
+            if (connected && iframeRef.current?.contentWindow) {
+              iframeRef.current.contentWindow.postMessage('wallet-connected', '*');
+            }
+          }}
         />
 
-        {/* Wallet Connect Modal — React-powered, overlays the iframe */}
+        {/* Connected wallet overlay — sits on top of the iframe nav, top-right */}
+        {connected && (
+          <div className="fixed top-4 md:top-6 right-4 md:right-6 z-[100] hidden md:flex items-center gap-3">
+            {/* Wallet address button */}
+            <div className="relative">
+              <button
+                onClick={() => setShowDropdown(!showDropdown)}
+                className="flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium transition-all"
+                style={{
+                  background: 'rgba(255,255,255,0.06)',
+                  backdropFilter: 'blur(16px)',
+                  border: '1px solid rgba(255,255,255,0.15)',
+                  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.2)',
+                }}
+              >
+                <div className="w-5 h-5 rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-500 shrink-0" />
+                <span className="text-white/90 font-mono text-xs">{walletAddress}</span>
+              </button>
+
+              {/* Dropdown */}
+              <AnimatePresence>
+                {showDropdown && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 4, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 4, scale: 0.95 }}
+                    className="absolute right-0 top-full mt-2 w-64 rounded-xl border border-white/[0.08] bg-[#111118] backdrop-blur-xl shadow-2xl z-50 overflow-hidden"
+                  >
+                    <div className="p-3 border-b border-white/[0.06]">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[10px] font-mono text-white/30 uppercase tracking-wider">
+                          {walletType === 'phantom' ? 'Phantom' : walletType === 'metamask' ? 'MetaMask' : 'Coinbase'}
+                        </span>
+                        <span className={`text-[9px] font-mono px-2 py-0.5 rounded-full ${
+                          networkStatus === 'connected'
+                            ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
+                            : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
+                        }`}>
+                          {networkStatus === 'connected' ? 'Base Connected' : 'Wrong Network'}
+                        </span>
+                      </div>
+                      <button
+                        onClick={copyAddress}
+                        className="mt-2 flex items-center gap-2 text-xs font-mono text-white/50 hover:text-white/80 transition-colors w-full"
+                      >
+                        <span className="truncate">{fullWalletAddress}</span>
+                        {copied ? <Check className="h-3 w-3 text-emerald-400 shrink-0" /> : <Copy className="h-3 w-3 shrink-0" />}
+                      </button>
+                    </div>
+                    <button
+                      onClick={() => navigate('/dashboard')}
+                      className="w-full flex items-center gap-2 px-3 py-2.5 text-xs text-violet-400 hover:bg-violet-500/10 transition-colors"
+                    >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+                      Go to Dashboard
+                    </button>
+                    <button
+                      onClick={() => { disconnect(); setShowDropdown(false); }}
+                      className="w-full flex items-center gap-2 px-3 py-2.5 text-xs text-red-400 hover:bg-red-500/10 transition-colors"
+                    >
+                      <LogOut className="h-3.5 w-3.5" />
+                      Disconnect Wallet
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {showDropdown && (
+                <div className="fixed inset-0 z-40" onClick={() => setShowDropdown(false)} />
+              )}
+            </div>
+
+            {/* Launch App button */}
+            <button
+              onClick={() => navigate('/dashboard')}
+              className="px-4 py-2 bg-gradient-to-r from-[#6C3CE9] to-[#9D6FFF] text-white text-sm rounded-full font-medium hover:opacity-90 transition-all shadow-[0_0_20px_rgba(108,60,233,0.4)] border-0 cursor-pointer"
+            >
+              Launch App →
+            </button>
+          </div>
+        )}
+
+        {/* Wallet Connect Modal */}
         <AnimatePresence>
           {showModal && (
             <div className="fixed inset-0 z-[9999] flex items-center justify-center">
@@ -72,9 +183,8 @@ const Index = () => {
                     </button>
                   </div>
 
-                  {/* Connected state */}
-                  {connected && (
-                    <div className="mb-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+                  {connected ? (
+                    <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
                       <div className="flex items-center gap-3">
                         <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-500" />
                         <div>
@@ -89,10 +199,7 @@ const Index = () => {
                         Go to Dashboard →
                       </button>
                     </div>
-                  )}
-
-                  {/* Wallet options */}
-                  {!connected && (
+                  ) : (
                     <div className="space-y-3">
                       <button
                         onClick={() => connect('metamask')}

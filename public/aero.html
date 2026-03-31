@@ -82,7 +82,7 @@ gtag('config', 'G-2M6V79H761');
          <a href="#roadmap-section" class="hover:text-white transition-colors">Roadmap</a>
          <a href="#faq" class="hover:text-white transition-colors">FAQ</a>
        </div>
-      <div class="hidden md:flex items-center gap-3">
+      <div id="nav-buttons" class="hidden md:flex items-center gap-3">
         <button onclick="window.parent.postMessage('open-wallet-modal','*')" class="px-5 py-2.5 text-sm rounded-full font-medium transition-all flex items-center gap-2 cursor-pointer" style="background: rgba(255,255,255,0.06); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.15); box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-violet-400"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2.5"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg>
           <span class="text-white/90">Connect Wallet</span>
@@ -91,6 +91,18 @@ gtag('config', 'G-2M6V79H761');
           Launch App →
         </button>
       </div>
+      <script>
+        window.addEventListener('message', function(e) {
+          if (e.data === 'wallet-connected') {
+            var el = document.getElementById('nav-buttons');
+            if (el) el.style.visibility = 'hidden';
+          }
+          if (e.data === 'wallet-disconnected') {
+            var el = document.getElementById('nav-buttons');
+            if (el) el.style.visibility = 'visible';
+          }
+        });
+      </script>
       <!-- Mobile hamburger -->
       <button id="mobile-menu-btn" class="md:hidden flex flex-col gap-[5px] z-10 p-2" onclick="toggleMobileMenu()">
         <span class="mobile-bar block w-5 h-[1.5px] bg-white/70 transition-all duration-300 origin-center"></span>

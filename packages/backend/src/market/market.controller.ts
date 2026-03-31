@@ -33,3 +33,4 @@ export class MarketController {
     return this.marketService.getStats();
   }
 }
+

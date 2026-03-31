@@ -1,4 +1,4 @@
-import { Bell, Wallet, LogOut, Copy, Check } from "lucide-react";
+import { Bell, Wallet, LogOut, Copy, Check, ShieldCheck, ArrowRightLeft, AlertTriangle, Package } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { useState } from "react";
@@ -7,6 +7,20 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useWallet } from "@/contexts/WalletContext";
 import metamaskLogo from "@/assets/metamask-logo.png";
 import phantomLogo from "@/assets/phantom-logo.jpg";
+
+const notifications = [
+  { id: 1, type: 'order' as const, title: 'Order Filled', message: '48 GPU-hrs H100 filled at $0.21/hr', time: '2m ago', unread: true },
+  { id: 2, type: 'settlement' as const, title: 'Settlement Confirmed', message: 'Tx 0x3f…a91c settled on Base', time: '8m ago', unread: true },
+  { id: 3, type: 'alert' as const, title: 'Price Alert', message: 'H100 spot price dropped below $0.20', time: '1h ago', unread: false },
+  { id: 4, type: 'system' as const, title: 'Auction Complete', message: 'Batch #142 cleared — 12 orders matched', time: '3h ago', unread: false },
+];
+
+const notifIcon = {
+  order: Package,
+  settlement: ArrowRightLeft,
+  alert: AlertTriangle,
+  system: ShieldCheck,
+};
 
 export function DashboardHeader() {
   const {
@@ -17,6 +31,7 @@ export function DashboardHeader() {
   const navigate = useNavigate();
   const [copied, setCopied] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
 
   const copyAddress = () => {
     if (fullWalletAddress) {
@@ -48,16 +63,78 @@ export function DashboardHeader() {
             </div>
           )}
 
-          <Button variant="ghost" size="icon" className="relative text-white/30 hover:text-white/70 hover:bg-white/[0.04] transition-all duration-300">
-            <Bell className="h-4 w-4" />
-            <span className="absolute top-2 right-2 h-1.5 w-1.5 rounded-full bg-violet-500 shadow-[0_0_8px_rgba(139,92,246,0.8)]" />
-          </Button>
+          <div className="relative">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => { setShowNotifications(!showNotifications); setShowDropdown(false); }}
+              className="relative text-white/30 hover:text-white/70 hover:bg-white/[0.04] transition-all duration-300"
+            >
+              <Bell className="h-4 w-4" />
+              {notifications.some(n => n.unread) && (
+                <span className="absolute top-2 right-2 h-1.5 w-1.5 rounded-full bg-violet-500 shadow-[0_0_8px_rgba(139,92,246,0.8)]" />
+              )}
+            </Button>
+
+            <AnimatePresence>
+              {showNotifications && (
+                <motion.div
+                  initial={{ opacity: 0, y: 4, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 4, scale: 0.95 }}
+                  className="absolute right-0 top-full mt-2 w-80 rounded-xl border border-white/[0.08] bg-[#111118] backdrop-blur-xl shadow-2xl z-50 overflow-hidden"
+                >
+                  <div className="p-3 border-b border-white/[0.06] flex items-center justify-between">
+                    <span className="text-[10px] font-mono text-white/30 uppercase tracking-wider">Notifications</span>
+                    <span className="text-[10px] font-mono text-violet-400 cursor-pointer hover:text-violet-300 transition-colors">Mark all read</span>
+                  </div>
+                  <div className="max-h-80 overflow-y-auto">
+                    {notifications.map((n) => {
+                      const Icon = notifIcon[n.type];
+                      return (
+                        <div
+                          key={n.id}
+                          className={`flex items-start gap-3 px-3 py-3 hover:bg-white/[0.03] transition-colors cursor-pointer border-b border-white/[0.04] last:border-0 ${n.unread ? 'bg-violet-500/[0.03]' : ''}`}
+                        >
+                          <div className={`mt-0.5 w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${
+                            n.type === 'order' ? 'bg-emerald-500/10 text-emerald-400' :
+                            n.type === 'settlement' ? 'bg-violet-500/10 text-violet-400' :
+                            n.type === 'alert' ? 'bg-amber-500/10 text-amber-400' :
+                            'bg-blue-500/10 text-blue-400'
+                          }`}>
+                            <Icon className="h-3.5 w-3.5" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2">
+                              <span className="text-xs font-medium text-white/80">{n.title}</span>
+                              {n.unread && <span className="h-1.5 w-1.5 rounded-full bg-violet-500 shrink-0" />}
+                            </div>
+                            <p className="text-[11px] text-white/30 font-mono mt-0.5 truncate">{n.message}</p>
+                            <span className="text-[10px] text-white/20 font-mono mt-1 block">{n.time}</span>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <div className="p-2 border-t border-white/[0.06]">
+                    <button className="w-full text-center text-[10px] font-mono text-violet-400 hover:text-violet-300 py-1.5 transition-colors">
+                      View All Notifications
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {showNotifications && (
+              <div className="fixed inset-0 z-40" onClick={() => setShowNotifications(false)} />
+            )}
+          </div>
 
           {connected ? (
             <div className="relative">
               <Button
                 size="sm"
-                onClick={() => setShowDropdown(!showDropdown)}
+                onClick={() => { setShowDropdown(!showDropdown); setShowNotifications(false); }}
                 className="bg-white/[0.06] hover:bg-white/[0.1] text-white gap-2 transition-all duration-300 border border-white/[0.08] rounded-full px-4"
               >
                 <div className="w-5 h-5 rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-500" />

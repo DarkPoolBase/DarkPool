@@ -15,3 +15,4 @@ export const GPU_TYPE_SPECS: Record<GpuType, { vram: number; tier: string }> = {
   [GpuType.H200]: { vram: 141, tier: 'Premium' },
   [GpuType.A10G]: { vram: 24, tier: 'Economy' },
 };
+

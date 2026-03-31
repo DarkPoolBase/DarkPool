@@ -22,3 +22,4 @@ export function computeSettlementHash(batch: BatchResult): `0x${string}` {
     ),
   );
 }
+

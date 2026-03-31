@@ -20,6 +20,8 @@ import { SdkIntegrationsModule } from './sdk-integrations/sdk-integrations.modul
 import { AgentTreasuryModule } from './agent-treasury/agent-treasury.module';
 import { AgentEconomyModule } from './agent-economy/agent-economy.module';
 import { OrdersModule } from './orders/orders.module';
+import { MatchingModule } from './matching/matching.module';
+import { SettlementModule } from './settlement/settlement.module';
 
 @Module({
   imports: [
@@ -46,6 +48,8 @@ import { OrdersModule } from './orders/orders.module';
     AgentTreasuryModule,
     AgentEconomyModule,
     OrdersModule,
+    MatchingModule,
+    SettlementModule,
   ],
 })
 export class AppModule {}

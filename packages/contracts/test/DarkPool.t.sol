@@ -312,3 +312,4 @@ contract DarkPoolTest is Test {
         assertEq(verifier.trustedRelayer(), newRelayer);
     }
 }
+

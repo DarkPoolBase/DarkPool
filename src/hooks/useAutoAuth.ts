@@ -8,7 +8,7 @@ import { useAuth } from './useAuth';
  * (e.g., when submitting an order) to avoid unwanted signature popups.
  */
 export function useAutoAuth() {
-  const { connected, fullWalletAddress, getProvider } = useWallet();
+  const { connected, fullWalletAddress, walletType, getProvider } = useWallet();
   const { user, isAuthenticated, login, logout, loading } = useAuth();
 
   const authenticate = useCallback(async (): Promise<boolean> => {
@@ -18,18 +18,33 @@ export function useAutoAuth() {
     const provider = getProvider();
     if (!provider) return false;
 
-    // Get the current address directly from the provider to avoid stale/case-mismatched state
-    const accounts = (await provider.request({ method: 'eth_accounts' })) as string[];
+    // Use eth_requestAccounts to ensure the EVM side is actively connected
+    const accounts = (await provider.request({ method: 'eth_requestAccounts' })) as string[];
     const currentAddress = accounts[0];
     if (!currentAddress) return false;
 
     const signMessage = async (message: string): Promise<string> => {
-      const hexMessage = '0x' + Array.from(new TextEncoder().encode(message))
+      const msgBytes = new TextEncoder().encode(message);
+      const hexMessage = '0x' + Array.from(msgBytes)
         .map(b => b.toString(16).padStart(2, '0')).join('');
-      return (await provider.request({
-        method: 'personal_sign',
-        params: [hexMessage, currentAddress],
-      })) as string;
+
+      // Phantom's EVM provider can be strict about personal_sign address matching.
+      // Try personal_sign first, fall back to eth_sign if Phantom rejects.
+      try {
+        return (await provider.request({
+          method: 'personal_sign',
+          params: [hexMessage, currentAddress.toLowerCase()],
+        })) as string;
+      } catch (firstErr: any) {
+        // If Phantom rejects due to address mismatch, retry with checksummed address
+        if (firstErr?.message?.includes('address') || firstErr?.code === -32602) {
+          return (await provider.request({
+            method: 'personal_sign',
+            params: [hexMessage, currentAddress],
+          })) as string;
+        }
+        throw firstErr;
+      }
     };
 
     try {
@@ -41,7 +56,7 @@ export function useAutoAuth() {
       }
       return false;
     }
-  }, [connected, fullWalletAddress, isAuthenticated, login, getProvider]);
+  }, [connected, fullWalletAddress, walletType, isAuthenticated, login, getProvider]);
 
   return { isAuthenticated, user, loading, authenticate };
 }

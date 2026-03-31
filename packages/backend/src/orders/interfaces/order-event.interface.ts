@@ -22,3 +22,4 @@ export interface BatchSettlementEvent {
   txHash: string;
   timestamp: number;
 }
+

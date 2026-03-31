@@ -196,3 +196,4 @@ contract DarkPool is IDarkPool, AccessControl, Pausable, ReentrancyGuard {
         _unpause();
     }
 }
+// Settlement batch size optimization

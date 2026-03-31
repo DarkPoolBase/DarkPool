@@ -56,3 +56,4 @@ contract SettlementVerifierTest is Test {
         verifier.setTrustedRelayer(newRelayer);
     }
 }
+

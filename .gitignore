@@ -30,3 +30,5 @@ packages/backend/dist/
 packages/backend/node_modules/
 packages/contracts/.env
 .env*.local
+.lovable/
+docs/

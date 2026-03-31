@@ -1,8 +1,8 @@
 # Contributing
 
 ## Branch Naming
-- `sorrowz/feature-name` - Sorrowz's branches
-- `powerz/feature-name` - Powerz's branches
+- `feature/feature-name` - Feature branches
+- `fix/bug-name` - Bug fix branches
 
 ## Commit Convention
 Follow Conventional Commits:
@@ -13,6 +13,5 @@ Follow Conventional Commits:
 - `chore: description` - Maintenance
 
 ## PR Process
-- All PRs require review from the other developer
+- All PRs require review before merge
 - All tests must pass before merge
-- Changes to `shared/` types require both devs' approval

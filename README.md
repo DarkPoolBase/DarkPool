@@ -4,8 +4,6 @@
 
 **Privacy-Preserving GPU Compute Marketplace on Base**
 
-[![Frontend](https://img.shields.io/badge/Frontend-Live-6C3CE9?style=flat-square)](https://www.darkpoolbase.org)
-[![API](https://img.shields.io/badge/API-Live-10B981?style=flat-square)](https://darkpoolsolana-ljque.ondigitalocean.app/api/health)
 [![Contracts](https://img.shields.io/badge/Tests-44%20Passing-10B981?style=flat-square)](#smart-contracts)
 [![Base](https://img.shields.io/badge/Chain-Base-0052FF?style=flat-square)](https://base.org)
 
@@ -17,29 +15,15 @@
 
 ---
 
-## Production URLs
-
-| Service | URL | Platform |
-|---------|-----|----------|
-| **Frontend** | [darkpoolbase.org](https://www.darkpoolbase.org) | Vercel |
-| **Backend API** | [darkpoolsolana-ljque.ondigitalocean.app/api](https://darkpoolsolana-ljque.ondigitalocean.app/api/health) | DigitalOcean |
-| **Database** | Supabase PostgreSQL | Supabase |
-| **Frontend Repo** | [onderwish1/darkpoolweb](https://github.com/onderwish1/darkpoolweb) | GitHub |
-| **Backend Repo** | [sorrowzzz/darkpool-api](https://github.com/sorrowzzz/darkpool-api) | GitHub |
-
----
-
 ## Architecture
 
 ```
                          ┌─────────────────────────────┐
-                         │     darkpoolbase.org         │
+                         │       Frontend App           │
                          │   Vite + React + Tailwind    │
-                         │        (Vercel)              │
                          └──────────┬──────────────────┘
                                     │ HTTPS
                          ┌──────────▼──────────────────┐
-                         │   DigitalOcean App Platform  │
                          │      NestJS Backend API      │
                          │                              │
                          │  ┌─────────┐ ┌────────────┐ │
@@ -55,8 +39,8 @@
                     ┌───────────────┼───────────────┐
                     │               │               │
              ┌──────▼─────┐ ┌──────▼─────┐ ┌──────▼──────┐
-             │  Supabase   │ │   Redis    │ │    Base     │
-             │ PostgreSQL  │ │  (optional)│ │ Blockchain  │
+             │ PostgreSQL  │ │   Redis    │ │    Base     │
+             │  Database   │ │  (optional)│ │ Blockchain  │
              └─────────────┘ └────────────┘ └─────────────┘
 ```
 
@@ -85,14 +69,14 @@ darkpool/
 │   │
 │   └── backend/                  # NestJS API server
 │       └── src/
-│           ├── orders/           # SORROWZ — Order CRUD, validation, Redis events
-│           ├── matching/         # SORROWZ — Batch auction engine (45s interval)
-│           ├── settlement/       # SORROWZ — On-chain settlement, order fill
-│           ├── auth/             # POWERZ  — SIWE + JWT + API keys
-│           ├── providers/        # POWERZ  — GPU provider registry
-│           ├── market/           # POWERZ  — Price feeds, OHLCV, stats
-│           ├── websocket/        # POWERZ  — Socket.io + Redis pub/sub
-│           ├── indexer/          # POWERZ  — On-chain event listener
+│           ├── orders/           # Order CRUD, validation, Redis events
+│           ├── matching/         # Batch auction engine (45s interval)
+│           ├── settlement/       # On-chain settlement, order fill
+│           ├── auth/             # SIWE + JWT + API keys
+│           ├── providers/        # GPU provider registry
+│           ├── market/           # Price feeds, OHLCV, stats
+│           ├── websocket/        # Socket.io + Redis pub/sub
+│           ├── indexer/          # On-chain event listener
 │           ├── agents/           # Agent trading (wired to OrdersService)
 │           ├── data-marketplace/ # Phase 1 — Encrypted data listings
 │           ├── validators/       # Phase 2 — ZK proof validation network
@@ -116,14 +100,14 @@ darkpool/
 
 - Node.js >= 18
 - Foundry (`curl -L https://foundry.paradigm.xyz | bash`)
-- PostgreSQL 16 (or Supabase account)
+- PostgreSQL 16
 - Redis 7 (optional — app runs without it)
 
 ### 1. Clone & Install
 
 ```bash
-git clone https://github.com/onderwish1/darkpoolweb.git
-cd darkpoolweb
+git clone https://github.com/DarkPoolBase/DarkPool.git
+cd DarkPool
 npm install
 ```
 
@@ -192,41 +176,23 @@ npm run dev             # http://localhost:5173
 
 ---
 
-## Ownership Map
+## Module Map
 
-| Domain | Owner | Scope |
-|--------|-------|-------|
-| Smart Contracts (DarkPool, Escrow, Verifier) | **Sorrowz** | Core trading |
-| Orders Module, Matching Engine, Settlement | **Sorrowz** | Backend trading core |
-| Frontend wallet, order flow, dashboard wiring | **Sorrowz** | UI integration |
-| Auth, Providers, Market, WebSocket, Indexer | **Powerz** | Infrastructure |
-| TokenRegistry, ComputeCredit, FeeCollector | **Powerz** | Token contracts |
-| Data Marketplace, Validators, TEE, Compliance | **Powerz** | Phase 1-4 modules |
-| Agent Treasury, Agent Economy | **Powerz** | Phase 5 modules |
+| Domain | Scope |
+|--------|-------|
+| Smart Contracts (DarkPool, Escrow, Verifier) | Core trading |
+| Orders Module, Matching Engine, Settlement | Backend trading core |
+| Frontend wallet, order flow, dashboard wiring | UI integration |
+| Auth, Providers, Market, WebSocket, Indexer | Infrastructure |
+| TokenRegistry, ComputeCredit, FeeCollector | Token contracts |
+| Data Marketplace, Validators, TEE, Compliance | Phase 1-4 modules |
+| Agent Treasury, Agent Economy | Phase 5 modules |
 
 ---
 
 ## Environment Variables
 
-### Backend (.env)
-
-```env
-NODE_ENV=development
-PORT=3001
-DATABASE_URL=postgresql://user:pass@host:5432/darkpool
-REDIS_HOST=localhost          # Optional — app runs without Redis
-REDIS_PORT=6379
-JWT_SECRET=your-secret-min-32-chars
-JWT_EXPIRATION=1h
-RPC_URL=https://sepolia.base.org
-CHAIN_ID=84532
-```
-
-### Frontend (.env.development)
-
-```env
-VITE_API_BASE_URL=http://localhost:3001
-```
+Copy `.env.example` to `.env` and fill in the required values. See the example files for the full list of variables needed for backend and frontend.
 
 ---
 
@@ -271,27 +237,7 @@ curl localhost:3001/api/settlements
 
 ## Deployment
 
-### Frontend → Vercel
-
-```bash
-vercel --prod --yes
-```
-
-### Backend → DigitalOcean App Platform
-
-Repo: `sorrowzzz/darkpool-api` → auto-deploys on push to `main`
-
-- Build: `npm install && npm run build`
-- Run: `node dist/main.js`
-- Port: 8080
-
-### Contracts → Base Sepolia
-
-```bash
-cd packages/contracts
-source .env
-forge script script/Deploy.s.sol --rpc-url $BASE_SEPOLIA_RPC --broadcast
-```
+See internal documentation for deployment instructions.
 
 ---
 

@@ -22,3 +22,4 @@ export function calculateRefund(
   const actualCost = clearingPrice * quantity * duration;
   return Math.max(0, escrowAmount - actualCost);
 }
+

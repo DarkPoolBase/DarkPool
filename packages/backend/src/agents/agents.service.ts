@@ -1,5 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { OrdersService } from '../orders/orders.service';
+import { keccak256, encodePacked, toHex } from 'viem';
 
 export interface AgentOrder {
   gpuType: string;
@@ -21,29 +23,17 @@ export interface AgentBalance {
   currency: string;
 }
 
-/**
- * Coinbase AgentKit integration for autonomous AI agent operations.
- * Enables agents to interact with the Dark Pool programmatically
- * using the AgentKit wallet and transaction management framework.
- *
- * Agents can:
- * - Submit compute orders autonomously
- * - Manage USDC balances
- * - Monitor order status
- * - Handle settlement
- */
 @Injectable()
 export class AgentsService {
   private readonly logger = new Logger(AgentsService.name);
 
-  constructor(private config: ConfigService) {}
+  constructor(
+    private config: ConfigService,
+    private ordersService: OrdersService,
+  ) {}
 
-  /**
-   * Submit a compute order on behalf of an AI agent.
-   * The agent provides desired compute parameters and the service
-   * handles commitment generation, escrow locking, and order submission.
-   */
   async submitAgentOrder(
+    userId: string,
     agentWallet: string,
     order: AgentOrder,
   ): Promise<AgentOrderResult> {
@@ -51,60 +41,64 @@ export class AgentsService {
       `Agent ${agentWallet} submitting order: ${order.quantity} ${order.gpuType} @ max ${order.maxPrice}`,
     );
 
-    // TODO: Full implementation:
-    // 1. Generate commitment hash from order params
-    // 2. Calculate escrow amount (quantity * maxPrice * duration)
-    // 3. Submit to DarkPool contract via agent's wallet
-    // 4. Return order tracking info
+    // Generate a commitment hash from order params
+    const secret = toHex(BigInt(Date.now()), { size: 32 });
+    const commitmentHash = keccak256(
+      encodePacked(
+        ['string', 'uint256', 'uint256', 'uint256', 'bool', 'bytes32'],
+        [
+          order.gpuType,
+          BigInt(order.quantity),
+          BigInt(Math.round(parseFloat(order.maxPrice) * 1e6)),
+          BigInt(order.duration),
+          true, // agents always buy
+          secret as `0x${string}`,
+        ],
+      ),
+    );
 
-    const escrowAmount = (
-      order.quantity *
-      parseFloat(order.maxPrice) *
-      order.duration
-    ).toFixed(6);
+    const created = await this.ordersService.create(userId, agentWallet, {
+      side: 'BUY',
+      gpuType: order.gpuType,
+      quantity: order.quantity,
+      pricePerHour: parseFloat(order.maxPrice),
+      duration: order.duration,
+      commitmentHash,
+      encryptedDetails: `agent:${agentWallet}`,
+    });
 
     return {
-      orderId: `ord_${Date.now().toString(36)}`,
-      status: 'SUBMITTED',
-      escrowAmount,
+      orderId: created.id,
+      status: created.status,
+      escrowAmount: created.escrowAmount,
       estimatedClearingPrice: order.maxPrice,
     };
   }
 
-  /**
-   * Get agent's USDC balance in escrow.
-   */
   async getAgentBalance(agentWallet: string): Promise<AgentBalance> {
     this.logger.log(`Fetching balance for agent ${agentWallet}`);
-
-    // TODO: Query Escrow contract for actual balances
-    return {
-      available: '0',
-      locked: '0',
-      currency: 'USDC',
-    };
+    // TODO: Query Escrow contract for actual balances when deployed
+    return { available: '0', locked: '0', currency: 'USDC' };
   }
 
-  /**
-   * Get active orders for an agent.
-   */
-  async getAgentOrders(agentWallet: string): Promise<AgentOrderResult[]> {
-    this.logger.log(`Fetching orders for agent ${agentWallet}`);
+  async getAgentOrders(
+    userId: string,
+  ): Promise<AgentOrderResult[]> {
+    const result = await this.ordersService.findAllForUser(userId, { limit: 50 });
 
-    // TODO: Query DarkPool contract + backend DB
-    return [];
+    return result.data.map((order) => ({
+      orderId: order.id,
+      status: order.status,
+      escrowAmount: order.escrowAmount,
+      estimatedClearingPrice: order.clearingPrice ?? order.pricePerHour,
+    }));
   }
 
-  /**
-   * Cancel an agent's pending order.
-   */
   async cancelAgentOrder(
-    agentWallet: string,
+    userId: string,
     orderId: string,
   ): Promise<{ success: boolean }> {
-    this.logger.log(`Agent ${agentWallet} cancelling order ${orderId}`);
-
-    // TODO: Call DarkPool.cancelOrder via agent's wallet
+    await this.ordersService.cancel(orderId, userId);
     return { success: true };
   }
 }

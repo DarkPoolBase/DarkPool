@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { DollarSign, BarChart3, CheckCircle, Zap, TrendingUp, Calculator } from "lucide-react";
+import { useOrderMetrics, useOrderStats } from "@/hooks/useOrders";
+import { useAutoAuth } from "@/hooks/useAutoAuth";
 import { StatsCard } from "@/components/dashboard/StatsCard";
 import { OrderTable } from "@/components/dashboard/OrderTable";
 import { QuickActions } from "@/components/dashboard/QuickActions";
@@ -24,6 +26,9 @@ const portfolioData = [
 
 const Dashboard = () => {
   const [tab, setTab] = useState<"overview" | "savings">("overview");
+  const { isAuthenticated } = useAutoAuth();
+  const { data: metrics } = useOrderMetrics();
+  const { data: stats } = useOrderStats(isAuthenticated);
 
   return (
     <div className="space-y-6 max-w-7xl relative">
@@ -66,20 +71,20 @@ const Dashboard = () => {
       {/* Stats Row — 8pt gap */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatsCard
-          icon={DollarSign} label="Escrow Balance" value="$2,450.00"
+          icon={DollarSign} label="Escrow Balance" value={`$${metrics?.totalVolume24h?.toFixed(2) ?? '2,450.00'}`}
           change="+12.5%" changeType="positive"
           sparkData={[1800, 2100, 1950, 2300, 2150, 2400, 2450]}
           sparkColor="rgb(52, 211, 153)" glow delay={0}
         />
         <StatsCard
-          icon={BarChart3} label="Active Orders" value="3"
-          sparkData={[1, 3, 2, 4, 3, 2, 3]}
+          icon={BarChart3} label="Active Orders" value={String(stats?.ACTIVE ?? metrics?.activeOrders ?? 0)}
+          sparkData={[1, 3, 2, 4, 3, 2, stats?.ACTIVE ?? 3]}
           sparkColor="rgb(139, 92, 246)" delay={0.08}
         />
         <StatsCard
-          icon={CheckCircle} label="Filled Today" value="156 GPU-hrs"
-          change="+24%" changeType="positive"
-          sparkData={[80, 110, 95, 130, 140, 150, 156]}
+          icon={CheckCircle} label="Filled Today" value={`${metrics?.filledOrders24h ?? 0} orders`}
+          change={metrics?.filledOrders24h ? `+${metrics.filledOrders24h}` : undefined} changeType="positive"
+          sparkData={[80, 110, 95, 130, 140, 150, metrics?.filledOrders24h ?? 0]}
           sparkColor="rgb(52, 211, 153)" delay={0.16}
         />
         <AuctionTimer />

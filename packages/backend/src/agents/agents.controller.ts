@@ -11,10 +11,6 @@ import {
 import { AgentsService } from './agents.service';
 import { ApiKeyGuard } from '../auth/guards/api-key.guard';
 
-/**
- * Agent-compatible endpoints for programmatic trading via AgentKit.
- * All endpoints require API key authentication (X-API-Key header).
- */
 @Controller('agents')
 @UseGuards(ApiKeyGuard)
 export class AgentsController {
@@ -22,29 +18,23 @@ export class AgentsController {
 
   @Post('orders')
   async submitOrder(
-    @Request() req: { user: { wallet: string } },
-    @Body()
-    body: {
-      gpuType: string;
-      quantity: number;
-      maxPrice: string;
-      duration: number;
-    },
+    @Request() req: { user: { sub: string; wallet: string } },
+    @Body() body: { gpuType: string; quantity: number; maxPrice: string; duration: number },
   ) {
-    return this.agentsService.submitAgentOrder(req.user.wallet, body);
+    return this.agentsService.submitAgentOrder(req.user.sub, req.user.wallet, body);
   }
 
   @Get('orders')
-  async getOrders(@Request() req: { user: { wallet: string } }) {
-    return this.agentsService.getAgentOrders(req.user.wallet);
+  async getOrders(@Request() req: { user: { sub: string } }) {
+    return this.agentsService.getAgentOrders(req.user.sub);
   }
 
   @Delete('orders/:orderId')
   async cancelOrder(
-    @Request() req: { user: { wallet: string } },
+    @Request() req: { user: { sub: string } },
     @Param('orderId') orderId: string,
   ) {
-    return this.agentsService.cancelAgentOrder(req.user.wallet, orderId);
+    return this.agentsService.cancelAgentOrder(req.user.sub, orderId);
   }
 
   @Get('balance')

@@ -6,8 +6,11 @@ import { ChevronDown, ChevronRight } from "lucide-react";
 import { GlassCard } from "@/components/ui/glass-card";
 import { SectionLabel } from "@/components/ui/section-label";
 import { motion, AnimatePresence } from "framer-motion";
+import { useOrders, useOrderStats, useCancelOrder } from "@/hooks/useOrders";
+import { useAutoAuth } from "@/hooks/useAutoAuth";
+import { toast } from "sonner";
 
-const orders = [
+const mockOrders = [
   { id: "#4521", side: "BUY", gpu: "H100", qty: "24 hrs", price: "$0.22", status: "FILLED" as const, submitted: "Mar 26, 2026 14:32:15 UTC", filled: "Mar 26, 2026 14:33:00 UTC (Batch #4521)", clearing: "$0.21/GPU-hour", total: "$5.04 USDC", tx: "0x7a3b...f82c", access: "ssh://compute-xyz123.darkpool.io" },
   { id: "#4520", side: "BUY", gpu: "A100", qty: "48 hrs", price: "$0.18", status: "ACTIVE" as const, submitted: "Mar 26, 2026 13:15:00 UTC" },
   { id: "#4519", side: "BUY", gpu: "A100", qty: "72 hrs", price: "$0.19", status: "CANCELLED" as const, submitted: "Mar 26, 2026 12:00:00 UTC" },
@@ -21,13 +24,49 @@ type StatusFilter = "ALL" | "ACTIVE" | "FILLED" | "CANCELLED" | "EXPIRED";
 const Orders = () => {
   const [filter, setFilter] = useState<StatusFilter>("ALL");
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const { isAuthenticated } = useAutoAuth();
+  const cancelOrder = useCancelOrder();
+
+  // Fetch real orders from API
+  const { data: apiOrders } = useOrders(
+    { status: filter === "ALL" ? undefined : filter },
+    isAuthenticated,
+  );
+  const { data: stats } = useOrderStats(isAuthenticated);
+
+  // Map API orders to display format, fallback to mock
+  const orders = apiOrders?.data?.length
+    ? apiOrders.data.map((o) => ({
+        id: o.id.slice(0, 8),
+        fullId: o.id,
+        side: o.side,
+        gpu: o.gpuType,
+        qty: `${o.duration} hrs`,
+        price: `$${parseFloat(o.pricePerHour).toFixed(2)}`,
+        status: o.status as "ACTIVE" | "FILLED" | "CANCELLED" | "EXPIRED",
+        submitted: new Date(o.createdAt).toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'UTC' }) + ' UTC',
+        ...(o.clearingPrice && { clearing: `$${parseFloat(o.clearingPrice).toFixed(2)}/GPU-hr` }),
+        ...(o.escrowAmount && { total: `$${parseFloat(o.escrowAmount).toFixed(2)} USDC` }),
+        ...(o.txHash && { tx: o.txHash.slice(0, 6) + '...' + o.txHash.slice(-4) }),
+        ...(o.batchId && { filled: `Batch #${o.batchId}` }),
+      }))
+    : mockOrders;
 
   const filtered = filter === "ALL" ? orders : orders.filter((o) => o.status === filter);
-  const counts = {
+  const counts = stats ?? {
     ACTIVE: orders.filter((o) => o.status === "ACTIVE").length,
     FILLED: orders.filter((o) => o.status === "FILLED").length,
     CANCELLED: orders.filter((o) => o.status === "CANCELLED").length,
     EXPIRED: orders.filter((o) => o.status === "EXPIRED").length,
+  };
+
+  const handleCancel = async (orderId: string) => {
+    try {
+      await cancelOrder.mutateAsync(orderId);
+      toast.success('Order cancelled');
+    } catch (err: any) {
+      toast.error(err?.message || 'Failed to cancel order');
+    }
   };
 
   return (

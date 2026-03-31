@@ -43,3 +43,4 @@ contract DarkPoolAccessTest is Test {
         assertTrue(darkPool.hasRole(darkPool.DEFAULT_ADMIN_ROLE(), address(this)));
     }
 }
+

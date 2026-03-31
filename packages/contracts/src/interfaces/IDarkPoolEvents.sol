@@ -11,3 +11,4 @@ interface IDarkPoolEvents {
     event RelayerUpdated(address indexed oldRelayer, address indexed newRelayer);
     event EscrowUpdated(address indexed oldEscrow, address indexed newEscrow);
 }
+

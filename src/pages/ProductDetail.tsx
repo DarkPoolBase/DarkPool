@@ -201,6 +201,18 @@ const productData: Record<string, {
       { label: "Providers", value: "312", icon: Shield },
     ],
   },
+  "burst-credits": {
+    name: "Burst Credits", label: "On-Demand Surge", price: "$0.18/GPU-hour", priceNum: 0.18,
+    providers: 287, vram: "Any GPU", workloads: ["Burst Workloads", "Surge Capacity", "Overflow Traffic", "Spot Demand"],
+    availability: 99, icon: Zap,
+    description: "On-demand surge capacity credits redeemable across all GPU types. Secure overflow compute with private batch auctions when demand spikes.",
+    benchmarks: [
+      { label: "Availability", value: "99%+", icon: CheckCircle },
+      { label: "Expiry", value: "30 days", icon: Clock },
+      { label: "Fill Rate", value: "96%", icon: TrendingUp },
+      { label: "Providers", value: "287", icon: Shield },
+    ],
+  },
 };
 
 

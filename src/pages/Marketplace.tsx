@@ -1,174 +1,45 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { Cpu, Server, Zap, Timer, BarChart3, Activity, Shield, ArrowRight, TrendingUp, Clock, Users, Layers, Info } from "lucide-react";
 import { GlassCard } from "@/components/ui/glass-card";
 import { motion } from "framer-motion";
 import { AuctionTimer } from "@/components/dashboard/AuctionTimer";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { useMarketPrices, useMarketStats, useMarketVolume } from "@/hooks/useMarket";
+import { useSettlements } from "@/hooks/useOrders";
 
 type MarketCategory = "spot" | "reserved" | "credits" | "clusters";
 
-const computeProducts = [
-  // === SPOT (6) ===
-  {
-    id: "h100", name: "NVIDIA H100", category: "spot" as MarketCategory,
-    price: "$0.21/GPU-hour", subtitle: "Best for training",
-    providers: 47, vram: "80GB HBM3", availability: 92, badge: "Most Liquid",
-    volume24h: "1,240 GPU-hrs", volumeUsd: "$260", icon: Cpu,
-  },
-  {
-    id: "a100", name: "NVIDIA A100", category: "spot" as MarketCategory,
-    price: "$0.15/GPU-hour", subtitle: "Best for fine-tuning",
-    providers: 89, vram: "80GB HBM2e", availability: 78, badge: "Low Price",
-    volume24h: "2,870 GPU-hrs", volumeUsd: "$430", icon: Server,
-  },
-  {
-    id: "rtx4090", name: "RTX 4090", category: "spot" as MarketCategory,
-    price: "$0.08/GPU-hour", subtitle: "Lowest cost inference",
-    providers: 234, vram: "24GB GDDR6X", availability: 65, badge: "High Demand",
-    volume24h: "4,120 GPU-hrs", volumeUsd: "$330", icon: Zap,
-  },
-  {
-    id: "l40s", name: "NVIDIA L40S", category: "spot" as MarketCategory,
-    price: "$0.12/GPU-hour", subtitle: "Balanced price-performance",
-    providers: 62, vram: "48GB GDDR6", availability: 71, badge: null,
-    volume24h: "1,890 GPU-hrs", volumeUsd: "$227", icon: Cpu,
-  },
-  {
-    id: "rtx3090", name: "RTX 3090", category: "spot" as MarketCategory,
-    price: "$0.05/GPU-hour", subtitle: "Budget inference",
-    providers: 312, vram: "24GB GDDR6X", availability: 88, badge: "Low Price",
-    volume24h: "5,640 GPU-hrs", volumeUsd: "$282", icon: Zap,
-  },
-  {
-    id: "h200", name: "NVIDIA H200", category: "spot" as MarketCategory,
-    price: "$0.32/GPU-hour", subtitle: "Next-gen training",
-    providers: 14, vram: "141GB HBM3e", availability: 38, badge: "Fast Fill",
-    volume24h: "420 GPU-hrs", volumeUsd: "$134", icon: Cpu,
-  },
+// Static product catalog — prices/providers/volume are overridden by API data
+const gpuMeta: Record<string, { name: string; vram: string; subtitle: string; icon: typeof Cpu }> = {
+  H100:  { name: "NVIDIA H100",  vram: "80GB HBM3",   subtitle: "Best for training",         icon: Cpu },
+  A100:  { name: "NVIDIA A100",  vram: "80GB HBM2e",  subtitle: "Best for fine-tuning",      icon: Server },
+  L40S:  { name: "NVIDIA L40S",  vram: "48GB GDDR6",  subtitle: "Balanced price-performance", icon: Cpu },
+  H200:  { name: "NVIDIA H200",  vram: "141GB HBM3e", subtitle: "Next-gen training",         icon: Cpu },
+  A10G:  { name: "NVIDIA A10G",  vram: "24GB GDDR6",  subtitle: "Budget inference",          icon: Zap },
+};
 
-  // === RESERVED (6) ===
-  {
-    id: "h100-block", name: "24h H100 Block", category: "reserved" as MarketCategory,
-    price: "$4.80/GPU-hour", subtitle: "Guaranteed capacity",
-    providers: 31, vram: "80GB HBM3", availability: 56, badge: "Fast Fill",
-    volume24h: "18 blocks", volumeUsd: "$86", icon: Clock,
-  },
-  {
-    id: "a100-block", name: "48h A100 Block", category: "reserved" as MarketCategory,
-    price: "$3.20/GPU-hour", subtitle: "Extended training runs",
-    providers: 24, vram: "80GB HBM2e", availability: 42, badge: null,
-    volume24h: "12 blocks", volumeUsd: "$61", icon: Clock,
-  },
-  {
-    id: "h100-week", name: "7-Day H100 Block", category: "reserved" as MarketCategory,
-    price: "$4.20/GPU-hour", subtitle: "Weekly commitment discount",
-    providers: 19, vram: "80GB HBM3", availability: 31, badge: "Low Price",
-    volume24h: "6 blocks", volumeUsd: "$201", icon: Clock,
-  },
-  {
-    id: "a100-week", name: "7-Day A100 Block", category: "reserved" as MarketCategory,
-    price: "$2.80/GPU-hour", subtitle: "Cost-efficient reservation",
-    providers: 28, vram: "80GB HBM2e", availability: 64, badge: null,
-    volume24h: "9 blocks", volumeUsd: "$176", icon: Clock,
-  },
-  {
-    id: "h200-block", name: "24h H200 Block", category: "reserved" as MarketCategory,
-    price: "$7.20/GPU-hour", subtitle: "Premium reserved capacity",
-    providers: 8, vram: "141GB HBM3e", availability: 22, badge: "Most Liquid",
-    volume24h: "4 blocks", volumeUsd: "$115", icon: Clock,
-  },
-  {
-    id: "l40s-block", name: "48h L40S Block", category: "reserved" as MarketCategory,
-    price: "$2.40/GPU-hour", subtitle: "Balanced reserved compute",
-    providers: 35, vram: "48GB GDDR6", availability: 73, badge: "High Demand",
-    volume24h: "22 blocks", volumeUsd: "$106", icon: Clock,
-  },
-
-  // === CREDITS (6) ===
-  {
-    id: "compute-credits", name: "Compute Credits", category: "credits" as MarketCategory,
-    price: "$0.18/GPU-hour", subtitle: "Any workload, flexible",
-    providers: 387, vram: "Flexible", availability: 100, badge: "Most Liquid",
-    volume24h: "8,450 units", volumeUsd: "$1,521", icon: Activity,
-  },
-  {
-    id: "training-credits", name: "Training Credits", category: "credits" as MarketCategory,
-    price: "$0.20/GPU-hour", subtitle: "Optimized for training",
-    providers: 142, vram: "A100+ tier", availability: 94, badge: null,
-    volume24h: "3,200 units", volumeUsd: "$640", icon: Activity,
-  },
-  {
-    id: "inference-credits", name: "Inference Credits", category: "credits" as MarketCategory,
-    price: "$0.09/GPU-hour", subtitle: "Low-latency inference",
-    providers: 298, vram: "Consumer+ tier", availability: 97, badge: "Low Price",
-    volume24h: "11,200 units", volumeUsd: "$1,008", icon: Activity,
-  },
-  {
-    id: "burst-credits", name: "Burst Credits", category: "credits" as MarketCategory,
-    price: "$0.25/GPU-hour", subtitle: "On-demand surge capacity",
-    providers: 89, vram: "Any GPU", availability: 85, badge: "Fast Fill",
-    volume24h: "1,840 units", volumeUsd: "$460", icon: Zap,
-  },
-  {
-    id: "prepaid-1000", name: "1,000-hr Credit Pack", category: "credits" as MarketCategory,
-    price: "$0.16/GPU-hour", subtitle: "Bulk discount pricing",
-    providers: 387, vram: "Flexible", availability: 100, badge: "Low Price",
-    volume24h: "14 packs", volumeUsd: "$2,240", icon: Activity,
-  },
-  {
-    id: "enterprise-credits", name: "Enterprise Credits", category: "credits" as MarketCategory,
-    price: "$0.14/GPU-hour", subtitle: "Volume-tiered pricing",
-    providers: 52, vram: "H100/A100 tier", availability: 88, badge: "High Demand",
-    volume24h: "4,600 units", volumeUsd: "$644", icon: Shield,
-  },
-
-  // === CLUSTERS (6) ===
-  {
-    id: "multi-gpu", name: "Multi-GPU Cluster", category: "clusters" as MarketCategory,
-    price: "$1.40/GPU-hour", subtitle: "Distributed training",
-    providers: 12, vram: "8×H100 (640GB)", availability: 34, badge: "Fast Fill",
-    volume24h: "96 GPU-hrs", volumeUsd: "$134", icon: Layers,
-  },
-  {
-    id: "a100-cluster", name: "A100 Cluster", category: "clusters" as MarketCategory,
-    price: "$0.95/GPU-hour", subtitle: "Cost-efficient scale",
-    providers: 18, vram: "4×A100 (320GB)", availability: 48, badge: null,
-    volume24h: "144 GPU-hrs", volumeUsd: "$137", icon: Layers,
-  },
-  {
-    id: "h100-mega", name: "H100 Mega Cluster", category: "clusters" as MarketCategory,
-    price: "$2.10/GPU-hour", subtitle: "Large-scale LLM training",
-    providers: 6, vram: "16×H100 (1.28TB)", availability: 18, badge: "Most Liquid",
-    volume24h: "48 GPU-hrs", volumeUsd: "$101", icon: Layers,
-  },
-  {
-    id: "inference-cluster", name: "Inference Cluster", category: "clusters" as MarketCategory,
-    price: "$0.52/GPU-hour", subtitle: "High-throughput serving",
-    providers: 28, vram: "4×L40S (192GB)", availability: 62, badge: "High Demand",
-    volume24h: "312 GPU-hrs", volumeUsd: "$162", icon: Layers,
-  },
-  {
-    id: "hybrid-cluster", name: "Hybrid GPU Cluster", category: "clusters" as MarketCategory,
-    price: "$0.78/GPU-hour", subtitle: "Mixed GPU training",
-    providers: 15, vram: "Mixed (256GB+)", availability: 41, badge: null,
-    volume24h: "168 GPU-hrs", volumeUsd: "$131", icon: Layers,
-  },
-  {
-    id: "h200-cluster", name: "H200 Cluster", category: "clusters" as MarketCategory,
-    price: "$2.80/GPU-hour", subtitle: "Next-gen distributed",
-    providers: 4, vram: "4×H200 (564GB)", availability: 15, badge: "Fast Fill",
-    volume24h: "24 GPU-hrs", volumeUsd: "$67", icon: Layers,
-  },
+// Derived product types beyond spot
+const reservedProducts = [
+  { id: "h100-block", name: "24h H100 Block", gpuBase: "H100", multiplier: 24, vram: "80GB HBM3", subtitle: "Guaranteed capacity", icon: Clock },
+  { id: "a100-block", name: "48h A100 Block", gpuBase: "A100", multiplier: 48, vram: "80GB HBM2e", subtitle: "Extended training runs", icon: Clock },
+  { id: "h100-week", name: "7-Day H100 Block", gpuBase: "H100", multiplier: 168, vram: "80GB HBM3", subtitle: "Weekly commitment discount", icon: Clock },
+  { id: "h200-block", name: "24h H200 Block", gpuBase: "H200", multiplier: 24, vram: "141GB HBM3e", subtitle: "Premium reserved capacity", icon: Clock },
+  { id: "l40s-block", name: "48h L40S Block", gpuBase: "L40S", multiplier: 48, vram: "48GB GDDR6", subtitle: "Balanced reserved compute", icon: Clock },
 ];
 
-const recentSettlements = [
-  { name: "NVIDIA H100", price: "$0.21", unit: "GPU-hr", qty: "48 GPU-hrs", time: "2m ago" },
-  { name: "NVIDIA A100", price: "$0.14", unit: "GPU-hr", qty: "120 GPU-hrs", time: "4m ago" },
-  { name: "RTX 4090", price: "$0.09", unit: "GPU-hr", qty: "72 GPU-hrs", time: "7m ago" },
-  { name: "NVIDIA H100", price: "$0.22", unit: "GPU-hr", qty: "24 GPU-hrs", time: "5m ago" },
-  { name: "NVIDIA L40S", price: "$0.11", unit: "GPU-hr", qty: "96 GPU-hrs", time: "9m ago" },
-  { name: "RTX 3090", price: "$0.04", unit: "GPU-hr", qty: "210 GPU-hrs", time: "12m ago" },
+const creditProducts = [
+  { id: "compute-credits", name: "Compute Credits", subtitle: "Any workload, flexible", vram: "Flexible", icon: Activity },
+  { id: "training-credits", name: "Training Credits", subtitle: "Optimized for training", vram: "A100+ tier", icon: Activity },
+  { id: "inference-credits", name: "Inference Credits", subtitle: "Low-latency inference", vram: "Consumer+ tier", icon: Activity },
+  { id: "burst-credits", name: "Burst Credits", subtitle: "On-demand surge capacity", vram: "Any GPU", icon: Zap },
+];
+
+const clusterProducts = [
+  { id: "multi-gpu", name: "Multi-GPU Cluster", gpuBase: "H100", gpuCount: 8, vram: "8×H100 (640GB)", subtitle: "Distributed training", icon: Layers },
+  { id: "a100-cluster", name: "A100 Cluster", gpuBase: "A100", gpuCount: 4, vram: "4×A100 (320GB)", subtitle: "Cost-efficient scale", icon: Layers },
+  { id: "h100-mega", name: "H100 Mega Cluster", gpuBase: "H100", gpuCount: 16, vram: "16×H100 (1.28TB)", subtitle: "Large-scale LLM training", icon: Layers },
+  { id: "h200-cluster", name: "H200 Cluster", gpuBase: "H200", gpuCount: 4, vram: "4×H200 (564GB)", subtitle: "Next-gen distributed", icon: Layers },
 ];
 
 const categories: { key: MarketCategory; label: string }[] = [
@@ -205,6 +76,102 @@ const badgeColor = (badge: string) => {
 const Marketplace = () => {
   const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState<MarketCategory>("spot");
+  const { data: marketPrices } = useMarketPrices();
+  const { data: marketStats } = useMarketStats();
+  const { data: volumeData } = useMarketVolume();
+  const { data: settlements } = useSettlements(6);
+
+  // Build spot products from real market prices
+  const priceMap = useMemo(() => {
+    const map: Record<string, any> = {};
+    if (marketPrices) {
+      for (const p of marketPrices) map[p.gpuType] = p;
+    }
+    return map;
+  }, [marketPrices]);
+
+  const spotProducts = useMemo(() => {
+    if (!marketPrices?.length) return [];
+    return marketPrices.map((p: any) => {
+      const meta = gpuMeta[p.gpuType] || { name: p.gpuType, vram: '—', subtitle: 'GPU Compute', icon: Cpu };
+      const vol = volumeData?.[p.gpuType];
+      const vol24h = vol ? Number(vol.volume24h).toLocaleString() : Number(p.volume24h).toLocaleString();
+      const volUsd = (parseFloat(p.volume24h) * parseFloat(p.price)).toFixed(0);
+      return {
+        id: p.gpuType.toLowerCase(),
+        name: meta.name,
+        category: "spot" as MarketCategory,
+        price: `$${parseFloat(p.price).toFixed(2)}/GPU-hour`,
+        subtitle: meta.subtitle,
+        providers: marketStats?.totalProviders ?? 0,
+        vram: meta.vram,
+        availability: Math.min(100, Math.max(10, 50 + Math.round(p.change24h * 10))),
+        badge: p.change24h > 3 ? "High Demand" : p.change24h < -1 ? "Low Price" : parseFloat(p.volume24h) > 20000 ? "Most Liquid" : null,
+        volume24h: `${vol24h} GPU-hrs`,
+        volumeUsd: `$${volUsd}`,
+        icon: meta.icon,
+      };
+    });
+  }, [marketPrices, marketStats, volumeData]);
+
+  const allReserved = useMemo(() => {
+    return reservedProducts.map(rp => {
+      const basePrice = priceMap[rp.gpuBase]?.price ? parseFloat(priceMap[rp.gpuBase].price) : 0;
+      return {
+        id: rp.id, name: rp.name, category: "reserved" as MarketCategory,
+        price: `$${(basePrice * rp.multiplier).toFixed(2)}/block`,
+        subtitle: rp.subtitle, providers: marketStats?.totalProviders ?? 0,
+        vram: rp.vram, availability: 50, badge: null,
+        volume24h: '—', volumeUsd: '—', icon: rp.icon,
+      };
+    });
+  }, [priceMap, marketStats]);
+
+  const allCredits = useMemo(() => {
+    const avgPrice = marketPrices?.length
+      ? marketPrices.reduce((s: number, p: any) => s + parseFloat(p.price), 0) / marketPrices.length
+      : 0;
+    return creditProducts.map(cp => ({
+      id: cp.id, name: cp.name, category: "credits" as MarketCategory,
+      price: `$${avgPrice.toFixed(2)}/GPU-hour`,
+      subtitle: cp.subtitle, providers: marketStats?.totalProviders ?? 0,
+      vram: cp.vram, availability: 95, badge: null,
+      volume24h: '—', volumeUsd: '—', icon: cp.icon,
+    }));
+  }, [marketPrices, marketStats]);
+
+  const allClusters = useMemo(() => {
+    return clusterProducts.map(cl => {
+      const basePrice = priceMap[cl.gpuBase]?.price ? parseFloat(priceMap[cl.gpuBase].price) : 0;
+      return {
+        id: cl.id, name: cl.name, category: "clusters" as MarketCategory,
+        price: `$${(basePrice * cl.gpuCount).toFixed(2)}/GPU-hour`,
+        subtitle: cl.subtitle, providers: marketStats?.totalProviders ?? 0,
+        vram: cl.vram, availability: 30, badge: null,
+        volume24h: '—', volumeUsd: '—', icon: cl.icon,
+      };
+    });
+  }, [priceMap, marketStats]);
+
+  const computeProducts = useMemo(() => {
+    return [...spotProducts, ...allReserved, ...allCredits, ...allClusters];
+  }, [spotProducts, allReserved, allCredits, allClusters]);
+
+  // Build settlement feed from real data
+  const recentSettlements = useMemo(() => {
+    if (!settlements?.length) return [];
+    return settlements.slice(0, 6).map((s: any) => {
+      const elapsed = Math.round((Date.now() - new Date(s.settledAt || s.createdAt).getTime()) / 60000);
+      const timeAgo = elapsed < 1 ? 'Just now' : `${elapsed}m ago`;
+      return {
+        name: `Batch #${s.batchId ?? s.batch_id ?? '—'}`,
+        price: `$${parseFloat(s.clearingPrice || s.clearing_price || '0').toFixed(2)}`,
+        unit: "GPU-hr",
+        qty: `${parseFloat(s.totalVolume || s.total_volume || '0').toFixed(0)} GPU-hrs`,
+        time: timeAgo,
+      };
+    });
+  }, [settlements]);
 
   const filteredProducts = computeProducts.filter(p => p.category === activeCategory);
 
@@ -233,7 +200,7 @@ const Marketplace = () => {
                 }`}
               >
                 {cat.label}
-                <span className="ml-2 text-[9px] opacity-60">{computeProducts.filter(p => p.category === cat.key).length}</span>
+                <span className="ml-2 text-[9px] opacity-60">{computeProducts.filter((p: any) => p.category === cat.key).length}</span>
               </button>
             ))}
           </div>

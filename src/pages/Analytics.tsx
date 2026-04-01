@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { useState, useMemo } from "react";
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
 import { GlassCard } from "@/components/ui/glass-card";
 import { SectionLabel } from "@/components/ui/section-label";
@@ -7,55 +6,54 @@ import { AnimatedNumber } from "@/components/ui/animated-number";
 import { GlowBlob } from "@/components/ui/glow-blob";
 import { motion } from "framer-motion";
 import { useOrderMetrics, useSettlements } from "@/hooks/useOrders";
+import { usePriceHistory, useMarketPrices } from "@/hooks/useMarket";
 
-const priceDataByTimeframe: Record<string, { date: string; price: number }[]> = {
-  "1D": [
-    { date: "00:00", price: 0.21 }, { date: "03:00", price: 0.20 },
-    { date: "06:00", price: 0.19 }, { date: "09:00", price: 0.20 },
-    { date: "12:00", price: 0.22 }, { date: "15:00", price: 0.23 },
-    { date: "18:00", price: 0.22 }, { date: "21:00", price: 0.21 },
-    { date: "Now", price: 0.21 },
-  ],
-  "1W": [
-    { date: "Mar 25", price: 0.20 }, { date: "Mar 26", price: 0.21 },
-    { date: "Mar 27", price: 0.24 }, { date: "Mar 28", price: 0.22 },
-    { date: "Mar 29", price: 0.19 }, { date: "Mar 30", price: 0.20 },
-    { date: "Mar 31", price: 0.21 },
-  ],
-  "1M": [
-    { date: "Mar 1", price: 0.18 }, { date: "Mar 5", price: 0.16 },
-    { date: "Mar 9", price: 0.17 }, { date: "Mar 13", price: 0.19 },
-    { date: "Mar 17", price: 0.22 }, { date: "Mar 21", price: 0.25 },
-    { date: "Mar 25", price: 0.23 }, { date: "Mar 28", price: 0.20 },
-    { date: "Mar 31", price: 0.21 },
-  ],
-  "ALL": [
-    { date: "Oct", price: 0.32 }, { date: "Nov", price: 0.28 },
-    { date: "Dec", price: 0.25 }, { date: "Jan", price: 0.22 },
-    { date: "Feb", price: 0.19 }, { date: "Mar", price: 0.21 },
-  ],
+const intervalMap: Record<string, string> = {
+  "1D": "1h",
+  "1W": "4h",
+  "1M": "1d",
+  "ALL": "1w",
 };
 
-const utilizationData = [
-  { name: "H100", value: 78, color: "from-primary to-[hsl(258,78%,70%)]" },
-  { name: "A100", value: 52, color: "from-blue-500 to-blue-400" },
-  { name: "RTX 4090", value: 41, color: "from-emerald-500 to-emerald-400" },
-  { name: "RTX 3090", value: 33, color: "from-amber-500 to-amber-400" },
-];
-
-const mockStats = [
-  { label: "24h Volume", value: "12,450 GPU-hours ($2,487.50)" },
-  { label: "Active Providers", value: "387" },
-  { label: "Total GPUs Available", value: "1,240" },
-  { label: "Avg Clearing Price", value: "$0.19/GPU-hour" },
-  { label: "Price Range (24h)", value: "$0.15 - $0.28" },
-  { label: "Orders Matched", value: "892" },
-];
+const gpuColors: Record<string, string> = {
+  H100: "from-primary to-[hsl(258,78%,70%)]",
+  A100: "from-blue-500 to-blue-400",
+  L40S: "from-emerald-500 to-emerald-400",
+  H200: "from-amber-500 to-amber-400",
+  A10G: "from-rose-500 to-rose-400",
+};
 
 const Analytics = () => {
   const [timeframe, setTimeframe] = useState("1W");
   const { data: metrics } = useOrderMetrics();
   const { data: settlements } = useSettlements(20);
+  const { data: priceHistory } = usePriceHistory('H100', intervalMap[timeframe]);
+  const { data: marketPrices } = useMarketPrices();
+
+  // Transform API price history into chart data
+  const chartData = useMemo(() => {
+    if (!priceHistory?.length) return [];
+    return priceHistory.map((p: any) => {
+      const d = new Date(p.timestamp);
+      let label: string;
+      if (timeframe === '1D') label = d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+      else if (timeframe === '1W') label = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      else if (timeframe === '1M') label = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      else label = d.toLocaleDateString('en-US', { month: 'short' });
+      return { date: label, price: parseFloat(p.close) };
+    });
+  }, [priceHistory, timeframe]);
+
+  // Build utilization data from market prices (volume-based)
+  const utilizationData = useMemo(() => {
+    if (!marketPrices?.length) return [];
+    const maxVol = Math.max(...marketPrices.map((p: any) => parseFloat(p.volume24h) || 0), 1);
+    return marketPrices.map((p: any) => ({
+      name: p.gpuType,
+      value: Math.round((parseFloat(p.volume24h) / maxVol) * 100),
+      color: gpuColors[p.gpuType] || "from-gray-500 to-gray-400",
+    }));
+  }, [marketPrices]);
 
   const stats = metrics ? [
     { label: "24h Volume", value: `${metrics.totalVolume24h.toFixed(0)} GPU-hours ($${metrics.totalVolume24h.toFixed(2)})` },
@@ -64,7 +62,14 @@ const Analytics = () => {
     { label: "Avg Clearing Price", value: `$${metrics.avgClearingPrice.toFixed(2)}/GPU-hour` },
     { label: "Filled Today", value: String(metrics.filledOrders24h) },
     { label: "GPU Types Active", value: String(Object.keys(metrics.ordersByGpuType).length) },
-  ] : mockStats;
+  ] : [
+    { label: "24h Volume", value: "—" },
+    { label: "Active Orders", value: "—" },
+    { label: "Total Orders", value: "—" },
+    { label: "Avg Clearing Price", value: "—" },
+    { label: "Filled Today", value: "—" },
+    { label: "GPU Types Active", value: "—" },
+  ];
 
   return (
     <div className="space-y-6 max-w-7xl relative">
@@ -101,8 +106,13 @@ const Analytics = () => {
           </div>
         </div>
         <div className="h-[296px]">
+          {chartData.length === 0 ? (
+            <div className="h-full flex items-center justify-center">
+              <p className="font-mono text-[11px] text-white/20">Loading price data...</p>
+            </div>
+          ) : (
           <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={priceDataByTimeframe[timeframe]}>
+            <AreaChart data={chartData}>
               <defs>
                 <linearGradient id="priceGradient" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%" stopColor="hsl(258, 78%, 56%)" stopOpacity={0.3} />
@@ -111,7 +121,7 @@ const Analytics = () => {
               </defs>
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
               <XAxis dataKey="date" tick={{ fontSize: 10, fill: "rgba(255,255,255,0.3)", fontFamily: "JetBrains Mono" }} axisLine={false} tickLine={false} />
-              <YAxis tick={{ fontSize: 10, fill: "rgba(255,255,255,0.3)", fontFamily: "JetBrains Mono" }} axisLine={false} tickLine={false} domain={[0.1, 0.3]} tickFormatter={(v) => `$${v}`} />
+              <YAxis tick={{ fontSize: 10, fill: "rgba(255,255,255,0.3)", fontFamily: "JetBrains Mono" }} axisLine={false} tickLine={false} domain={["auto", "auto"]} tickFormatter={(v) => `$${v}`} />
               <Tooltip
                 contentStyle={{
                   background: "rgba(11,12,14,0.95)",
@@ -128,6 +138,7 @@ const Analytics = () => {
               <Area type="monotone" dataKey="price" stroke="hsl(258, 78%, 56%)" strokeWidth={2} fill="url(#priceGradient)" />
             </AreaChart>
           </ResponsiveContainer>
+          )}
         </div>
       </GlassCard>
 
@@ -147,9 +158,11 @@ const Analytics = () => {
 
         {/* Utilization */}
         <GlassCard delay={0.3} className="p-6">
-          <SectionLabel>GPU Utilization by Type</SectionLabel>
+          <SectionLabel>GPU Volume by Type</SectionLabel>
           <div className="mt-4 space-y-6">
-            {utilizationData.map((gpu, i) => (
+            {utilizationData.length === 0 ? (
+              <p className="font-mono text-[11px] text-white/20 text-center py-8">Loading GPU data...</p>
+            ) : utilizationData.map((gpu: any, i: number) => (
               <div key={gpu.name} className="space-y-2">
                 <div className="flex justify-between items-center">
                   <span className="text-xs text-white/60">{gpu.name}</span>

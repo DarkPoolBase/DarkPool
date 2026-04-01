@@ -8,3 +8,4 @@ import { MarketService } from './market.service';
   exports: [MarketService],
 })
 export class MarketModule {}
+

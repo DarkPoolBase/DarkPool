@@ -283,7 +283,7 @@ const ProductDetail = () => {
 
   // Override product data with real market prices
   const product = useMemo(() => {
-    const base = productData[productId || "h100"] || productData.h100;
+    const base = productData[productId || "h100"] || productData[resolvedGpu.toLowerCase()] || productData.h100;
     const livePrice = marketPrices?.find((p: any) => p.gpuType === resolvedGpu);
     if (livePrice) {
       return {

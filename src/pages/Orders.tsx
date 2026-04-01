@@ -123,7 +123,7 @@ const Orders = () => {
             }`}
           >
             {s === "ALL" ? "All Orders" : s.charAt(0) + s.slice(1).toLowerCase()}
-            {s !== "ALL" && ` (${counts[s as keyof typeof counts]})`}
+            {s !== "ALL" && ` (${counts[s as keyof typeof counts] ?? 0})`}
           </button>
         ))}
       </div>

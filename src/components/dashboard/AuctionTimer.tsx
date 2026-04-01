@@ -12,9 +12,11 @@ export function AuctionTimer() {
   useEffect(() => {
     const unsub = subscribe("batch:phase", (data: unknown) => {
       const event = data as { batchId: number; phase: string; endsAt: number };
-      setPhase(event.phase);
-      const remaining = Math.max(0, Math.floor((event.endsAt - Date.now()) / 1000));
-      setSeconds(remaining);
+      if (event.phase) setPhase(event.phase);
+      if (event.endsAt && Number.isFinite(event.endsAt)) {
+        const remaining = Math.max(0, Math.floor((event.endsAt - Date.now()) / 1000));
+        setSeconds(remaining);
+      }
     });
     return unsub;
   }, [subscribe]);
@@ -26,10 +28,11 @@ export function AuctionTimer() {
     return () => clearInterval(interval);
   }, []);
 
-  const isUrgent = seconds <= 10;
-  const mins = Math.floor(seconds / 60);
-  const secs = seconds % 60;
-  const progress = seconds / 60;
+  const safeSeconds = Number.isFinite(seconds) ? seconds : 0;
+  const isUrgent = safeSeconds <= 10 && safeSeconds > 0;
+  const mins = Math.floor(safeSeconds / 60);
+  const secs = safeSeconds % 60;
+  const progress = safeSeconds / 60;
 
   const radius = 24;
   const circumference = 2 * Math.PI * radius;

@@ -237,6 +237,18 @@ const productData: Record<string, {
       { label: "Verified Providers", value: "6", icon: Shield },
     ],
   },
+  "h200-cluster": {
+    name: "H200 Cluster", label: "Training Cluster", price: "$15.20/GPU-hour", priceNum: 15.20,
+    providers: 4, vram: "4×H200 (564GB)", workloads: ["Next-Gen Distributed Training", "Frontier Models", "Research", "Large Inference"],
+    availability: 22, icon: Layers,
+    description: "4×H200 clusters with 564GB total HBM3e for next-generation distributed workloads. Private procurement ensures no market signal leakage.",
+    benchmarks: [
+      { label: "Avg. Uptime", value: "99.6%", icon: CheckCircle },
+      { label: "Fill Rate", value: "69%", icon: TrendingUp },
+      { label: "Interconnect", value: "NVLink 4", icon: Activity },
+      { label: "Verified Providers", value: "4", icon: Shield },
+    ],
+  },
 };
 
 

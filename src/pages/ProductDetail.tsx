@@ -93,6 +93,18 @@ const productData: Record<string, {
       { label: "Verified Providers", value: "31", icon: Shield },
     ],
   },
+  l40s: {
+    name: "NVIDIA L40S", label: "Balanced Compute", price: "$0.85/GPU-hour", priceNum: 0.85,
+    providers: 63, vram: "48GB GDDR6", workloads: ["Inference", "Fine-tuning", "Rendering", "Batch Jobs"],
+    availability: 74, icon: Cpu,
+    description: "Balanced price-performance GPU for inference and fine-tuning workloads. Private batch auctions ensure competitive pricing without order book exposure.",
+    benchmarks: [
+      { label: "Avg. Uptime", value: "99.4%", icon: CheckCircle },
+      { label: "Fill Rate", value: "89%", icon: TrendingUp },
+      { label: "Avg. Latency", value: "11ms", icon: Activity },
+      { label: "Verified Providers", value: "63", icon: Shield },
+    ],
+  },
 };
 
 

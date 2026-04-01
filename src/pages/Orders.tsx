@@ -7,9 +7,53 @@ import { ChevronDown, ChevronRight } from "lucide-react";
 import { GlassCard } from "@/components/ui/glass-card";
 import { SectionLabel } from "@/components/ui/section-label";
 import { motion, AnimatePresence } from "framer-motion";
-import { useOrders, useOrderStats, useCancelOrder } from "@/hooks/useOrders";
+import { useOrders, useOrderStats, useCancelOrder, useOrderFulfillment } from "@/hooks/useOrders";
 import { useAutoAuth } from "@/hooks/useAutoAuth";
 import { toast } from "sonner";
+
+function FulfillmentPanel({ orderId }: { orderId: string }) {
+  const { data, isLoading } = useOrderFulfillment(orderId);
+
+  if (isLoading || !data || data.status === 'PENDING' || data.status === 'PROVISIONING') {
+    return (
+      <div className="mt-3 p-3 rounded-lg bg-amber-500/5 border border-amber-500/10">
+        <p className="font-mono text-xs text-amber-400">Provisioning GPU instance...</p>
+      </div>
+    );
+  }
+
+  if (data.status === 'RUNNING') {
+    return (
+      <div className="mt-3 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+        <p className="font-mono text-xs text-emerald-400 mb-2">GPU Ready — SSH Access</p>
+        <code className="font-mono text-xs text-white/70 bg-black/30 px-3 py-2 rounded block">
+          {data.connectionString}
+        </code>
+        <p className="font-mono text-[10px] text-white/30 mt-2">
+          Expires: {new Date(data.expiresAt!).toLocaleString()}
+        </p>
+      </div>
+    );
+  }
+
+  if (data.status === 'TERMINATED') {
+    return (
+      <div className="mt-3 p-3 rounded-lg bg-white/[0.02] border border-white/[0.06]">
+        <p className="font-mono text-xs text-white/30">Instance expired</p>
+      </div>
+    );
+  }
+
+  if (data.status === 'FAILED') {
+    return (
+      <div className="mt-3 p-3 rounded-lg bg-destructive/5 border border-destructive/10">
+        <p className="font-mono text-xs text-destructive/70">Provisioning failed — contact support</p>
+      </div>
+    );
+  }
+
+  return null;
+}
 
 
 type StatusFilter = "ALL" | "ACTIVE" | "FILLED" | "CANCELLED" | "EXPIRED";
@@ -166,12 +210,7 @@ const Orders = () => {
                               <span className="text-white/30 w-32 shrink-0">Transaction</span>
                               <span className="font-mono text-primary">{order.tx}</span>
                             </p>
-                            {order.access && (
-                              <p className="flex gap-4 text-xs">
-                                <span className="text-white/30 w-32 shrink-0">Compute Access</span>
-                                <span className="font-mono text-primary">{order.access}</span>
-                              </p>
-                            )}
+                            <FulfillmentPanel orderId={order.fullId} />
                           </div>
                         </motion.div>
                       </TableCell>

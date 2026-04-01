@@ -126,3 +126,29 @@ export function useCancelOrder() {
   });
 }
 
+interface FulfillmentData {
+  status: 'PENDING' | 'PROVISIONING' | 'RUNNING' | 'TERMINATED' | 'FAILED';
+  message?: string;
+  sshHost?: string;
+  sshPort?: number;
+  sshUser?: string;
+  expiresAt?: string;
+  connectionString?: string;
+}
+
+export type { FulfillmentData };
+
+export function useOrderFulfillment(orderId: string | undefined) {
+  return useQuery({
+    queryKey: ['fulfillment', orderId],
+    queryFn: () => api.get<FulfillmentData>(`/api/orders/${orderId}/fulfillment`),
+    enabled: !!orderId,
+    refetchInterval: (query) => {
+      const status = query.state.data?.status;
+      if (status === 'RUNNING' || status === 'TERMINATED' || status === 'FAILED') return false;
+      return 15000;
+    },
+    retry: false,
+  });
+}
+

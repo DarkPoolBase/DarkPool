@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { motion, useScroll, useTransform } from "motion/react";
+import { motion, useScroll, useTransform, MotionValue } from "motion/react";
 import { useRef } from "react";
 
 export interface MagicTextProps {
@@ -10,7 +10,7 @@ export interface MagicTextProps {
 
 interface WordProps {
   children: string;
-  progress: any;
+  progress: MotionValue<number>;
   range: number[];
 }
 

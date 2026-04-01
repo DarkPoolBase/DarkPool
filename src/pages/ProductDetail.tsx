@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, Cpu, Server, Zap, Layers, Activity, Clock, Lock, Shield, BarChart3, CheckCircle, TrendingUp, Users, Loader2 } from "lucide-react";

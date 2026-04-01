@@ -49,3 +49,4 @@ export function useAutoAuth() {
   return { isAuthenticated, user, loading, authenticate };
 }
 // EIP-55 checksummed address fix
+

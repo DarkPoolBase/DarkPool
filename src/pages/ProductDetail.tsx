@@ -141,6 +141,18 @@ const productData: Record<string, {
       { label: "Verified Providers", value: "44", icon: Shield },
     ],
   },
+  "h100-week": {
+    name: "7-Day H100 Block", label: "Reserved Compute", price: "$35.28/block", priceNum: 35.28,
+    providers: 22, vram: "80GB HBM3", workloads: ["Pre-training", "Long Training Runs", "Research", "Large Models"],
+    availability: 38, icon: Clock,
+    description: "7-day reserved H100 blocks for sustained pre-training workloads. Weekly commitments secure capacity at locked-in rates with full privacy.",
+    benchmarks: [
+      { label: "Guarantee", value: "99.8%", icon: CheckCircle },
+      { label: "Block Size", value: "7 days", icon: Clock },
+      { label: "Fill Rate", value: "80%", icon: TrendingUp },
+      { label: "Verified Providers", value: "22", icon: Shield },
+    ],
+  },
 };
 
 

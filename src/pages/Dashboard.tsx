@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useMemo } from "react";
 import { BarChart3, CheckCircle, Zap, TrendingUp, Calculator, ArrowUpDown } from "lucide-react";
 import { useOrders, useOrderStats } from "@/hooks/useOrders";

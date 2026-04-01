@@ -46,7 +46,9 @@ export function useMyProvider(enabled = true) {
     queryKey: ['providers', 'me'],
     queryFn: () => api.get<ProviderData | null>('/api/providers/me'),
     enabled,
-    retry: false,
+    retry: 1,
+    retryDelay: 3000,
+    staleTime: 30_000,
     placeholderData: null,
   });
 }
@@ -89,8 +91,9 @@ export function useRegisterProvider() {
       region?: string;
       minPricePerHour?: number;
     }) => api.post<ProviderData>('/api/providers', data),
-    onSuccess: () => {
-      qc.invalidateQueries({ queryKey: ['providers'] });
+    onSuccess: (provider) => {
+      // Immediately show dashboard without waiting for a refetch
+      qc.setQueryData(['providers', 'me'], provider);
     },
   });
 }

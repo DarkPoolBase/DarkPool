@@ -177,6 +177,18 @@ const productData: Record<string, {
       { label: "Verified Providers", value: "38", icon: Shield },
     ],
   },
+  "training-credits": {
+    name: "Training Credits", label: "Prepaid Compute", price: "$0.18/GPU-hour", priceNum: 0.18,
+    providers: 387, vram: "A100+ tier", workloads: ["Model Training", "Fine-tuning", "Pre-training", "Experimentation"],
+    availability: 95, icon: Activity,
+    description: "Pre-purchased credits optimized for training workloads on A100+ GPUs. Flexible redemption across providers with private auction-determined rates.",
+    benchmarks: [
+      { label: "Tier", value: "A100+", icon: CheckCircle },
+      { label: "Expiry", value: "90 days", icon: Clock },
+      { label: "Min. Purchase", value: "100 units", icon: TrendingUp },
+      { label: "Providers", value: "387", icon: Shield },
+    ],
+  },
 };
 
 

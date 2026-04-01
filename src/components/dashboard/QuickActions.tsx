@@ -27,7 +27,7 @@ export function QuickActions() {
           <button
             key={action.label}
             onClick={() => navigate(action.route)}
-            className="flex items-center gap-2 px-4 py-4 rounded-xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-md transition-all duration-300 ease-out text-left group hover:bg-white/[0.06] hover:border-white/[0.15]"
+            className="flex items-center gap-2 px-4 py-6 rounded-xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-md transition-all duration-300 ease-out text-left group hover:bg-white/[0.06] hover:border-white/[0.15]"
           >
             <action.icon className={`h-4 w-4 ${iconColorMap[action.accent]} transition-transform duration-300 group-hover:scale-110`} />
             <span className="text-xs text-white/60 group-hover:text-white/90 transition-colors duration-300 font-medium">{action.label}</span>

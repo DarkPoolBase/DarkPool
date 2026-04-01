@@ -212,7 +212,7 @@ const Orders = () => {
                                 <span className="font-mono text-primary">{order.tx}</span>
                               </p>
                             )}
-                            {order.status === "FILLED" && <FulfillmentPanel orderId={order.fullId} />}
+                            {order.status === "FILLED" && order.side === "BUY" && <FulfillmentPanel orderId={order.fullId} />}
                           </div>
                         </motion.div>
                       </TableCell>

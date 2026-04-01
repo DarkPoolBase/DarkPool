@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { DollarSign, BarChart3, CheckCircle, Zap, TrendingUp, Calculator } from "lucide-react";
-import { useOrderMetrics, useOrderStats, useSettlements } from "@/hooks/useOrders";
+import { useOrders, useOrderStats, useSettlements } from "@/hooks/useOrders";
 import { useAutoAuth } from "@/hooks/useAutoAuth";
 import { useMarketStats } from "@/hooks/useMarket";
 import { StatsCard } from "@/components/dashboard/StatsCard";
@@ -15,11 +15,27 @@ import { AreaChart, Area, ResponsiveContainer, XAxis, YAxis, Tooltip, CartesianG
 
 const Dashboard = () => {
   const [tab, setTab] = useState<"overview" | "savings">("overview");
-  const { isAuthenticated, authenticate } = useAutoAuth();
-  const { data: metrics } = useOrderMetrics();
+  const { isAuthenticated } = useAutoAuth();
+  const { data: userOrders } = useOrders({ limit: 100 }, isAuthenticated);
   const { data: stats } = useOrderStats(isAuthenticated);
   const { data: settlements } = useSettlements(10);
   const { data: marketStats } = useMarketStats();
+
+  // Derive user-specific metrics from their orders
+  const userEscrow = useMemo(() => {
+    if (!userOrders?.data?.length) return 0;
+    return userOrders.data
+      .filter((o: any) => o.status === 'ACTIVE' || o.status === 'PENDING')
+      .reduce((sum: number, o: any) => sum + parseFloat(o.escrowAmount || '0'), 0);
+  }, [userOrders]);
+
+  const userFilledToday = useMemo(() => {
+    if (!userOrders?.data?.length) return 0;
+    const today = new Date().toDateString();
+    return userOrders.data.filter(
+      (o: any) => o.status === 'FILLED' && new Date(o.updatedAt).toDateString() === today
+    ).length;
+  }, [userOrders]);
 
   // Build portfolio chart from real settlement data
   const portfolioData = useMemo(() => {
@@ -81,20 +97,19 @@ const Dashboard = () => {
       {/* Stats Row — 8pt gap */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatsCard
-          icon={DollarSign} label="Escrow Balance" value={`$${metrics?.totalVolume24h?.toFixed(2) ?? '2,450.00'}`}
-          change="+12.5%" changeType="positive"
-          sparkData={[1800, 2100, 1950, 2300, 2150, 2400, 2450]}
+          icon={DollarSign} label="Escrow Balance" value={`$${userEscrow.toFixed(2)}`}
+          sparkData={[0, 0, 0, 0, 0, 0, userEscrow]}
           sparkColor="rgb(52, 211, 153)" glow delay={0}
         />
         <StatsCard
-          icon={BarChart3} label="Active Orders" value={String(stats?.ACTIVE ?? metrics?.activeOrders ?? 0)}
-          sparkData={[1, 3, 2, 4, 3, 2, stats?.ACTIVE ?? 3]}
+          icon={BarChart3} label="Active Orders" value={String(stats?.ACTIVE ?? 0)}
+          sparkData={[0, 0, 0, 0, 0, 0, stats?.ACTIVE ?? 0]}
           sparkColor="rgb(139, 92, 246)" delay={0.08}
         />
         <StatsCard
-          icon={CheckCircle} label="Filled Today" value={`${metrics?.filledOrders24h ?? 0} orders`}
-          change={metrics?.filledOrders24h ? `+${metrics.filledOrders24h}` : undefined} changeType="positive"
-          sparkData={[80, 110, 95, 130, 140, 150, metrics?.filledOrders24h ?? 0]}
+          icon={CheckCircle} label="Filled Today" value={`${userFilledToday} orders`}
+          change={userFilledToday > 0 ? `+${userFilledToday}` : undefined} changeType="positive"
+          sparkData={[0, 0, 0, 0, 0, 0, userFilledToday]}
           sparkColor="rgb(52, 211, 153)" delay={0.16}
         />
         <AuctionTimer />

@@ -1,8 +1,8 @@
 import { useState, useMemo } from "react";
-import { DollarSign, BarChart3, CheckCircle, Zap, TrendingUp, Calculator } from "lucide-react";
-import { useOrders, useOrderStats, useSettlements } from "@/hooks/useOrders";
+import { BarChart3, CheckCircle, Zap, TrendingUp, Calculator, ArrowUpDown } from "lucide-react";
+import { useOrders, useOrderStats } from "@/hooks/useOrders";
 import { useAutoAuth } from "@/hooks/useAutoAuth";
-import { useMarketStats } from "@/hooks/useMarket";
+import { useMarketStats, usePriceHistory } from "@/hooks/useMarket";
 import { StatsCard } from "@/components/dashboard/StatsCard";
 import { OrderTable } from "@/components/dashboard/OrderTable";
 import { QuickActions } from "@/components/dashboard/QuickActions";
@@ -13,19 +13,31 @@ import { GlassCard } from "@/components/ui/glass-card";
 import { SavingsCalculator } from "@/components/dashboard/SavingsCalculator";
 import { AreaChart, Area, ResponsiveContainer, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
 
+const portfolioIntervalMap: Record<string, string> = {
+  "1D": "1h", "1W": "4h", "1M": "1d", "ALL": "1w",
+};
+
 const Dashboard = () => {
   const [tab, setTab] = useState<"overview" | "savings">("overview");
+  const [portfolioTimeframe, setPortfolioTimeframe] = useState("1W");
   const { isAuthenticated } = useAutoAuth();
   const { data: userOrders } = useOrders({ limit: 100 }, isAuthenticated);
   const { data: stats } = useOrderStats(isAuthenticated);
-  const { data: settlements } = useSettlements(10);
   const { data: marketStats } = useMarketStats();
+  const { data: priceHistory } = usePriceHistory('H100', portfolioIntervalMap[portfolioTimeframe]);
 
   // Derive user-specific metrics from their orders
-  const userEscrow = useMemo(() => {
+  const userEscrowBalance = useMemo(() => {
     if (!userOrders?.data?.length) return 0;
     return userOrders.data
       .filter((o: any) => o.status === 'ACTIVE' || o.status === 'PENDING')
+      .reduce((sum: number, o: any) => sum + parseFloat(o.escrowAmount || '0'), 0);
+  }, [userOrders]);
+
+  const userTotalTraded = useMemo(() => {
+    if (!userOrders?.data?.length) return 0;
+    return userOrders.data
+      .filter((o: any) => o.status === 'FILLED')
       .reduce((sum: number, o: any) => sum + parseFloat(o.escrowAmount || '0'), 0);
   }, [userOrders]);
 
@@ -37,24 +49,18 @@ const Dashboard = () => {
     ).length;
   }, [userOrders]);
 
-  // Build portfolio chart from real settlement data
+  // Build portfolio chart from price history API (shows market price trend)
   const portfolioData = useMemo(() => {
-    if (!settlements?.length) return [];
-    const sorted = [...settlements].sort(
-      (a: any, b: any) => new Date(a.settledAt || a.createdAt).getTime() - new Date(b.settledAt || b.createdAt).getTime()
-    );
-    let cumulative = 0;
-    return sorted.map((s: any) => {
-      cumulative += parseFloat(s.totalVolume || s.clearingPrice || s.clearing_price || '0');
-      const d = new Date(s.settledAt || s.createdAt);
-      return {
-        date: d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
-        value: Math.round(cumulative * 100) / 100,
-      };
+    if (!priceHistory?.length) return [];
+    return priceHistory.map((p: any) => {
+      const d = new Date(p.timestamp);
+      let label: string;
+      if (portfolioTimeframe === '1D') label = d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+      else if (portfolioTimeframe === 'ALL') label = d.toLocaleDateString('en-US', { month: 'short' });
+      else label = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      return { date: label, value: parseFloat(p.close) };
     });
-  }, [settlements]);
-
-  const currentPortfolioValue = portfolioData.length > 0 ? portfolioData[portfolioData.length - 1].value : 0;
+  }, [priceHistory, portfolioTimeframe]);
 
   return (
     <div className="space-y-6 max-w-7xl relative">
@@ -97,8 +103,8 @@ const Dashboard = () => {
       {/* Stats Row — 8pt gap */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatsCard
-          icon={DollarSign} label="Escrow Balance" value={`$${userEscrow.toFixed(2)}`}
-          sparkData={[0, 0, 0, 0, 0, 0, userEscrow]}
+          icon={ArrowUpDown} label="Total Traded" value={`$${userTotalTraded.toFixed(2)}`}
+          sparkData={[0, 0, 0, 0, 0, 0, userTotalTraded]}
           sparkColor="rgb(52, 211, 153)" glow delay={0}
         />
         <StatsCard
@@ -121,20 +127,16 @@ const Dashboard = () => {
           <div>
             <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40 block mb-2">Portfolio Value</span>
             <div className="flex items-end gap-3">
-              <AnimatedNumber value={currentPortfolioValue} prefix="$" decimals={2} className="text-2xl md:text-3xl font-mono font-semibold tracking-tight text-white tabular-nums" />
-              {portfolioData.length > 1 && (
-                <span className="inline-flex items-center px-2 py-1 rounded-full text-[10px] font-mono font-medium border bg-emerald-500/10 text-emerald-400 border-emerald-500/20 mb-0.5">
-                  {portfolioData.length} settlements
-                </span>
-              )}
+              <AnimatedNumber value={userEscrowBalance} prefix="$" decimals={2} className="text-2xl md:text-3xl font-mono font-semibold tracking-tight text-white tabular-nums" />
             </div>
           </div>
           <div className="flex gap-1">
-            {["1D", "1W", "1M", "ALL"].map((tf, i) => (
+            {["1D", "1W", "1M", "ALL"].map((tf) => (
               <button
                 key={tf}
+                onClick={() => setPortfolioTimeframe(tf)}
                 className={`px-3 md:px-4 py-1.5 md:py-2 text-[10px] font-mono tracking-wider rounded-full border transition-all duration-300 ${
-                  i === 1
+                  portfolioTimeframe === tf
                     ? "text-white bg-white/[0.06] border-white/10"
                     : "text-white/30 border-transparent hover:text-white/60 hover:bg-white/[0.03]"
                 }`}
@@ -148,7 +150,7 @@ const Dashboard = () => {
         <div className="h-[180px] md:h-[224px]">
           {portfolioData.length === 0 ? (
             <div className="h-full flex items-center justify-center">
-              <p className="font-mono text-[11px] text-white/20">No settlement data yet</p>
+              <p className="font-mono text-[11px] text-white/20">Loading market data...</p>
             </div>
           ) : (
           <ResponsiveContainer width="100%" height="100%">
@@ -173,7 +175,7 @@ const Dashboard = () => {
                   boxShadow: "0 0 30px rgba(139,92,246,0.15)",
                 }}
                 labelStyle={{ color: "rgba(255,255,255,0.3)" }}
-                formatter={(value: number) => [`$${value.toFixed(2)}`, "Value"]}
+                formatter={(value: number) => [`$${value.toFixed(4)}`, "H100 Price"]}
               />
               <Area type="monotone" dataKey="value" stroke="rgb(139,92,246)" strokeWidth={2} fill="url(#portfolioGradient)" />
             </AreaChart>

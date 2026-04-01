@@ -3,12 +3,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
-  Settings as SettingsIcon, Shield, Cpu, MapPin, Wifi,
-  Zap, TrendingUp, CheckCircle2, DollarSign, Activity, BarChart3, Upload, Loader2
+  Cpu, MapPin, Wifi, Zap, TrendingUp, CheckCircle2,
+  DollarSign, Activity, Upload, Loader2, Pencil, Check, X
 } from "lucide-react";
 import { GlassCard } from "@/components/ui/glass-card";
 import { SectionLabel } from "@/components/ui/section-label";
-import { useMyProvider, useMyEarnings, useRegisterProvider } from "@/hooks/useProviders";
+import { useMyProvider, useMyEarnings, useRegisterProvider, useUpdateMinPrice } from "@/hooks/useProviders";
 import { useAutoAuth } from "@/hooks/useAutoAuth";
 import { toast } from "sonner";
 
@@ -94,9 +94,7 @@ function RegistrationForm() {
           <div className="flex flex-col gap-2">
             <label className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">GPU Count</label>
             <Input
-              type="number"
-              min={1}
-              value={count}
+              type="number" min={1} value={count}
               onChange={(e) => setCount(parseInt(e.target.value) || 1)}
               className="font-mono border-white/[0.06] bg-white/[0.02] hover:border-white/[0.12] transition-colors h-10"
             />
@@ -123,10 +121,7 @@ function RegistrationForm() {
             <DollarSign className="h-3 w-3" /> Min Ask Price (USDC / GPU-hr)
           </label>
           <Input
-            type="number"
-            step={0.01}
-            min={0.01}
-            value={minPrice}
+            type="number" step={0.01} min={0.01} value={minPrice}
             onChange={(e) => setMinPrice(parseFloat(e.target.value) || 0.10)}
             className="font-mono border-white/[0.06] bg-white/[0.02] hover:border-white/[0.12] transition-colors h-10"
           />
@@ -134,8 +129,7 @@ function RegistrationForm() {
 
         <div className="rounded-xl bg-primary/[0.05] border border-primary/10 p-4">
           <p className="font-mono text-[10px] text-white/40">
-            The market maker will auto-place SELL orders at your min price each 45-second batch cycle.
-            You earn the clearing price when matched with a buyer.
+            The market maker will auto-place SELL orders at your min price each 45-second batch cycle. You earn the clearing price when matched with a buyer.
           </p>
         </div>
 
@@ -152,20 +146,59 @@ function RegistrationForm() {
   );
 }
 
+function MinPriceEditor({ provider }: { provider: any }) {
+  const [editing, setEditing] = useState(false);
+  const [value, setValue] = useState(parseFloat(provider.minPricePerHour).toFixed(2));
+  const updateMinPrice = useUpdateMinPrice(provider.id);
+
+  const save = async () => {
+    try {
+      await updateMinPrice.mutateAsync(parseFloat(value));
+      toast.success("Min price updated");
+      setEditing(false);
+    } catch {
+      toast.error("Failed to update price");
+    }
+  };
+
+  if (!editing) {
+    return (
+      <div className="flex items-center gap-2">
+        <span className="font-mono text-sm font-semibold text-foreground">${parseFloat(provider.minPricePerHour).toFixed(2)}/hr</span>
+        <button onClick={() => setEditing(true)} className="text-white/30 hover:text-white/60 transition-colors">
+          <Pencil className="h-3 w-3" />
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex items-center gap-2">
+      <Input
+        type="number" step={0.01} min={0.01}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        className="font-mono h-7 w-24 text-xs border-white/[0.06] bg-white/[0.02]"
+        autoFocus
+      />
+      <button onClick={save} className="text-emerald-400 hover:text-emerald-300">
+        <Check className="h-3.5 w-3.5" />
+      </button>
+      <button onClick={() => setEditing(false)} className="text-white/30 hover:text-white/50">
+        <X className="h-3.5 w-3.5" />
+      </button>
+    </div>
+  );
+}
+
 function ProviderDashboard({ provider }: { provider: any }) {
   const { data: earningsData } = useMyEarnings(true);
 
   const gpuLabel = GPU_OPTIONS.find(g => g.value === provider.gpuTypes?.[0]?.type)?.label
     ?? provider.gpuTypes?.[0]?.type ?? "—";
 
-  const fillRate = provider.totalJobs > 0
-    ? "Active"
-    : "Awaiting match";
-
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-
-      {/* Active Listing */}
       <GlassCard delay={0.1} className="p-6">
         <div className="flex flex-col gap-6">
           <div className="flex items-center justify-between">
@@ -192,8 +225,14 @@ function ProviderDashboard({ provider }: { provider: any }) {
           </div>
 
           <div className="grid grid-cols-2 gap-4">
+            <div className="p-3 rounded-xl bg-white/[0.03]">
+              <div className="flex items-center gap-1.5 mb-1.5">
+                <DollarSign className="h-3 w-3 text-muted-foreground" />
+                <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">Min Ask</span>
+              </div>
+              <MinPriceEditor provider={provider} />
+            </div>
             {[
-              { label: "Min Ask", value: `$${parseFloat(provider.minPricePerHour).toFixed(2)}/hr`, icon: DollarSign },
               { label: "Total Jobs", value: String(provider.totalJobs), icon: Activity },
               { label: "Reputation", value: `${parseFloat(provider.reputation).toFixed(1)} / 5.0`, icon: TrendingUp },
               { label: "Uptime", value: `${parseFloat(provider.uptimePct).toFixed(1)}%`, icon: Wifi },
@@ -207,19 +246,9 @@ function ProviderDashboard({ provider }: { provider: any }) {
               </div>
             ))}
           </div>
-
-          <div className="flex gap-2">
-            <Button variant="outline" size="sm" className="text-[10px] gap-1.5 font-mono border-white/[0.06] bg-transparent hover:bg-white/[0.04] text-muted-foreground">
-              <SettingsIcon className="h-3 w-3" /> Settings
-            </Button>
-            <Button variant="outline" size="sm" className="text-[10px] gap-1.5 font-mono border-white/[0.06] bg-transparent hover:bg-white/[0.04] text-muted-foreground">
-              <BarChart3 className="h-3 w-3" /> Details
-            </Button>
-          </div>
         </div>
       </GlassCard>
 
-      {/* Earnings */}
       <GlassCard delay={0.2} glow className="p-6 lg:col-span-2">
         <div className="flex flex-col gap-6">
           <SectionLabel pulse>Earnings</SectionLabel>
@@ -228,7 +257,7 @@ function ProviderDashboard({ provider }: { provider: any }) {
             {[
               { label: "Total Earned", value: `$${parseFloat(earningsData?.totalEarnings ?? '0').toFixed(4)}`, accent: true },
               { label: "Pending Payout", value: `$${parseFloat(earningsData?.pendingEarnings ?? '0').toFixed(4)}` },
-              { label: "Status", value: fillRate },
+              { label: "Status", value: provider.totalJobs > 0 ? "Active" : "Awaiting match" },
               { label: "Completed Jobs", value: String(provider.totalJobs) },
             ].map((stat) => (
               <div key={stat.label} className="p-4 rounded-xl bg-white/[0.03]">
@@ -249,7 +278,7 @@ function ProviderDashboard({ provider }: { provider: any }) {
                 <p className="font-mono text-xs text-white/20">No earnings yet — waiting for your first matched order</p>
               </div>
             )}
-            {earningsData?.earnings.map((e) => (
+            {earningsData?.earnings.map((e: any) => (
               <div key={e.id} className="flex items-center justify-between px-4 py-3 border-b border-white/[0.04] last:border-0">
                 <div className="flex items-center gap-3">
                   <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400/60" />
@@ -270,7 +299,7 @@ function ProviderDashboard({ provider }: { provider: any }) {
             </Button>
             <Button className="flex-1 h-12 gap-2 text-sm font-semibold bg-gradient-to-r from-primary to-[hsl(258,78%,65%)] hover:from-primary/90 hover:to-[hsl(258,78%,60%)] shadow-[0_0_20px_rgba(108,60,233,0.3)] hover:shadow-[0_0_30px_rgba(108,60,233,0.5)] transition-all duration-300 border-0">
               <Zap className="h-4 w-4" />
-              Update Min Price
+              Add GPU Type
             </Button>
           </div>
         </div>

@@ -117,6 +117,18 @@ const productData: Record<string, {
       { label: "Verified Providers", value: "18", icon: Shield },
     ],
   },
+  a10g: {
+    name: "NVIDIA A10G", label: "Budget Inference", price: "$0.35/GPU-hour", priceNum: 0.35,
+    providers: 142, vram: "24GB GDDR6", workloads: ["Inference", "Dev/Test", "Fine-tuning", "Batch Jobs"],
+    availability: 83, icon: Zap,
+    description: "Cost-efficient GPU for inference and development workloads. High availability and budget-friendly pricing through private batch auctions.",
+    benchmarks: [
+      { label: "Avg. Uptime", value: "98.8%", icon: CheckCircle },
+      { label: "Fill Rate", value: "92%", icon: TrendingUp },
+      { label: "Avg. Latency", value: "7ms", icon: Activity },
+      { label: "Verified Providers", value: "142", icon: Shield },
+    ],
+  },
 };
 
 

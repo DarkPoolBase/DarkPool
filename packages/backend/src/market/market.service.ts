@@ -41,18 +41,35 @@ export class MarketService {
     if (cached) return JSON.parse(cached);
 
     // TODO: Query from settlements table once indexer is running
+    // Map interval to milliseconds for proper time spacing
+    const intervalMs: Record<string, number> = {
+      '1h': 3600000,
+      '4h': 4 * 3600000,
+      '1d': 24 * 3600000,
+      '1w': 7 * 24 * 3600000,
+    };
+    const stepMs = intervalMs[interval] || 3600000;
+
+    // Use a seeded approach so the same interval+gpuType returns consistent data
+    const basePrices: Record<string, number> = {
+      H100: 2.5, A100: 1.2, L40S: 0.85, H200: 3.8, A10G: 0.35,
+    };
+    const base = basePrices[gpuType] || 1.0;
+
+    // Generate deterministic-ish data using the timestamp as seed
     const history = Array.from({ length: limit }, (_, i) => {
-      const time = new Date(Date.now() - (limit - i) * 3600000);
-      const base = gpuType === 'H100' ? 2.5 : gpuType === 'A100' ? 1.2 : 0.85;
-      const variance = (Math.random() - 0.5) * 0.2;
-      const price = (base + variance).toFixed(4);
+      const time = new Date(Date.now() - (limit - i) * stepMs);
+      // Use day-of-year + index as a simple seed for consistency
+      const seed = (time.getDate() * 100 + i * 7 + time.getHours()) % 100;
+      const variance = ((seed / 100) - 0.5) * 0.4 * base;
+      const price = Math.max(0.01, base + variance);
       return {
         timestamp: time.toISOString(),
-        open: price,
-        high: (parseFloat(price) + 0.05).toFixed(4),
-        low: (parseFloat(price) - 0.05).toFixed(4),
-        close: price,
-        volume: Math.floor(Math.random() * 500 + 100).toString(),
+        open: price.toFixed(4),
+        high: (price + base * 0.02).toFixed(4),
+        low: (price - base * 0.02).toFixed(4),
+        close: price.toFixed(4),
+        volume: Math.floor(200 + seed * 5).toString(),
       };
     });
 

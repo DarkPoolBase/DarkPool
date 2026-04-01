@@ -10,14 +10,6 @@ import { useOrders, useOrderStats, useCancelOrder } from "@/hooks/useOrders";
 import { useAutoAuth } from "@/hooks/useAutoAuth";
 import { toast } from "sonner";
 
-const mockOrders = [
-  { id: "#4521", side: "BUY", gpu: "H100", qty: "24 hrs", price: "$0.22", status: "FILLED" as const, submitted: "Mar 26, 2026 14:32:15 UTC", filled: "Mar 26, 2026 14:33:00 UTC (Batch #4521)", clearing: "$0.21/GPU-hour", total: "$5.04 USDC", tx: "0x7a3b...f82c", access: "ssh://compute-xyz123.darkpool.io" },
-  { id: "#4520", side: "BUY", gpu: "A100", qty: "48 hrs", price: "$0.18", status: "ACTIVE" as const, submitted: "Mar 26, 2026 13:15:00 UTC" },
-  { id: "#4519", side: "BUY", gpu: "A100", qty: "72 hrs", price: "$0.19", status: "CANCELLED" as const, submitted: "Mar 26, 2026 12:00:00 UTC" },
-  { id: "#4518", side: "SELL", gpu: "RTX 4090", qty: "24 hrs", price: "$0.09", status: "FILLED" as const, submitted: "Mar 25, 2026 22:00:00 UTC", filled: "Mar 25, 2026 22:01:00 UTC (Batch #4518)", clearing: "$0.08/GPU-hr", total: "$1.92 USDC", tx: "0x9c1a...d43e" },
-  { id: "#4517", side: "SELL", gpu: "A100", qty: "168 hrs", price: "$0.16", status: "FILLED" as const, submitted: "Mar 25, 2026 18:30:00 UTC", filled: "Mar 25, 2026 18:31:00 UTC (Batch #4517)", clearing: "$0.16/GPU-hr", total: "$26.88 USDC", tx: "0x2f4d...a91b" },
-  { id: "#4516", side: "BUY", gpu: "H100", qty: "48 hrs", price: "$0.30", status: "EXPIRED" as const, submitted: "Mar 25, 2026 10:00:00 UTC" },
-];
 
 type StatusFilter = "ALL" | "ACTIVE" | "FILLED" | "CANCELLED" | "EXPIRED";
 
@@ -34,23 +26,21 @@ const Orders = () => {
   );
   const { data: stats } = useOrderStats(isAuthenticated);
 
-  // Map API orders to display format, fallback to mock
-  const orders = apiOrders?.data?.length
-    ? apiOrders.data.map((o) => ({
-        id: o.id.slice(0, 8),
-        fullId: o.id,
-        side: o.side,
-        gpu: o.gpuType,
-        qty: `${o.duration} hrs`,
-        price: `$${parseFloat(o.pricePerHour).toFixed(2)}`,
-        status: o.status as "ACTIVE" | "FILLED" | "CANCELLED" | "EXPIRED",
-        submitted: new Date(o.createdAt).toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'UTC' }) + ' UTC',
-        ...(o.clearingPrice && { clearing: `$${parseFloat(o.clearingPrice).toFixed(2)}/GPU-hr` }),
-        ...(o.escrowAmount && { total: `$${parseFloat(o.escrowAmount).toFixed(2)} USDC` }),
-        ...(o.txHash && { tx: o.txHash.slice(0, 6) + '...' + o.txHash.slice(-4) }),
-        ...(o.batchId && { filled: `Batch #${o.batchId}` }),
-      }))
-    : mockOrders;
+  // Map API orders to display format
+  const orders = (apiOrders?.data || []).map((o) => ({
+    id: o.id.slice(0, 8),
+    fullId: o.id,
+    side: o.side,
+    gpu: o.gpuType,
+    qty: `${o.duration} hrs`,
+    price: `$${parseFloat(o.pricePerHour).toFixed(2)}`,
+    status: o.status as "ACTIVE" | "FILLED" | "CANCELLED" | "EXPIRED",
+    submitted: new Date(o.createdAt).toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'UTC' }) + ' UTC',
+    ...(o.clearingPrice && { clearing: `$${parseFloat(o.clearingPrice).toFixed(2)}/GPU-hr` }),
+    ...(o.escrowAmount && { total: `$${parseFloat(o.escrowAmount).toFixed(2)} USDC` }),
+    ...(o.txHash && { tx: o.txHash.slice(0, 6) + '...' + o.txHash.slice(-4) }),
+    ...(o.batchId && { filled: `Batch #${o.batchId}` }),
+  }));
 
   const filtered = filter === "ALL" ? orders : orders.filter((o) => o.status === filter);
   const counts = stats ?? {
@@ -108,7 +98,14 @@ const Orders = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {filtered.map((order) => (
+            {filtered.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={7} className="text-center py-16">
+                  <p className="font-mono text-sm text-white/20 mb-3">No orders found</p>
+                  <p className="font-mono text-[11px] text-white/10">Place your first order on the Marketplace to get started</p>
+                </TableCell>
+              </TableRow>
+            ) : filtered.map((order) => (
               <>
                 <TableRow
                   key={order.id}

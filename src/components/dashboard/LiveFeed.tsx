@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { GlassCard } from "@/components/ui/glass-card";
 import { useWebSocket } from "@/hooks/useWebSocket";
+import { useSettlements } from "@/hooks/useOrders";
 
 interface FeedItem {
   title: string;
@@ -27,7 +28,22 @@ function formatTimeAgo(timestamp: number): string {
 }
 
 export function LiveFeed() {
-  const [feedItems, setFeedItems] = useState<FeedItem[]>(defaultFeedItems);
+  const { data: settlements } = useSettlements(6);
+
+  const realFeedItems: FeedItem[] = settlements?.length
+    ? settlements.map((s: any) => ({
+        title: `Batch #${s.batchId} settled`,
+        detail: `${parseFloat(s.totalVolume).toFixed(0)} GPU-hrs @ $${parseFloat(s.clearingPrice).toFixed(2)}/hr — ${s.numFills} fills`,
+        time: s.settledAt ? new Date(s.settledAt).toLocaleTimeString() : 'Recent',
+        highlight: false,
+      }))
+    : [];
+
+  const [feedItems, setFeedItems] = useState<FeedItem[]>(realFeedItems.length ? realFeedItems : defaultFeedItems);
+
+  useEffect(() => {
+    if (realFeedItems.length > 0) setFeedItems(realFeedItems);
+  }, [settlements]);
   const { subscribe, connected } = useWebSocket();
 
   useEffect(() => {

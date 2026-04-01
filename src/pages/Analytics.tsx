@@ -6,6 +6,7 @@ import { SectionLabel } from "@/components/ui/section-label";
 import { AnimatedNumber } from "@/components/ui/animated-number";
 import { GlowBlob } from "@/components/ui/glow-blob";
 import { motion } from "framer-motion";
+import { useOrderMetrics, useSettlements } from "@/hooks/useOrders";
 
 const priceDataByTimeframe: Record<string, { date: string; price: number }[]> = {
   "1D": [
@@ -42,7 +43,7 @@ const utilizationData = [
   { name: "RTX 3090", value: 33, color: "from-amber-500 to-amber-400" },
 ];
 
-const stats = [
+const mockStats = [
   { label: "24h Volume", value: "12,450 GPU-hours ($2,487.50)" },
   { label: "Active Providers", value: "387" },
   { label: "Total GPUs Available", value: "1,240" },
@@ -53,6 +54,17 @@ const stats = [
 
 const Analytics = () => {
   const [timeframe, setTimeframe] = useState("1W");
+  const { data: metrics } = useOrderMetrics();
+  const { data: settlements } = useSettlements(20);
+
+  const stats = metrics ? [
+    { label: "24h Volume", value: `${metrics.totalVolume24h.toFixed(0)} GPU-hours ($${metrics.totalVolume24h.toFixed(2)})` },
+    { label: "Active Orders", value: String(metrics.activeOrders) },
+    { label: "Total Orders", value: String(metrics.totalOrders) },
+    { label: "Avg Clearing Price", value: `$${metrics.avgClearingPrice.toFixed(2)}/GPU-hour` },
+    { label: "Filled Today", value: String(metrics.filledOrders24h) },
+    { label: "GPU Types Active", value: String(Object.keys(metrics.ordersByGpuType).length) },
+  ] : mockStats;
 
   return (
     <div className="space-y-6 max-w-7xl relative">

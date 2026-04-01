@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { DollarSign, BarChart3, CheckCircle, Zap, TrendingUp, Calculator } from "lucide-react";
-import { useOrderMetrics, useOrderStats } from "@/hooks/useOrders";
+import { useOrderMetrics, useOrderStats, useSettlements } from "@/hooks/useOrders";
 import { useAutoAuth } from "@/hooks/useAutoAuth";
 import { StatsCard } from "@/components/dashboard/StatsCard";
 import { OrderTable } from "@/components/dashboard/OrderTable";
@@ -26,9 +26,10 @@ const portfolioData = [
 
 const Dashboard = () => {
   const [tab, setTab] = useState<"overview" | "savings">("overview");
-  const { isAuthenticated } = useAutoAuth();
+  const { isAuthenticated, authenticate } = useAutoAuth();
   const { data: metrics } = useOrderMetrics();
   const { data: stats } = useOrderStats(isAuthenticated);
+  const { data: settlements } = useSettlements(10);
 
   return (
     <div className="space-y-6 max-w-7xl relative">

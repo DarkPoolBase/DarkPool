@@ -174,8 +174,7 @@ const Orders = () => {
                   <TableCell className="py-4">
                     {order.status === "ACTIVE" && (
                       <div className="flex gap-2">
-                        <Button variant="outline" size="sm" className="text-[10px] h-8 border-white/[0.06] bg-transparent hover:bg-white/[0.04] text-white/50">Cancel</Button>
-                        <Button variant="outline" size="sm" className="text-[10px] h-8 border-white/[0.06] bg-transparent hover:bg-white/[0.04] text-white/50">Modify</Button>
+                        <Button variant="outline" size="sm" className="text-[10px] h-8 border-white/[0.06] bg-transparent hover:bg-white/[0.04] text-white/50" onClick={(e) => { e.stopPropagation(); handleCancel(order.fullId); }}>Cancel</Button>
                       </div>
                     )}
                     {order.status === "FILLED" && (
@@ -184,7 +183,7 @@ const Orders = () => {
                   </TableCell>
                 </TableRow>
                 <AnimatePresence>
-                  {expandedId === order.id && order.status === "FILLED" && (
+                  {expandedId === order.id && (
                     <TableRow key={`${order.id}-detail`} className="border-white/[0.04]">
                       <TableCell colSpan={8} className="p-0">
                         <motion.div
@@ -197,20 +196,23 @@ const Orders = () => {
                           <div className="p-6 bg-primary/[0.02] border-l-2 border-l-primary/30 space-y-2">
                             {[
                               ["Submitted", order.submitted],
-                              ["Filled", order.filled],
-                              ["Clearing Price", order.clearing],
-                              ["Total Paid", order.total],
+                              ["Status", order.status],
+                              ...(order.filled ? [["Filled", order.filled]] : []),
+                              ...(order.clearing ? [["Clearing Price", order.clearing]] : []),
+                              ...(order.total ? [["Total Paid", order.total]] : []),
                             ].map(([label, val]) => (
                               <p key={label} className="flex gap-4 text-xs">
                                 <span className="text-white/30 w-32 shrink-0">{label}</span>
                                 <span className="font-mono text-white/60">{val}</span>
                               </p>
                             ))}
-                            <p className="flex gap-4 text-xs">
-                              <span className="text-white/30 w-32 shrink-0">Transaction</span>
-                              <span className="font-mono text-primary">{order.tx}</span>
-                            </p>
-                            <FulfillmentPanel orderId={order.fullId} />
+                            {order.tx && (
+                              <p className="flex gap-4 text-xs">
+                                <span className="text-white/30 w-32 shrink-0">Transaction</span>
+                                <span className="font-mono text-primary">{order.tx}</span>
+                              </p>
+                            )}
+                            {order.status === "FILLED" && <FulfillmentPanel orderId={order.fullId} />}
                           </div>
                         </motion.div>
                       </TableCell>

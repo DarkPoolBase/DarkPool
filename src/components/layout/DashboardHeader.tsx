@@ -1,11 +1,13 @@
 import { Bell, Wallet, LogOut, Copy, Check, ShieldCheck, ArrowRightLeft, AlertTriangle, Package } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useWallet } from "@/contexts/WalletContext";
 import { useNotifications, type NotificationType } from "@/hooks/useNotifications";
+import { useOrders } from "@/hooks/useOrders";
+import { useAutoAuth } from "@/hooks/useAutoAuth";
 import metamaskLogo from "@/assets/metamask-logo.png";
 import phantomLogo from "@/assets/phantom-logo.jpg";
 
@@ -21,6 +23,15 @@ export function DashboardHeader() {
     connected, connecting, walletAddress, fullWalletAddress,
     walletType, networkStatus, connect, disconnect, showModal, setShowModal,
   } = useWallet();
+  const { isAuthenticated } = useAutoAuth();
+  const { data: userOrders } = useOrders({ limit: 100 }, isAuthenticated);
+
+  const userBalance = useMemo(() => {
+    if (!userOrders?.data?.length) return 0;
+    return userOrders.data
+      .filter((o: any) => o.status === 'ACTIVE' || o.status === 'PENDING')
+      .reduce((sum: number, o: any) => sum + parseFloat(o.escrowAmount || '0'), 0);
+  }, [userOrders]);
 
   const navigate = useNavigate();
   const { notifications, unreadCount, markAllRead, markRead } = useNotifications();
@@ -54,7 +65,7 @@ export function DashboardHeader() {
           {connected && (
             <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/5 bg-white/[0.02] backdrop-blur-md">
               <span className="text-[10px] font-mono text-white/30 uppercase tracking-widest">USDC</span>
-              <span className="font-mono text-sm font-medium text-white tabular-nums">$2,450.00</span>
+              <span className="font-mono text-sm font-medium text-white tabular-nums">${userBalance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
             </div>
           )}
 

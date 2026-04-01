@@ -189,6 +189,18 @@ const productData: Record<string, {
       { label: "Providers", value: "387", icon: Shield },
     ],
   },
+  "inference-credits": {
+    name: "Inference Credits", label: "Prepaid Compute", price: "$0.18/GPU-hour", priceNum: 0.18,
+    providers: 312, vram: "Consumer+ tier", workloads: ["Real-time Inference", "API Serving", "Batch Inference", "Dev/Test"],
+    availability: 97, icon: Activity,
+    description: "Low-latency inference credits redeemable across consumer-grade and enterprise GPUs. Optimized for serving workloads with private procurement.",
+    benchmarks: [
+      { label: "Tier", value: "Consumer+", icon: CheckCircle },
+      { label: "Expiry", value: "90 days", icon: Clock },
+      { label: "Avg. Latency", value: "8ms", icon: Activity },
+      { label: "Providers", value: "312", icon: Shield },
+    ],
+  },
 };
 
 

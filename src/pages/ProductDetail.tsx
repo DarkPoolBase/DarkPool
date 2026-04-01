@@ -129,6 +129,18 @@ const productData: Record<string, {
       { label: "Verified Providers", value: "142", icon: Shield },
     ],
   },
+  "a100-block": {
+    name: "48h A100 Block", label: "Reserved Compute", price: "$57.60/block", priceNum: 57.60,
+    providers: 44, vram: "80GB HBM2e", workloads: ["Extended Training", "Fine-tuning", "Research", "Continuous Inference"],
+    availability: 52, icon: Clock,
+    description: "48-hour reserved A100 compute blocks for extended training runs. Encrypted reservation ensures your infrastructure plans remain private.",
+    benchmarks: [
+      { label: "Guarantee", value: "99.5%", icon: CheckCircle },
+      { label: "Block Size", value: "48 hrs", icon: Clock },
+      { label: "Fill Rate", value: "83%", icon: TrendingUp },
+      { label: "Verified Providers", value: "44", icon: Shield },
+    ],
+  },
 };
 
 

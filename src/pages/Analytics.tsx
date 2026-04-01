@@ -5,7 +5,7 @@ import { SectionLabel } from "@/components/ui/section-label";
 import { AnimatedNumber } from "@/components/ui/animated-number";
 import { GlowBlob } from "@/components/ui/glow-blob";
 import { motion } from "framer-motion";
-import { useOrderMetrics, useSettlements } from "@/hooks/useOrders";
+import { useOrderMetrics } from "@/hooks/useOrders";
 import { usePriceHistory, useMarketPrices } from "@/hooks/useMarket";
 
 const intervalMap: Record<string, string> = {
@@ -23,11 +23,13 @@ const gpuColors: Record<string, string> = {
   A10G: "from-rose-500 to-rose-400",
 };
 
+const gpuTypes = ['H100', 'A100', 'L40S', 'H200', 'A10G'];
+
 const Analytics = () => {
   const [timeframe, setTimeframe] = useState("1W");
+  const [selectedGpu, setSelectedGpu] = useState("H100");
   const { data: metrics } = useOrderMetrics();
-  const { data: settlements } = useSettlements(20);
-  const { data: priceHistory } = usePriceHistory('H100', intervalMap[timeframe]);
+  const { data: priceHistory } = usePriceHistory(selectedGpu, intervalMap[timeframe]);
   const { data: marketPrices } = useMarketPrices();
 
   // Transform API price history into chart data
@@ -82,8 +84,23 @@ const Analytics = () => {
 
       {/* Price Chart */}
       <GlassCard delay={0.1} gradient className="p-6">
-        <div className="flex items-center justify-between mb-6">
-          <SectionLabel>H100 Price History</SectionLabel>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-3">
+          <div className="flex items-center gap-3">
+            <SectionLabel>{selectedGpu} Price History</SectionLabel>
+            <div className="flex gap-1 p-1 rounded-lg bg-white/[0.02] border border-white/[0.06]">
+              {gpuTypes.map((gpu) => (
+                <button
+                  key={gpu}
+                  onClick={() => setSelectedGpu(gpu)}
+                  className={`relative px-3 py-1.5 text-[10px] font-mono tracking-wider rounded-md transition-all duration-300 ${
+                    selectedGpu === gpu ? "text-white bg-primary/20 border border-primary/30" : "text-white/40 hover:text-white/60"
+                  }`}
+                >
+                  {gpu}
+                </button>
+              ))}
+            </div>
+          </div>
           <div className="flex gap-1 p-1 rounded-lg bg-white/[0.02] border border-white/[0.06]">
             {["1D", "1W", "1M", "ALL"].map((tf) => (
               <button

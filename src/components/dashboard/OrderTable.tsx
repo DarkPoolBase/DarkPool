@@ -5,14 +5,6 @@ import { GlassCard } from "@/components/ui/glass-card";
 import { useOrders } from "@/hooks/useOrders";
 import { useAutoAuth } from "@/hooks/useAutoAuth";
 
-const mockOrders = [
-  { id: "#4521", side: "BUY", gpu: "H100", qty: "24 hrs", price: "$0.22", status: "FILLED" as const, time: "2 min ago" },
-  { id: "#4520", side: "SELL", gpu: "RTX 4090", qty: "48 hrs", price: "$0.18", status: "ACTIVE" as const, time: "Waiting" },
-  { id: "#4519", side: "BUY", gpu: "A100", qty: "72 hrs", price: "$0.19", status: "PENDING" as const, time: "5 min ago" },
-  { id: "#4518", side: "BUY", gpu: "H100", qty: "12 hrs", price: "$0.24", status: "FILLED" as const, time: "32 min ago" },
-  { id: "#4517", side: "SELL", gpu: "A100", qty: "168 hrs", price: "$0.16", status: "FILLED" as const, time: "1 hr ago" },
-];
-
 export function OrderTable() {
   const navigate = useNavigate();
   const { isAuthenticated } = useAutoAuth();
@@ -28,7 +20,7 @@ export function OrderTable() {
         status: o.status as "ACTIVE" | "FILLED" | "CANCELLED" | "EXPIRED" | "PENDING",
         time: new Date(o.createdAt).toLocaleTimeString(),
       }))
-    : mockOrders;
+    : [];
 
   return (
     <GlassCard delay={0.2}>
@@ -58,7 +50,19 @@ export function OrderTable() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {orders.map((order) => (
+            {orders.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={7} className="text-center py-12">
+                  <p className="font-mono text-[11px] text-white/20 mb-2">No orders yet</p>
+                  <button
+                    onClick={() => navigate("/marketplace")}
+                    className="font-mono text-[10px] text-primary hover:text-primary/80 transition-colors"
+                  >
+                    Place your first order →
+                  </button>
+                </TableCell>
+              </TableRow>
+            ) : orders.map((order) => (
               <TableRow
                 key={order.id}
                 className="border-b border-white/5 hover:bg-white/[0.02] cursor-pointer transition-all duration-300 ease-out"

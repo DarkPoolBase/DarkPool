@@ -32,7 +32,7 @@ export function SavingsCalculator() {
       const annual = revenue * 12;
       return { revenue, annual, barMarketH: 30, barDpH: 80 };
     }
-  }, [mode, gpu, hours, p]);
+  }, [mode, hours, p]);
 
   return (
     <GlassCard delay={0.1} className="p-6">

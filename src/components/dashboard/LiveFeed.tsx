@@ -23,19 +23,17 @@ function formatTimeAgo(timestamp: number): string {
 export function LiveFeed() {
   const { data: settlements } = useSettlements(6);
 
-  const realFeedItems: FeedItem[] = settlements?.length
-    ? settlements.map((s: any) => ({
-        title: `Batch #${s.batchId} settled`,
-        detail: `${parseFloat(s.totalVolume).toFixed(0)} GPU-hrs @ $${parseFloat(s.clearingPrice).toFixed(2)}/hr — ${s.numFills} fills`,
-        time: s.settledAt ? new Date(s.settledAt).toLocaleTimeString() : 'Recent',
-        highlight: false,
-      }))
-    : [];
-
-  const [feedItems, setFeedItems] = useState<FeedItem[]>(realFeedItems);
+  const [feedItems, setFeedItems] = useState<FeedItem[]>([]);
 
   useEffect(() => {
-    if (realFeedItems.length > 0) setFeedItems(realFeedItems);
+    if (!settlements?.length) return;
+    const items: FeedItem[] = settlements.map((s: any) => ({
+      title: `Batch #${s.batchId} settled`,
+      detail: `${parseFloat(s.totalVolume).toFixed(0)} GPU-hrs @ $${parseFloat(s.clearingPrice).toFixed(2)}/hr — ${s.numFills} fills`,
+      time: s.settledAt ? new Date(s.settledAt).toLocaleTimeString() : 'Recent',
+      highlight: false,
+    }));
+    setFeedItems(items);
   }, [settlements]);
   const { subscribe, connected } = useWebSocket();
 

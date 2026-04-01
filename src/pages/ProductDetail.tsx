@@ -213,6 +213,18 @@ const productData: Record<string, {
       { label: "Providers", value: "287", icon: Shield },
     ],
   },
+  "a100-cluster": {
+    name: "A100 Cluster", label: "Training Cluster", price: "$4.80/GPU-hour", priceNum: 4.80,
+    providers: 19, vram: "4×A100 (320GB)", workloads: ["Distributed Training", "Large Models", "Research", "Multi-GPU Jobs"],
+    availability: 32, icon: Layers,
+    description: "4×A100 clusters for cost-efficient distributed training. Encrypted cluster procurement prevents competitors from tracking your infrastructure footprint.",
+    benchmarks: [
+      { label: "Avg. Uptime", value: "99.3%", icon: CheckCircle },
+      { label: "Fill Rate", value: "78%", icon: TrendingUp },
+      { label: "Interconnect", value: "NVLink", icon: Activity },
+      { label: "Verified Providers", value: "19", icon: Shield },
+    ],
+  },
 };
 
 

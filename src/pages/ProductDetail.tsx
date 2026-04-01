@@ -165,6 +165,18 @@ const productData: Record<string, {
       { label: "Verified Providers", value: "9", icon: Shield },
     ],
   },
+  "l40s-block": {
+    name: "48h L40S Block", label: "Reserved Compute", price: "$40.80/block", priceNum: 40.80,
+    providers: 38, vram: "48GB GDDR6", workloads: ["Extended Inference", "Fine-tuning", "Rendering", "Batch Processing"],
+    availability: 61, icon: Clock,
+    description: "48-hour reserved L40S compute blocks for extended inference and fine-tuning. Balanced cost and capacity with private batch auction pricing.",
+    benchmarks: [
+      { label: "Guarantee", value: "99.3%", icon: CheckCircle },
+      { label: "Block Size", value: "48 hrs", icon: Clock },
+      { label: "Fill Rate", value: "85%", icon: TrendingUp },
+      { label: "Verified Providers", value: "38", icon: Shield },
+    ],
+  },
 };
 
 

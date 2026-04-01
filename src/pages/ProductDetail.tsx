@@ -153,6 +153,18 @@ const productData: Record<string, {
       { label: "Verified Providers", value: "22", icon: Shield },
     ],
   },
+  "h200-block": {
+    name: "24h H200 Block", label: "Reserved Compute", price: "$91.20/block", priceNum: 91.20,
+    providers: 9, vram: "141GB HBM3e", workloads: ["Frontier Model Training", "Large-Scale Inference", "Research", "Pre-training"],
+    availability: 28, icon: Clock,
+    description: "24-hour reserved H200 blocks for premium next-gen compute. Encrypted reservation flow protects your capacity requirements from market exposure.",
+    benchmarks: [
+      { label: "Guarantee", value: "99.7%", icon: CheckCircle },
+      { label: "Block Size", value: "24 hrs", icon: Clock },
+      { label: "Fill Rate", value: "74%", icon: TrendingUp },
+      { label: "Verified Providers", value: "9", icon: Shield },
+    ],
+  },
 };
 
 

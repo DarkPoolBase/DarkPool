@@ -4,9 +4,13 @@ import { api } from '@/lib/api';
 interface ProviderData {
   id: string;
   userId: string;
+  walletAddress: string | null;
   name: string;
   gpuTypes: { type: string; count: number; available: number }[];
   region: string | null;
+  minPricePerHour: string;
+  totalEarnings: string;
+  pendingEarnings: string;
   uptimePct: number;
   reputation: number;
   totalJobs: number;
@@ -15,9 +19,46 @@ interface ProviderData {
   updatedAt: string;
 }
 
+interface ProviderEarning {
+  id: string;
+  providerId: string;
+  orderId: string;
+  batchId: number;
+  gpuType: string;
+  amount: string;
+  clearingPrice: string;
+  createdAt: string;
+}
+
+interface EarningsResponse {
+  earnings: ProviderEarning[];
+  totalEarnings: string;
+  pendingEarnings: string;
+}
+
 interface ProviderListResponse {
   data: ProviderData[];
   total: number;
+}
+
+export function useMyProvider(enabled = true) {
+  return useQuery<ProviderData | null>({
+    queryKey: ['providers', 'me'],
+    queryFn: () => api.get<ProviderData | null>('/api/providers/me'),
+    enabled,
+    retry: false,
+    placeholderData: null,
+  });
+}
+
+export function useMyEarnings(enabled = true) {
+  return useQuery<EarningsResponse>({
+    queryKey: ['providers', 'me', 'earnings'],
+    queryFn: () => api.get<EarningsResponse>('/api/providers/me/earnings'),
+    enabled,
+    placeholderData: { earnings: [], totalEarnings: '0', pendingEarnings: '0' },
+    refetchInterval: 30_000,
+  });
 }
 
 export function useProviders(page = 1, limit = 20) {
@@ -27,10 +68,7 @@ export function useProviders(page = 1, limit = 20) {
       api.get<ProviderListResponse>('/api/providers', {
         params: { page: String(page), limit: String(limit) },
       }),
-    placeholderData: {
-      data: [],
-      total: 0,
-    },
+    placeholderData: { data: [], total: 0 },
   });
 }
 
@@ -42,15 +80,6 @@ export function useProvider(id: string) {
   });
 }
 
-export function useProviderReputation(id: string) {
-  return useQuery<{ reputation: number; uptimePct: number; totalJobs: number }>({
-    queryKey: ['providers', id, 'reputation'],
-    queryFn: () =>
-      api.get(`/api/providers/${id}/reputation`),
-    enabled: !!id,
-  });
-}
-
 export function useRegisterProvider() {
   const qc = useQueryClient();
   return useMutation({
@@ -58,8 +87,11 @@ export function useRegisterProvider() {
       name: string;
       gpuTypes: { type: string; count: number; available: number }[];
       region?: string;
+      minPricePerHour?: number;
     }) => api.post<ProviderData>('/api/providers', data),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ['providers'] }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['providers'] });
+    },
   });
 }
 
@@ -67,7 +99,16 @@ export function useUpdateCapacity(providerId: string) {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (gpuTypes: { type: string; count: number; available: number }[]) =>
-      api.post<ProviderData>(`/api/providers/${providerId}/capacity`, { gpuTypes }),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ['providers', providerId] }),
+      api.patch<ProviderData>(`/api/providers/${providerId}/capacity`, { gpuTypes }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['providers'] }),
+  });
+}
+
+export function useUpdateMinPrice(providerId: string) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (minPricePerHour: number) =>
+      api.patch<ProviderData>(`/api/providers/${providerId}/min-price`, { minPricePerHour }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['providers'] }),
   });
 }

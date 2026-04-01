@@ -225,6 +225,18 @@ const productData: Record<string, {
       { label: "Verified Providers", value: "19", icon: Shield },
     ],
   },
+  "h100-mega": {
+    name: "H100 Mega Cluster", label: "Training Cluster", price: "$3.36/GPU-hour", priceNum: 3.36,
+    providers: 6, vram: "16×H100 (1.28TB)", workloads: ["Large-Scale LLM Training", "Foundation Models", "Pre-training", "Research"],
+    availability: 18, icon: Layers,
+    description: "16×H100 mega-clusters for large-scale LLM pre-training. Maximum privacy ensures your frontier model training plans never reach the public order book.",
+    benchmarks: [
+      { label: "Avg. Uptime", value: "99.5%", icon: CheckCircle },
+      { label: "Fill Rate", value: "71%", icon: TrendingUp },
+      { label: "Interconnect", value: "InfiniBand", icon: Activity },
+      { label: "Verified Providers", value: "6", icon: Shield },
+    ],
+  },
 };
 
 

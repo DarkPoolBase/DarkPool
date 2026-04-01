@@ -105,6 +105,18 @@ const productData: Record<string, {
       { label: "Verified Providers", value: "63", icon: Shield },
     ],
   },
+  h200: {
+    name: "NVIDIA H200", label: "Next-Gen Training", price: "$3.80/GPU-hour", priceNum: 3.80,
+    providers: 18, vram: "141GB HBM3e", workloads: ["Large Model Training", "Pre-training", "Research", "Inference"],
+    availability: 41, icon: Cpu,
+    description: "Next-generation H200 with 141GB HBM3e memory for frontier model training. Encrypted procurement protects your infrastructure scale-up from competitors.",
+    benchmarks: [
+      { label: "Avg. Uptime", value: "99.6%", icon: CheckCircle },
+      { label: "Fill Rate", value: "79%", icon: TrendingUp },
+      { label: "Avg. Latency", value: "14ms", icon: Activity },
+      { label: "Verified Providers", value: "18", icon: Shield },
+    ],
+  },
 };
 
 

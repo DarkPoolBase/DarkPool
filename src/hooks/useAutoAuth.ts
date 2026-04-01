@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useCallback } from 'react';
 import { getAddress } from 'viem';
 import { useWallet } from '@/contexts/WalletContext';

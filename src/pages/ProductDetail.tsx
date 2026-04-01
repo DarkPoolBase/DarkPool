@@ -267,10 +267,10 @@ const ProductDetail = () => {
   // Map productId to valid GPU type for the API
   const gpuTypeMap: Record<string, string> = {
     h100: 'H100', a100: 'A100', rtx4090: 'RTX4090', l40s: 'L40S', h200: 'H200', a10g: 'A10G',
-    'multi-gpu': 'H100', 'compute-credits': 'H100', 'h100-block': 'H100', 'a100-48h': 'A100',
-    'h100-7d': 'H100', 'training-credits': 'H100', 'burst-credits': 'A100',
-    'inference-credits': 'RTX4090', '8xh100': 'H100', 'a100-cluster': 'A100',
-    'h100-mega': 'H100',
+    'multi-gpu': 'H100', 'compute-credits': 'H100', 'h100-block': 'H100',
+    'a100-block': 'A100', 'h100-week': 'H100', 'h200-block': 'H200', 'l40s-block': 'L40S',
+    'training-credits': 'A100', 'inference-credits': 'A10G', 'burst-credits': 'A100',
+    'a100-cluster': 'A100', 'h100-mega': 'H100', 'h200-cluster': 'H200',
   };
 
   const resolvedGpu = gpuTypeMap[productId || 'h100'] || 'H100';

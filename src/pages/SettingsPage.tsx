@@ -448,7 +448,33 @@ const SettingsPage = () => {
       </GlassCard>
 
       {/* Price Alerts */}
-      <PriceAlertsCard />
+      <GlassCard delay={0.4} className="p-6 relative overflow-hidden">
+        <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/40 backdrop-blur-[2px] rounded-xl">
+          <span className="text-sm font-mono text-white/50 tracking-wider uppercase px-4 py-2 rounded-full border border-white/10 bg-white/[0.05]">Coming Soon</span>
+        </div>
+        <div className="opacity-30 pointer-events-none">
+          <div className="flex items-center gap-2 mb-4">
+            <Bell className="h-4 w-4 text-violet-400" />
+            <SectionLabel>Price Alerts</SectionLabel>
+          </div>
+          <div className="flex flex-wrap gap-2 items-end">
+            <div className="flex-1 min-w-[100px]">
+              <label className="text-[10px] text-white/30 uppercase tracking-wider block mb-1">GPU</label>
+              <div className="w-full h-9 px-3 rounded-lg border border-white/[0.08] bg-[#1a1a24] text-xs font-mono text-white/80 flex items-center">H100</div>
+            </div>
+            <div className="flex-1 min-w-[80px]">
+              <label className="text-[10px] text-white/30 uppercase tracking-wider block mb-1">Direction</label>
+              <div className="w-full h-9 px-3 rounded-lg border border-white/[0.08] bg-[#1a1a24] text-xs font-mono text-white/80 flex items-center">Below</div>
+            </div>
+            <div className="flex-1 min-w-[80px]">
+              <label className="text-[10px] text-white/30 uppercase tracking-wider block mb-1">$/hr</label>
+              <div className="w-full h-9 px-3 rounded-lg border border-white/[0.08] bg-[#1a1a24] text-xs font-mono text-white/40 flex items-center">2.00</div>
+            </div>
+            <Button size="sm" disabled className="h-9 px-3 bg-violet-600 text-white text-xs gap-1"><Plus className="h-3 w-3" /> Add</Button>
+          </div>
+          <p className="text-[11px] text-white/20 font-mono py-2 mt-2">Set alerts to get notified when GPU prices cross your threshold.</p>
+        </div>
+      </GlassCard>
     </div>
   );
 };

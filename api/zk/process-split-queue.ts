@@ -15,7 +15,6 @@ import {
   getBaseProvider,
   getTokenAddress,
   getContractAddress,
-  getPrivacyPoolContract,
   ERC20_ABI,
 } from '../lib/void402-base.js';
 import { getBaseIntermediateWalletPool } from '../lib/intermediate-wallet-pool-base.js';
@@ -216,7 +215,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
       try {
         const tokenAddress = getTokenAddress(split.token || 'USDC');
-        const poolAddress = getContractAddress();
+        const escrowAddress = process.env.ESCROW_CONTRACT_ADDRESS || '0x36077c43166a4eE59D5775FCe433393b43f2140a';
         const splitAmount = ethers.parseUnits(split.split_amount, 6);
 
         // Check holding wallet token balance
@@ -352,18 +351,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           if (!intFunded) throw new Error('Cannot fund intermediate wallet with ETH - all funder wallets depleted');
         }
 
-        // STEP 4: Intermediate -> Contract (approve + deposit)
+        // STEP 4: Intermediate -> User wallet (direct USDC transfer)
         const intSigner = new ethers.Wallet(intermediateWalletData.privateKey, provider);
         const intToken = new ethers.Contract(tokenAddress, ERC20_ABI, intSigner);
-        const pool = getPrivacyPoolContract(intSigner);
 
-        const approveTx = await intToken.approve(poolAddress, splitAmount);
-        await approveTx.wait();
-        console.log(`Intermediate approve: ${approveTx.hash}`);
-
-        const depositTx = await pool.deposit(tokenAddress, splitAmount);
+        const depositTx = await intToken.transfer(split.user_wallet, splitAmount);
         const depositReceipt = await depositTx.wait();
-        console.log(`Intermediate -> Pool deposit: ${depositReceipt.hash}`);
+        console.log(`Intermediate -> User wallet: ${depositReceipt.hash}`);
 
         // Mark split as sent
         await supabase

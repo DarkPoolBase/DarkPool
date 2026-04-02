@@ -4,7 +4,7 @@ import { useAvatarColor } from "@/pages/SettingsPage";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useWallet } from "@/contexts/WalletContext";
@@ -40,26 +40,6 @@ export function DashboardHeader() {
   const escrowLocked = formatUSDC(escrowBalance?.locked ?? BigInt(0));
   const escrowTotal = formatUSDC((escrowBalance?.available ?? BigInt(0)) + (escrowBalance?.locked ?? BigInt(0)));
 
-  // Pool balance from privacy deposits
-  const [poolBalance, setPoolBalance] = useState(0);
-  const fetchPoolBalance = async () => {
-    if (!fullWalletAddress) return;
-    try {
-      const res = await fetch(`/api/zk/balance?wallet=${fullWalletAddress}`);
-      const data = await res.json();
-      if (data.success) setPoolBalance(data.balance || 0);
-    } catch { /* ignore */ }
-  };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => { fetchPoolBalance(); }, [fullWalletAddress]);
-  useEffect(() => {
-    if (!fullWalletAddress) return;
-    const interval = setInterval(fetchPoolBalance, 15_000);
-    return () => clearInterval(interval);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fullWalletAddress]);
-
-  const totalBalance = (parseFloat(escrowTotal) + poolBalance).toFixed(2);
 
   const navigate = useNavigate();
   const { color: avatarColor } = useAvatarColor();
@@ -125,7 +105,7 @@ export function DashboardHeader() {
               className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/5 bg-white/[0.02] backdrop-blur-md hover:bg-white/[0.06] hover:border-white/10 transition-all duration-300 cursor-pointer"
             >
               <span className="text-[10px] font-mono text-white/30 uppercase tracking-widest">USDC</span>
-              <span className="font-mono text-sm font-medium text-white tabular-nums">${totalBalance}</span>
+              <span className="font-mono text-sm font-medium text-white tabular-nums">${escrowTotal}</span>
             </button>
           )}
 
@@ -415,24 +395,18 @@ export function DashboardHeader() {
                 {/* Balance display */}
                 <div className="grid grid-cols-2 gap-3 mb-4">
                   <div className="p-3 rounded-xl bg-white/[0.03]">
-                    <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/30">Pool Balance</p>
-                    <p className="font-mono text-lg font-semibold text-violet-400 tabular-nums mt-1">${poolBalance.toFixed(2)}</p>
+                    <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/30">Available</p>
+                    <p className="font-mono text-lg font-semibold text-emerald-400 tabular-nums mt-1">${escrowAvailable}</p>
                   </div>
                   <div className="p-3 rounded-xl bg-white/[0.03]">
-                    <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/30">Escrow</p>
-                    <p className="font-mono text-lg font-semibold text-emerald-400 tabular-nums mt-1">${escrowTotal}</p>
+                    <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/30">Locked</p>
+                    <p className="font-mono text-lg font-semibold text-amber-400 tabular-nums mt-1">${escrowLocked}</p>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3 mb-5">
-                  <div className="p-3 rounded-xl bg-white/[0.03]">
-                    <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/30">Locked</p>
-                    <p className="font-mono text-sm font-semibold text-amber-400 tabular-nums mt-1">${escrowLocked}</p>
-                  </div>
-                  <div className="p-3 rounded-xl bg-white/[0.03]">
-                    <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/30">Wallet USDC</p>
-                    <p className="font-mono text-sm font-semibold text-white tabular-nums mt-1">${usdcFormatted}</p>
-                  </div>
+                <div className="p-3 rounded-xl bg-white/[0.03] mb-5">
+                  <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/30">Wallet USDC</p>
+                  <p className="font-mono text-sm font-semibold text-white tabular-nums mt-1">${usdcFormatted}</p>
                 </div>
 
                 {/* Deposit button */}
@@ -486,7 +460,7 @@ export function DashboardHeader() {
         )}
       </AnimatePresence>
 
-      <DepositModal open={showPrivacyDeposit} onClose={() => { setShowPrivacyDeposit(false); fetchPoolBalance(); refetchEscrow(); refetchUSDC(); }} />
+      <DepositModal open={showPrivacyDeposit} onClose={() => { setShowPrivacyDeposit(false); refetchEscrow(); refetchUSDC(); }} />
     </>
   );
 }

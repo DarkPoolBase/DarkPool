@@ -215,7 +215,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
       try {
         const tokenAddress = getTokenAddress(split.token || 'USDC');
-        const escrowAddress = process.env.ESCROW_CONTRACT_ADDRESS || '0x36077c43166a4eE59D5775FCe433393b43f2140a';
+        const escrowAddress = process.env.ESCROW_CONTRACT_ADDRESS || '0x8248f602AbeF2D5B58b2cd563b81d92B9C933Bf7';
         const splitAmount = ethers.parseUnits(split.split_amount, 6);
 
         // Check holding wallet token balance

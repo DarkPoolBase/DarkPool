@@ -160,8 +160,8 @@ const DepositModal = ({ open, onClose }: DepositModalProps) => {
       throw new Error(nonceData.error || "Failed to get auth nonce");
     }
 
-    // Step 2: Sign message
-    const message = nonceData.nonce;
+    // Step 2: Sign the full message (not just the nonce)
+    const message = nonceData.message;
     const hexMessage =
       "0x" +
       Array.from(new TextEncoder().encode(message))
@@ -180,7 +180,7 @@ const DepositModal = ({ open, onClose }: DepositModalProps) => {
       body: JSON.stringify({
         walletAddress: fullWalletAddress,
         signature,
-        nonce: message,
+        nonce: nonceData.nonce,
       }),
     });
     const verifyData = await verifyRes.json();

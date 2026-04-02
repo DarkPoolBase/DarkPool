@@ -118,9 +118,10 @@ function PriceAlertsCard() {
           <select
             value={gpuType}
             onChange={(e) => setGpuType(e.target.value)}
-            className="w-full h-9 px-3 rounded-lg border border-white/[0.08] bg-white/[0.04] text-xs font-mono text-white/80 outline-none focus:border-violet-500/50"
+            className="w-full h-9 px-3 rounded-lg border border-white/[0.08] bg-[#1a1a24] text-xs font-mono text-white/80 outline-none focus:border-violet-500/50 appearance-none"
+            style={{ colorScheme: 'dark' }}
           >
-            {GPU_TYPES.map((g) => <option key={g} value={g}>{g}</option>)}
+            {GPU_TYPES.map((g) => <option key={g} value={g} className="bg-[#1a1a24] text-white/80">{g}</option>)}
           </select>
         </div>
         <div className="flex-1 min-w-[80px]">
@@ -128,10 +129,11 @@ function PriceAlertsCard() {
           <select
             value={direction}
             onChange={(e) => setDirection(e.target.value as "above" | "below")}
-            className="w-full h-9 px-3 rounded-lg border border-white/[0.08] bg-white/[0.04] text-xs font-mono text-white/80 outline-none focus:border-violet-500/50"
+            className="w-full h-9 px-3 rounded-lg border border-white/[0.08] bg-[#1a1a24] text-xs font-mono text-white/80 outline-none focus:border-violet-500/50 appearance-none"
+            style={{ colorScheme: 'dark' }}
           >
-            <option value="below">Below</option>
-            <option value="above">Above</option>
+            <option value="below" className="bg-[#1a1a24] text-white/80">Below</option>
+            <option value="above" className="bg-[#1a1a24] text-white/80">Above</option>
           </select>
         </div>
         <div className="flex-1 min-w-[80px]">

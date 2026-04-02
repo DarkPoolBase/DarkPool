@@ -29,25 +29,6 @@ export function isSolanaChain(): boolean {
 }
 
 /**
- * ChangeNow currency codes per chain
- */
-export function getChangeNowCurrencies(chain?: ActiveChain) {
-  const activeChain = chain || getActiveChain();
-
-  if (activeChain === 'base') {
-    return {
-      'USDC': 'usdcbase',
-      'USDT': 'usdtbase',
-    } as const;
-  }
-
-  return {
-    'USDC': 'usdcsol',
-    'USDT': 'usdtsol',
-  } as const;
-}
-
-/**
  * Token addresses per chain
  */
 export function getTokenAddresses(chain?: ActiveChain) {

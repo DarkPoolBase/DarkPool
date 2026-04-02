@@ -1,18 +1,14 @@
 /**
  * Deposit Modal Component
  *
- * Full privacy deposit flow:
+ * Always-partial-privacy split-deposit flow (no ChangeNow mixer, no privacy level selection):
  * 1. Create holding wallet (deterministic per deposit)
  * 2. User signs token transfer to holding wallet
- * 3. Auto-split deposit into 2-4 random parts
- * 4. Each split goes through ChangeNow privacy mixer
- * 5. Mixer output -> Intermediate Wallet -> Pool (smart contract)
- * 6. Balance credited after all splits processed
+ * 3. Auto-split deposit into 2-4 random parts with staggered timing
+ * 4. Each part routed through intermediate wallet -> Pool
+ * 5. Balance credited after all splits processed
  *
- * Privacy levels:
- * - public:  Direct deposit, no mixing, zero fees
- * - partial: Split transfers without mixer, zero fees
- * - full:    Split + ChangeNow mixer, ~15% mixer fee
+ * Zero platform fees. Small ETH gas deposit covers network costs.
  */
 
 import { useState, useCallback, useRef, useEffect } from "react";
@@ -23,8 +19,6 @@ import {
   AlertCircle,
   CheckCircle2,
   Clock,
-  Shield,
-  ShieldAlert,
   ShieldCheck,
   X,
 } from "lucide-react";
@@ -45,11 +39,8 @@ type DepositStep =
   | "submitting"
   | "waitingForFunds"
   | "splitting"
-  | "mixerProcessing"
   | "success"
   | "failed";
-
-type PrivacyLevel = "public" | "partial" | "full";
 
 const MAX_AMOUNT = 999999.99;
 
@@ -101,7 +92,6 @@ const DepositModal = ({ open, onClose }: DepositModalProps) => {
 
   const [amount, setAmount] = useState("");
   const [token, setToken] = useState<"USDC" | "USDT">("USDC");
-  const [privacyLevel, setPrivacyLevel] = useState<PrivacyLevel>("full");
   const [step, setStep] = useState<DepositStep>("form");
   const [depositId, setDepositId] = useState("");
   const [txSignature, setTxSignature] = useState("");
@@ -112,10 +102,6 @@ const DepositModal = ({ open, onClose }: DepositModalProps) => {
   // Split progress
   const [totalSplits, setTotalSplits] = useState(0);
   const [sentSplits, setSentSplits] = useState(0);
-
-  // Mixer progress
-  const [processedExchanges, setProcessedExchanges] = useState(0);
-  const [totalExchanges, setTotalExchanges] = useState(0);
 
   // Polling refs
   const pollingRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -346,7 +332,7 @@ const DepositModal = ({ open, onClose }: DepositModalProps) => {
             wallet: fullWalletAddress,
             amount: depositAmount,
             token,
-            privacy_level: privacyLevel,
+            privacy_level: "partial",
           }),
         },
         bearer
@@ -518,17 +504,8 @@ const DepositModal = ({ open, onClose }: DepositModalProps) => {
       // STEP 4: Process split queue
       // ============================================
       setStep("splitting");
-      const isDirectDeposit =
-        privacyLevel === "public" ||
-        privacyLevel === "partial" ||
-        (token === "USDT" && privacyLevel === "full");
-      setProcessingStatus(
-        isDirectDeposit
-          ? `Processing splits (0/${numSplits})...`
-          : `Sending splits to privacy mixer (0/${numSplits})...`
-      );
+      setProcessingStatus(`Processing splits (0/${numSplits})...`);
 
-      let skipMixerStep = false;
       await pollEndpoint(
         "/api/zk/process-split-queue",
         { depositId: newDepositId, wallet: fullWalletAddress },
@@ -538,33 +515,16 @@ const DepositModal = ({ open, onClose }: DepositModalProps) => {
             setTotalSplits(data.totalSplits || numSplits);
           }
 
-          if (data.depositComplete && data.skipMixer) {
-            skipMixerStep = true;
-            setProcessingStatus("Deposit complete!");
-            return { done: true, data };
-          }
-
-          if (data.allSent) {
-            if (data.skipMixer) {
-              skipMixerStep = true;
-              setProcessingStatus(
-                `All ${data.totalSplits || numSplits} splits processed!`
-              );
-            } else {
-              setProcessingStatus(
-                `All ${data.totalSplits || numSplits} splits sent to privacy mixer`
-              );
-            }
+          if (data.depositComplete || data.allSent) {
+            setProcessingStatus(
+              `All ${data.totalSplits || numSplits} splits processed!`
+            );
             return { done: true, data };
           }
 
           const sent = data.sentSplits || 0;
           const total = data.totalSplits || numSplits;
-          setProcessingStatus(
-            isDirectDeposit
-              ? `Processing splits (${sent}/${total})...`
-              : `Sending splits to privacy mixer (${sent}/${total})...`
-          );
+          setProcessingStatus(`Processing splits (${sent}/${total})...`);
           return { done: false };
         },
         5000,
@@ -573,92 +533,10 @@ const DepositModal = ({ open, onClose }: DepositModalProps) => {
         bearer
       );
 
-      console.log(`[Deposit] Split queue done. skipMixer=${skipMixerStep}`);
+      console.log(`[Deposit] Split queue done, deposit complete!`);
 
       // ============================================
-      // STEP 5: Process pending exchanges (full privacy only)
-      // ============================================
-      if (!skipMixerStep) {
-        setStep("mixerProcessing");
-        setTotalExchanges(numSplits);
-        setProcessedExchanges(0);
-        setProcessingStatus("Waiting for privacy mixer to process...");
-
-        // Trigger processing every 30s in the background
-        const triggerProcessing = () => {
-          authFetch(
-            "/api/zk/process-pending-exchanges",
-            {
-              method: "POST",
-              body: JSON.stringify({
-                wallet: fullWalletAddress,
-                depositId: newDepositId,
-              }),
-            },
-            bearer
-          ).catch(() => {});
-        };
-        triggerProcessing();
-        const processingInterval = setInterval(triggerProcessing, 30000);
-
-        try {
-          await pollEndpoint(
-            "/api/zk/process-pending-exchanges",
-            {
-              wallet: fullWalletAddress,
-              depositId: newDepositId,
-              statusOnly: true,
-            },
-            (data) => {
-              if (data.completedExchanges !== undefined) {
-                setProcessedExchanges(data.completedExchanges);
-              }
-              if (
-                data.totalExchanges !== undefined &&
-                data.totalExchanges > 0
-              ) {
-                setTotalExchanges(data.totalExchanges);
-              }
-
-              if (data.allComplete === true) {
-                setProcessingStatus("All exchanges processed!");
-                return { done: true, data };
-              }
-
-              const completed = data.completedExchanges || 0;
-              const total = data.totalExchanges || numSplits;
-              if (total > 0 && completed > 0) {
-                setProcessingStatus(
-                  `Processing exchanges (${completed}/${total})...`
-                );
-              } else if (total > 0) {
-                setProcessingStatus(
-                  "Privacy mixer is processing your funds..."
-                );
-              } else {
-                setProcessingStatus(
-                  "Waiting for privacy mixer to process..."
-                );
-              }
-
-              return { done: false };
-            },
-            8000,
-            1800000,
-            "POST",
-            bearer
-          );
-        } finally {
-          clearInterval(processingInterval);
-        }
-
-        console.log(`[Deposit] All exchanges processed, deposit complete!`);
-      } else {
-        console.log(`[Deposit] Skipped mixer step (${privacyLevel} privacy)`);
-      }
-
-      // ============================================
-      // STEP 6: Success!
+      // STEP 5: Success!
       // ============================================
       setStep("success");
     } catch (err: any) {
@@ -688,7 +566,6 @@ const DepositModal = ({ open, onClose }: DepositModalProps) => {
   const handleReset = () => {
     setAmount("");
     setToken("USDC");
-    setPrivacyLevel("full");
     setStep("form");
     setDepositId("");
     setTxSignature("");
@@ -696,8 +573,6 @@ const DepositModal = ({ open, onClose }: DepositModalProps) => {
     setProcessingStatus("");
     setTotalSplits(0);
     setSentSplits(0);
-    setProcessedExchanges(0);
-    setTotalExchanges(0);
     isCancelledRef.current = false;
 
     if (pollingRef.current) {
@@ -734,14 +609,7 @@ const DepositModal = ({ open, onClose }: DepositModalProps) => {
         return 30;
       case "splitting":
         return (
-          30 + (totalSplits > 0 ? (sentSplits / totalSplits) * 30 : 0)
-        );
-      case "mixerProcessing":
-        return (
-          60 +
-          (totalExchanges > 0
-            ? (processedExchanges / totalExchanges) * 35
-            : 0)
+          30 + (totalSplits > 0 ? (sentSplits / totalSplits) * 65 : 0)
         );
       case "success":
         return 100;
@@ -751,42 +619,6 @@ const DepositModal = ({ open, onClose }: DepositModalProps) => {
   };
 
   const minDeposit = 3;
-  const effectivePrivacy: PrivacyLevel =
-    token === "USDT" && privacyLevel === "full" ? "partial" : privacyLevel;
-
-  /* ---------------------------------------------------------------- */
-  /*  Privacy level options                                            */
-  /* ---------------------------------------------------------------- */
-
-  const privacyOptions: {
-    value: PrivacyLevel;
-    label: string;
-    desc: string;
-    icon: typeof Shield;
-    color: string;
-  }[] = [
-    {
-      value: "public",
-      label: "Public",
-      desc: "Direct deposit, fastest",
-      icon: ShieldAlert,
-      color: "text-white/40",
-    },
-    {
-      value: "partial",
-      label: "Partial",
-      desc: "Split transfers, no mixer",
-      icon: Shield,
-      color: "text-yellow-400",
-    },
-    {
-      value: "full",
-      label: "Full",
-      desc: "Split + mixer, max privacy",
-      icon: ShieldCheck,
-      color: "text-violet-400",
-    },
-  ];
 
   /* ---------------------------------------------------------------- */
   /*  Render                                                           */
@@ -897,58 +729,6 @@ const DepositModal = ({ open, onClose }: DepositModalProps) => {
                       />
                     </div>
 
-                    {/* Privacy Level Selector */}
-                    <div>
-                      <label className="text-[11px] text-white/30 uppercase tracking-wider block mb-2">
-                        Privacy Level
-                      </label>
-                      <div className="grid grid-cols-3 gap-2">
-                        {privacyOptions.map((opt) => {
-                          const Icon = opt.icon;
-                          const isActive = privacyLevel === opt.value;
-                          return (
-                            <button
-                              key={opt.value}
-                              onClick={() => setPrivacyLevel(opt.value)}
-                              className={`flex flex-col items-center gap-1.5 py-3 px-2 rounded-xl border transition-all ${
-                                isActive
-                                  ? "border-violet-500/50 bg-violet-500/10"
-                                  : "border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.06]"
-                              }`}
-                            >
-                              <Icon
-                                className={`w-4 h-4 ${isActive ? opt.color : "text-white/30"}`}
-                              />
-                              <span
-                                className={`text-xs font-medium ${isActive ? "text-white/90" : "text-white/40"}`}
-                              >
-                                {opt.label}
-                              </span>
-                              <span className="text-[10px] text-white/20 leading-tight text-center">
-                                {opt.desc}
-                              </span>
-                            </button>
-                          );
-                        })}
-                      </div>
-                    </div>
-
-                    {/* USDT full privacy warning */}
-                    {token === "USDT" && privacyLevel === "full" && (
-                      <div className="rounded-xl bg-yellow-500/10 border border-yellow-500/30 p-3 flex items-start gap-2">
-                        <span className="text-yellow-400 text-sm mt-0.5">
-                          &#9888;
-                        </span>
-                        <p className="text-xs text-yellow-300 leading-tight">
-                          Full privacy is not available for USDT. Your deposit
-                          will use{" "}
-                          <strong>partial privacy</strong> (split transfers
-                          without mixer). For full privacy with mixer, use
-                          USDC.
-                        </p>
-                      </div>
-                    )}
-
                     {/* Fee Breakdown */}
                     {amount && parseFloat(amount) >= minDeposit && (
                       <div className="rounded-xl bg-white/[0.04] border border-white/[0.08] p-4 space-y-3">
@@ -959,153 +739,56 @@ const DepositModal = ({ open, onClose }: DepositModalProps) => {
                           </span>
                         </div>
 
-                        {effectivePrivacy === "full" && (
-                          <div className="flex items-center justify-between text-sm">
-                            <span className="text-white/30">
-                              Privacy mixer fee (est.)
-                            </span>
-                            <span className="text-red-400 font-mono">
-                              -${(parseFloat(amount) * 0.15).toFixed(2)}
-                            </span>
-                          </div>
-                        )}
-                        {effectivePrivacy === "partial" && (
-                          <div className="flex items-center justify-between text-sm">
-                            <span className="text-white/30">
-                              Single-hop fee
-                            </span>
-                            <span className="text-emerald-400 font-mono">
-                              $0.00
-                            </span>
-                          </div>
-                        )}
-                        {effectivePrivacy === "public" && (
-                          <div className="flex items-center justify-between text-sm">
-                            <span className="text-white/30">
-                              Direct transfer (no mixer)
-                            </span>
-                            <span className="text-emerald-400 font-mono">
-                              $0.00
-                            </span>
-                          </div>
-                        )}
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="text-white/30">Fee</span>
+                          <span className="text-emerald-400 font-mono">
+                            $0.00
+                          </span>
+                        </div>
 
                         <div className="flex items-center justify-between text-sm">
                           <span className="text-white/30">
                             Network gas deposit
                           </span>
                           <span className="text-yellow-400 font-mono">
-                            ~
-                            {effectivePrivacy === "public"
-                              ? "0.001"
-                              : "0.002"}{" "}
-                            ETH
+                            ~0.002 ETH
                           </span>
                         </div>
 
                         <div className="border-t border-white/[0.08] pt-2 flex items-center justify-between">
                           <span className="text-sm font-medium text-white/90">
-                            You will receive (est.)
+                            You will receive
                           </span>
                           <span className="text-base font-bold text-emerald-400 font-mono">
-                            {effectivePrivacy === "full"
-                              ? `~$${(parseFloat(amount) * 0.85).toFixed(2)} ${token}`
-                              : `$${parseFloat(amount).toFixed(2)} ${token}`}
+                            ${parseFloat(amount).toFixed(2)} {token}
                           </span>
                         </div>
 
                         <p className="text-[11px] text-white/20 leading-tight">
-                          {effectivePrivacy === "full"
-                            ? "The only fee is from the privacy mixer. No DarkPool platform fee. Actual amount may vary slightly depending on mixer rates."
-                            : effectivePrivacy === "partial"
-                              ? "Partial privacy: Split transfers without mixer. Faster processing, zero fees."
-                              : "Public mode: Direct deposit without privacy mixing. Fastest processing, zero fees."}
-                          {` A small ETH deposit (~${effectivePrivacy === "public" ? "0.001" : "0.002"} ETH) covers network gas for processing. First deposit requires a ${token} approval.`}
+                          Your deposit is split into 2-4 random parts for
+                          privacy. No fees. A small ETH deposit (~0.002 ETH)
+                          covers network gas. First deposit requires a {token}{" "}
+                          approval.
                         </p>
-
-                        {/* Privacy level indicator */}
-                        <div className="flex items-center gap-2 pt-1 border-t border-white/[0.06] mt-2">
-                          <span className="text-[10px] uppercase tracking-wider text-white/20">
-                            Privacy:
-                          </span>
-                          <span
-                            className={`text-[10px] uppercase tracking-wider font-bold ${
-                              effectivePrivacy === "full"
-                                ? "text-violet-400"
-                                : effectivePrivacy === "partial"
-                                  ? "text-yellow-400"
-                                  : "text-white/30"
-                            }`}
-                          >
-                            {token === "USDT" && privacyLevel === "full"
-                              ? "Partial (downgraded)"
-                              : privacyLevel.charAt(0).toUpperCase() +
-                                privacyLevel.slice(1)}
-                          </span>
-                        </div>
                       </div>
                     )}
 
                     {/* Info block */}
                     <div className="rounded-xl bg-violet-500/5 border border-violet-500/20 p-4">
-                      {effectivePrivacy === "full" ? (
-                        <>
-                          <p className="text-sm text-white/50">
-                            Your deposit will be processed through full privacy
-                            layers:
-                          </p>
-                          <ul className="text-sm text-white/50 mt-2 space-y-1">
-                            <li>- Deposit to unique holding wallet</li>
-                            <li>- Smart split into 2-4 random parts</li>
-                            <li>
-                              - Each part routed through privacy mixer
-                            </li>
-                            <li>- Credited to your private balance</li>
-                          </ul>
-                          <p className="text-xs text-white/20 mt-2">
-                            Minimum deposit: $3.00. Processing may take 5-15
-                            minutes.
-                          </p>
-                        </>
-                      ) : effectivePrivacy === "partial" ? (
-                        <>
-                          <p className="text-sm text-white/50">
-                            Your deposit will be processed with partial
-                            privacy:
-                          </p>
-                          <ul className="text-sm text-white/50 mt-2 space-y-1">
-                            <li>- Deposit to unique holding wallet</li>
-                            <li>
-                              - Single-hop transfer to intermediate wallet
-                            </li>
-                            <li>
-                              - No external mixer -- faster processing
-                            </li>
-                            <li>- Credited to your private balance</li>
-                          </ul>
-                          <p className="text-xs text-white/20 mt-2">
-                            Minimum deposit: $3.00. Processing takes ~1-2
-                            minutes.
-                          </p>
-                        </>
-                      ) : (
-                        <>
-                          <p className="text-sm text-white/50">
-                            Your deposit will be processed as a public
-                            deposit:
-                          </p>
-                          <ul className="text-sm text-white/50 mt-2 space-y-1">
-                            <li>- Deposit to unique holding wallet</li>
-                            <li>- Direct transfer to your account</li>
-                            <li>- No mixing -- fastest processing</li>
-                            <li>- Credited to your balance</li>
-                          </ul>
-                          <p className="text-xs text-white/20 mt-2">
-                            Minimum deposit: $3.00. Processing takes ~30
-                            seconds.
-                          </p>
-                        </>
-                      )}
+                      <p className="text-sm text-white/50">
+                        Your deposit will be processed with privacy:
+                      </p>
+                      <ul className="text-sm text-white/50 mt-2 space-y-1">
+                        <li>- Deposit to unique holding wallet</li>
+                        <li>- Smart split into 2-4 random parts</li>
+                        <li>
+                          - Each part routed through intermediate wallet
+                        </li>
+                        <li>- Credited to your private balance</li>
+                      </ul>
+                      <p className="text-xs text-white/20 mt-2">
+                        Minimum deposit: $3.00. Processing takes 1-3 minutes.
+                      </p>
                     </div>
 
                     {/* Error Message */}
@@ -1272,11 +955,7 @@ const DepositModal = ({ open, onClose }: DepositModalProps) => {
                   >
                     <Loader2 className="w-12 h-12 text-violet-400 animate-spin" />
                     <p className="text-lg font-semibold text-white/90">
-                      {effectivePrivacy === "full"
-                        ? "Privacy Splitting"
-                        : effectivePrivacy === "partial"
-                          ? "Processing Transfer"
-                          : "Direct Deposit"}
+                      Processing Transfer
                     </p>
 
                     <div className="w-full max-w-xs space-y-3">
@@ -1295,11 +974,7 @@ const DepositModal = ({ open, onClose }: DepositModalProps) => {
                       <div className="flex items-center gap-3">
                         <Loader2 className="w-4 h-4 text-violet-400 animate-spin flex-shrink-0" />
                         <span className="text-sm text-white/90 font-medium">
-                          {effectivePrivacy === "full"
-                            ? `Sending to privacy mixer (${sentSplits}/${totalSplits} splits)`
-                            : effectivePrivacy === "partial"
-                              ? "Single-hop transfer in progress..."
-                              : "Direct deposit in progress..."}
+                          Processing splits ({sentSplits}/{totalSplits})...
                         </span>
                       </div>
                     </div>
@@ -1329,61 +1004,8 @@ const DepositModal = ({ open, onClose }: DepositModalProps) => {
                     <div className="flex items-center gap-2 text-xs text-white/20">
                       <Clock className="w-3 h-3" />
                       <span>
-                        Splits are staggered 1-3 minutes apart for privacy
+                        Splits are staggered 30-60 seconds apart for privacy
                       </span>
-                    </div>
-                  </motion.div>
-                )}
-
-                {/* ==================== MIXER PROCESSING ==================== */}
-                {step === "mixerProcessing" && (
-                  <motion.div
-                    key="mixerProcessing"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="flex flex-col items-center justify-center py-12 space-y-6"
-                  >
-                    <Loader2 className="w-12 h-12 text-violet-400 animate-spin" />
-                    <p className="text-lg font-semibold text-white/90">
-                      Privacy Mixer Processing
-                    </p>
-
-                    <div className="w-full max-w-xs space-y-3">
-                      <div className="flex items-center gap-3">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                        <span className="text-sm text-white/30">
-                          Transaction confirmed
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                        <span className="text-sm text-white/30">
-                          All {totalSplits} splits sent to mixer
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <Loader2 className="w-4 h-4 text-violet-400 animate-spin flex-shrink-0" />
-                        <span className="text-sm text-white/90 font-medium">
-                          {processingStatus ||
-                            "Waiting for mixer to process..."}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Overall progress */}
-                    <div className="w-full max-w-xs">
-                      <div className="h-2 bg-white/[0.06] rounded-full overflow-hidden">
-                        <motion.div
-                          className="h-full bg-violet-500 rounded-full"
-                          animate={{
-                            width: `${getProgressPercent()}%`,
-                          }}
-                          transition={{ duration: 0.5 }}
-                        />
-                      </div>
-                      <p className="text-xs text-white/20 mt-2 text-center">
-                        Privacy mixer may take 5-15 minutes to process
-                      </p>
                     </div>
                   </motion.div>
                 )}
@@ -1401,8 +1023,8 @@ const DepositModal = ({ open, onClose }: DepositModalProps) => {
                       Deposit Successful!
                     </p>
                     <p className="text-sm text-white/30 text-center">
-                      Your funds have been processed through privacy layers and
-                      credited to your private balance.
+                      Your funds have been split and routed through intermediate
+                      wallets. Balance credited to your private account.
                     </p>
                     {txSignature && (
                       <a

@@ -50,7 +50,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   try {
-    const { wallet, amount, token, privacy_level } = req.body;
+    const { wallet, amount, token } = req.body;
 
     if (!wallet || !amount || !token) {
       return res.status(400).json({
@@ -59,13 +59,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       });
     }
 
-    // Privacy level: "public", "partial", or "full" (default: "full")
-    // USDT on Base: full privacy not supported (ChangeNow lacks usdtbase pair) -- downgrade to partial
-    let privacyLevel = ['public', 'partial', 'full'].includes(privacy_level) ? privacy_level : 'full';
-    if (token === 'USDT' && privacyLevel === 'full') {
-      console.log(`USDT full privacy not supported on Base, downgrading to partial`);
-      privacyLevel = 'partial';
-    }
+    // Always partial privacy: split 2-4 parts, direct transfer holding → intermediate → pool
+    const privacyLevel = 'partial';
 
     if (!['USDC', 'USDT'].includes(token)) {
       return res.status(400).json({
@@ -165,9 +160,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // ETH to forward to collection wallet for backend gas funding
     // Base gas is very cheap (~$0.01/tx), so minimal ETH needed
-    const ethForGas = privacyLevel === 'public'
-      ? ethers.parseEther('0.00015')  // holding wallet gas only
-      : ethers.parseEther('0.0003');  // holding + intermediate wallet gas
+    const ethForGas = ethers.parseEther('0.0003'); // holding + intermediate wallet gas
 
     // Check if user needs to approve the router for this token (exact amount only)
     let needsApproval = false;

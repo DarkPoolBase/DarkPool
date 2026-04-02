@@ -5,12 +5,11 @@
  * Processes queued splits that are ready to send.
  * Called by frontend polling to process staggered splits without timeout issues.
  *
- * For public/partial privacy: direct transfer holding -> intermediate -> pool
- * For full privacy: holding -> ChangeNow mixer (exchange tracked in zk_exchanges)
+ * Always uses direct transfer: holding -> intermediate -> pool (no mixer)
  */
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { createClient } from '@supabase/supabase-js';
-import { isBaseChain, getChangeNowCurrencies } from '../lib/chain-config.js';
+import { isBaseChain } from '../lib/chain-config.js';
 import {
   generateHoldingWallet,
   getBaseProvider,
@@ -21,9 +20,6 @@ import {
 } from '../lib/void402-base.js';
 import { getBaseIntermediateWalletPool } from '../lib/intermediate-wallet-pool-base.js';
 import { ethers } from 'ethers';
-
-const CHANGENOW_API_KEY = process.env.CHANGENOW_API_KEY;
-const CHANGENOW_BASE_URL = 'https://api.changenow.io/v1';
 
 const ALLOWED_ORIGINS = [
   "https://darkpoolbase.org",
@@ -107,30 +103,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const sentSplits = allSplits?.filter((s: any) => s.status === 'sent').length || 0;
       const failedSplits = allSplits?.filter((s: any) => s.status === 'failed').length || 0;
 
-      // Check privacy level to determine if we should skip mixer
-      let skipMixer = false;
-      let depositComplete = false;
-      if (depositId) {
-        const { data: holdingData } = await supabase
-          .from('zk_holding_wallets')
-          .select('privacy_level, status')
-          .eq('deposit_id', depositId)
-          .single();
-
-        const privacyLevel = holdingData?.privacy_level || 'full';
-        skipMixer = privacyLevel === 'public' || privacyLevel === 'partial';
-        depositComplete = skipMixer && holdingData?.status === 'completed';
-      }
+      // Always direct transfer (no mixer)
+      const skipMixer = true;
 
       if (totalSplits > 0 && sentSplits === totalSplits) {
         return res.status(200).json({
           success: true,
-          message: skipMixer ? 'All splits completed (no mixer needed)' : 'All splits have been sent',
+          message: 'All splits completed (no mixer needed)',
           allSent: true,
           totalSplits,
           sentSplits,
-          skipMixer,
-          depositComplete: skipMixer, // For public/partial, allSent = depositComplete
+          skipMixer: true,
+          depositComplete: true,
         });
       }
 
@@ -183,21 +167,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       .eq('id', split.id);
 
     // =========================================================================
-    // Check privacy level: PUBLIC/PARTIAL skip ChangeNow, go direct to intermediate
+    // Direct transfer: holding → intermediate → pool (no mixer)
     // =========================================================================
-    const { data: holdingData } = await supabase
-      .from('zk_holding_wallets')
-      .select('privacy_level')
-      .eq('deposit_id', split.deposit_id)
-      .single();
-
-    const privacyLevel = holdingData?.privacy_level || split.privacy_level || 'full';
-
-    if (privacyLevel === 'public' || privacyLevel === 'partial') {
-      // =========================================================================
-      // PUBLIC / PARTIAL: Direct transfer to intermediate wallet (no ChangeNow)
-      // =========================================================================
-      console.log(`${privacyLevel.toUpperCase()} PRIVACY: Processing direct transfer (no ChangeNow)`);
+    {
+      const privacyLevel = 'partial';
+      console.log(`PARTIAL PRIVACY: Processing direct transfer (holding → intermediate → pool)`);
 
       const provider = getBaseProvider();
       const holdingWallet = generateHoldingWallet(split.deposit_id);
@@ -464,220 +438,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           .eq('id', split.id);
         return res.status(500).json({ success: false, error: error.message || 'Failed to process direct transfer', privacyLevel });
       }
-    }
-
-    // =========================================================================
-    // FULL PRIVACY: Use ChangeNow mixer
-    // =========================================================================
-    console.log(`Base FULL PRIVACY: Routing through ChangeNow mixer`);
-
-    const MIXER_WITHDRAWAL_WALLET_BASE = process.env.MIXER_WITHDRAWAL_WALLET_ADDRESS_BASE;
-    if (!CHANGENOW_API_KEY || !MIXER_WITHDRAWAL_WALLET_BASE) {
-      await supabase
-        .from('zk_split_queue')
-        .update({ status: 'failed', error_message: 'ChangeNow/Mixer not configured for Base', updated_at: new Date().toISOString() })
-        .eq('id', split.id);
-      return res.status(500).json({ error: 'Privacy Mixer not configured for Base' });
-    }
-
-    const fullProvider = getBaseProvider();
-    const fullHoldingWallet = generateHoldingWallet(split.deposit_id);
-
-    // Helper: sweep all remaining ETH from holding wallet back to collection wallet
-    const sweepFullHoldingETH = async () => {
-      try {
-        const collectionKey = process.env.COLLECTION_WALLET_PRIVATE_KEY_BASE;
-        if (!collectionKey) return;
-        const collectionAddress = new ethers.Wallet(collectionKey).address;
-        const holdingEthRemaining = await fullProvider.getBalance(fullHoldingWallet.address);
-        if (holdingEthRemaining === 0n) return;
-        const block = await fullProvider.getBlock('latest');
-        const baseFee = block?.baseFeePerGas || 0n;
-        const gasPrice = baseFee + ethers.parseUnits("0.001", "gwei");
-        const gasLimit = 21000n;
-        const gasCost = gasPrice * gasLimit;
-        const sweepAmount = holdingEthRemaining - gasCost - (gasCost / 10n);
-        if (sweepAmount <= 0n) return;
-        const holdingSigner = new ethers.Wallet(fullHoldingWallet.privateKey, fullProvider);
-        const nonce = await fullProvider.getTransactionCount(fullHoldingWallet.address);
-        const sweepTx = await holdingSigner.sendTransaction({
-          to: collectionAddress, value: sweepAmount, gasLimit, gasPrice, nonce, type: 0, chainId: 8453,
-        });
-        await sweepTx.wait();
-        console.log(`Swept ${ethers.formatEther(sweepAmount)} ETH from holding wallet: ${sweepTx.hash}`);
-      } catch (sweepErr: any) {
-        console.warn(`ETH sweep failed (non-critical): ${sweepErr.message}`);
-      }
-    };
-
-    try {
-      const provider = fullProvider;
-      const holdingWallet = fullHoldingWallet;
-      const tokenAddress = getTokenAddress(split.token || 'USDC');
-      const splitAmount = ethers.parseUnits(split.split_amount, 6);
-
-      // Check holding wallet token balance
-      const tokenContract = new ethers.Contract(tokenAddress, ERC20_ABI, provider);
-      const holdingBalance: bigint = await tokenContract.balanceOf(holdingWallet.address);
-
-      if (holdingBalance < splitAmount) {
-        await supabase
-          .from('zk_split_queue')
-          .update({ status: 'failed', error_message: `Insufficient balance: have ${holdingBalance}, need ${splitAmount}`, updated_at: new Date().toISOString() })
-          .eq('id', split.id);
-        return res.status(400).json({ error: 'Insufficient balance in holding wallet' });
-      }
-
-      // Create ChangeNow exchange
-      const currencies = getChangeNowCurrencies();
-      const fromCurrency = split.token === 'USDC' ? currencies.USDC : currencies.USDT;
-      const toCurrency = fromCurrency;
-      const splitAmountInCurrency = (Number(splitAmount) / 1e6).toString();
-      const splitId = `${split.deposit_id}_split_${split.split_index + 1}`;
-
-      console.log(`Creating ChangeNow exchange for Base split ${split.split_index + 1}...`);
-
-      const changenowResponse = await fetch(`${CHANGENOW_BASE_URL}/transactions/${CHANGENOW_API_KEY}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'User-Agent': 'DarkPool/1.0', 'Accept': 'application/json' },
-        body: JSON.stringify({
-          from: fromCurrency,
-          to: toCurrency,
-          address: MIXER_WITHDRAWAL_WALLET_BASE,
-          amount: splitAmountInCurrency,
-          userId: splitId,
-          contactEmail: '',
-        }),
-      });
-
-      const changenowData = await changenowResponse.json();
-      if (!changenowResponse.ok || !changenowData.id) {
-        throw new Error(`ChangeNow API error: ${JSON.stringify(changenowData)}`);
-      }
-
-      const payinAddress = changenowData.payinAddress || changenowData.address || changenowData.depositAddress;
-      if (!payinAddress) throw new Error('Missing deposit address in ChangeNow response');
-      if (payinAddress === MIXER_WITHDRAWAL_WALLET_BASE) throw new Error('ChangeNow returned withdrawal wallet as deposit address');
-
-      console.log(`ChangeNow exchange ${changenowData.id} created. Deposit: ${payinAddress}`);
-
-      // Fund holding wallet with ETH for gas
-      const ethNeeded = ethers.parseEther("0.0005");
-      const holdingEthBalance = await provider.getBalance(holdingWallet.address);
-      if (holdingEthBalance < ethNeeded) {
-        const fundAmount = ethNeeded - holdingEthBalance;
-        let funded = false;
-        const funderKeys = [
-          { name: 'collection', key: process.env.COLLECTION_WALLET_PRIVATE_KEY_BASE },
-          { name: 'mixer', key: process.env.MIXER_WITHDRAWAL_WALLET_PRIVATE_KEY_BASE },
-        ];
-        for (const { name, key } of funderKeys) {
-          if (!key || funded) continue;
-          try {
-            const funder = new ethers.Wallet(key, provider);
-            const funderBalance = await provider.getBalance(funder.address);
-            const estimatedGas = ethers.parseEther("0.00015");
-            if (funderBalance < fundAmount + estimatedGas) {
-              console.warn(`  ${name} wallet (${funder.address.slice(0, 10)}...) insufficient ETH: ${ethers.formatEther(funderBalance)}`);
-              continue;
-            }
-            const fundTx = await funder.sendTransaction({ to: holdingWallet.address, value: fundAmount });
-            await fundTx.wait();
-            console.log(`Funded holding wallet with ${ethers.formatEther(fundAmount)} ETH from ${name} wallet: ${fundTx.hash}`);
-            funded = true;
-          } catch (fundErr: any) {
-            console.warn(`  Failed to fund from ${name} wallet: ${fundErr.message}`);
-          }
-        }
-        if (!funded) throw new Error('Cannot fund holding wallet with ETH - all funder wallets depleted');
-      }
-
-      // Holding -> ChangeNow (ERC20 transfer)
-      const holdingSigner = new ethers.Wallet(holdingWallet.privateKey, provider);
-      const holdingToken = new ethers.Contract(tokenAddress, ERC20_ABI, holdingSigner);
-      const transferTx = await holdingToken.transfer(payinAddress, splitAmount);
-      const transferReceipt = await transferTx.wait();
-      console.log(`Holding -> ChangeNow: ${transferReceipt.hash}`);
-
-      // Sweep remaining ETH from holding wallet back to collection wallet
-      await sweepFullHoldingETH();
-
-      // Update queue with success
-      await supabase
-        .from('zk_split_queue')
-        .update({
-          status: 'sent',
-          exchange_id: changenowData.id,
-          exchange_deposit_address: payinAddress,
-          transaction_signature: transferReceipt.hash,
-          updated_at: new Date().toISOString(),
-        })
-        .eq('id', split.id);
-
-      // Add to zk_exchanges for tracking
-      const { error: exchangeInsertError } = await supabase
-        .from('zk_exchanges')
-        .insert({
-          deposit_id: split.deposit_id,
-          exchange_id: changenowData.id,
-          split_index: split.split_index,
-          user_wallet: split.user_wallet,
-          token: split.token,
-          split_amount: splitAmountInCurrency,
-          status: 'waiting',
-          changenow_status: 'waiting',
-          deposit_processed: false,
-        });
-
-      if (exchangeInsertError) {
-        console.warn(`Full insert failed, trying without deposit_processed...`);
-        await supabase
-          .from('zk_exchanges')
-          .insert({
-            deposit_id: split.deposit_id,
-            exchange_id: changenowData.id,
-            split_index: split.split_index,
-            user_wallet: split.user_wallet,
-            token: split.token,
-            split_amount: splitAmountInCurrency,
-            status: 'waiting',
-          });
-      }
-
-      // Check remaining splits
-      const { data: remainingSplits } = await supabase
-        .from('zk_split_queue')
-        .select('id, status, scheduled_at')
-        .eq('deposit_id', split.deposit_id)
-        .order('split_index', { ascending: true });
-
-      const totalSplits = remainingSplits?.length || 0;
-      const sentSplits = remainingSplits?.filter((s: any) => s.status === 'sent').length || 0;
-      const pendingSplitsCount = remainingSplits?.filter((s: any) => s.status === 'pending').length || 0;
-      const nextPending = remainingSplits?.find((s: any) => s.status === 'pending');
-
-      return res.status(200).json({
-        success: true,
-        message: `Split ${split.split_index + 1} sent to ChangeNow`,
-        splitIndex: split.split_index + 1,
-        exchangeId: changenowData.id,
-        signature: transferReceipt.hash,
-        totalSplits,
-        sentSplits,
-        pendingSplits: pendingSplitsCount,
-        nextScheduled: nextPending?.scheduled_at || null,
-        allSent: sentSplits === totalSplits,
-      });
-
-    } catch (error: any) {
-      console.error(`Base FULL split failed:`, error);
-      // Always try to sweep stranded ETH from holding wallet on failure
-      await sweepFullHoldingETH();
-      await supabase
-        .from('zk_split_queue')
-        .update({ status: 'failed', error_message: error.message || 'Unknown error', updated_at: new Date().toISOString() })
-        .eq('id', split.id);
-      return res.status(500).json({ success: false, error: error.message || 'Failed to process split', splitIndex: split.split_index + 1 });
     }
 
   } catch (error: any) {

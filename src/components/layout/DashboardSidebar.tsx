@@ -169,7 +169,7 @@ export function DashboardSidebar() {
               </span>
               <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-emerald-400/70">System Online</span>
             </div>
-            <p className="font-mono text-[10px] text-white/15">v0.1.0-alpha · Base Mainnet</p>
+            <p className="font-mono text-[10px] text-white/15">v0.8.3 · Base Mainnet</p>
           </div>
         )}
       </SidebarContent>

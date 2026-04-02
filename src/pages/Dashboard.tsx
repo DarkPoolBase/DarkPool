@@ -62,7 +62,7 @@ const Dashboard = () => {
       if (portfolioTimeframe === '1D') label = d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
       else if (portfolioTimeframe === 'ALL') label = d.toLocaleDateString('en-US', { month: 'short' });
       else label = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-      return { date: label, value: parseFloat(p.avgPrice) };
+      return { date: label, value: parseFloat(p.close ?? p.avgPrice ?? '0') };
     });
   }, [priceHistory, portfolioTimeframe]);
 

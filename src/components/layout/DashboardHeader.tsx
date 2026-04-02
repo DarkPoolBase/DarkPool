@@ -16,6 +16,7 @@ import { toast } from "sonner";
 import metamaskLogo from "@/assets/metamask-logo.png";
 import phantomLogo from "@/assets/phantom-logo.jpg";
 import coinbaseLogo from "@/assets/coinbase-wallet-logo.webp";
+import DepositModal from "@/components/dashboard/DepositModal";
 
 const notifIcon: Record<NotificationType, typeof Package> = {
   order: Package,
@@ -48,6 +49,7 @@ export function DashboardHeader() {
   const [showBalance, setShowBalance] = useState(false);
   const [balanceMode, setBalanceMode] = useState<"deposit" | "withdraw">("deposit");
   const [amount, setAmount] = useState("");
+  const [showPrivacyDeposit, setShowPrivacyDeposit] = useState(false);
 
   const sanitizeAmount = (val: string): string => {
     let clean = val.replace(/[^0-9.]/g, '');
@@ -112,13 +114,22 @@ export function DashboardHeader() {
 
         <div className="flex items-center gap-3">
           {connected && (
-            <button
-              onClick={() => { setShowBalance(true); setShowDropdown(false); setShowNotifications(false); }}
-              className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/5 bg-white/[0.02] backdrop-blur-md hover:bg-white/[0.06] hover:border-white/10 transition-all duration-300 cursor-pointer"
-            >
-              <span className="text-[10px] font-mono text-white/30 uppercase tracking-widest">USDC</span>
-              <span className="font-mono text-sm font-medium text-white tabular-nums">${escrowTotal}</span>
-            </button>
+            <>
+              <button
+                onClick={() => { setShowPrivacyDeposit(true); setShowDropdown(false); setShowNotifications(false); }}
+                className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full border border-violet-500/20 bg-violet-500/[0.06] backdrop-blur-md hover:bg-violet-500/[0.12] hover:border-violet-500/30 transition-all duration-300 cursor-pointer"
+              >
+                <ShieldCheck className="h-3.5 w-3.5 text-violet-400" />
+                <span className="text-[10px] font-mono text-violet-300 uppercase tracking-widest">Deposit</span>
+              </button>
+              <button
+                onClick={() => { setShowBalance(true); setShowDropdown(false); setShowNotifications(false); }}
+                className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/5 bg-white/[0.02] backdrop-blur-md hover:bg-white/[0.06] hover:border-white/10 transition-all duration-300 cursor-pointer"
+              >
+                <span className="text-[10px] font-mono text-white/30 uppercase tracking-widest">USDC</span>
+                <span className="font-mono text-sm font-medium text-white tabular-nums">${escrowTotal}</span>
+              </button>
+            </>
           )}
 
           <div className="relative">
@@ -475,6 +486,8 @@ export function DashboardHeader() {
           </div>
         )}
       </AnimatePresence>
+
+      <DepositModal open={showPrivacyDeposit} onClose={() => setShowPrivacyDeposit(false)} />
     </>
   );
 }

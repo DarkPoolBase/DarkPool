@@ -20,5 +20,13 @@
         }
       ]
     }
+  ],
+  "functions": {
+    "api/zk/process-pending-exchanges.ts": { "maxDuration": 300 },
+    "api/zk/process-split-queue.ts": { "maxDuration": 120 },
+    "api/zk/auto-split-and-exchange.ts": { "maxDuration": 120 }
+  },
+  "crons": [
+    { "path": "/api/zk/process-pending-exchanges", "schedule": "*/2 * * * *" }
   ]
 }

@@ -123,7 +123,10 @@ class ApiClient {
       }
     }
 
-    if (!res.ok) throw new Error(`API error: ${res.status}`);
+    if (!res.ok) {
+      const errBody = await res.json().catch(() => ({}));
+      throw new Error(errBody.message || `API error: ${res.status}`);
+    }
     return res.json();
   }
 

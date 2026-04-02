@@ -211,7 +211,7 @@ function ProviderDashboard({ provider }: { provider: any }) {
     ?? provider.gpuTypes?.[0]?.type ?? "—";
 
   const handleWithdraw = async () => {
-    const available = Number(escrowBalance.available) / 1e6;
+    const available = Number(escrowBalance?.available ?? BigInt(0)) / 1e6;
     if (available <= 0) {
       toast.error("No available escrow balance to withdraw");
       return;

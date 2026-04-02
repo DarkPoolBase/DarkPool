@@ -42,7 +42,7 @@ const Dashboard = () => {
     return clean;
   };
 
-  const walletBalanceNum = Number(escrowBalance.available) / 1e6;
+  const walletBalanceNum = Number(escrowBalance?.available ?? BigInt(0)) / 1e6;
   const usdcWalletNum = parseFloat(usdcFormatted) || 0;
 
   const handleDeposit = async () => {

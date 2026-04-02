@@ -31,11 +31,16 @@ export const USDC_DECIMALS = 6;
 
 /** Convert a human-readable USDC amount (e.g. 1.50) to on-chain units (1500000) */
 export function parseUSDC(amount: number): bigint {
+  if (!Number.isFinite(amount) || amount < 0) return BigInt(0);
   return BigInt(Math.round(amount * 10 ** USDC_DECIMALS));
 }
 
 /** Convert on-chain USDC units to human-readable amount */
 export function formatUSDC(raw: bigint): string {
-  const num = Number(raw) / 10 ** USDC_DECIMALS;
-  return num.toFixed(2);
+  if (!raw || raw < BigInt(0)) return '0.00';
+  const divisor = BigInt(10 ** USDC_DECIMALS);
+  const whole = raw / divisor;
+  const remainder = raw % divisor;
+  const decimals = remainder.toString().padStart(USDC_DECIMALS, '0').slice(0, 2);
+  return `${whole}.${decimals}`;
 }

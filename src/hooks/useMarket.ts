@@ -79,3 +79,14 @@ export function useMarketVolume() {
     refetchInterval: 30000,
   });
 }
+
+export type AvailabilityMap = Record<string, { available: number; inStock: boolean }>;
+
+export function useGpuAvailability() {
+  return useQuery<AvailabilityMap>({
+    queryKey: ['market', 'availability'],
+    queryFn: () => api.get<AvailabilityMap>('/api/market/availability'),
+    refetchInterval: 120_000, // matches backend 2-min cache
+    staleTime: 60_000,
+  });
+}

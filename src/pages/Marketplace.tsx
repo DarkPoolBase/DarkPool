@@ -6,7 +6,7 @@ import { GlassCard } from "@/components/ui/glass-card";
 import { motion } from "framer-motion";
 import { AuctionTimer } from "@/components/dashboard/AuctionTimer";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { useMarketPrices, useMarketStats, useMarketVolume } from "@/hooks/useMarket";
+import { useMarketPrices, useMarketStats, useMarketVolume, useGpuAvailability } from "@/hooks/useMarket";
 import { useSettlements } from "@/hooks/useOrders";
 
 type MarketCategory = "spot" | "reserved" | "credits" | "clusters";
@@ -80,6 +80,7 @@ const Marketplace = () => {
   const { data: marketPrices } = useMarketPrices();
   const { data: marketStats } = useMarketStats();
   const { data: volumeData } = useMarketVolume();
+  const { data: availability } = useGpuAvailability();
   const { data: settlements } = useSettlements(6);
 
   // Build spot products from real market prices
@@ -98,6 +99,7 @@ const Marketplace = () => {
       const vol = volumeData?.[p.gpuType];
       const vol24h = vol ? Number(vol.volume24h).toLocaleString() : Number(p.volume24h).toLocaleString();
       const volUsd = (parseFloat(p.volume24h) * parseFloat(p.price)).toFixed(0);
+      const inStock = availability ? (availability[p.gpuType]?.inStock ?? true) : true;
       return {
         id: p.gpuType.toLowerCase(),
         name: meta.name,
@@ -111,22 +113,25 @@ const Marketplace = () => {
         volume24h: `${vol24h} GPU-hrs`,
         volumeUsd: `$${volUsd}`,
         icon: meta.icon,
+        outOfStock: !inStock,
       };
     });
-  }, [marketPrices, marketStats, volumeData]);
+  }, [marketPrices, marketStats, volumeData, availability]);
 
   const allReserved = useMemo(() => {
     return reservedProducts.map(rp => {
       const basePrice = priceMap[rp.gpuBase]?.price ? parseFloat(priceMap[rp.gpuBase].price) : 0;
+      const inStock = availability ? (availability[rp.gpuBase]?.inStock ?? true) : true;
       return {
         id: rp.id, name: rp.name, category: "reserved" as MarketCategory,
         price: `$${(basePrice * rp.multiplier).toFixed(2)}/block`,
         subtitle: rp.subtitle, providers: marketStats?.totalProviders ?? 0,
         vram: rp.vram, availability: 50, badge: null,
         volume24h: '—', volumeUsd: '—', icon: rp.icon,
+        outOfStock: !inStock,
       };
     });
-  }, [priceMap, marketStats]);
+  }, [priceMap, marketStats, availability]);
 
   const allCredits = useMemo(() => {
     const avgPrice = marketPrices?.length
@@ -138,21 +143,24 @@ const Marketplace = () => {
       subtitle: cp.subtitle, providers: marketStats?.totalProviders ?? 0,
       vram: cp.vram, availability: 95, badge: null,
       volume24h: '—', volumeUsd: '—', icon: cp.icon,
+      outOfStock: false,
     }));
   }, [marketPrices, marketStats]);
 
   const allClusters = useMemo(() => {
     return clusterProducts.map(cl => {
       const basePrice = priceMap[cl.gpuBase]?.price ? parseFloat(priceMap[cl.gpuBase].price) : 0;
+      const inStock = availability ? (availability[cl.gpuBase]?.inStock ?? true) : true;
       return {
         id: cl.id, name: cl.name, category: "clusters" as MarketCategory,
         price: `$${(basePrice * cl.gpuCount).toFixed(2)}/GPU-hour`,
         subtitle: cl.subtitle, providers: marketStats?.totalProviders ?? 0,
         vram: cl.vram, availability: 30, badge: null,
         volume24h: '—', volumeUsd: '—', icon: cl.icon,
+        outOfStock: !inStock,
       };
     });
-  }, [priceMap, marketStats]);
+  }, [priceMap, marketStats, availability]);
 
   const computeProducts = useMemo(() => {
     return [...spotProducts, ...allReserved, ...allCredits, ...allClusters];
@@ -211,8 +219,8 @@ const Marketplace = () => {
               <GlassCard
                 key={product.id}
                 delay={0.1 + i * 0.06}
-                className="p-0 cursor-pointer group flex flex-col"
-                onClick={() => navigate(`/marketplace/${product.id}`)}
+                className={`p-0 flex flex-col ${product.outOfStock ? 'opacity-50 grayscale cursor-not-allowed' : 'cursor-pointer group'}`}
+                onClick={() => !product.outOfStock && navigate(`/marketplace/${product.id}`)}
               >
                 <div className="p-4 flex-1 flex flex-col">
                   {/* Header: Name + Badge */}
@@ -226,11 +234,15 @@ const Marketplace = () => {
                         <span className="font-mono text-[10px] text-muted-foreground/60">{product.vram}</span>
                       </div>
                     </div>
-                    {product.badge && (
+                    {product.outOfStock ? (
+                      <span className="px-2 py-1 rounded-full text-[9px] font-mono font-medium border bg-rose-500/10 text-rose-400 border-rose-500/20">
+                        OUT OF STOCK
+                      </span>
+                    ) : product.badge ? (
                       <span className={`px-2 py-1 rounded-full text-[9px] font-mono font-medium border ${badgeColor(product.badge)}`}>
                         {product.badge.toUpperCase()}
                       </span>
-                    )}
+                    ) : null}
                   </div>
 
                   {/* Price + Subtitle */}
@@ -290,25 +302,33 @@ const Marketplace = () => {
 
                 {/* Footer: Buy (primary) / Sell (secondary) / View Market (tertiary) */}
                 <div className="px-4 py-2 border-t border-white/[0.04] flex items-center gap-2 group-hover:bg-white/[0.02] transition-colors duration-500">
-                  <button
-                    onClick={(e) => { e.stopPropagation(); navigate(`/marketplace/${product.id}?side=buy`); }}
-                    className="flex-[2] py-2 rounded-lg text-[11px] font-mono font-semibold bg-emerald-500/15 text-emerald-400 border border-emerald-500/25 hover:bg-emerald-500/25 transition-colors"
-                  >
-                    Buy
-                  </button>
-                  <button
-                    onClick={(e) => { e.stopPropagation(); navigate(`/marketplace/${product.id}?side=sell`); }}
-                    className="flex-1 py-2 rounded-lg text-[10px] font-mono font-medium bg-rose-500/10 text-rose-400 border border-rose-500/20 hover:bg-rose-500/20 transition-colors"
-                  >
-                    Sell
-                  </button>
-                  <button
-                    onClick={(e) => { e.stopPropagation(); navigate(`/marketplace/${product.id}`); }}
-                    className="ml-auto flex items-center gap-1.5 px-2 py-2 text-[9px] font-mono text-muted-foreground hover:text-foreground/70 transition-colors"
-                  >
-                    View Market
-                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform duration-300" />
-                  </button>
+                  {product.outOfStock ? (
+                    <span className="flex-1 py-2 text-center text-[11px] font-mono text-muted-foreground/40">
+                      Currently unavailable
+                    </span>
+                  ) : (
+                    <>
+                      <button
+                        onClick={(e) => { e.stopPropagation(); navigate(`/marketplace/${product.id}?side=buy`); }}
+                        className="flex-[2] py-2 rounded-lg text-[11px] font-mono font-semibold bg-emerald-500/15 text-emerald-400 border border-emerald-500/25 hover:bg-emerald-500/25 transition-colors"
+                      >
+                        Buy
+                      </button>
+                      <button
+                        onClick={(e) => { e.stopPropagation(); navigate(`/marketplace/${product.id}?side=sell`); }}
+                        className="flex-1 py-2 rounded-lg text-[10px] font-mono font-medium bg-rose-500/10 text-rose-400 border border-rose-500/20 hover:bg-rose-500/20 transition-colors"
+                      >
+                        Sell
+                      </button>
+                      <button
+                        onClick={(e) => { e.stopPropagation(); navigate(`/marketplace/${product.id}`); }}
+                        className="ml-auto flex items-center gap-1.5 px-2 py-2 text-[9px] font-mono text-muted-foreground hover:text-foreground/70 transition-colors"
+                      >
+                        View Market
+                        <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform duration-300" />
+                      </button>
+                    </>
+                  )}
                 </div>
               </GlassCard>
             ))}

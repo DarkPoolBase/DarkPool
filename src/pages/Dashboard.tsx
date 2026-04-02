@@ -140,15 +140,11 @@ const Dashboard = () => {
             Savings
           </button>
           <button
-            onClick={() => setTab("portfolio")}
-            className={`flex-1 sm:flex-initial px-3 md:px-4 py-2 text-[10px] font-mono uppercase tracking-wider rounded-md transition-all duration-300 flex items-center justify-center gap-1.5 ${
-              tab === "portfolio"
-                ? "text-white bg-white/[0.06] border border-white/10"
-                : "text-white/30 border border-transparent hover:text-white/60"
-            }`}
+            disabled
+            className="flex-1 sm:flex-initial px-3 md:px-4 py-2 text-[10px] font-mono uppercase tracking-wider rounded-md transition-all duration-300 flex items-center justify-center gap-1.5 text-white/20 border border-transparent cursor-not-allowed"
           >
             <PieChart className="w-3 h-3" />
-            Portfolio
+            Portfolio <span className="text-[9px] text-white/15 ml-1">(Soon)</span>
           </button>
         </div>
       </div>

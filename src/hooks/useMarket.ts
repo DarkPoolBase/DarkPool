@@ -1,5 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
+import { useEffect, useRef } from 'react';
 import { api } from '@/lib/api';
+import { toast } from 'sonner';
 
 interface GpuPrice {
   gpuType: string;
@@ -33,7 +35,7 @@ interface VolumeData {
 }
 
 export function useMarketPrices() {
-  return useQuery<GpuPrice[]>({
+  const query = useQuery<GpuPrice[]>({
     queryKey: ['market', 'prices'],
     queryFn: () => api.get<GpuPrice[]>('/api/market/prices'),
     refetchInterval: 10000,
@@ -45,6 +47,37 @@ export function useMarketPrices() {
       { gpuType: 'A10G', price: '0.35', change24h: -0.3, volume24h: '12000' },
     ],
   });
+
+  // Check price alerts whenever prices update
+  const triggeredRef = useRef<Set<string>>(new Set());
+  useEffect(() => {
+    if (!query.data) return;
+    try {
+      const alerts = JSON.parse(localStorage.getItem('darkpool_price_alerts') || '[]');
+      const priceMap: Record<string, number> = {};
+      for (const p of query.data) {
+        priceMap[p.gpuType] = parseFloat(p.price);
+      }
+      for (const alert of alerts) {
+        if (!alert.active) continue;
+        const current = priceMap[alert.gpuType];
+        if (current === undefined) continue;
+        const triggered =
+          (alert.direction === 'below' && current < alert.threshold) ||
+          (alert.direction === 'above' && current > alert.threshold);
+        if (triggered && !triggeredRef.current.has(alert.id)) {
+          triggeredRef.current.add(alert.id);
+          toast(`${alert.gpuType} is now $${current.toFixed(2)}/hr`, {
+            description: `${alert.direction === 'below' ? 'Below' : 'Above'} your $${alert.threshold.toFixed(2)} alert`,
+          });
+          // Reset after 5 min so it can trigger again
+          setTimeout(() => triggeredRef.current.delete(alert.id), 300000);
+        }
+      }
+    } catch { /* ignore */ }
+  }, [query.data]);
+
+  return query;
 }
 
 export function useMarketStats() {

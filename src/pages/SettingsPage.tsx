@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
-import { Copy, Trash2, Eye, EyeOff, Shield, Key, Loader2 } from "lucide-react";
+import { Copy, Trash2, Eye, EyeOff, Shield, Key, Loader2, Bell, Plus, X } from "lucide-react";
 import { GlassCard } from "@/components/ui/glass-card";
 import { SectionLabel } from "@/components/ui/section-label";
 import { useState, useEffect, useRef } from "react";
@@ -47,6 +47,141 @@ export function useAvatarColor() {
   }, []);
 
   return { color, setColor };
+}
+
+const ALERTS_KEY = "darkpool_price_alerts";
+const GPU_TYPES = ["H100", "A100", "L40S", "H200", "A10G"];
+
+interface PriceAlert {
+  id: string;
+  gpuType: string;
+  threshold: number;
+  direction: "above" | "below";
+  active: boolean;
+}
+
+function loadAlerts(): PriceAlert[] {
+  try {
+    return JSON.parse(localStorage.getItem(ALERTS_KEY) || "[]");
+  } catch { return []; }
+}
+
+function saveAlerts(alerts: PriceAlert[]) {
+  localStorage.setItem(ALERTS_KEY, JSON.stringify(alerts));
+}
+
+function PriceAlertsCard() {
+  const [alerts, setAlerts] = useState<PriceAlert[]>(loadAlerts);
+  const [gpuType, setGpuType] = useState(GPU_TYPES[0]);
+  const [threshold, setThreshold] = useState("");
+  const [direction, setDirection] = useState<"above" | "below">("below");
+
+  const addAlert = () => {
+    const price = parseFloat(threshold);
+    if (!price || price <= 0) return;
+    const newAlert: PriceAlert = {
+      id: `${Date.now()}`,
+      gpuType,
+      threshold: price,
+      direction,
+      active: true,
+    };
+    const updated = [...alerts, newAlert];
+    setAlerts(updated);
+    saveAlerts(updated);
+    setThreshold("");
+  };
+
+  const removeAlert = (id: string) => {
+    const updated = alerts.filter((a) => a.id !== id);
+    setAlerts(updated);
+    saveAlerts(updated);
+  };
+
+  const toggleAlert = (id: string, active: boolean) => {
+    const updated = alerts.map((a) => a.id === id ? { ...a, active } : a);
+    setAlerts(updated);
+    saveAlerts(updated);
+  };
+
+  return (
+    <GlassCard delay={0.4} className="p-6 space-y-4">
+      <div className="flex items-center gap-2">
+        <Bell className="h-4 w-4 text-violet-400" />
+        <SectionLabel>Price Alerts</SectionLabel>
+      </div>
+
+      {/* Add alert form */}
+      <div className="flex flex-wrap gap-2 items-end">
+        <div className="flex-1 min-w-[100px]">
+          <label className="text-[10px] text-white/30 uppercase tracking-wider block mb-1">GPU</label>
+          <select
+            value={gpuType}
+            onChange={(e) => setGpuType(e.target.value)}
+            className="w-full h-9 px-3 rounded-lg border border-white/[0.08] bg-white/[0.04] text-xs font-mono text-white/80 outline-none focus:border-violet-500/50"
+          >
+            {GPU_TYPES.map((g) => <option key={g} value={g}>{g}</option>)}
+          </select>
+        </div>
+        <div className="flex-1 min-w-[80px]">
+          <label className="text-[10px] text-white/30 uppercase tracking-wider block mb-1">Direction</label>
+          <select
+            value={direction}
+            onChange={(e) => setDirection(e.target.value as "above" | "below")}
+            className="w-full h-9 px-3 rounded-lg border border-white/[0.08] bg-white/[0.04] text-xs font-mono text-white/80 outline-none focus:border-violet-500/50"
+          >
+            <option value="below">Below</option>
+            <option value="above">Above</option>
+          </select>
+        </div>
+        <div className="flex-1 min-w-[80px]">
+          <label className="text-[10px] text-white/30 uppercase tracking-wider block mb-1">$/hr</label>
+          <input
+            type="number"
+            step="0.01"
+            min="0"
+            placeholder="2.00"
+            value={threshold}
+            onChange={(e) => setThreshold(e.target.value)}
+            className="w-full h-9 px-3 rounded-lg border border-white/[0.08] bg-white/[0.04] text-xs font-mono text-white/80 outline-none focus:border-violet-500/50 placeholder:text-white/20"
+          />
+        </div>
+        <Button
+          size="sm"
+          onClick={addAlert}
+          disabled={!threshold || parseFloat(threshold) <= 0}
+          className="h-9 px-3 bg-violet-600 hover:bg-violet-500 text-white text-xs gap-1"
+        >
+          <Plus className="h-3 w-3" /> Add
+        </Button>
+      </div>
+
+      {/* Active alerts */}
+      {alerts.length === 0 ? (
+        <p className="text-[11px] text-white/20 font-mono py-2">No price alerts set. Add one above.</p>
+      ) : (
+        <div className="space-y-0">
+          {alerts.map((alert) => (
+            <div key={alert.id} className="flex items-center justify-between py-2.5 border-b border-white/[0.04] last:border-0">
+              <div className="flex items-center gap-3">
+                <Switch
+                  checked={alert.active}
+                  onCheckedChange={(val) => toggleAlert(alert.id, val)}
+                />
+                <span className={`text-xs font-mono ${alert.active ? "text-white/70" : "text-white/30"}`}>
+                  {alert.gpuType} {alert.direction === "below" ? "drops below" : "rises above"}{" "}
+                  <span className="text-violet-400">${alert.threshold.toFixed(2)}</span>/hr
+                </span>
+              </div>
+              <button onClick={() => removeAlert(alert.id)} className="p-1 rounded hover:bg-white/[0.06] transition-colors">
+                <X className="h-3.5 w-3.5 text-white/20 hover:text-red-400" />
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+    </GlassCard>
+  );
 }
 
 const SettingsPage = () => {
@@ -309,6 +444,9 @@ const SettingsPage = () => {
           ))}
         </div>
       </GlassCard>
+
+      {/* Price Alerts */}
+      <PriceAlertsCard />
     </div>
   );
 };

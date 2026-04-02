@@ -17,6 +17,7 @@ import metamaskLogo from "@/assets/metamask-logo.png";
 import phantomLogo from "@/assets/phantom-logo.jpg";
 import coinbaseLogo from "@/assets/coinbase-wallet-logo.webp";
 import DepositModal from "@/components/dashboard/DepositModal";
+import { useBasename } from "@/hooks/useBasename";
 
 const notifIcon: Record<NotificationType, typeof Package> = {
   order: Package,
@@ -31,6 +32,7 @@ export function DashboardHeader() {
     walletType, networkStatus, connect, disconnect, showModal, setShowModal,
   } = useWallet();
   const { isAuthenticated } = useAutoAuth();
+  const { basename } = useBasename(fullWalletAddress);
   const { data: escrowBalance, refetch: refetchEscrow } = useEscrowBalance(fullWalletAddress ?? undefined);
   const { formatted: usdcFormatted, refetch: refetchUSDC } = useUSDCBalance(fullWalletAddress ?? undefined);
   const { deposit, isLoading: depositing } = useDepositUSDC();
@@ -182,14 +184,14 @@ export function DashboardHeader() {
 
           {connected ? (
             <div className="relative">
-              <Button
-                size="sm"
+              <button
                 onClick={() => { setShowDropdown(!showDropdown); setShowNotifications(false); }}
-                className="bg-white/[0.06] hover:bg-white/[0.1] text-white gap-2 transition-all duration-300 border border-white/[0.08] rounded-full px-4"
+                className="flex items-center gap-2 bg-white/[0.06] hover:bg-white/[0.1] text-white transition-all duration-300 border border-white/[0.08] rounded-full px-3 py-1.5"
               >
-                <div className="w-5 h-5 rounded-full" style={{ background: `linear-gradient(135deg, ${avatarColor.from}, ${avatarColor.to})` }} />
-                <span className="text-xs font-mono">{walletAddress}</span>
-              </Button>
+                <div className="w-5 h-5 rounded-full shrink-0" style={{ background: `linear-gradient(135deg, ${avatarColor.from}, ${avatarColor.to})` }} />
+                <span className="text-xs font-mono text-white/90">{basename || walletAddress}</span>
+                {basename && <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-violet-500/10 text-violet-400 border border-violet-500/20 font-mono shrink-0">ENS</span>}
+              </button>
 
               <AnimatePresence>
                 {showDropdown && (
@@ -200,6 +202,9 @@ export function DashboardHeader() {
                     className="absolute right-0 top-full mt-2 w-64 rounded-xl border border-white/[0.08] bg-[#111118] backdrop-blur-xl shadow-2xl z-50 overflow-hidden"
                   >
                     <div className="p-3 border-b border-white/[0.06]">
+                      {basename && (
+                        <p className="text-sm font-mono font-semibold text-white/90 mb-1">{basename}</p>
+                      )}
                       <div className="flex items-center justify-between">
                         <span className="text-[10px] font-mono text-white/30 uppercase tracking-wider">
                           {walletType === 'phantom' ? 'Phantom' : walletType === 'metamask' ? 'MetaMask' : 'Coinbase'}

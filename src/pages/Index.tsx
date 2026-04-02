@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { IntroLoader } from "@/components/IntroLoader";
 import { useWallet } from "@/contexts/WalletContext";
-import { LogOut, Copy, Check } from "lucide-react";
+import { LogOut, Copy, Check, Settings } from "lucide-react";
+import { useAvatarColor } from "@/pages/SettingsPage";
 import metamaskLogo from "@/assets/metamask-logo.png";
 import phantomLogo from "@/assets/phantom-logo.jpg";
 import coinbaseLogo from "@/assets/coinbase-wallet-logo.webp";
@@ -16,6 +17,7 @@ const Index = () => {
     walletType, networkStatus, connect, disconnect, showModal, setShowModal,
   } = useWallet();
   const navigate = useNavigate();
+  const { color: avatarColor } = useAvatarColor();
   const [showDropdown, setShowDropdown] = useState(false);
   const [copied, setCopied] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -44,6 +46,18 @@ const Index = () => {
       }
       if (event.data === 'launch-app') {
         navigate('/dashboard');
+      }
+      if (event.data === 'navigate-marketplace') {
+        navigate('/marketplace');
+      }
+      if (event.data === 'navigate-provider') {
+        navigate('/provider');
+      }
+      if (event.data === 'navigate-analytics') {
+        navigate('/analytics');
+      }
+      if (event.data === 'navigate-api-docs') {
+        navigate('/api-docs');
       }
     };
     window.addEventListener('message', handleMessage);
@@ -86,7 +100,7 @@ const Index = () => {
                   boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.2)',
                 }}
               >
-                <div className="w-5 h-5 rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-500 shrink-0" />
+                <div className="w-5 h-5 rounded-full shrink-0" style={{ background: `linear-gradient(135deg, ${avatarColor.from}, ${avatarColor.to})` }} />
                 <span className="text-white/90 font-mono text-xs">{walletAddress}</span>
               </button>
 
@@ -126,6 +140,13 @@ const Index = () => {
                     >
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
                       View on Basescan
+                    </button>
+                    <button
+                      onClick={() => { setShowDropdown(false); navigate('/settings'); }}
+                      className="w-full flex items-center gap-2 px-3 py-2.5 text-xs text-white/50 hover:bg-white/[0.05] hover:text-white/80 transition-colors"
+                    >
+                      <Settings className="h-3.5 w-3.5" />
+                      Settings
                     </button>
                     <button
                       onClick={() => { disconnect(); setShowDropdown(false); }}
@@ -188,7 +209,7 @@ const Index = () => {
                   {connected ? (
                     <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-500" />
+                        <div className="w-8 h-8 rounded-full" style={{ background: `linear-gradient(135deg, ${avatarColor.from}, ${avatarColor.to})` }} />
                         <div>
                           <div className="text-sm font-mono text-white">{walletAddress}</div>
                           <div className="text-[10px] text-emerald-400 font-mono">Connected to Base</div>

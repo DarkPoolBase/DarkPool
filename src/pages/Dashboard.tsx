@@ -3,7 +3,7 @@ import { useState, useMemo } from "react";
 import { BarChart3, CheckCircle, Zap, TrendingUp, Calculator, ArrowUpDown } from "lucide-react";
 import { useOrders, useOrderStats } from "@/hooks/useOrders";
 import { useAutoAuth } from "@/hooks/useAutoAuth";
-import { useMarketStats } from "@/hooks/useMarket";
+import { useMarketStats, usePriceHistory } from "@/hooks/useMarket";
 import { StatsCard } from "@/components/dashboard/StatsCard";
 import { OrderTable } from "@/components/dashboard/OrderTable";
 import { QuickActions } from "@/components/dashboard/QuickActions";
@@ -12,13 +12,20 @@ import { AuctionTimer } from "@/components/dashboard/AuctionTimer";
 import { AnimatedNumber } from "@/components/ui/animated-number";
 import { GlassCard } from "@/components/ui/glass-card";
 import { SavingsCalculator } from "@/components/dashboard/SavingsCalculator";
+import { AreaChart, Area, ResponsiveContainer, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
+
+const portfolioIntervalMap: Record<string, string> = {
+  "1D": "1h", "1W": "4h", "1M": "1d", "ALL": "1w",
+};
 
 const Dashboard = () => {
   const [tab, setTab] = useState<"overview" | "savings">("overview");
+  const [portfolioTimeframe, setPortfolioTimeframe] = useState("1W");
   const { isAuthenticated } = useAutoAuth();
   const { data: userOrders } = useOrders({ limit: 100 }, isAuthenticated);
   const { data: stats } = useOrderStats(isAuthenticated);
   const { data: marketStats } = useMarketStats();
+  const { data: priceHistory } = usePriceHistory('H100', portfolioIntervalMap[portfolioTimeframe]);
 
   // Derive user-specific metrics from their orders
   const userEscrowBalance = useMemo(() => {
@@ -43,6 +50,18 @@ const Dashboard = () => {
     ).length;
   }, [userOrders]);
 
+  // Build portfolio chart from price history API
+  const portfolioData = useMemo(() => {
+    if (!priceHistory?.length) return [];
+    return priceHistory.map((p: any) => {
+      const d = new Date(p.timestamp);
+      let label: string;
+      if (portfolioTimeframe === '1D') label = d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+      else if (portfolioTimeframe === 'ALL') label = d.toLocaleDateString('en-US', { month: 'short' });
+      else label = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      return { date: label, value: parseFloat(p.avgPrice) };
+    });
+  }, [priceHistory, portfolioTimeframe]);
 
   return (
     <div className="space-y-6 max-w-7xl relative">
@@ -103,47 +122,65 @@ const Dashboard = () => {
         <AuctionTimer />
       </div>
 
-      {/* Portfolio Value */}
+      {/* Portfolio Value with Chart */}
       <GlassCard delay={0.15} className="p-4 md:p-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-3">
           <div>
             <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40 block mb-2">Portfolio Value</span>
             <AnimatedNumber value={userEscrowBalance} prefix="$" decimals={2} className="text-2xl md:text-3xl font-mono font-semibold tracking-tight text-white tabular-nums" />
           </div>
+          <div className="flex gap-1">
+            {["1D", "1W", "1M", "ALL"].map((tf) => (
+              <button
+                key={tf}
+                onClick={() => setPortfolioTimeframe(tf)}
+                className={`px-3 md:px-4 py-1.5 md:py-2 text-[10px] font-mono tracking-wider rounded-full border transition-all duration-300 ${
+                  portfolioTimeframe === tf
+                    ? "text-white bg-white/[0.06] border-white/10"
+                    : "text-white/30 border-transparent hover:text-white/60 hover:bg-white/[0.03]"
+                }`}
+              >
+                {tf}
+              </button>
+            ))}
+          </div>
         </div>
 
-        {userEscrowBalance === 0 && userTotalTraded === 0 ? (
-          <div className="py-10 flex flex-col items-center gap-4">
-            <div className="w-16 h-16 rounded-2xl bg-primary/[0.06] border border-primary/[0.1] flex items-center justify-center">
-              <TrendingUp className="w-7 h-7 text-primary/40" />
+        <div className="h-[180px] md:h-[224px]">
+          {portfolioData.length === 0 ? (
+            <div className="h-full flex items-center justify-center">
+              <p className="font-mono text-[11px] text-white/20">Loading market data...</p>
             </div>
-            <div className="text-center">
-              <p className="font-mono text-sm text-white/30 mb-1">No activity yet</p>
-              <p className="font-mono text-[11px] text-white/15">Place an order on the Marketplace to start building your portfolio</p>
-            </div>
-            <button
-              onClick={() => window.location.href = '/marketplace'}
-              className="font-mono text-[11px] text-primary hover:text-primary/80 transition-colors border border-primary/20 rounded-lg px-4 py-2 hover:bg-primary/5"
-            >
-              Browse Marketplace →
-            </button>
-          </div>
-        ) : (
-          <div className="grid grid-cols-3 gap-4 pt-2">
-            <div className="p-4 rounded-xl bg-white/[0.03]">
-              <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/30">Locked in Orders</p>
-              <p className="font-mono text-lg font-semibold text-white tabular-nums mt-1">${userEscrowBalance.toFixed(2)}</p>
-            </div>
-            <div className="p-4 rounded-xl bg-white/[0.03]">
-              <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/30">Total Traded</p>
-              <p className="font-mono text-lg font-semibold text-white tabular-nums mt-1">${userTotalTraded.toFixed(2)}</p>
-            </div>
-            <div className="p-4 rounded-xl bg-white/[0.03]">
-              <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/30">Orders Placed</p>
-              <p className="font-mono text-lg font-semibold text-white tabular-nums mt-1">{userOrders?.data?.length ?? 0}</p>
-            </div>
-          </div>
-        )}
+          ) : (
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart data={portfolioData}>
+                <defs>
+                  <linearGradient id="portfolioGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="rgb(139,92,246)" stopOpacity={0.25} />
+                    <stop offset="100%" stopColor="rgb(139,92,246)" stopOpacity={0} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.03)" />
+                <XAxis dataKey="date" tick={{ fontSize: 10, fill: "rgba(255,255,255,0.2)", fontFamily: "JetBrains Mono" }} axisLine={false} tickLine={false} />
+                <YAxis tick={{ fontSize: 10, fill: "rgba(255,255,255,0.2)", fontFamily: "JetBrains Mono" }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${v}`} domain={["auto", "auto"]} />
+                <Tooltip
+                  contentStyle={{
+                    background: "rgba(5,5,8,0.95)",
+                    border: "1px solid rgba(255,255,255,0.06)",
+                    borderRadius: 12,
+                    fontSize: 11,
+                    fontFamily: "JetBrains Mono",
+                    backdropFilter: "blur(16px)",
+                    boxShadow: "0 0 30px rgba(139,92,246,0.15)",
+                  }}
+                  labelStyle={{ color: "rgba(255,255,255,0.3)" }}
+                  formatter={(value: number) => [`$${value.toFixed(4)}`, "H100 Price"]}
+                />
+                <Area type="monotone" dataKey="value" stroke="rgb(139,92,246)" strokeWidth={2} fill="url(#portfolioGradient)" />
+              </AreaChart>
+            </ResponsiveContainer>
+          )}
+        </div>
       </GlassCard>
 
       {/* Main Content */}

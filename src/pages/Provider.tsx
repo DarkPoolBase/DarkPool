@@ -4,12 +4,15 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
   Cpu, MapPin, Wifi, Zap, TrendingUp, CheckCircle2,
-  DollarSign, Activity, Upload, Loader2, Pencil, Check, X
+  DollarSign, Activity, Upload, Loader2, Pencil, Check, X, Plus
 } from "lucide-react";
 import { GlassCard } from "@/components/ui/glass-card";
 import { SectionLabel } from "@/components/ui/section-label";
-import { useMyProvider, useMyEarnings, useRegisterProvider, useUpdateMinPrice } from "@/hooks/useProviders";
+import { useMyProvider, useMyEarnings, useRegisterProvider, useUpdateMinPrice, useUpdateCapacity } from "@/hooks/useProviders";
 import { useAutoAuth } from "@/hooks/useAutoAuth";
+import { useWithdrawUSDC, useEscrowBalance } from "@/hooks/useContracts";
+import { useWallet } from "@/contexts/WalletContext";
+import { formatUSDC } from "@/lib/chain";
 import { toast } from "sonner";
 
 const GPU_OPTIONS = [
@@ -193,9 +196,51 @@ function MinPriceEditor({ provider }: { provider: any }) {
 
 function ProviderDashboard({ provider }: { provider: any }) {
   const { data: earningsData } = useMyEarnings(true);
+  const { fullWalletAddress } = useWallet();
+  const { data: escrowBalance, refetch: refetchEscrow } = useEscrowBalance(fullWalletAddress ?? undefined);
+  const { withdraw, isLoading: withdrawing } = useWithdrawUSDC();
+  const updateCapacity = useUpdateCapacity(provider.id);
+
+  const [showAddGpu, setShowAddGpu] = useState(false);
+  const [newGpuType, setNewGpuType] = useState("");
+  const [newGpuCount, setNewGpuCount] = useState(1);
 
   const gpuLabel = GPU_OPTIONS.find(g => g.value === provider.gpuTypes?.[0]?.type)?.label
     ?? provider.gpuTypes?.[0]?.type ?? "—";
+
+  const handleWithdraw = async () => {
+    const available = Number(escrowBalance.available) / 1e6;
+    if (available <= 0) {
+      toast.error("No available escrow balance to withdraw");
+      return;
+    }
+    try {
+      await withdraw(available);
+      toast.success(`Withdrew $${available.toFixed(2)} USDC to wallet`);
+      refetchEscrow();
+    } catch (err: any) {
+      toast.error(err?.shortMessage || err?.message || "Withdrawal failed");
+    }
+  };
+
+  const handleAddGpu = async () => {
+    if (!newGpuType) { toast.error("Select a GPU type"); return; }
+    const existing = provider.gpuTypes || [];
+    const alreadyListed = existing.find((g: any) => g.type === newGpuType);
+    if (alreadyListed) { toast.error("GPU type already listed"); return; }
+    try {
+      await updateCapacity.mutateAsync([
+        ...existing,
+        { type: newGpuType, count: newGpuCount, available: newGpuCount },
+      ]);
+      toast.success(`Added ${newGpuType} to your listing`);
+      setShowAddGpu(false);
+      setNewGpuType("");
+      setNewGpuCount(1);
+    } catch (err: any) {
+      toast.error(err?.message || "Failed to add GPU type");
+    }
+  };
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -224,6 +269,19 @@ function ProviderDashboard({ provider }: { provider: any }) {
             </div>
           </div>
 
+          {/* All listed GPU types */}
+          {provider.gpuTypes?.length > 1 && (
+            <div className="flex flex-col gap-2">
+              <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">All GPUs</span>
+              {provider.gpuTypes.map((g: any) => (
+                <div key={g.type} className="flex items-center justify-between px-3 py-2 rounded-lg bg-white/[0.03]">
+                  <span className="font-mono text-xs text-foreground">{g.type}</span>
+                  <span className="font-mono text-[10px] text-muted-foreground">{g.count} units</span>
+                </div>
+              ))}
+            </div>
+          )}
+
           <div className="grid grid-cols-2 gap-4">
             <div className="p-3 rounded-xl bg-white/[0.03]">
               <div className="flex items-center gap-1.5 mb-1.5">
@@ -246,6 +304,17 @@ function ProviderDashboard({ provider }: { provider: any }) {
               </div>
             ))}
           </div>
+
+          {/* Escrow balance for provider */}
+          {fullWalletAddress && (
+            <div className="p-3 rounded-xl bg-white/[0.03]">
+              <div className="flex items-center gap-1.5 mb-1.5">
+                <DollarSign className="h-3 w-3 text-muted-foreground" />
+                <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">Escrow Available</span>
+              </div>
+              <p className="font-mono text-sm font-semibold text-emerald-400">${formatUSDC(escrowBalance.available)}</p>
+            </div>
+          )}
         </div>
       </GlassCard>
 
@@ -292,13 +361,51 @@ function ProviderDashboard({ provider }: { provider: any }) {
             ))}
           </div>
 
+          {/* Add GPU Type form */}
+          {showAddGpu && (
+            <div className="rounded-xl bg-white/[0.03] p-4 flex flex-col gap-3">
+              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Add GPU Type</span>
+              <div className="flex gap-3">
+                <Select onValueChange={setNewGpuType}>
+                  <SelectTrigger className="border-white/[0.06] bg-white/[0.02] h-9 text-xs">
+                    <SelectValue placeholder="Select GPU" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {GPU_OPTIONS.filter(g => !provider.gpuTypes?.some((e: any) => e.type === g.value)).map((g) => (
+                      <SelectItem key={g.value} value={g.value}>{g.label}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <Input
+                  type="number" min={1} value={newGpuCount}
+                  onChange={(e) => setNewGpuCount(parseInt(e.target.value) || 1)}
+                  className="font-mono text-xs h-9 w-20 border-white/[0.06] bg-white/[0.02]"
+                  placeholder="Count"
+                />
+                <Button onClick={handleAddGpu} disabled={updateCapacity.isPending} size="sm" className="h-9 px-3 text-xs bg-primary hover:bg-primary/80 border-0 shrink-0">
+                  {updateCapacity.isPending ? <Loader2 className="h-3 w-3 animate-spin" /> : <Check className="h-3 w-3" />}
+                </Button>
+                <Button onClick={() => setShowAddGpu(false)} size="sm" variant="ghost" className="h-9 px-2 shrink-0">
+                  <X className="h-3 w-3" />
+                </Button>
+              </div>
+            </div>
+          )}
+
           <div className="flex gap-3">
-            <Button className="flex-1 h-12 gap-2 text-sm font-semibold bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.2)] hover:shadow-[0_0_30px_rgba(16,185,129,0.4)] transition-all duration-300 border-0">
-              <DollarSign className="h-4 w-4" />
+            <Button
+              onClick={handleWithdraw}
+              disabled={withdrawing}
+              className="flex-1 h-12 gap-2 text-sm font-semibold bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.2)] hover:shadow-[0_0_30px_rgba(16,185,129,0.4)] transition-all duration-300 border-0"
+            >
+              {withdrawing ? <Loader2 className="h-4 w-4 animate-spin" /> : <DollarSign className="h-4 w-4" />}
               Withdraw to Wallet
             </Button>
-            <Button className="flex-1 h-12 gap-2 text-sm font-semibold bg-gradient-to-r from-primary to-[hsl(258,78%,65%)] hover:from-primary/90 hover:to-[hsl(258,78%,60%)] shadow-[0_0_20px_rgba(108,60,233,0.3)] hover:shadow-[0_0_30px_rgba(108,60,233,0.5)] transition-all duration-300 border-0">
-              <Zap className="h-4 w-4" />
+            <Button
+              onClick={() => setShowAddGpu(!showAddGpu)}
+              className="flex-1 h-12 gap-2 text-sm font-semibold bg-gradient-to-r from-primary to-[hsl(258,78%,65%)] hover:from-primary/90 hover:to-[hsl(258,78%,60%)] shadow-[0_0_20px_rgba(108,60,233,0.3)] hover:shadow-[0_0_30px_rgba(108,60,233,0.5)] transition-all duration-300 border-0"
+            >
+              <Plus className="h-4 w-4" />
               Add GPU Type
             </Button>
           </div>

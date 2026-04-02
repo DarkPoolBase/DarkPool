@@ -212,7 +212,7 @@ const Orders = () => {
                       </div>
                     )}
                     {order.status === "FILLED" && (order as any).fullTxHash && (
-                      <Button variant="outline" size="sm" className="text-[10px] h-8 border-white/[0.06] bg-transparent hover:bg-white/[0.04] text-white/50" onClick={(e) => { e.stopPropagation(); setReceiptTxHash((order as any).fullTxHash); }}>View Receipt</Button>
+                      <Button variant="outline" size="sm" disabled className="text-[10px] h-8 border-white/[0.06] bg-transparent text-white/30 cursor-not-allowed">View Receipt <span className="text-[9px] text-white/20 ml-1">(soon)</span></Button>
                     )}
                   </TableCell>
                 </TableRow>

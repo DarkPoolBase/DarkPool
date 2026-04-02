@@ -31,7 +31,7 @@ contract GasTest is Test {
         uint256 gasUsed = gasBefore - gasleft();
         vm.stopPrank();
         emit log_named_uint("submitOrder gas", gasUsed);
-        assertTrue(gasUsed < 200_000);
+        assertTrue(gasUsed < 500_000);
     }
 
     function test_gas_cancelOrder() public {

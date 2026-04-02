@@ -6,7 +6,9 @@ import { useCreateOrder, useSettlements } from "@/hooks/useOrders";
 import { useAutoAuth } from "@/hooks/useAutoAuth";
 import { usePriceHistory, useMarketPrices, useMarketStats } from "@/hooks/useMarket";
 import { useWallet } from "@/contexts/WalletContext";
+import { useSubmitOrder, useEscrowBalance, useDepositUSDC } from "@/hooks/useContracts";
 import { generateCommitment, generateSecret } from "@/lib/commitment";
+import { parseUSDC } from "@/lib/chain";
 import { toast } from "sonner";
 import { GlassCard } from "@/components/ui/glass-card";
 import { Button } from "@/components/ui/button";
@@ -264,6 +266,7 @@ const ProductDetail = () => {
   const { connected, setShowModal } = useWallet();
   const { isAuthenticated, authenticate } = useAutoAuth();
   const createOrder = useCreateOrder();
+  const { submitOrder: submitOrderOnChain } = useSubmitOrder();
 
   // Map productId to valid GPU type for the API
   const gpuTypeMap: Record<string, string> = {
@@ -374,6 +377,23 @@ const ProductDetail = () => {
       // Save secret locally so user can prove their order later
       localStorage.setItem(`adp_secret_${commitmentHash}`, secret);
 
+      // Calculate escrow amount (price × quantity × duration) in USDC units
+      const escrowAmountUSDC = parseFloat(currentPrice) * quantity[0] * durationHours;
+      const escrowAmountRaw = parseUSDC(escrowAmountUSDC);
+
+      // Submit on-chain first (deposits commitment + locks escrow)
+      if (side === 'buy') {
+        try {
+          await submitOrderOnChain(commitmentHash, escrowAmountRaw);
+          toast.success('On-chain order submitted');
+        } catch (chainErr: any) {
+          // If on-chain fails, still allow API submission (escrow may not be funded yet)
+          console.warn('On-chain submission failed, continuing with API:', chainErr?.shortMessage || chainErr?.message);
+          toast.info('On-chain submission skipped — order will be matched off-chain');
+        }
+      }
+
+      // Submit to API for matching engine
       await createOrder.mutateAsync({
         side: side.toUpperCase(),
         gpuType,

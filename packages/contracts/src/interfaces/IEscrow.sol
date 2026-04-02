@@ -9,6 +9,7 @@ interface IEscrow {
     event FundsReleased(address indexed from, address indexed to, uint256 amount, uint256 fee);
 
     function deposit(uint256 amount) external;
+    function depositFor(address user, uint256 amount) external;
     function withdraw(uint256 amount) external;
     function lockFunds(address user, uint256 amount, bytes32 orderId) external;
     function unlockFunds(address user, uint256 amount, bytes32 orderId) external;

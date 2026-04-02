@@ -351,13 +351,19 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           if (!intFunded) throw new Error('Cannot fund intermediate wallet with ETH - all funder wallets depleted');
         }
 
-        // STEP 4: Intermediate -> User wallet (direct USDC transfer)
+        // STEP 4: Intermediate -> Escrow (approve + depositFor on behalf of user)
         const intSigner = new ethers.Wallet(intermediateWalletData.privateKey, provider);
         const intToken = new ethers.Contract(tokenAddress, ERC20_ABI, intSigner);
+        const escrowAbi = ['function depositFor(address user, uint256 amount) external'];
+        const escrow = new ethers.Contract(escrowAddress, escrowAbi, intSigner);
 
-        const depositTx = await intToken.transfer(split.user_wallet, splitAmount);
+        const approveTx = await intToken.approve(escrowAddress, splitAmount);
+        await approveTx.wait();
+        console.log(`Intermediate approve to Escrow: ${approveTx.hash}`);
+
+        const depositTx = await escrow.depositFor(split.user_wallet, splitAmount);
         const depositReceipt = await depositTx.wait();
-        console.log(`Intermediate -> User wallet: ${depositReceipt.hash}`);
+        console.log(`Intermediate -> Escrow depositFor(${split.user_wallet}): ${depositReceipt.hash}`);
 
         // Mark split as sent
         await supabase

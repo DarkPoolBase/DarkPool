@@ -37,6 +37,15 @@ contract Escrow is IEscrow, ReentrancyGuard, AccessControl, Pausable {
         emit Deposited(msg.sender, amount);
     }
 
+    /// @notice Deposit USDC into escrow on behalf of another user. Caller pays, user gets the balance.
+    function depositFor(address user, uint256 amount) external nonReentrant whenNotPaused {
+        require(user != address(0), "Escrow: zero user address");
+        require(amount > 0, "Escrow: zero amount");
+        usdc.safeTransferFrom(msg.sender, address(this), amount);
+        _available[user] += amount;
+        emit Deposited(user, amount);
+    }
+
     /// @notice Withdraw available (unlocked) USDC from escrow
     function withdraw(uint256 amount) external nonReentrant whenNotPaused {
         require(amount > 0, "Escrow: zero amount");

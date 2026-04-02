@@ -102,6 +102,13 @@ export const ESCROW_ABI = [
   },
   {
     type: 'function',
+    name: 'depositFor',
+    inputs: [{ name: 'user', type: 'address' }, { name: 'amount', type: 'uint256' }],
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
     name: 'withdraw',
     inputs: [{ name: 'amount', type: 'uint256' }],
     outputs: [],

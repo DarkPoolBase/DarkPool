@@ -4,6 +4,8 @@ import { BarChart3, CheckCircle, Zap, TrendingUp, Calculator, ArrowUpDown } from
 import { useOrders, useOrderStats } from "@/hooks/useOrders";
 import { useAutoAuth } from "@/hooks/useAutoAuth";
 import { useMarketStats, usePriceHistory } from "@/hooks/useMarket";
+import { useEscrowBalance } from "@/hooks/useContracts";
+import { useWallet } from "@/contexts/WalletContext";
 import { StatsCard } from "@/components/dashboard/StatsCard";
 import { OrderTable } from "@/components/dashboard/OrderTable";
 import { QuickActions } from "@/components/dashboard/QuickActions";
@@ -26,14 +28,15 @@ const Dashboard = () => {
   const { data: stats } = useOrderStats(isAuthenticated);
   const { data: marketStats } = useMarketStats();
   const { data: priceHistory } = usePriceHistory('H100', portfolioIntervalMap[portfolioTimeframe]);
+  const { fullWalletAddress } = useWallet();
+  const { data: escrowBalance } = useEscrowBalance(fullWalletAddress ?? undefined);
 
-  // Derive user-specific metrics from their orders
-  const userEscrowBalance = useMemo(() => {
-    if (!userOrders?.data?.length) return 0;
-    return userOrders.data
-      .filter((o: any) => o.status === 'ACTIVE' || o.status === 'PENDING')
-      .reduce((sum: number, o: any) => sum + parseFloat(o.escrowAmount || '0'), 0);
-  }, [userOrders]);
+  // Portfolio value = on-chain escrow total (available + locked)
+  const portfolioValue = useMemo(() => {
+    const available = Number(escrowBalance?.available ?? BigInt(0));
+    const locked = Number(escrowBalance?.locked ?? BigInt(0));
+    return (available + locked) / 1e6;
+  }, [escrowBalance]);
 
   const userTotalTraded = useMemo(() => {
     if (!userOrders?.data?.length) return 0;
@@ -127,7 +130,7 @@ const Dashboard = () => {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-3">
           <div>
             <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40 block mb-2">Portfolio Value</span>
-            <AnimatedNumber value={userEscrowBalance} prefix="$" decimals={2} className="text-2xl md:text-3xl font-mono font-semibold tracking-tight text-white tabular-nums" />
+            <AnimatedNumber value={portfolioValue} prefix="$" decimals={2} className="text-2xl md:text-3xl font-mono font-semibold tracking-tight text-white tabular-nums" />
           </div>
           <div className="flex gap-1">
             {["1D", "1W", "1M", "ALL"].map((tf) => (

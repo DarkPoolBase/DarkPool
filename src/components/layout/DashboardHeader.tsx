@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Bell, Wallet, LogOut, Copy, Check, ShieldCheck, ArrowRightLeft, AlertTriangle, Package, ArrowDownToLine, ArrowUpFromLine, Loader2, X } from "lucide-react";
+import { Bell, Wallet, LogOut, Copy, Check, ShieldCheck, ArrowRightLeft, AlertTriangle, Package, ArrowDownToLine, ArrowUpFromLine, Loader2, X, Settings } from "lucide-react";
+import { useAvatarColor } from "@/pages/SettingsPage";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SidebarTrigger } from "@/components/ui/sidebar";
@@ -39,6 +40,7 @@ export function DashboardHeader() {
   const escrowTotal = formatUSDC((escrowBalance?.available ?? BigInt(0)) + (escrowBalance?.locked ?? BigInt(0)));
 
   const navigate = useNavigate();
+  const { color: avatarColor } = useAvatarColor();
   const { notifications, unreadCount, markAllRead, markRead } = useNotifications();
   const [copied, setCopied] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -197,7 +199,7 @@ export function DashboardHeader() {
                 onClick={() => { setShowDropdown(!showDropdown); setShowNotifications(false); }}
                 className="bg-white/[0.06] hover:bg-white/[0.1] text-white gap-2 transition-all duration-300 border border-white/[0.08] rounded-full px-4"
               >
-                <div className="w-5 h-5 rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-500" />
+                <div className="w-5 h-5 rounded-full" style={{ background: `linear-gradient(135deg, ${avatarColor.from}, ${avatarColor.to})` }} />
                 <span className="text-xs font-mono">{walletAddress}</span>
               </Button>
 
@@ -236,6 +238,13 @@ export function DashboardHeader() {
                     >
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
                       View on Basescan
+                    </button>
+                    <button
+                      onClick={() => { setShowDropdown(false); navigate('/settings'); }}
+                      className="w-full flex items-center gap-2 px-3 py-2.5 text-xs text-white/50 hover:bg-white/[0.05] hover:text-white/80 transition-colors"
+                    >
+                      <Settings className="h-3.5 w-3.5" />
+                      Settings
                     </button>
                     <button
                       onClick={() => { disconnect(); setShowDropdown(false); navigate('/'); }}

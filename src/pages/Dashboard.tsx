@@ -33,9 +33,22 @@ const Dashboard = () => {
   const { deposit, isLoading: depositing } = useDepositUSDC();
   const { withdraw, isLoading: withdrawing } = useWithdrawUSDC();
 
+  // Sanitize amount input: no negatives, max 6 decimal places
+  const sanitizeAmount = (val: string): string => {
+    let clean = val.replace(/[^0-9.]/g, '');
+    const parts = clean.split('.');
+    if (parts.length > 2) clean = parts[0] + '.' + parts.slice(1).join('');
+    if (parts.length === 2 && parts[1].length > 6) clean = parts[0] + '.' + parts[1].slice(0, 6);
+    return clean;
+  };
+
+  const walletBalanceNum = Number(escrowBalance.available) / 1e6;
+  const usdcWalletNum = parseFloat(usdcFormatted) || 0;
+
   const handleDeposit = async () => {
     const amt = parseFloat(depositAmount);
     if (!amt || amt <= 0) { toast.error("Enter a valid amount"); return; }
+    if (amt > usdcWalletNum) { toast.error(`Insufficient wallet USDC. You have $${usdcWalletNum.toFixed(2)}`); return; }
     try {
       await deposit(amt);
       toast.success(`Deposited $${amt.toFixed(2)} USDC into escrow`);
@@ -50,6 +63,7 @@ const Dashboard = () => {
   const handleWithdraw = async () => {
     const amt = parseFloat(withdrawAmount);
     if (!amt || amt <= 0) { toast.error("Enter a valid amount"); return; }
+    if (amt > walletBalanceNum) { toast.error(`Insufficient escrow balance. Available: $${walletBalanceNum.toFixed(2)}`); return; }
     try {
       await withdraw(amt);
       toast.success(`Withdrew $${amt.toFixed(2)} USDC from escrow`);
@@ -176,7 +190,7 @@ const Dashboard = () => {
                 <div className="flex gap-2">
                   <Input
                     type="number" step="0.01" min="0.01" placeholder="Amount"
-                    value={depositAmount} onChange={(e) => setDepositAmount(e.target.value)}
+                    value={depositAmount} onChange={(e) => setDepositAmount(sanitizeAmount(e.target.value))}
                     className="font-mono text-xs h-9 border-white/[0.06] bg-white/[0.02]"
                   />
                   <Button onClick={handleDeposit} disabled={depositing} size="sm"
@@ -190,7 +204,7 @@ const Dashboard = () => {
                 <div className="flex gap-2">
                   <Input
                     type="number" step="0.01" min="0.01" placeholder="Amount"
-                    value={withdrawAmount} onChange={(e) => setWithdrawAmount(e.target.value)}
+                    value={withdrawAmount} onChange={(e) => setWithdrawAmount(sanitizeAmount(e.target.value))}
                     className="font-mono text-xs h-9 border-white/[0.06] bg-white/[0.02]"
                   />
                   <Button onClick={handleWithdraw} disabled={withdrawing} size="sm"

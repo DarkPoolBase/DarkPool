@@ -6,7 +6,7 @@ import { useCreateOrder, useSettlements } from "@/hooks/useOrders";
 import { useAutoAuth } from "@/hooks/useAutoAuth";
 import { usePriceHistory, useMarketPrices, useMarketStats } from "@/hooks/useMarket";
 import { useWallet } from "@/contexts/WalletContext";
-import { useSubmitOrder, useEscrowBalance, useDepositUSDC } from "@/hooks/useContracts";
+import { useSubmitOrder, useEscrowBalance } from "@/hooks/useContracts";
 import { generateCommitment, generateSecret } from "@/lib/commitment";
 import { parseUSDC } from "@/lib/chain";
 import { toast } from "sonner";
@@ -263,10 +263,11 @@ const ProductDetail = () => {
   const [price, setPrice] = useState("");
   const [duration, setDuration] = useState("1h");
 
-  const { connected, setShowModal } = useWallet();
+  const { connected, setShowModal, fullWalletAddress } = useWallet();
   const { isAuthenticated, authenticate } = useAutoAuth();
   const createOrder = useCreateOrder();
   const { submitOrder: submitOrderOnChain } = useSubmitOrder();
+  const { data: escrowBal } = useEscrowBalance(fullWalletAddress ?? undefined);
 
   // Map productId to valid GPU type for the API
   const gpuTypeMap: Record<string, string> = {
@@ -364,6 +365,21 @@ const ProductDetail = () => {
 
     try {
       const gpuType = gpuTypeMap[productId || 'h100'] || 'H100';
+
+      // Calculate escrow amount (price × quantity × duration) in USDC units
+      const escrowAmountUSDC = parseFloat(currentPrice) * quantity[0] * durationHours;
+
+      // Balance check: ensure user has enough escrow balance for BUY orders
+      if (side === 'buy') {
+        const availableUSDC = Number(escrowBal?.available ?? BigInt(0)) / 1e6;
+        if (availableUSDC < escrowAmountUSDC) {
+          toast.error(
+            `Insufficient escrow balance. You need $${escrowAmountUSDC.toFixed(2)} but have $${availableUSDC.toFixed(2)} available. Deposit USDC on the Dashboard first.`
+          );
+          return;
+        }
+      }
+
       const secret = generateSecret();
       const commitmentHash = generateCommitment({
         gpuType,
@@ -377,8 +393,6 @@ const ProductDetail = () => {
       // Save secret locally so user can prove their order later
       localStorage.setItem(`adp_secret_${commitmentHash}`, secret);
 
-      // Calculate escrow amount (price × quantity × duration) in USDC units
-      const escrowAmountUSDC = parseFloat(currentPrice) * quantity[0] * durationHours;
       const escrowAmountRaw = parseUSDC(escrowAmountUSDC);
 
       // Submit on-chain first (deposits commitment + locks escrow)

@@ -7,6 +7,7 @@ import { useWallet } from "@/contexts/WalletContext";
 import { LogOut, Copy, Check } from "lucide-react";
 import metamaskLogo from "@/assets/metamask-logo.png";
 import phantomLogo from "@/assets/phantom-logo.jpg";
+import coinbaseLogo from "@/assets/coinbase-wallet-logo.webp";
 
 const Index = () => {
   const [loaderDone, setLoaderDone] = useState(false);
@@ -228,6 +229,21 @@ const Index = () => {
                           <div className="text-[10px] text-white/30 font-mono mt-0.5">Multi-Chain Wallet</div>
                         </div>
                         {typeof window !== 'undefined' && (window as any).phantom?.ethereum?.isPhantom && (
+                          <span className="text-[10px] font-mono text-emerald-400/70 uppercase tracking-wider px-2 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20">Detected</span>
+                        )}
+                      </button>
+
+                      <button
+                        onClick={() => connect('coinbase')}
+                        disabled={connecting}
+                        className="w-full flex items-center gap-4 p-4 rounded-xl bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.08] hover:border-white/[0.15] transition-all duration-300 disabled:opacity-50"
+                      >
+                        <img src={coinbaseLogo} alt="Coinbase Wallet" className="w-10 h-10 rounded-xl object-cover" />
+                        <div className="text-left flex-1">
+                          <div className="text-sm font-medium text-white/90">Coinbase Wallet</div>
+                          <div className="text-[10px] text-white/30 font-mono mt-0.5">Self-Custody Wallet</div>
+                        </div>
+                        {typeof window !== 'undefined' && ((window as any).coinbaseWalletExtension || (window as any).ethereum?.isCoinbaseWallet) && (
                           <span className="text-[10px] font-mono text-emerald-400/70 uppercase tracking-wider px-2 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20">Detected</span>
                         )}
                       </button>

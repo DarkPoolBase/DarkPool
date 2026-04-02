@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -276,7 +277,23 @@ function ProviderDashboard({ provider }: { provider: any }) {
               {provider.gpuTypes.map((g: any) => (
                 <div key={g.type} className="flex items-center justify-between px-3 py-2 rounded-lg bg-white/[0.03]">
                   <span className="font-mono text-xs text-foreground">{g.type}</span>
-                  <span className="font-mono text-[10px] text-muted-foreground">{g.count} units</span>
+                  <div className="flex items-center gap-2">
+                    <span className="font-mono text-[10px] text-muted-foreground">{g.count} units</span>
+                    {provider.gpuTypes.length > 1 && (
+                      <button
+                        onClick={async () => {
+                          const remaining = provider.gpuTypes.filter((x: any) => x.type !== g.type);
+                          try {
+                            await updateCapacity.mutateAsync(remaining);
+                            toast.success(`Removed ${g.type} from listing`);
+                          } catch { toast.error("Failed to remove GPU type"); }
+                        }}
+                        className="text-white/20 hover:text-red-400 transition-colors"
+                      >
+                        <X className="h-3 w-3" />
+                      </button>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>

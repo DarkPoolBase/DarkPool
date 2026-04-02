@@ -18,6 +18,7 @@ export const publicClient: PublicClient = createPublicClient({
 });
 
 /** Build a wallet client from the user's browser wallet provider */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function getWalletClient(provider: any): WalletClient {
   return createWalletClient({
     chain: base as Chain,

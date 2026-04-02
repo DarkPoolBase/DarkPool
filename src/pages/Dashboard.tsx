@@ -53,8 +53,8 @@ const Dashboard = () => {
     ).length;
   }, [userOrders]);
 
-  // Build portfolio chart from price history API
-  const portfolioData = useMemo(() => {
+  // Build portfolio chart from H100 market price history
+  const chartData = useMemo(() => {
     if (!priceHistory?.length) return [];
     return priceHistory.map((p: any) => {
       const d = new Date(p.timestamp);
@@ -150,13 +150,13 @@ const Dashboard = () => {
         </div>
 
         <div className="h-[180px] md:h-[224px]">
-          {portfolioData.length === 0 ? (
+          {chartData.length === 0 ? (
             <div className="h-full flex items-center justify-center">
               <p className="font-mono text-[11px] text-white/20">Loading market data...</p>
             </div>
           ) : (
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={portfolioData}>
+              <AreaChart data={chartData}>
                 <defs>
                   <linearGradient id="portfolioGradient" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="0%" stopColor="rgb(139,92,246)" stopOpacity={0.25} />
@@ -177,7 +177,7 @@ const Dashboard = () => {
                     boxShadow: "0 0 30px rgba(139,92,246,0.15)",
                   }}
                   labelStyle={{ color: "rgba(255,255,255,0.3)" }}
-                  formatter={(value: number) => [`$${value.toFixed(4)}`, "H100 Price"]}
+                  formatter={(value: number) => [`$${value.toFixed(2)}`, "Market Price"]}
                 />
                 <Area type="monotone" dataKey="value" stroke="rgb(139,92,246)" strokeWidth={2} fill="url(#portfolioGradient)" />
               </AreaChart>

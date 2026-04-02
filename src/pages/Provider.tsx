@@ -5,15 +5,14 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
   Cpu, MapPin, Wifi, Zap, TrendingUp, CheckCircle2,
-  DollarSign, Activity, Upload, Loader2, Pencil, Check, X, Plus
+  DollarSign, Activity, Upload, Loader2, Pencil, Check, X, Plus, Trash2, AlertTriangle
 } from "lucide-react";
 import { GlassCard } from "@/components/ui/glass-card";
 import { SectionLabel } from "@/components/ui/section-label";
-import { useMyProvider, useMyEarnings, useRegisterProvider, useUpdateMinPrice, useUpdateCapacity } from "@/hooks/useProviders";
+import { useMyProvider, useMyEarnings, useRegisterProvider, useUpdateMinPrice, useUpdateCapacity, useDeregisterProvider } from "@/hooks/useProviders";
 import { useAutoAuth } from "@/hooks/useAutoAuth";
 import { useWithdrawUSDC, useEscrowBalance } from "@/hooks/useContracts";
 import { useWallet } from "@/contexts/WalletContext";
-import { formatUSDC } from "@/lib/chain";
 import { toast } from "sonner";
 
 const GPU_OPTIONS = [
@@ -201,8 +200,10 @@ function ProviderDashboard({ provider }: { provider: any }) {
   const { data: escrowBalance, refetch: refetchEscrow } = useEscrowBalance(fullWalletAddress ?? undefined);
   const { withdraw, isLoading: withdrawing } = useWithdrawUSDC();
   const updateCapacity = useUpdateCapacity(provider.id);
+  const deregister = useDeregisterProvider();
 
   const [showAddGpu, setShowAddGpu] = useState(false);
+  const [showTerminate, setShowTerminate] = useState(false);
   const [newGpuType, setNewGpuType] = useState("");
   const [newGpuCount, setNewGpuCount] = useState(1);
 
@@ -221,6 +222,16 @@ function ProviderDashboard({ provider }: { provider: any }) {
       refetchEscrow();
     } catch (err: any) {
       toast.error(err?.shortMessage || err?.message || "Withdrawal failed");
+    }
+  };
+
+  const handleDeregister = async () => {
+    try {
+      await deregister.mutateAsync();
+      toast.success("Provider listing removed");
+      setShowTerminate(false);
+    } catch (err: any) {
+      toast.error(err?.message || "Failed to remove listing");
     }
   };
 
@@ -322,16 +333,14 @@ function ProviderDashboard({ provider }: { provider: any }) {
             ))}
           </div>
 
-          {/* Escrow balance for provider */}
-          {fullWalletAddress && (
-            <div className="p-3 rounded-xl bg-white/[0.03]">
-              <div className="flex items-center gap-1.5 mb-1.5">
-                <DollarSign className="h-3 w-3 text-muted-foreground" />
-                <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">Escrow Available</span>
-              </div>
-              <p className="font-mono text-sm font-semibold text-emerald-400">${formatUSDC(escrowBalance.available)}</p>
-            </div>
-          )}
+          {/* Terminate listing */}
+          <button
+            onClick={() => setShowTerminate(true)}
+            className="w-full p-3 rounded-xl bg-red-500/[0.06] border border-red-500/10 hover:bg-red-500/[0.12] hover:border-red-500/20 transition-all flex items-center justify-center gap-2 group"
+          >
+            <Trash2 className="h-3.5 w-3.5 text-red-400/60 group-hover:text-red-400" />
+            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-red-400/60 group-hover:text-red-400">Remove Listing</span>
+          </button>
         </div>
       </GlassCard>
 
@@ -428,6 +437,42 @@ function ProviderDashboard({ provider }: { provider: any }) {
           </div>
         </div>
       </GlassCard>
+
+      {/* Terminate confirmation dialog */}
+      {showTerminate && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+          <GlassCard delay={0} className="p-6 max-w-md w-full mx-4">
+            <div className="flex flex-col items-center gap-5 text-center">
+              <div className="h-14 w-14 rounded-2xl bg-red-500/10 border border-red-500/20 flex items-center justify-center">
+                <AlertTriangle className="h-7 w-7 text-red-400" />
+              </div>
+              <div>
+                <h3 className="font-mono text-base font-semibold text-foreground">Remove Provider Listing</h3>
+                <p className="font-mono text-[11px] text-muted-foreground mt-2 leading-relaxed">
+                  This will permanently remove your listing for <span className="text-foreground">{gpuLabel}</span> and stop all auto-placed SELL orders. Any pending earnings will remain in your account.
+                </p>
+              </div>
+              <div className="flex gap-3 w-full">
+                <Button
+                  onClick={() => setShowTerminate(false)}
+                  variant="ghost"
+                  className="flex-1 h-11 font-mono text-xs border border-white/[0.06] hover:bg-white/[0.03]"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  onClick={handleDeregister}
+                  disabled={deregister.isPending}
+                  className="flex-1 h-11 font-mono text-xs bg-red-500/80 hover:bg-red-500 border-0 gap-2"
+                >
+                  {deregister.isPending ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Trash2 className="h-3.5 w-3.5" />}
+                  Remove Listing
+                </Button>
+              </div>
+            </div>
+          </GlassCard>
+        </div>
+      )}
     </div>
   );
 }
@@ -437,7 +482,7 @@ const Provider = () => {
   const { data: provider, isLoading } = useMyProvider(isAuthenticated);
 
   return (
-    <div className="space-y-6 max-w-7xl">
+    <div className="space-y-6 max-w-7xl min-h-[calc(100vh-8rem)]">
       <div>
         <h1 className="text-2xl md:text-3xl font-thin tracking-tight text-foreground">Provider Panel</h1>
         <p className="text-sm text-muted-foreground mt-2 font-mono text-[11px]">Register, manage, and monetize your GPU compute</p>

@@ -115,3 +115,14 @@ export function useUpdateMinPrice(providerId: string) {
     onSuccess: () => qc.invalidateQueries({ queryKey: ['providers'] }),
   });
 }
+
+export function useDeregisterProvider() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: () => api.delete<{ success: boolean }>('/api/providers/me'),
+    onSuccess: () => {
+      qc.setQueryData(['providers', 'me'], null);
+      qc.invalidateQueries({ queryKey: ['providers'] });
+    },
+  });
+}

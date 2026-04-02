@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { OrderStatusBadge } from "@/components/dashboard/OrderStatusBadge";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, ChevronRight } from "lucide-react";
+import { ChevronDown, ChevronRight, Loader2 } from "lucide-react";
 import { GlassCard } from "@/components/ui/glass-card";
 import { SectionLabel } from "@/components/ui/section-label";
 import { motion, AnimatePresence } from "framer-motion";
@@ -13,11 +13,43 @@ import { toast } from "sonner";
 
 function FulfillmentPanel({ orderId }: { orderId: string }) {
   const { data, isLoading } = useOrderFulfillment(orderId);
+  const prevStatus = useRef<string | undefined>(undefined);
+  const [elapsed, setElapsed] = useState(0);
+
+  // Count up elapsed seconds while provisioning
+  useEffect(() => {
+    if (data?.status === 'PROVISIONING' || data?.status === 'PENDING' || (!data && !isLoading)) {
+      const iv = setInterval(() => setElapsed(s => s + 1), 1000);
+      return () => clearInterval(iv);
+    }
+    setElapsed(0);
+  }, [data?.status, data, isLoading]);
+
+  // Fire a toast when the instance goes RUNNING
+  useEffect(() => {
+    if (prevStatus.current && prevStatus.current !== 'RUNNING' && data?.status === 'RUNNING') {
+      toast.success('GPU instance is live!', {
+        description: `SSH: ${data.connectionString ?? `${data.sshUser}@${data.sshHost} -p ${data.sshPort}`}`,
+        duration: 10000,
+      });
+    }
+    prevStatus.current = data?.status;
+  }, [data?.status, data]);
 
   if (isLoading || !data || data.status === 'PENDING' || data.status === 'PROVISIONING') {
+    const mins = Math.floor(elapsed / 60);
+    const secs = elapsed % 60;
+    const elapsedStr = mins > 0 ? `${mins}m ${secs}s` : `${secs}s`;
     return (
-      <div className="mt-3 p-3 rounded-lg bg-amber-500/5 border border-amber-500/10">
-        <p className="font-mono text-xs text-amber-400">Provisioning GPU instance...</p>
+      <div className="mt-3 p-4 rounded-lg bg-amber-500/5 border border-amber-500/10 space-y-2">
+        <div className="flex items-center gap-2">
+          <Loader2 className="w-3.5 h-3.5 text-amber-400 animate-spin shrink-0" />
+          <p className="font-mono text-xs text-amber-400">Provisioning GPU instance... ({elapsedStr})</p>
+        </div>
+        <p className="font-mono text-[10px] text-white/30 leading-relaxed">
+          Searching for an available instance on Vast.ai and booting it up.
+          This typically takes <span className="text-white/50">2–5 minutes</span> — you'll get a notification when it's ready.
+        </p>
       </div>
     );
   }

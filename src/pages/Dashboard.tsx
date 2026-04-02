@@ -1,11 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useMemo } from "react";
-import { BarChart3, CheckCircle, Zap, TrendingUp, Calculator, ArrowUpDown, Wallet, ArrowDownToLine, ArrowUpFromLine, Loader2 } from "lucide-react";
+import { BarChart3, CheckCircle, Zap, TrendingUp, Calculator, ArrowUpDown } from "lucide-react";
 import { useOrders, useOrderStats } from "@/hooks/useOrders";
 import { useAutoAuth } from "@/hooks/useAutoAuth";
 import { useMarketStats } from "@/hooks/useMarket";
-import { useEscrowBalance, useUSDCBalance, useDepositUSDC, useWithdrawUSDC } from "@/hooks/useContracts";
-import { useWallet } from "@/contexts/WalletContext";
 import { StatsCard } from "@/components/dashboard/StatsCard";
 import { OrderTable } from "@/components/dashboard/OrderTable";
 import { QuickActions } from "@/components/dashboard/QuickActions";
@@ -14,66 +12,13 @@ import { AuctionTimer } from "@/components/dashboard/AuctionTimer";
 import { AnimatedNumber } from "@/components/ui/animated-number";
 import { GlassCard } from "@/components/ui/glass-card";
 import { SavingsCalculator } from "@/components/dashboard/SavingsCalculator";
-import { formatUSDC } from "@/lib/chain";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
 
 const Dashboard = () => {
   const [tab, setTab] = useState<"overview" | "savings">("overview");
-  const [depositAmount, setDepositAmount] = useState("");
-  const [withdrawAmount, setWithdrawAmount] = useState("");
   const { isAuthenticated } = useAutoAuth();
-  const { connected, fullWalletAddress } = useWallet();
   const { data: userOrders } = useOrders({ limit: 100 }, isAuthenticated);
   const { data: stats } = useOrderStats(isAuthenticated);
   const { data: marketStats } = useMarketStats();
-  const { data: escrowBalance, refetch: refetchEscrow } = useEscrowBalance(fullWalletAddress ?? undefined);
-  const { refetch: refetchUSDC, formatted: usdcFormatted } = useUSDCBalance(fullWalletAddress ?? undefined);
-  const { deposit, isLoading: depositing } = useDepositUSDC();
-  const { withdraw, isLoading: withdrawing } = useWithdrawUSDC();
-
-  // Sanitize amount input: no negatives, max 6 decimal places
-  const sanitizeAmount = (val: string): string => {
-    let clean = val.replace(/[^0-9.]/g, '');
-    const parts = clean.split('.');
-    if (parts.length > 2) clean = parts[0] + '.' + parts.slice(1).join('');
-    if (parts.length === 2 && parts[1].length > 6) clean = parts[0] + '.' + parts[1].slice(0, 6);
-    return clean;
-  };
-
-  const walletBalanceNum = Number(escrowBalance?.available ?? BigInt(0)) / 1e6;
-  const usdcWalletNum = parseFloat(usdcFormatted) || 0;
-
-  const handleDeposit = async () => {
-    const amt = parseFloat(depositAmount);
-    if (!amt || amt <= 0) { toast.error("Enter a valid amount"); return; }
-    if (amt > usdcWalletNum) { toast.error(`Insufficient wallet USDC. You have $${usdcWalletNum.toFixed(2)}`); return; }
-    try {
-      await deposit(amt);
-      toast.success(`Deposited $${amt.toFixed(2)} USDC into escrow`);
-      setDepositAmount("");
-      refetchEscrow();
-      refetchUSDC();
-    } catch (err: any) {
-      toast.error(err?.shortMessage || err?.message || "Deposit failed");
-    }
-  };
-
-  const handleWithdraw = async () => {
-    const amt = parseFloat(withdrawAmount);
-    if (!amt || amt <= 0) { toast.error("Enter a valid amount"); return; }
-    if (amt > walletBalanceNum) { toast.error(`Insufficient escrow balance. Available: $${walletBalanceNum.toFixed(2)}`); return; }
-    try {
-      await withdraw(amt);
-      toast.success(`Withdrew $${amt.toFixed(2)} USDC from escrow`);
-      setWithdrawAmount("");
-      refetchEscrow();
-      refetchUSDC();
-    } catch (err: any) {
-      toast.error(err?.shortMessage || err?.message || "Withdrawal failed");
-    }
-  };
 
   // Derive user-specific metrics from their orders
   const userEscrowBalance = useMemo(() => {
@@ -137,7 +82,7 @@ const Dashboard = () => {
       ) : (
         <>
 
-      {/* Stats Row — 8pt gap */}
+      {/* Stats Row */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatsCard
           icon={ArrowUpDown} label="Total Traded" value={`$${userTotalTraded.toFixed(2)}`}
@@ -158,116 +103,50 @@ const Dashboard = () => {
         <AuctionTimer />
       </div>
 
-      {/* Escrow & Portfolio */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        {/* On-chain Escrow Balance */}
-        <GlassCard delay={0.15} glow className="p-4 md:p-6">
-          <div className="flex flex-col gap-5">
-            <div className="flex items-center gap-2">
-              <Wallet className="h-4 w-4 text-primary" />
-              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">Escrow Balance</span>
-            </div>
-
-            {connected ? (
-              <>
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="p-3 rounded-xl bg-white/[0.03]">
-                    <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/30">Available</p>
-                    <p className="font-mono text-lg font-semibold text-emerald-400 tabular-nums mt-1">${formatUSDC(escrowBalance.available)}</p>
-                  </div>
-                  <div className="p-3 rounded-xl bg-white/[0.03]">
-                    <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/30">Locked</p>
-                    <p className="font-mono text-lg font-semibold text-amber-400 tabular-nums mt-1">${formatUSDC(escrowBalance.locked)}</p>
-                  </div>
-                </div>
-
-                <div className="p-3 rounded-xl bg-white/[0.03]">
-                  <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/30">Wallet USDC</p>
-                  <p className="font-mono text-sm font-semibold text-white tabular-nums mt-1">${usdcFormatted}</p>
-                </div>
-
-                {/* Deposit */}
-                <div className="flex gap-2">
-                  <Input
-                    type="number" step="0.01" min="0.01" placeholder="Amount"
-                    value={depositAmount} onChange={(e) => setDepositAmount(sanitizeAmount(e.target.value))}
-                    className="font-mono text-xs h-9 border-white/[0.06] bg-white/[0.02]"
-                  />
-                  <Button onClick={handleDeposit} disabled={depositing} size="sm"
-                    className="gap-1.5 h-9 px-3 text-xs bg-emerald-600 hover:bg-emerald-500 border-0 shrink-0">
-                    {depositing ? <Loader2 className="h-3 w-3 animate-spin" /> : <ArrowDownToLine className="h-3 w-3" />}
-                    Deposit
-                  </Button>
-                </div>
-
-                {/* Withdraw */}
-                <div className="flex gap-2">
-                  <Input
-                    type="number" step="0.01" min="0.01" placeholder="Amount"
-                    value={withdrawAmount} onChange={(e) => setWithdrawAmount(sanitizeAmount(e.target.value))}
-                    className="font-mono text-xs h-9 border-white/[0.06] bg-white/[0.02]"
-                  />
-                  <Button onClick={handleWithdraw} disabled={withdrawing} size="sm"
-                    className="gap-1.5 h-9 px-3 text-xs bg-white/[0.06] hover:bg-white/[0.1] border-0 shrink-0">
-                    {withdrawing ? <Loader2 className="h-3 w-3 animate-spin" /> : <ArrowUpFromLine className="h-3 w-3" />}
-                    Withdraw
-                  </Button>
-                </div>
-              </>
-            ) : (
-              <div className="py-6 flex flex-col items-center gap-3">
-                <Wallet className="h-8 w-8 text-white/10" />
-                <p className="font-mono text-[11px] text-white/20 text-center">Connect wallet to view escrow balance</p>
-              </div>
-            )}
+      {/* Portfolio Value */}
+      <GlassCard delay={0.15} className="p-4 md:p-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-3">
+          <div>
+            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40 block mb-2">Portfolio Value</span>
+            <AnimatedNumber value={userEscrowBalance} prefix="$" decimals={2} className="text-2xl md:text-3xl font-mono font-semibold tracking-tight text-white tabular-nums" />
           </div>
-        </GlassCard>
+        </div>
 
-        {/* Portfolio Value */}
-        <GlassCard delay={0.2} className="p-4 md:p-6 lg:col-span-2">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-3">
-            <div>
-              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40 block mb-2">Portfolio Value</span>
-              <AnimatedNumber value={userEscrowBalance} prefix="$" decimals={2} className="text-2xl md:text-3xl font-mono font-semibold tracking-tight text-white tabular-nums" />
+        {userEscrowBalance === 0 && userTotalTraded === 0 ? (
+          <div className="py-10 flex flex-col items-center gap-4">
+            <div className="w-16 h-16 rounded-2xl bg-primary/[0.06] border border-primary/[0.1] flex items-center justify-center">
+              <TrendingUp className="w-7 h-7 text-primary/40" />
+            </div>
+            <div className="text-center">
+              <p className="font-mono text-sm text-white/30 mb-1">No activity yet</p>
+              <p className="font-mono text-[11px] text-white/15">Place an order on the Marketplace to start building your portfolio</p>
+            </div>
+            <button
+              onClick={() => window.location.href = '/marketplace'}
+              className="font-mono text-[11px] text-primary hover:text-primary/80 transition-colors border border-primary/20 rounded-lg px-4 py-2 hover:bg-primary/5"
+            >
+              Browse Marketplace →
+            </button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-3 gap-4 pt-2">
+            <div className="p-4 rounded-xl bg-white/[0.03]">
+              <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/30">Locked in Orders</p>
+              <p className="font-mono text-lg font-semibold text-white tabular-nums mt-1">${userEscrowBalance.toFixed(2)}</p>
+            </div>
+            <div className="p-4 rounded-xl bg-white/[0.03]">
+              <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/30">Total Traded</p>
+              <p className="font-mono text-lg font-semibold text-white tabular-nums mt-1">${userTotalTraded.toFixed(2)}</p>
+            </div>
+            <div className="p-4 rounded-xl bg-white/[0.03]">
+              <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/30">Orders Placed</p>
+              <p className="font-mono text-lg font-semibold text-white tabular-nums mt-1">{userOrders?.data?.length ?? 0}</p>
             </div>
           </div>
+        )}
+      </GlassCard>
 
-          {userEscrowBalance === 0 && userTotalTraded === 0 ? (
-            <div className="py-10 flex flex-col items-center gap-4">
-              <div className="w-16 h-16 rounded-2xl bg-primary/[0.06] border border-primary/[0.1] flex items-center justify-center">
-                <TrendingUp className="w-7 h-7 text-primary/40" />
-              </div>
-              <div className="text-center">
-                <p className="font-mono text-sm text-white/30 mb-1">No activity yet</p>
-                <p className="font-mono text-[11px] text-white/15">Place an order on the Marketplace to start building your portfolio</p>
-              </div>
-              <button
-                onClick={() => window.location.href = '/marketplace'}
-                className="font-mono text-[11px] text-primary hover:text-primary/80 transition-colors border border-primary/20 rounded-lg px-4 py-2 hover:bg-primary/5"
-              >
-                Browse Marketplace →
-              </button>
-            </div>
-          ) : (
-            <div className="grid grid-cols-3 gap-4 pt-2">
-              <div className="p-4 rounded-xl bg-white/[0.03]">
-                <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/30">Locked in Orders</p>
-                <p className="font-mono text-lg font-semibold text-white tabular-nums mt-1">${userEscrowBalance.toFixed(2)}</p>
-              </div>
-              <div className="p-4 rounded-xl bg-white/[0.03]">
-                <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/30">Total Traded</p>
-                <p className="font-mono text-lg font-semibold text-white tabular-nums mt-1">${userTotalTraded.toFixed(2)}</p>
-              </div>
-              <div className="p-4 rounded-xl bg-white/[0.03]">
-                <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/30">Orders Placed</p>
-                <p className="font-mono text-lg font-semibold text-white tabular-nums mt-1">{userOrders?.data?.length ?? 0}</p>
-              </div>
-            </div>
-          )}
-        </GlassCard>
-      </div>
-
-      {/* Main Content — 8pt-aligned gap */}
+      {/* Main Content */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <div className="lg:col-span-2 space-y-4">
           <OrderTable />
@@ -304,5 +183,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
-

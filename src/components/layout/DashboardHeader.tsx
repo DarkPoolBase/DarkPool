@@ -1,14 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Bell, Wallet, LogOut, Copy, Check, ShieldCheck, ArrowRightLeft, AlertTriangle, Package } from "lucide-react";
+import { Bell, Wallet, LogOut, Copy, Check, ShieldCheck, ArrowRightLeft, AlertTriangle, Package, ArrowDownToLine, ArrowUpFromLine, Loader2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useWallet } from "@/contexts/WalletContext";
 import { useNotifications, type NotificationType } from "@/hooks/useNotifications";
-import { useOrders } from "@/hooks/useOrders";
+import { useEscrowBalance, useUSDCBalance, useDepositUSDC, useWithdrawUSDC } from "@/hooks/useContracts";
 import { useAutoAuth } from "@/hooks/useAutoAuth";
+import { formatUSDC } from "@/lib/chain";
+import { toast } from "sonner";
 import metamaskLogo from "@/assets/metamask-logo.png";
 import phantomLogo from "@/assets/phantom-logo.jpg";
 
@@ -25,20 +28,62 @@ export function DashboardHeader() {
     walletType, networkStatus, connect, disconnect, showModal, setShowModal,
   } = useWallet();
   const { isAuthenticated } = useAutoAuth();
-  const { data: userOrders } = useOrders({ limit: 100 }, isAuthenticated);
+  const { data: escrowBalance, refetch: refetchEscrow } = useEscrowBalance(fullWalletAddress ?? undefined);
+  const { formatted: usdcFormatted, refetch: refetchUSDC } = useUSDCBalance(fullWalletAddress ?? undefined);
+  const { deposit, isLoading: depositing } = useDepositUSDC();
+  const { withdraw, isLoading: withdrawing } = useWithdrawUSDC();
 
-  const userBalance = useMemo(() => {
-    if (!userOrders?.data?.length) return 0;
-    return userOrders.data
-      .filter((o: any) => o.status === 'ACTIVE' || o.status === 'PENDING')
-      .reduce((sum: number, o: any) => sum + parseFloat(o.escrowAmount || '0'), 0);
-  }, [userOrders]);
+  const escrowAvailable = formatUSDC(escrowBalance?.available ?? BigInt(0));
+  const escrowLocked = formatUSDC(escrowBalance?.locked ?? BigInt(0));
+  const escrowTotal = formatUSDC((escrowBalance?.available ?? BigInt(0)) + (escrowBalance?.locked ?? BigInt(0)));
 
   const navigate = useNavigate();
   const { notifications, unreadCount, markAllRead, markRead } = useNotifications();
   const [copied, setCopied] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
+  const [showBalance, setShowBalance] = useState(false);
+  const [balanceMode, setBalanceMode] = useState<"deposit" | "withdraw">("deposit");
+  const [amount, setAmount] = useState("");
+
+  const sanitizeAmount = (val: string): string => {
+    let clean = val.replace(/[^0-9.]/g, '');
+    const parts = clean.split('.');
+    if (parts.length > 2) clean = parts[0] + '.' + parts.slice(1).join('');
+    if (parts.length === 2 && parts[1].length > 6) clean = parts[0] + '.' + parts[1].slice(0, 6);
+    return clean;
+  };
+
+  const handleConfirm = async () => {
+    const amt = parseFloat(amount);
+    if (!amt || amt <= 0) { toast.error("Enter a valid amount"); return; }
+
+    if (balanceMode === "deposit") {
+      const walletBal = parseFloat(usdcFormatted) || 0;
+      if (amt > walletBal) { toast.error(`Insufficient wallet USDC. You have $${walletBal.toFixed(2)}`); return; }
+      try {
+        await deposit(amt);
+        toast.success(`Deposited $${amt.toFixed(2)} USDC`);
+        setAmount("");
+        refetchEscrow();
+        refetchUSDC();
+      } catch (err: any) {
+        toast.error(err?.shortMessage || err?.message || "Deposit failed");
+      }
+    } else {
+      const availBal = Number(escrowBalance?.available ?? BigInt(0)) / 1e6;
+      if (amt > availBal) { toast.error(`Insufficient escrow balance. Available: $${availBal.toFixed(2)}`); return; }
+      try {
+        await withdraw(amt);
+        toast.success(`Withdrew $${amt.toFixed(2)} USDC`);
+        setAmount("");
+        refetchEscrow();
+        refetchUSDC();
+      } catch (err: any) {
+        toast.error(err?.shortMessage || err?.message || "Withdrawal failed");
+      }
+    }
+  };
 
   const copyAddress = () => {
     if (fullWalletAddress) {
@@ -64,10 +109,13 @@ export function DashboardHeader() {
 
         <div className="flex items-center gap-3">
           {connected && (
-            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/5 bg-white/[0.02] backdrop-blur-md">
+            <button
+              onClick={() => { setShowBalance(true); setShowDropdown(false); setShowNotifications(false); }}
+              className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/5 bg-white/[0.02] backdrop-blur-md hover:bg-white/[0.06] hover:border-white/10 transition-all duration-300 cursor-pointer"
+            >
               <span className="text-[10px] font-mono text-white/30 uppercase tracking-widest">USDC</span>
-              <span className="font-mono text-sm font-medium text-white tabular-nums">${userBalance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-            </div>
+              <span className="font-mono text-sm font-medium text-white tabular-nums">${escrowTotal}</span>
+            </button>
           )}
 
           <div className="relative">
@@ -293,6 +341,110 @@ export function DashboardHeader() {
                     <span className="text-[10px] text-emerald-400/70 font-mono">Network Active</span>
                   </div>
                 </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* Balance Modal */}
+      <AnimatePresence>
+        {showBalance && (
+          <div className="fixed inset-0 z-[9999] flex items-center justify-center">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+              onClick={() => setShowBalance(false)}
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+              className="relative z-10 w-full max-w-sm mx-4 rounded-2xl overflow-hidden border border-white/[0.08] bg-[#111118]"
+            >
+              <div className="p-6">
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center gap-2">
+                    <Wallet className="h-4 w-4 text-primary" />
+                    <h3 className="text-base font-light text-white tracking-tight">Balance</h3>
+                  </div>
+                  <button
+                    onClick={() => setShowBalance(false)}
+                    className="w-7 h-7 rounded-full flex items-center justify-center bg-white/[0.05] border border-white/10 hover:bg-white/10 transition-all text-white/50"
+                  >
+                    <X className="h-3.5 w-3.5" />
+                  </button>
+                </div>
+
+                {/* Balance display */}
+                <div className="grid grid-cols-2 gap-3 mb-4">
+                  <div className="p-3 rounded-xl bg-white/[0.03]">
+                    <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/30">Available</p>
+                    <p className="font-mono text-lg font-semibold text-emerald-400 tabular-nums mt-1">${escrowAvailable}</p>
+                  </div>
+                  <div className="p-3 rounded-xl bg-white/[0.03]">
+                    <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/30">Locked</p>
+                    <p className="font-mono text-lg font-semibold text-amber-400 tabular-nums mt-1">${escrowLocked}</p>
+                  </div>
+                </div>
+
+                <div className="p-3 rounded-xl bg-white/[0.03] mb-5">
+                  <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/30">Wallet USDC</p>
+                  <p className="font-mono text-sm font-semibold text-white tabular-nums mt-1">${usdcFormatted}</p>
+                </div>
+
+                {/* Deposit / Withdraw toggle */}
+                <div className="flex rounded-xl overflow-hidden bg-white/[0.03] mb-4 h-10">
+                  <button
+                    onClick={() => setBalanceMode("deposit")}
+                    className={`flex-1 text-xs font-mono uppercase tracking-wider font-semibold transition-all ${
+                      balanceMode === "deposit" ? "text-emerald-400 bg-emerald-500/10" : "text-white/30 hover:text-white/50"
+                    }`}
+                  >Deposit</button>
+                  <button
+                    onClick={() => setBalanceMode("withdraw")}
+                    className={`flex-1 text-xs font-mono uppercase tracking-wider font-semibold transition-all ${
+                      balanceMode === "withdraw" ? "text-white bg-white/[0.06]" : "text-white/30 hover:text-white/50"
+                    }`}
+                  >Withdraw</button>
+                </div>
+
+                {/* Amount input */}
+                <Input
+                  type="text"
+                  inputMode="decimal"
+                  placeholder="0.00"
+                  value={amount}
+                  onChange={(e) => setAmount(sanitizeAmount(e.target.value))}
+                  className="font-mono text-center text-lg h-12 border-white/[0.06] bg-white/[0.02] mb-4"
+                />
+
+                {/* Confirm button */}
+                <Button
+                  onClick={handleConfirm}
+                  disabled={depositing || withdrawing || !amount}
+                  className={`w-full h-12 gap-2 text-sm font-semibold transition-all duration-300 border-0 ${
+                    balanceMode === "deposit"
+                      ? "bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.2)]"
+                      : "bg-gradient-to-r from-violet-600 to-violet-500 hover:from-violet-500 hover:to-violet-400 shadow-[0_0_20px_rgba(139,92,246,0.2)]"
+                  }`}
+                >
+                  {(depositing || withdrawing) ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : balanceMode === "deposit" ? (
+                    <ArrowDownToLine className="h-4 w-4" />
+                  ) : (
+                    <ArrowUpFromLine className="h-4 w-4" />
+                  )}
+                  {balanceMode === "deposit" ? "Confirm Deposit" : "Confirm Withdrawal"}
+                </Button>
+
+                <p className="font-mono text-[10px] text-white/20 text-center mt-3">
+                  {balanceMode === "deposit" ? "USDC will be transferred from your wallet to the escrow contract" : "Available USDC will be returned to your wallet"}
+                </p>
               </div>
             </motion.div>
           </div>

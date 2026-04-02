@@ -47,7 +47,6 @@ export function DashboardHeader() {
   const [showDropdown, setShowDropdown] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [showBalance, setShowBalance] = useState(false);
-  const [balanceMode, setBalanceMode] = useState<"deposit" | "withdraw">("deposit");
   const [amount, setAmount] = useState("");
   const [showPrivacyDeposit, setShowPrivacyDeposit] = useState(false);
 
@@ -63,30 +62,16 @@ export function DashboardHeader() {
     const amt = parseFloat(amount);
     if (!amt || amt <= 0) { toast.error("Enter a valid amount"); return; }
 
-    if (balanceMode === "deposit") {
-      const walletBal = parseFloat(usdcFormatted) || 0;
-      if (amt > walletBal) { toast.error(`Insufficient wallet USDC. You have $${walletBal.toFixed(2)}`); return; }
-      try {
-        await deposit(amt);
-        toast.success(`Deposited $${amt.toFixed(2)} USDC`);
-        setAmount("");
-        refetchEscrow();
-        refetchUSDC();
-      } catch (err: any) {
-        toast.error(err?.shortMessage || err?.message || "Deposit failed");
-      }
-    } else {
-      const availBal = Number(escrowBalance?.available ?? BigInt(0)) / 1e6;
-      if (amt > availBal) { toast.error(`Insufficient escrow balance. Available: $${availBal.toFixed(2)}`); return; }
-      try {
-        await withdraw(amt);
-        toast.success(`Withdrew $${amt.toFixed(2)} USDC`);
-        setAmount("");
-        refetchEscrow();
-        refetchUSDC();
-      } catch (err: any) {
-        toast.error(err?.shortMessage || err?.message || "Withdrawal failed");
-      }
+    const availBal = Number(escrowBalance?.available ?? BigInt(0)) / 1e6;
+    if (amt > availBal) { toast.error(`Insufficient escrow balance. Available: $${availBal.toFixed(2)}`); return; }
+    try {
+      await withdraw(amt);
+      toast.success(`Withdrew $${amt.toFixed(2)} USDC`);
+      setAmount("");
+      refetchEscrow();
+      refetchUSDC();
+    } catch (err: any) {
+      toast.error(err?.shortMessage || err?.message || "Withdrawal failed");
     }
   };
 
@@ -114,22 +99,13 @@ export function DashboardHeader() {
 
         <div className="flex items-center gap-3">
           {connected && (
-            <>
-              <button
-                onClick={() => { setShowPrivacyDeposit(true); setShowDropdown(false); setShowNotifications(false); }}
-                className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full border border-violet-500/20 bg-violet-500/[0.06] backdrop-blur-md hover:bg-violet-500/[0.12] hover:border-violet-500/30 transition-all duration-300 cursor-pointer"
-              >
-                <ShieldCheck className="h-3.5 w-3.5 text-violet-400" />
-                <span className="text-[10px] font-mono text-violet-300 uppercase tracking-widest">Deposit</span>
-              </button>
-              <button
-                onClick={() => { setShowBalance(true); setShowDropdown(false); setShowNotifications(false); }}
-                className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/5 bg-white/[0.02] backdrop-blur-md hover:bg-white/[0.06] hover:border-white/10 transition-all duration-300 cursor-pointer"
-              >
-                <span className="text-[10px] font-mono text-white/30 uppercase tracking-widest">USDC</span>
-                <span className="font-mono text-sm font-medium text-white tabular-nums">${escrowTotal}</span>
-              </button>
-            </>
+            <button
+              onClick={() => { setShowBalance(true); setShowDropdown(false); setShowNotifications(false); }}
+              className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/5 bg-white/[0.02] backdrop-blur-md hover:bg-white/[0.06] hover:border-white/10 transition-all duration-300 cursor-pointer"
+            >
+              <span className="text-[10px] font-mono text-white/30 uppercase tracking-widest">USDC</span>
+              <span className="font-mono text-sm font-medium text-white tabular-nums">${escrowTotal}</span>
+            </button>
           )}
 
           <div className="relative">
@@ -432,55 +408,51 @@ export function DashboardHeader() {
                   <p className="font-mono text-sm font-semibold text-white tabular-nums mt-1">${usdcFormatted}</p>
                 </div>
 
-                {/* Deposit / Withdraw toggle */}
-                <div className="flex rounded-xl overflow-hidden bg-white/[0.03] mb-4 h-10">
-                  <button
-                    onClick={() => setBalanceMode("deposit")}
-                    className={`flex-1 text-xs font-mono uppercase tracking-wider font-semibold transition-all ${
-                      balanceMode === "deposit" ? "text-emerald-400 bg-emerald-500/10" : "text-white/30 hover:text-white/50"
-                    }`}
-                  >Deposit</button>
-                  <button
-                    onClick={() => setBalanceMode("withdraw")}
-                    className={`flex-1 text-xs font-mono uppercase tracking-wider font-semibold transition-all ${
-                      balanceMode === "withdraw" ? "text-white bg-white/[0.06]" : "text-white/30 hover:text-white/50"
-                    }`}
-                  >Withdraw</button>
-                </div>
-
-                {/* Amount input */}
-                <Input
-                  type="text"
-                  inputMode="decimal"
-                  placeholder="0.00"
-                  value={amount}
-                  onChange={(e) => setAmount(sanitizeAmount(e.target.value))}
-                  className="font-mono text-center text-lg h-12 border-white/[0.06] bg-white/[0.02] mb-4"
-                />
-
-                {/* Confirm button */}
+                {/* Deposit button */}
                 <Button
-                  onClick={handleConfirm}
-                  disabled={depositing || withdrawing || !amount}
-                  className={`w-full h-12 gap-2 text-sm font-semibold transition-all duration-300 border-0 ${
-                    balanceMode === "deposit"
-                      ? "bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.2)]"
-                      : "bg-gradient-to-r from-violet-600 to-violet-500 hover:from-violet-500 hover:to-violet-400 shadow-[0_0_20px_rgba(139,92,246,0.2)]"
-                  }`}
+                  onClick={() => { setShowBalance(false); setShowPrivacyDeposit(true); }}
+                  className="w-full h-12 gap-2 text-sm font-semibold transition-all duration-300 border-0 bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.2)] mb-3"
                 >
-                  {(depositing || withdrawing) ? (
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                  ) : balanceMode === "deposit" ? (
-                    <ArrowDownToLine className="h-4 w-4" />
-                  ) : (
-                    <ArrowUpFromLine className="h-4 w-4" />
-                  )}
-                  {balanceMode === "deposit" ? "Confirm Deposit" : "Confirm Withdrawal"}
+                  <ArrowDownToLine className="h-4 w-4" />
+                  Deposit USDC
                 </Button>
 
-                <p className="font-mono text-[10px] text-white/20 text-center mt-3">
-                  {balanceMode === "deposit" ? "USDC will be transferred from your wallet to the escrow contract" : "Available USDC will be returned to your wallet"}
-                </p>
+                {/* Withdraw section */}
+                <div className="border-t border-white/[0.06] pt-4 mt-1">
+                  <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/30 mb-3">Withdraw</p>
+                  <Input
+                    type="text"
+                    inputMode="decimal"
+                    placeholder="0.00"
+                    value={amount}
+                    onChange={(e) => setAmount(sanitizeAmount(e.target.value))}
+                    className="font-mono text-center text-lg h-12 border-white/[0.06] bg-white/[0.02] mb-3"
+                  />
+                  <Button
+                    onClick={handleConfirm}
+                    disabled={withdrawing || !amount}
+                    className="w-full h-12 gap-2 text-sm font-semibold transition-all duration-300 border-0 bg-gradient-to-r from-violet-600 to-violet-500 hover:from-violet-500 hover:to-violet-400 shadow-[0_0_20px_rgba(139,92,246,0.2)]"
+                  >
+                    {withdrawing ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <ArrowUpFromLine className="h-4 w-4" />
+                    )}
+                    Confirm Withdrawal
+                  </Button>
+                  <p className="font-mono text-[10px] text-white/20 text-center mt-3">
+                    Available USDC will be returned to your wallet
+                  </p>
+                </div>
+
+                {/* Deposit info */}
+                <div className="border-t border-white/[0.06] pt-4 mt-3">
+                  <div className="rounded-xl bg-violet-500/5 border border-violet-500/20 p-3">
+                    <p className="text-[11px] text-white/40 leading-relaxed">
+                      Deposits are split into 2-4 random parts and routed through intermediate wallets for privacy. No fees. Processing takes 1-3 minutes.
+                    </p>
+                  </div>
+                </div>
               </div>
             </motion.div>
           </div>

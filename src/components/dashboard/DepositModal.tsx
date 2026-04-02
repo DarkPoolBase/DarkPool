@@ -91,7 +91,7 @@ const DepositModal = ({ open, onClose }: DepositModalProps) => {
   const { connected, fullWalletAddress, walletType, getProvider } = useWallet();
 
   const [amount, setAmount] = useState("");
-  const [token, setToken] = useState<"USDC" | "USDT">("USDC");
+  const token = "USDC" as const;
   const [step, setStep] = useState<DepositStep>("form");
   const [depositId, setDepositId] = useState("");
   const [txSignature, setTxSignature] = useState("");
@@ -565,7 +565,6 @@ const DepositModal = ({ open, onClose }: DepositModalProps) => {
 
   const handleReset = () => {
     setAmount("");
-    setToken("USDC");
     setStep("form");
     setDepositId("");
     setTxSignature("");
@@ -680,39 +679,6 @@ const DepositModal = ({ open, onClose }: DepositModalProps) => {
                     exit={{ opacity: 0, x: -20 }}
                     className="space-y-5"
                   >
-                    {/* Token Selection */}
-                    <div>
-                      <label className="text-[11px] text-white/30 uppercase tracking-wider block mb-2">
-                        Token
-                      </label>
-                      <div className="flex gap-2">
-                        {(["USDC", "USDT"] as const).map((t) => (
-                          <button
-                            key={t}
-                            onClick={() => setToken(t)}
-                            className={`flex-1 flex items-center justify-center gap-2 h-12 rounded-xl border transition-all ${
-                              token === t
-                                ? "border-violet-500/50 bg-violet-500/10 text-white/90"
-                                : "border-white/[0.08] bg-white/[0.04] text-white/50 hover:bg-white/[0.06]"
-                            }`}
-                          >
-                            <img
-                              src={
-                                t === "USDC"
-                                  ? "https://assets.coingecko.com/coins/images/6319/small/USD_Coin_icon.png"
-                                  : "https://assets.coingecko.com/coins/images/325/small/Tether.png"
-                              }
-                              alt={t}
-                              className="w-5 h-5 rounded-full"
-                            />
-                            <span className="text-sm font-medium">
-                              {t} (Base)
-                            </span>
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
                     {/* Amount Input */}
                     <div>
                       <label className="text-[11px] text-white/30 uppercase tracking-wider block mb-2">

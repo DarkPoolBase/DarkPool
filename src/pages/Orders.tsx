@@ -10,6 +10,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useOrders, useOrderStats, useCancelOrder, useOrderFulfillment } from "@/hooks/useOrders";
 import { useAutoAuth } from "@/hooks/useAutoAuth";
 import { toast } from "sonner";
+import TransactionReceiptModal from "@/components/dashboard/TransactionReceiptModal";
 
 function FulfillmentPanel({ orderId }: { orderId: string }) {
   const { data, isLoading } = useOrderFulfillment(orderId);
@@ -93,6 +94,7 @@ type StatusFilter = "ALL" | "ACTIVE" | "FILLED" | "CANCELLED" | "EXPIRED";
 const Orders = () => {
   const [filter, setFilter] = useState<StatusFilter>("ALL");
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [receiptTxHash, setReceiptTxHash] = useState<string | null>(null);
   const { isAuthenticated } = useAutoAuth();
   const cancelOrder = useCancelOrder();
 
@@ -115,7 +117,7 @@ const Orders = () => {
     submitted: new Date(o.createdAt).toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'UTC' }) + ' UTC',
     ...(o.clearingPrice && { clearing: `$${parseFloat(o.clearingPrice).toFixed(2)}/GPU-hr` }),
     ...(o.escrowAmount && { total: `$${parseFloat(o.escrowAmount).toFixed(2)} USDC` }),
-    ...(o.txHash && { tx: o.txHash.slice(0, 6) + '...' + o.txHash.slice(-4) }),
+    ...(o.txHash && { tx: o.txHash.slice(0, 6) + '...' + o.txHash.slice(-4), fullTxHash: o.txHash }),
     ...(o.batchId && { filled: `Batch #${o.batchId}` }),
   }));
 
@@ -209,8 +211,8 @@ const Orders = () => {
                         <Button variant="outline" size="sm" className="text-[10px] h-8 border-white/[0.06] bg-transparent hover:bg-white/[0.04] text-white/50" onClick={(e) => { e.stopPropagation(); handleCancel(order.fullId); }}>Cancel</Button>
                       </div>
                     )}
-                    {order.status === "FILLED" && (
-                      <Button variant="outline" size="sm" className="text-[10px] h-8 border-white/[0.06] bg-transparent hover:bg-white/[0.04] text-white/50">Details</Button>
+                    {order.status === "FILLED" && (order as any).fullTxHash && (
+                      <Button variant="outline" size="sm" className="text-[10px] h-8 border-white/[0.06] bg-transparent hover:bg-white/[0.04] text-white/50" onClick={(e) => { e.stopPropagation(); setReceiptTxHash((order as any).fullTxHash); }}>View Receipt</Button>
                     )}
                   </TableCell>
                 </TableRow>
@@ -256,6 +258,14 @@ const Orders = () => {
           </TableBody>
         </Table>
       </GlassCard>
+
+      {receiptTxHash && (
+        <TransactionReceiptModal
+          open={!!receiptTxHash}
+          onClose={() => setReceiptTxHash(null)}
+          txHash={receiptTxHash}
+        />
+      )}
     </div>
   );
 };

@@ -25,7 +25,7 @@ export function useAvatarColor() {
     try {
       const saved = localStorage.getItem(AVATAR_COLOR_KEY);
       if (saved) return JSON.parse(saved);
-    } catch {}
+    } catch (_e) { /* ignore */ }
     return PALETTE[0];
   });
 
@@ -40,7 +40,7 @@ export function useAvatarColor() {
       try {
         const saved = localStorage.getItem(AVATAR_COLOR_KEY);
         if (saved) setColorState(JSON.parse(saved));
-      } catch {}
+      } catch (_e) { /* ignore */ }
     };
     window.addEventListener("avatar-color-change", handler);
     return () => window.removeEventListener("avatar-color-change", handler);

@@ -21,6 +21,7 @@ import { MiniAppProvider } from "./miniapp/MiniAppProvider";
 import { MiniAppLayout } from "./miniapp/MiniAppLayout";
 import { MiniAppMarketplace } from "./miniapp/MiniAppMarketplace";
 import { MiniAppOrders } from "./miniapp/MiniAppOrders";
+import { MiniAppOrder } from "./miniapp/MiniAppOrder";
 
 const queryClient = new QueryClient();
 
@@ -49,6 +50,7 @@ const App = () => (
           {/* Farcaster Mini App routes */}
           <Route path="/miniapp" element={<MiniAppProvider><MiniAppLayout /></MiniAppProvider>}>
             <Route index element={<MiniAppMarketplace />} />
+            <Route path="order/:gpuType" element={<MiniAppOrder />} />
             <Route path="orders" element={<MiniAppOrders />} />
           </Route>
 

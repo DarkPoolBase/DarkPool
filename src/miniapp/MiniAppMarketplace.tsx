@@ -79,7 +79,7 @@ export function MiniAppMarketplace() {
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      navigate(`/marketplace/${gpu.gpuType.toLowerCase()}?side=buy`);
+                      navigate(`/miniapp/order/${gpu.gpuType.toLowerCase()}?side=buy`);
                     }}
                     className="flex-1 py-2 rounded-lg text-xs font-mono font-semibold bg-emerald-500/15 text-emerald-400 border border-emerald-500/25 hover:bg-emerald-500/25 transition-colors"
                   >
@@ -88,7 +88,7 @@ export function MiniAppMarketplace() {
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      navigate(`/marketplace/${gpu.gpuType.toLowerCase()}?side=sell`);
+                      navigate(`/miniapp/order/${gpu.gpuType.toLowerCase()}?side=sell`);
                     }}
                     className="flex-1 py-2 rounded-lg text-xs font-mono font-medium bg-rose-500/10 text-rose-400 border border-rose-500/20 hover:bg-rose-500/20 transition-colors"
                   >

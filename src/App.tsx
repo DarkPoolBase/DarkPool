@@ -17,6 +17,10 @@ import ApiDocs from "./pages/ApiDocs";
 import SdkDocs from "./pages/SdkDocs";
 import SettingsPage from "./pages/SettingsPage";
 import Notifications from "./pages/Notifications";
+import { MiniAppProvider } from "./miniapp/MiniAppProvider";
+import { MiniAppLayout } from "./miniapp/MiniAppLayout";
+import { MiniAppMarketplace } from "./miniapp/MiniAppMarketplace";
+import { MiniAppOrders } from "./miniapp/MiniAppOrders";
 
 const queryClient = new QueryClient();
 
@@ -41,6 +45,13 @@ const App = () => (
             <Route path="/notifications" element={<Notifications />} />
             <Route path="/settings" element={<SettingsPage />} />
           </Route>
+
+          {/* Farcaster Mini App routes */}
+          <Route path="/miniapp" element={<MiniAppProvider><MiniAppLayout /></MiniAppProvider>}>
+            <Route index element={<MiniAppMarketplace />} />
+            <Route path="orders" element={<MiniAppOrders />} />
+          </Route>
+
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

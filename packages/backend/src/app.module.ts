@@ -22,6 +22,7 @@ import { AgentEconomyModule } from './agent-economy/agent-economy.module';
 import { OrdersModule } from './orders/orders.module';
 import { MatchingModule } from './matching/matching.module';
 import { SettlementModule } from './settlement/settlement.module';
+import { FarcasterModule } from './farcaster/farcaster.module';
 
 @Module({
   imports: [
@@ -50,6 +51,7 @@ import { SettlementModule } from './settlement/settlement.module';
     OrdersModule,
     MatchingModule,
     SettlementModule,
+    FarcasterModule,
   ],
 })
 export class AppModule {}

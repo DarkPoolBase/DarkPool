@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ChevronDown, ChevronRight, Loader2 } from 'lucide-react';
 import { useOrders, useCancelOrder, useOrderFulfillment } from '@/hooks/useOrders';
-import { useAutoAuth } from '@/hooks/useAutoAuth';
+import { useMiniAppAuth } from './useMiniAppAuth';
 import { toast } from 'sonner';
 
 type StatusFilter = 'ALL' | 'ACTIVE' | 'FILLED' | 'CANCELLED' | 'EXPIRED';
@@ -58,7 +58,7 @@ function FulfillmentInfo({ orderId }: { orderId: string }) {
 export function MiniAppOrders() {
   const [filter, setFilter] = useState<StatusFilter>('ALL');
   const [expandedId, setExpandedId] = useState<string | null>(null);
-  const { isAuthenticated } = useAutoAuth();
+  const { isAuthenticated, loading } = useMiniAppAuth();
   const cancelOrder = useCancelOrder();
 
   const { data: apiOrders } = useOrders(
@@ -92,13 +92,22 @@ export function MiniAppOrders() {
     }
   };
 
-  if (!isAuthenticated) {
+  if (loading || !isAuthenticated) {
     return (
       <div className="flex flex-col items-center justify-center py-16 text-center">
-        <p className="font-mono text-sm text-white/30 mb-2">Connect wallet to view orders</p>
-        <p className="font-mono text-[10px] text-white/15">
-          Your wallet will be connected automatically via Farcaster
-        </p>
+        {loading ? (
+          <>
+            <Loader2 className="w-5 h-5 text-primary animate-spin mb-3" />
+            <p className="font-mono text-xs text-white/30">Connecting wallet...</p>
+          </>
+        ) : (
+          <>
+            <p className="font-mono text-sm text-white/30 mb-2">Authenticating...</p>
+            <p className="font-mono text-[10px] text-white/15">
+              Connecting your Farcaster wallet
+            </p>
+          </>
+        )}
       </div>
     );
   }

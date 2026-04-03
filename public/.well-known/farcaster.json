@@ -15,8 +15,8 @@
     "buttonTitle": "Open DarkPool",
     "webhookUrl": "https://darkpoolbase.org/api/farcaster/webhook",
     "subtitle": "GPU Compute Dark Pool",
-    "description": "Trade GPU compute through private batch auctions on Base. Browse spot markets, place buy/sell orders, and track fulfillment.",
-    "primaryCategory": "utilities",
+    "description": "Trade GPU compute through private batch auctions on Base. Browse spot markets, place orders, and track fulfillment.",
+    "primaryCategory": "finance",
     "tags": ["gpu", "compute", "defi", "base"],
     "requiredChains": ["eip155:8453"],
     "requiredCapabilities": []

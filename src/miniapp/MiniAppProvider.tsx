@@ -17,20 +17,21 @@ export function useFarcasterUser(): FarcasterUser | null {
   const [user, setUser] = useState<FarcasterUser | null>(null);
 
   useEffect(() => {
-    try {
-      const ctx = sdk.context;
-      if (ctx?.user) {
-        const pfp = ctx.user.pfpUrl;
-        setUser({
-          fid: ctx.user.fid,
-          username: typeof ctx.user.username === 'string' ? ctx.user.username : undefined,
-          displayName: typeof ctx.user.displayName === 'string' ? ctx.user.displayName : undefined,
-          pfpUrl: typeof pfp === 'string' ? pfp : undefined,
-        });
-      }
-    } catch {
-      // Not in a Farcaster client
-    }
+    // sdk.context is a Promise — must be awaited
+    sdk.context
+      .then((ctx) => {
+        if (ctx?.user) {
+          setUser({
+            fid: ctx.user.fid,
+            username: ctx.user.username,
+            displayName: ctx.user.displayName,
+            pfpUrl: ctx.user.pfpUrl,
+          });
+        }
+      })
+      .catch(() => {
+        // Not in a Farcaster client
+      });
   }, []);
 
   return user;
@@ -40,7 +41,6 @@ export function MiniAppProvider({ children }: { children: ReactNode }) {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    // Signal to the Farcaster client that the app is ready
     sdk.actions.ready().catch(() => {});
     setReady(true);
   }, []);

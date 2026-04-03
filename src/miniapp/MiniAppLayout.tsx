@@ -17,7 +17,7 @@ export function MiniAppLayout() {
         </div>
         {user && (
           <div className="flex items-center gap-2">
-            {user.pfpUrl && (
+            {typeof user.pfpUrl === 'string' && user.pfpUrl && (
               <img src={user.pfpUrl} alt="" className="w-5 h-5 rounded-full" />
             )}
             <span className="font-mono text-[10px] text-white/50">

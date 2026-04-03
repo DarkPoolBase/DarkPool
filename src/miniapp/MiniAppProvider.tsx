@@ -20,11 +20,12 @@ export function useFarcasterUser(): FarcasterUser | null {
     try {
       const ctx = sdk.context;
       if (ctx?.user) {
+        const pfp = ctx.user.pfpUrl;
         setUser({
           fid: ctx.user.fid,
-          username: ctx.user.username,
-          displayName: ctx.user.displayName,
-          pfpUrl: ctx.user.pfpUrl,
+          username: typeof ctx.user.username === 'string' ? ctx.user.username : undefined,
+          displayName: typeof ctx.user.displayName === 'string' ? ctx.user.displayName : undefined,
+          pfpUrl: typeof pfp === 'string' ? pfp : undefined,
         });
       }
     } catch {

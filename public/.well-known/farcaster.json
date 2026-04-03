@@ -4,13 +4,15 @@
     "payload": "eyJkb21haW4iOiJkYXJrcG9vbGJhc2Uub3JnIn0",
     "signature": "8mTrhGbkLJKzNel87Es0701I+Lvu0mNyhaOXseWaofAwtkJYEiDk0SVD5pjh7JuV43dTXlvvHzQX49QDsWbE9hw="
   },
-  "miniapp": {
+  "frame": {
     "version": "1",
     "name": "DarkPool",
     "homeUrl": "https://darkpoolbase.org/miniapp",
     "iconUrl": "https://darkpoolbase.org/icon.png",
+    "imageUrl": "https://darkpoolbase.org/og-miniapp.png",
     "splashImageUrl": "https://darkpoolbase.org/splash.png",
     "splashBackgroundColor": "#0a0a0f",
+    "buttonTitle": "Open DarkPool",
     "webhookUrl": "https://darkpoolbase.org/api/farcaster/webhook",
     "subtitle": "GPU Compute Dark Pool",
     "description": "Trade GPU compute through private batch auctions on Base. Browse spot markets, place buy/sell orders, and track fulfillment.",

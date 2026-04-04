@@ -56,6 +56,14 @@ function FulfillmentPanel({ orderId }: { orderId: string }) {
   }
 
   if (data.status === 'RUNNING') {
+    const isExpired = data.expiresAt && new Date(data.expiresAt) < new Date();
+    if (isExpired) {
+      return (
+        <div className="mt-3 p-3 rounded-lg bg-white/[0.02] border border-white/[0.06]">
+          <p className="font-mono text-xs text-white/30">Instance expired — {new Date(data.expiresAt!).toLocaleString()}</p>
+        </div>
+      );
+    }
     return (
       <div className="mt-3 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
         <p className="font-mono text-xs text-emerald-400 mb-2">GPU Ready — SSH Access</p>

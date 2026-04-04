@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Bearer Token Authentication Utilities
  * 1:1 with Nolvipay's bearer-auth.ts

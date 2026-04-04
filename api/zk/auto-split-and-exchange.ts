@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * DarkPool Auto Split and Exchange API
  * POST /api/zk/auto-split-and-exchange

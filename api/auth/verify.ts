@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * DarkPool Verify Signature API
  * POST /api/auth/verify

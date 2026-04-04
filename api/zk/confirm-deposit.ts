@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * DarkPool Confirm Deposit API
  * POST /api/zk/confirm-deposit

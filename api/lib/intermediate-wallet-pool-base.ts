@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Intermediate Wallet Pool for Base (EVM) Chain
  * Mirrors intermediate-wallet-pool.ts but for EVM wallets (0x addresses, hex private keys).

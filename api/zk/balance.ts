@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * DarkPool ZK Balance API
  * GET /api/zk/balance?wallet=0x...

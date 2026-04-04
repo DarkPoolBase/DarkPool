@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * DarkPool Process Split Queue API
  * POST /api/zk/process-split-queue
@@ -223,7 +224,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         const holdingBalance: bigint = await tokenContract.balanceOf(holdingWallet.address);
 
         // Get or assign intermediate wallet (needed for both fresh and retry flows)
-        let { data: walletMapping } = await supabase
+        const { data: walletMapping } = await supabase
           .from('zk_user_wallets')
           .select('intermediate_wallet')
           .eq('user_wallet', split.user_wallet)

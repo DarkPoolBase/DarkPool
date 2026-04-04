@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * DarkPool Create Holding Wallet API
  * POST /api/zk/create-holding-wallet

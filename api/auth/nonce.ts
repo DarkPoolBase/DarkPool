@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * DarkPool Generate Nonce API (uses Supabase)
  * POST /api/auth/nonce

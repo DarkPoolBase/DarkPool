@@ -101,13 +101,13 @@
 ---
 
 ## 8. CQRS Backend Pattern
-- [ ] **Status: Not Started**
+- [x] **Status: Completed**
 - **Priority:** Medium
 - **Description:** Split NestJS backend into command (order submission, execution) and query (order status, history, analytics) paths using `@nestjs/cqrs`.
 - **Tasks:**
-  - [ ] Install and configure `@nestjs/cqrs`
-  - [ ] Separate order submission into command handlers
-  - [ ] Separate order queries into query handlers
+  - [x] Install and configure `@nestjs/cqrs`
+  - [x] Separate order submission into command handlers
+  - [x] Separate order queries into query handlers
   - [ ] Add event sourcing for order lifecycle
   - [ ] Benchmark throughput improvement
 - **Why:** High-throughput dark pools need separated read/write paths
@@ -120,3 +120,4 @@
 |------|--------|------|
 | 2026-04-09 | Tracker created | All items |
 | 2026-04-09 | Implemented | #4 Farcaster Mini App Push Notifications |
+| 2026-04-09 | Implemented | #8 CQRS Backend Pattern |

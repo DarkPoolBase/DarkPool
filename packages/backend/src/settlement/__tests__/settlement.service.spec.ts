@@ -89,9 +89,5 @@ describe('SettlementService', () => {
     expect(mockOrders.fillOrders).not.toHaveBeenCalled();
   });
 
-  it('should return recent settlements', async () => {
-    mockRepo.find.mockResolvedValue([{ batchId: 1 }, { batchId: 2 }]);
-    const result = await service.getRecentSettlements(10);
-    expect(result).toHaveLength(2);
-  });
+  // Query tests moved to settlement/queries/ handlers
 });

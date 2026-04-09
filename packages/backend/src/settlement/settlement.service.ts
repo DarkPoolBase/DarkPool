@@ -178,23 +178,6 @@ export class SettlementService implements OnModuleInit {
   }
 
   /**
-   * Get recent settlements for API consumption
-   */
-  async getRecentSettlements(limit = 20): Promise<Settlement[]> {
-    return this.settlementRepo.find({
-      order: { createdAt: 'DESC' },
-      take: limit,
-    });
-  }
-
-  /**
-   * Get settlement by batch ID
-   */
-  async getByBatchId(batchId: number): Promise<Settlement | null> {
-    return this.settlementRepo.findOne({ where: { batchId } });
-  }
-
-  /**
    * Send push notification to all Farcaster users with notifications enabled
    */
   private async sendFarcasterNotification(

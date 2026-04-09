@@ -1,9 +1,11 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
-import { SettlementService } from './settlement.service';
+import { QueryBus } from '@nestjs/cqrs';
+import { GetRecentSettlementsQuery } from './queries/get-recent-settlements.query';
+import { GetSettlementQuery } from './queries/get-settlement.query';
 
 @Controller('settlements')
 export class SettlementController {
-  constructor(private readonly settlementService: SettlementService) {}
+  constructor(private readonly queryBus: QueryBus) {}
 
   /**
    * GET /api/settlements
@@ -11,8 +13,8 @@ export class SettlementController {
    */
   @Get()
   async getRecent(@Query('limit') limit?: string) {
-    return this.settlementService.getRecentSettlements(
-      limit ? parseInt(limit) : 20,
+    return this.queryBus.execute(
+      new GetRecentSettlementsQuery(limit ? parseInt(limit) : 20),
     );
   }
 
@@ -22,8 +24,8 @@ export class SettlementController {
    */
   @Get(':batchId')
   async getByBatchId(@Param('batchId') batchId: string) {
-    const settlement = await this.settlementService.getByBatchId(
-      parseInt(batchId),
+    const settlement = await this.queryBus.execute(
+      new GetSettlementQuery(parseInt(batchId)),
     );
     if (!settlement) {
       return { message: `Settlement for batch #${batchId} not found` };
@@ -31,4 +33,3 @@ export class SettlementController {
     return settlement;
   }
 }
-

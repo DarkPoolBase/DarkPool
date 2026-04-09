@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, Cpu, Server, Zap, Layers, Activity, Clock, Lock, Shield, BarChart3, CheckCircle, TrendingUp, Users, Loader2 } from "lucide-react";
+import { ArrowLeft, Cpu, Server, Zap, Layers, Activity, Clock, Lock, Shield, BarChart3, CheckCircle, TrendingUp, Users, Loader2, Zap as ZapIcon } from "lucide-react";
 import { useCreateOrder, useSettlements } from "@/hooks/useOrders";
 import { useAutoAuth } from "@/hooks/useAutoAuth";
 import { usePriceHistory, useMarketPrices, useMarketStats } from "@/hooks/useMarket";
 import { useWallet } from "@/contexts/WalletContext";
-import { useSubmitOrder, useEscrowBalance } from "@/hooks/useContracts";
+import { useSubmitOrder, useEscrowBalance, usePaymasterEnabled } from "@/hooks/useContracts";
 import { generateCommitment, generateSecret } from "@/lib/commitment";
 import { parseUSDC } from "@/lib/chain";
 import { toast } from "sonner";
@@ -18,6 +18,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { SectionLabel } from "@/components/ui/section-label";
 import { motion } from "framer-motion";
 import { AreaChart, Area, ResponsiveContainer, XAxis, YAxis, Tooltip, CartesianGrid, BarChart, Bar } from "recharts";
+import { DepthChart } from "@/components/dashboard/DepthChart";
+
+// Suppress unused import from icon rename
+void ZapIcon;
 
 const productData: Record<string, {
   name: string; label: string; price: string; priceNum: number; providers: number;
@@ -262,6 +266,10 @@ const ProductDetail = () => {
   const [quantity, setQuantity] = useState([24]);
   const [price, setPrice] = useState("");
   const [duration, setDuration] = useState("1h");
+  const [chartTab, setChartTab] = useState<"price" | "depth">("price");
+  const [commitPhase, setCommitPhase] = useState<"idle" | "committed">("idle");
+  const [pendingCommit, setPendingCommit] = useState<{ hash: string; secret: string } | null>(null);
+  const paymasterEnabled = usePaymasterEnabled();
 
   const { connected, setShowModal, fullWalletAddress } = useWallet();
   const { isAuthenticated, authenticate } = useAutoAuth();
@@ -354,10 +362,30 @@ const ProductDetail = () => {
   const durationHours = durationMap[duration] || 1;
   const estTotal = (quantity[0] * parseFloat(currentPrice || "0") * durationHours).toFixed(2);
 
+  // Phase 1 — generate and store commitment hash (no network call)
+  const handleCommit = () => {
+    if (!connected) { setShowModal(true); return; }
+    const gpuType = gpuTypeMap[productId || 'h100'] || 'H100';
+    const secret = generateSecret();
+    const hash = generateCommitment({
+      gpuType,
+      quantity: quantity[0],
+      pricePerHour: BigInt(Math.round(parseFloat(currentPrice) * 1e6)),
+      duration: durationHours,
+      isBuy: side === 'buy',
+      secret,
+    });
+    localStorage.setItem(`adp_secret_${hash}`, secret);
+    setPendingCommit({ hash, secret });
+    setCommitPhase('committed');
+    toast.success('Commitment generated — your order details are now sealed.');
+  };
+
+  // Phase 2 — reveal + submit to API + on-chain
   const handleSubmitOrder = async () => {
     if (!connected) { setShowModal(true); return; }
+    if (commitPhase === 'idle') { handleCommit(); return; }
 
-    // Authenticate with SIWE if not already (will prompt wallet signature)
     if (!isAuthenticated) {
       const success = await authenticate();
       if (!success) { toast.error('Authentication failed or was rejected.'); return; }
@@ -365,11 +393,9 @@ const ProductDetail = () => {
 
     try {
       const gpuType = gpuTypeMap[productId || 'h100'] || 'H100';
-
-      // Calculate escrow amount (price × quantity × duration) in USDC units
+      const commitmentHash = pendingCommit!.hash;
       const escrowAmountUSDC = parseFloat(currentPrice) * quantity[0] * durationHours;
 
-      // Balance check: ensure user has enough escrow balance for BUY orders
       if (side === 'buy') {
         const availableUSDC = Number(escrowBal?.available ?? BigInt(0)) / 1e6;
         if (availableUSDC < escrowAmountUSDC) {
@@ -380,34 +406,18 @@ const ProductDetail = () => {
         }
       }
 
-      const secret = generateSecret();
-      const commitmentHash = generateCommitment({
-        gpuType,
-        quantity: quantity[0],
-        pricePerHour: BigInt(Math.round(parseFloat(currentPrice) * 1e6)),
-        duration: durationHours,
-        isBuy: side === 'buy',
-        secret,
-      });
-
-      // Save secret locally so user can prove their order later
-      localStorage.setItem(`adp_secret_${commitmentHash}`, secret);
-
       const escrowAmountRaw = parseUSDC(escrowAmountUSDC);
 
-      // Submit on-chain first (deposits commitment + locks escrow)
       if (side === 'buy') {
         try {
           await submitOrderOnChain(commitmentHash, escrowAmountRaw);
-          toast.success('On-chain order submitted');
+          toast.success('Commitment anchored on-chain');
         } catch (chainErr: any) {
-          // If on-chain fails, still allow API submission (escrow may not be funded yet)
           console.warn('On-chain submission failed, continuing with API:', chainErr?.shortMessage || chainErr?.message);
           toast.info('On-chain submission skipped — order will be matched off-chain');
         }
       }
 
-      // Submit to API for matching engine
       await createOrder.mutateAsync({
         side: side.toUpperCase(),
         gpuType,
@@ -418,7 +428,9 @@ const ProductDetail = () => {
         encryptedDetails: JSON.stringify({ productId, side, secret: '(stored locally)' }),
       });
 
-      toast.success('Order submitted! View it on the Orders page.');
+      toast.success('Order revealed and submitted! View it on the Orders page.');
+      setCommitPhase('idle');
+      setPendingCommit(null);
       navigate('/orders');
     } catch (err: any) {
       toast.error(err?.message || 'Failed to submit order');
@@ -472,41 +484,59 @@ const ProductDetail = () => {
         </div>
       </GlassCard>
 
-      {/* Price History — full width */}
+      {/* Price History / Depth Chart — tabbed */}
       <GlassCard delay={0.1} className="p-6">
         <div className="flex items-center justify-between mb-4">
-          <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Price History (24h)</span>
+          <div className="flex items-center gap-1 p-0.5 rounded-lg bg-white/[0.03] border border-white/[0.06]">
+            {(["price", "depth"] as const).map(tab => (
+              <button
+                key={tab}
+                onClick={() => setChartTab(tab)}
+                className={`px-3 py-1 rounded-md font-mono text-[10px] uppercase tracking-wider transition-all duration-200 ${
+                  chartTab === tab
+                    ? "bg-primary/15 text-primary border border-primary/20"
+                    : "text-white/30 hover:text-white/60"
+                }`}
+              >
+                {tab === "price" ? "Price History" : "Depth"}
+              </button>
+            ))}
+          </div>
           <span className="font-mono text-[10px] text-muted-foreground/50">USDC / GPU-hr</span>
         </div>
         <div className="h-[280px]">
-          {priceHistory.length === 0 ? (
-            <div className="h-full flex items-center justify-center">
-              <p className="font-mono text-[11px] text-white/20">Loading price history...</p>
-            </div>
+          {chartTab === "price" ? (
+            priceHistory.length === 0 ? (
+              <div className="h-full flex items-center justify-center">
+                <p className="font-mono text-[11px] text-white/20">Loading price history...</p>
+              </div>
+            ) : (
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={priceHistory}>
+                  <defs>
+                    <linearGradient id="priceGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="hsl(263,70%,58%)" stopOpacity={0.25} />
+                      <stop offset="100%" stopColor="hsl(263,70%,58%)" stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.03)" />
+                  <XAxis dataKey="time" tick={{ fontSize: 10, fill: "rgba(255,255,255,0.2)", fontFamily: "JetBrains Mono" }} axisLine={false} tickLine={false} />
+                  <YAxis tick={{ fontSize: 10, fill: "rgba(255,255,255,0.2)", fontFamily: "JetBrains Mono" }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${v}`} domain={["auto", "auto"]} />
+                  <Tooltip
+                    contentStyle={{
+                      background: "rgba(5,5,8,0.95)", border: "1px solid rgba(255,255,255,0.06)",
+                      borderRadius: 12, fontSize: 11, fontFamily: "JetBrains Mono",
+                      backdropFilter: "blur(16px)", boxShadow: "0 0 30px rgba(108,60,233,0.15)",
+                    }}
+                    labelStyle={{ color: "rgba(255,255,255,0.3)" }}
+                    formatter={(value: number) => [`$${value.toFixed(3)}`, "Price"]}
+                  />
+                  <Area type="monotone" dataKey="price" stroke="hsl(263,70%,58%)" strokeWidth={2} fill="url(#priceGrad)" />
+                </AreaChart>
+              </ResponsiveContainer>
+            )
           ) : (
-          <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={priceHistory}>
-              <defs>
-                <linearGradient id="priceGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="hsl(263,70%,58%)" stopOpacity={0.25} />
-                  <stop offset="100%" stopColor="hsl(263,70%,58%)" stopOpacity={0} />
-                </linearGradient>
-              </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.03)" />
-              <XAxis dataKey="time" tick={{ fontSize: 10, fill: "rgba(255,255,255,0.2)", fontFamily: "JetBrains Mono" }} axisLine={false} tickLine={false} />
-              <YAxis tick={{ fontSize: 10, fill: "rgba(255,255,255,0.2)", fontFamily: "JetBrains Mono" }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${v}`} domain={["auto", "auto"]} />
-              <Tooltip
-                contentStyle={{
-                  background: "rgba(5,5,8,0.95)", border: "1px solid rgba(255,255,255,0.06)",
-                  borderRadius: 12, fontSize: 11, fontFamily: "JetBrains Mono",
-                  backdropFilter: "blur(16px)", boxShadow: "0 0 30px rgba(108,60,233,0.15)",
-                }}
-                labelStyle={{ color: "rgba(255,255,255,0.3)" }}
-                formatter={(value: number) => [`$${value.toFixed(3)}`, "Price"]}
-              />
-              <Area type="monotone" dataKey="price" stroke="hsl(263,70%,58%)" strokeWidth={2} fill="url(#priceGrad)" />
-            </AreaChart>
-          </ResponsiveContainer>
+            <DepthChart gpuType={resolvedGpu} />
           )}
         </div>
       </GlassCard>
@@ -601,6 +631,43 @@ const ProductDetail = () => {
             </div>
           </div>
 
+          {/* Commit-Reveal phase indicator */}
+          <div className="flex items-center gap-3">
+            {[
+              { label: "1. Commit", active: commitPhase === "idle", done: commitPhase === "committed" },
+              { label: "2. Reveal & Submit", active: commitPhase === "committed", done: false },
+            ].map((step, i) => (
+              <div key={i} className="flex items-center gap-2">
+                {i > 0 && <div className="w-8 h-px bg-white/10" />}
+                <div className={`flex items-center gap-1.5 px-3 py-1 rounded-full border font-mono text-[10px] transition-all duration-300 ${
+                  step.done
+                    ? "border-emerald-500/30 bg-emerald-500/08 text-emerald-400"
+                    : step.active
+                    ? "border-primary/30 bg-primary/08 text-primary"
+                    : "border-white/[0.06] text-white/20"
+                }`}>
+                  {step.done && <CheckCircle className="w-3 h-3" />}
+                  {step.label}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Commitment hash display */}
+          {pendingCommit && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              className="rounded-xl bg-emerald-500/[0.04] border border-emerald-500/[0.15] p-4"
+            >
+              <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-emerald-400/60 mb-2">Order Commitment Hash</p>
+              <p className="font-mono text-[11px] text-emerald-400/80 break-all">{pendingCommit.hash}</p>
+              <p className="font-mono text-[9px] text-white/20 mt-2">
+                This hash seals your order details. Nobody can see your price or quantity until after settlement.
+              </p>
+            </motion.div>
+          )}
+
           {/* Summary + Submit bar */}
           <div className="rounded-xl bg-white/[0.03] p-5">
             <div className="flex flex-col md:flex-row items-center justify-between gap-5">
@@ -617,12 +684,28 @@ const ProductDetail = () => {
                 className="gap-2 bg-gradient-to-r from-primary to-[hsl(258,78%,65%)] hover:from-primary/90 hover:to-[hsl(258,78%,60%)] shadow-[0_0_20px_rgba(108,60,233,0.3)] hover:shadow-[0_0_30px_rgba(108,60,233,0.5)] transition-all duration-300 border-0 h-12 px-8 disabled:opacity-50"
               >
                 {createOrder.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Lock className="h-4 w-4" />}
-                {!connected ? 'Connect Wallet' : createOrder.isPending ? 'Submitting...' : 'Submit Encrypted Order'}
+                {!connected
+                  ? 'Connect Wallet'
+                  : createOrder.isPending
+                  ? 'Submitting...'
+                  : commitPhase === 'idle'
+                  ? 'Commit Order'
+                  : 'Reveal & Submit'}
               </Button>
             </div>
-            <p className="font-mono text-[10px] text-muted-foreground/50 leading-relaxed text-center mt-4">
-              Orders remain encrypted until verified settlement.
-            </p>
+            <div className="flex items-center justify-center gap-3 mt-4">
+              <p className="font-mono text-[10px] text-muted-foreground/50 leading-relaxed">
+                {commitPhase === 'idle'
+                  ? 'Step 1: Seal your order details with a commitment hash.'
+                  : 'Step 2: Reveal and submit — order enters the next 45s batch auction.'}
+              </p>
+              {paymasterEnabled && (
+                <span className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 font-mono text-[9px] text-emerald-400 shrink-0">
+                  <Zap className="w-2.5 h-2.5" />
+                  Gas Free
+                </span>
+              )}
+            </div>
           </div>
         </div>
       </GlassCard>

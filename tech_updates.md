@@ -7,7 +7,7 @@
 ---
 
 ## 1. x402 Protocol Integration (AI Agent Payments)
-- [ ] **Status: Not Started**
+- [x] **Status: Completed**
 - **Priority:** Critical
 - **Description:** Coinbase + Linux Foundation launched x402 (April 2026) with Stripe, Cloudflare, AWS, Google, Visa as partners. Uses HTTP 402 for machine-to-machine USDC payments on Base.
 - **Tasks:**
@@ -20,7 +20,7 @@
 ---
 
 ## 2. Commit-Reveal Order Submission
-- [ ] **Status: Not Started**
+- [x] **Status: Completed**
 - **Priority:** Critical
 - **Description:** Two-phase order process — users commit `hash(order + nonce)`, then reveal after commit phase ends. Prevents front-running by concealing order details until execution.
 - **Tasks:**
@@ -121,3 +121,5 @@
 | 2026-04-09 | Tracker created | All items |
 | 2026-04-09 | Implemented | #4 Farcaster Mini App Push Notifications |
 | 2026-04-09 | Implemented | #8 CQRS Backend Pattern |
+| 2026-04-09 | Implemented | #1 x402 Protocol Integration |
+| 2026-04-09 | Implemented | #2 Commit-Reveal Order Submission |

@@ -83,6 +83,21 @@ const sections = [
     ],
   },
   {
+    title: "x402 Payment Protocol",
+    desc: "Machine-native payment flow for AI agents. Send a single HTTP request with an X-Payment header — no wallets, no approval flows. Backed by USDC on Base.",
+    rows: [
+      { method: "POST", path: "/api/payments/requirements", auth: "Public", desc: "Get payment requirements for an endpoint (returns 402 + payment headers)" },
+      { method: "POST", path: "/api/payments/verify",       auth: "Public", desc: "Verify an x402 payment tx hash" },
+    ],
+  },
+  {
+    title: "Activity",
+    desc: "Unified wallet activity timeline — order fills, settlements, and cancellations in one feed.",
+    rows: [
+      { method: "GET", path: "/api/activity", auth: "JWT", desc: "Get your activity timeline (param: limit, default 50, max 200)" },
+    ],
+  },
+  {
     title: "Health",
     desc: "Liveness check.",
     rows: [
@@ -149,6 +164,48 @@ const ApiDocs = () => {
           <p><span className="text-white/30">Agent header: </span><span className="text-white/60">X-API-Key: &lt;apiKey&gt;</span></p>
           <p className="text-white/30 pt-1">All responses are JSON. Authenticated endpoints return <span className="text-white/50">401</span> if token is missing or expired.</p>
         </div>
+      </GlassCard>
+
+      {/* x402 Agent Payment Example */}
+      <GlassCard delay={0.28} gradient className="overflow-hidden">
+        <div className="px-6 py-4 border-b border-white/[0.04] flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="flex gap-2">
+              <span className="w-3 h-3 rounded-full bg-destructive/40" />
+              <span className="w-3 h-3 rounded-full bg-warning/40" />
+              <span className="w-3 h-3 rounded-full bg-success/40" />
+            </div>
+            <span className="font-mono text-[10px] text-white/30 ml-2">x402-agent.ts</span>
+          </div>
+          <span className="font-mono text-[9px] px-2 py-0.5 rounded-full border border-violet-500/20 bg-violet-500/05 text-violet-400/60 uppercase tracking-wider">x402 Protocol</span>
+        </div>
+        <pre className="p-6 text-[11px] font-mono overflow-x-auto leading-relaxed">
+          <span className="text-white/20">{"// AI agent auto-pays for compute access via HTTP 402\n"}</span>
+          <span className="text-white/20">{"// No wallets, no approval flows — pure HTTP + USDC on Base\n\n"}</span>
+          <span className="text-primary/60">{"async function "}</span><span className="text-warning/70">{"submitAgentOrder"}</span>{"() {\n"}
+          {"  "}<span className="text-white/20">{"// Step 1: Hit endpoint — server returns 402 + payment requirements\n"}</span>
+          {"  "}<span className="text-primary/60">{"let"}</span>{" res = "}<span className="text-primary/60">{"await"}</span>{" "}<span className="text-warning/70">{"fetch"}</span>{"("}<span className="text-success/70">{"'https://api.darkpool.finance/api/orders'"}</span>{", {\n"}
+          {"    method: "}<span className="text-success/70">{"'POST'"}</span>{", headers: { "}<span className="text-success/70">{"'X-API-Key'"}</span>{": apiKey },\n"}
+          {"    body: "}<span className="text-warning/70">{"JSON"}</span>{".stringify({ side: "}<span className="text-success/70">{"'BUY'"}</span>{", gpuType: "}<span className="text-success/70">{"'H100'"}</span>{", quantity: "}<span className="text-warning/70">{"1"}</span>{", pricePerHour: "}<span className="text-warning/70">{"2.50"}</span>{", duration: "}<span className="text-warning/70">{"24"}</span>{" }),\n"}
+          {"  });\n\n"}
+          {"  "}<span className="text-primary/60">{"if"}</span>{" (res.status === "}<span className="text-warning/70">{"402"}</span>{") {\n"}
+          {"    "}<span className="text-white/20">{"// Step 2: Read payment requirements from headers\n"}</span>
+          {"    "}<span className="text-primary/60">{"const"}</span>{" amount = res.headers.get("}<span className="text-success/70">{"'X-Payment-Amount'"}</span>{");    "}<span className="text-white/20">{"// '0.01'\n"}</span>
+          {"    "}<span className="text-primary/60">{"const"}</span>{" token  = res.headers.get("}<span className="text-success/70">{"'X-Payment-Token'"}</span>{");     "}<span className="text-white/20">{"// USDC on Base\n"}</span>
+          {"    "}<span className="text-primary/60">{"const"}</span>{" recip  = res.headers.get("}<span className="text-success/70">{"'X-Payment-Recipient'"}</span>{");\n\n"}
+          {"    "}<span className="text-white/20">{"// Step 3: Send USDC on Base\n"}</span>
+          {"    "}<span className="text-primary/60">{"const"}</span>{" txHash = "}<span className="text-primary/60">{"await"}</span>{" "}<span className="text-warning/70">{"sendUSDC"}</span>{"(recip, amount); "}<span className="text-white/20">{"// agent wallet signs\n\n"}</span>
+          {"    "}<span className="text-white/20">{"// Step 4: Retry with payment proof\n"}</span>
+          {"    res = "}<span className="text-primary/60">{"await"}</span>{" "}<span className="text-warning/70">{"fetch"}</span>{"("}<span className="text-success/70">{"'https://api.darkpool.finance/api/orders'"}</span>{", {\n"}
+          {"      method: "}<span className="text-success/70">{"'POST'"}</span>{",\n"}
+          {"      headers: { "}<span className="text-success/70">{"'X-API-Key'"}</span>{": apiKey, "}<span className="text-success/70">{"'X-Payment-Tx'"}</span>{": txHash, "}<span className="text-success/70">{"'X-Payment-Amount'"}</span>{": amount },\n"}
+          {"      body: "}<span className="text-warning/70">{"JSON"}</span>{".stringify({ side: "}<span className="text-success/70">{"'BUY'"}</span>{", gpuType: "}<span className="text-success/70">{"'H100'"}</span>{", quantity: "}<span className="text-warning/70">{"1"}</span>{", pricePerHour: "}<span className="text-warning/70">{"2.50"}</span>{", duration: "}<span className="text-warning/70">{"24"}</span>{" }),\n"}
+          {"    });\n"}
+          {"  }\n\n"}
+          {"  "}<span className="text-primary/60">{"const"}</span>{" order = "}<span className="text-primary/60">{"await"}</span>{" res."}<span className="text-warning/70">{"json"}</span>{"();\n"}
+          {"  "}<span className="text-warning/70">{"console"}</span>{"."}<span className="text-warning/70">{"log"}</span>{"("}<span className="text-success/70">{"'Order matched in next batch:'"}</span>{", order.id);\n"}
+          {"}"}
+        </pre>
       </GlassCard>
 
       {/* Endpoint Sections */}

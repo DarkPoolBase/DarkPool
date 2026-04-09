@@ -1,5 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { createPublicClient, http, decodeEventLog, parseAbiItem } from 'viem';
+import { base } from 'viem/chains';
 
 interface X402PaymentRequest {
   amount: string;
@@ -64,18 +66,68 @@ export class X402Service {
 
   /**
    * Verify an x402 payment was completed on-chain.
+   * Fetches the tx receipt on Base, finds a USDC Transfer event to our
+   * recipient address, and confirms the value >= expectedAmount.
    */
   async verifyPayment(txHash: string, expectedAmount: string): Promise<boolean> {
     this.logger.log(`Verifying x402 payment: ${txHash} for ${expectedAmount} USDC`);
 
-    // TODO: Use viem to verify the transaction on Base
-    // 1. Fetch transaction receipt
-    // 2. Decode USDC transfer event
-    // 3. Verify amount matches expected
-    // 4. Verify recipient matches our address
-    // 5. Verify sufficient confirmations
+    try {
+      const rpcUrl = this.config.get<string>('BASE_RPC_URL', 'https://mainnet.base.org');
+      const client = createPublicClient({ chain: base, transport: http(rpcUrl) });
 
-    return true;
+      const receipt = await client.getTransactionReceipt({
+        hash: txHash as `0x${string}`,
+      });
+
+      if (receipt.status !== 'success') {
+        this.logger.warn(`x402 tx ${txHash} reverted`);
+        return false;
+      }
+
+      const usdcAddress = this.config.get<string>(
+        'USDC_ADDRESS',
+        '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
+      );
+      const recipientAddress = this.config.get<string>('X402_RECIPIENT_ADDRESS', '');
+
+      if (!recipientAddress) {
+        this.logger.warn('X402_RECIPIENT_ADDRESS not configured — skipping amount check');
+        return receipt.status === 'success';
+      }
+
+      const transferEvent = parseAbiItem(
+        'event Transfer(address indexed from, address indexed to, uint256 value)',
+      );
+
+      // Expected amount in USDC base units (6 decimals)
+      const expectedRaw = BigInt(Math.round(parseFloat(expectedAmount) * 1_000_000));
+
+      for (const log of receipt.logs) {
+        if (log.address.toLowerCase() !== usdcAddress.toLowerCase()) continue;
+        try {
+          const decoded = decodeEventLog({
+            abi: [transferEvent],
+            data: log.data,
+            topics: log.topics,
+          });
+          const args = decoded.args as { from: string; to: string; value: bigint };
+          if (args.to.toLowerCase() !== recipientAddress.toLowerCase()) continue;
+          if (args.value >= expectedRaw) {
+            this.logger.log(`x402 payment verified: ${args.value} USDC units in tx ${txHash}`);
+            return true;
+          }
+        } catch {
+          continue;
+        }
+      }
+
+      this.logger.warn(`No matching USDC transfer found in tx ${txHash}`);
+      return false;
+    } catch (err) {
+      this.logger.error(`x402 verification error: ${err}`);
+      return false;
+    }
   }
 
   /**

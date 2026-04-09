@@ -20,5 +20,23 @@
     "tags": ["gpu", "compute", "defi", "base"],
     "requiredChains": ["eip155:8453"],
     "requiredCapabilities": []
+  },
+  "miniapp": {
+    "version": "1",
+    "name": "DarkPool",
+    "subtitle": "GPU Compute Dark Pool",
+    "description": "Trade GPU compute through private batch auctions on Base. Browse spot markets, place orders, and track fulfillment.",
+    "iconUrl": "https://darkpoolbase.org/icon.png",
+    "splashImageUrl": "https://darkpoolbase.org/splash.png",
+    "splashBackgroundColor": "#0a0a0f",
+    "homeUrl": "https://darkpoolbase.org/miniapp",
+    "webhookUrl": "https://darkpoolbase.org/api/farcaster/webhook",
+    "primaryCategory": "finance",
+    "tags": ["gpu", "compute", "defi", "base"],
+    "heroImageUrl": "https://darkpoolbase.org/og-miniapp.png",
+    "ogTitle": "DarkPool — Private GPU Marketplace on Base",
+    "ogDescription": "Trade GPU compute through private batch auctions on Base. 70% cheaper than AWS.",
+    "ogImageUrl": "https://darkpoolbase.org/og-miniapp.png",
+    "screenshotUrls": []
   }
 }

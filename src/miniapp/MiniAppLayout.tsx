@@ -1,9 +1,10 @@
 import { Outlet, NavLink } from 'react-router-dom';
-import { ShoppingCart, ClipboardList } from 'lucide-react';
-import { useFarcasterUser } from './MiniAppProvider';
+import { ShoppingCart, ClipboardList, Bell, BellOff } from 'lucide-react';
+import { useFarcasterUser, useFarcasterNotifications } from './MiniAppProvider';
 
 export function MiniAppLayout() {
   const user = useFarcasterUser();
+  const { enabled: notificationsEnabled, requestNotifications } = useFarcasterNotifications();
 
   return (
     <div className="flex flex-col h-screen bg-[#0a0a0f] text-white overflow-hidden">
@@ -15,16 +16,29 @@ export function MiniAppLayout() {
           </div>
           <span className="font-mono text-xs font-medium tracking-wide">DarkPool</span>
         </div>
-        {user && (
-          <div className="flex items-center gap-2">
-            {typeof user.pfpUrl === 'string' && user.pfpUrl && (
-              <img src={user.pfpUrl} alt="" className="w-5 h-5 rounded-full" />
-            )}
-            <span className="font-mono text-[10px] text-white/50">
-              @{user.username || `fid:${user.fid}`}
-            </span>
-          </div>
-        )}
+        <div className="flex items-center gap-2">
+          <button
+            onClick={notificationsEnabled ? undefined : requestNotifications}
+            className={`w-7 h-7 rounded-lg flex items-center justify-center transition-colors ${
+              notificationsEnabled
+                ? 'bg-emerald-500/10 text-emerald-400'
+                : 'bg-white/[0.04] text-white/30 hover:text-white/60 hover:bg-white/[0.08]'
+            }`}
+            title={notificationsEnabled ? 'Notifications enabled' : 'Enable notifications'}
+          >
+            {notificationsEnabled ? <Bell className="w-3.5 h-3.5" /> : <BellOff className="w-3.5 h-3.5" />}
+          </button>
+          {user && (
+            <>
+              {typeof user.pfpUrl === 'string' && user.pfpUrl && (
+                <img src={user.pfpUrl} alt="" className="w-5 h-5 rounded-full" />
+              )}
+              <span className="font-mono text-[10px] text-white/50">
+                @{user.username || `fid:${user.fid}`}
+              </span>
+            </>
+          )}
+        </div>
       </header>
 
       {/* Content */}

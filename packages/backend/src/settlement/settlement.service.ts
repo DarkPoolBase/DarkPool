@@ -125,6 +125,15 @@ export class SettlementService implements OnModuleInit {
       }),
     );
 
+    // Step 5: Send Farcaster push notifications for settlement
+    this.sendFarcasterNotification(
+      `Batch #${batch.batchId} Settled`,
+      `${batch.gpuType} — ${batch.matchedPairs.length} fills at $${batch.clearingPrice.toFixed(4)}/hr`,
+      `https://darkpoolbase.org/miniapp/orders`,
+    ).catch((err) =>
+      this.logger.warn(`Farcaster notification failed: ${err.message}`),
+    );
+
     this.logger.log(
       `Batch #${batch.batchId} settled: ${batch.matchedPairs.length} fills, ` +
         `$${batch.totalValueUSDC.toFixed(2)} volume, tx=${txHash ?? 'simulated'}`,
@@ -183,6 +192,32 @@ export class SettlementService implements OnModuleInit {
    */
   async getByBatchId(batchId: number): Promise<Settlement | null> {
     return this.settlementRepo.findOne({ where: { batchId } });
+  }
+
+  /**
+   * Send push notification to all Farcaster users with notifications enabled
+   */
+  private async sendFarcasterNotification(
+    title: string,
+    body: string,
+    targetUrl?: string,
+  ): Promise<void> {
+    const notifyUrl = this.config.get<string>('FC_NOTIFY_URL');
+    if (!notifyUrl) return;
+
+    const secret = this.config.get<string>('FC_NOTIFY_SECRET') || '';
+    const res = await fetch(notifyUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-notify-secret': secret,
+      },
+      body: JSON.stringify({ title, body, targetUrl }),
+    });
+
+    if (!res.ok) {
+      throw new Error(`Farcaster notify responded ${res.status}`);
+    }
   }
 
   private delay(ms: number): Promise<void> {

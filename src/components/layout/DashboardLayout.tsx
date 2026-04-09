@@ -6,9 +6,11 @@ import { AnimatePresence, motion } from "framer-motion";
 import { WebGLBackground } from "@/components/ui/webgl-background";
 import { WalletGate } from "@/components/WalletGate";
 import { Github } from "lucide-react";
+import { useNotificationListener } from "@/hooks/useNotifications";
 
 export function DashboardLayout() {
   const location = useLocation();
+  useNotificationListener();
 
   return (
     <SidebarProvider>

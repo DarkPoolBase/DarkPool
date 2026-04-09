@@ -9,19 +9,23 @@ import {
   UseGuards,
   Request,
 } from '@nestjs/common';
+import { Throttle, ThrottlerGuard } from '@nestjs/throttler';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 @Controller('auth')
+@UseGuards(ThrottlerGuard)
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Get('nonce')
+  @Throttle({ default: { ttl: 60000, limit: 10 } })
   async getNonce(@Query('address') address: string) {
     return this.authService.generateNonce(address);
   }
 
   @Post('verify')
+  @Throttle({ default: { ttl: 60000, limit: 10 } })
   async verify(@Body() body: { message: string; signature: string }) {
     return this.authService.verify(body.message, body.signature);
   }

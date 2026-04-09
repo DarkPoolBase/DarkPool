@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ScheduleModule } from '@nestjs/schedule';
+import { ThrottlerModule } from '@nestjs/throttler';
 import { databaseConfig } from './config/database.config';
 import { HealthModule } from './health/health.module';
 import { AuthModule } from './auth/auth.module';
@@ -32,6 +33,10 @@ import { FarcasterModule } from './farcaster/farcaster.module';
     }),
     TypeOrmModule.forRootAsync(databaseConfig),
     ScheduleModule.forRoot(),
+    ThrottlerModule.forRoot([{
+      ttl: 60000,
+      limit: 100,
+    }]),
     RedisModule,
     HealthModule,
     AuthModule,

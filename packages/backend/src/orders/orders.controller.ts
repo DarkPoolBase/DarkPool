@@ -9,12 +9,14 @@ import {
   UseGuards,
   Request,
 } from '@nestjs/common';
+import { ThrottlerGuard } from '@nestjs/throttler';
 import { OrdersService, CreateOrderInput } from './orders.service';
 import { OrderMetricsService } from './services/order-metrics.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { ParseOrderIdPipe } from './pipes/parse-order-id.pipe';
 
 @Controller('orders')
+@UseGuards(ThrottlerGuard)
 export class OrdersController {
   constructor(
     private readonly ordersService: OrdersService,

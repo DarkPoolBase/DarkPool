@@ -3572,12 +3572,43 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
         <div class="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/5 text-xs gap-4 px-6 max-w-7xl mx-auto w-full">
           <span class="">© 2026 DARKPOOL. Built on Base.</span>
-          <div class="flex gap-4">
+          <div class="flex items-center gap-4">
+            <button id="ca-copy-btn" onclick="copyCA()" class="flex items-center gap-1.5 font-mono text-white/40 hover:text-white/70 transition-colors cursor-pointer bg-transparent border-0 p-0 text-xs">
+              <span class="text-white/20">CA:</span>
+              <span id="ca-addr">0xecf9...3b07</span>
+              <svg id="ca-icon-copy" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              <svg id="ca-icon-check" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:none"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
             <a href="https://x.com/darkpoolbase" target="_blank" rel="noopener" class="hover:text-white transition-colors">Twitter</a>
             <a href="https://github.com/DarkPoolBase/DarkPool" target="_blank" rel="noopener" class="hover:text-white transition-colors">GitHub</a>
             <a href="https://t.me/DarkPoolBase" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">Telegram</a>
           </div>
         </div>
+        <!-- CA copy toast -->
+        <div id="ca-toast" style="position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(1rem);opacity:0;transition:opacity 0.3s,transform 0.3s;pointer-events:none;z-index:9999;display:flex;align-items:center;gap:0.5rem;background:rgba(17,17,24,0.95);border:1px solid rgba(52,211,153,0.25);border-radius:0.75rem;padding:0.6rem 1rem;font-family:'JetBrains Mono',monospace;font-size:11px;color:#34d399;backdrop-filter:blur(16px);box-shadow:0 4px 24px rgba(0,0,0,0.4);">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Contract address copied
+        </div>
+        <script>
+          function copyCA() {
+            var addr = '0xecf91117bea61b4c8c210fad2c38a65bcf513b07';
+            navigator.clipboard.writeText(addr).then(function() {
+              document.getElementById('ca-icon-copy').style.display = 'none';
+              document.getElementById('ca-icon-check').style.display = 'inline';
+              setTimeout(function() {
+                document.getElementById('ca-icon-copy').style.display = 'inline';
+                document.getElementById('ca-icon-check').style.display = 'none';
+              }, 2000);
+              var toast = document.getElementById('ca-toast');
+              toast.style.opacity = '1';
+              toast.style.transform = 'translateX(-50%) translateY(0)';
+              setTimeout(function() {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(-50%) translateY(1rem)';
+              }, 2500);
+            });
+          }
+        </script>
       </footer>
     </main>
 

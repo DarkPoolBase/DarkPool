@@ -6,6 +6,8 @@ import {
   Monitor,
   FileText,
   Settings,
+  Bot,
+  Activity,
 } from "lucide-react";
 import darkpoolLogo from "@/assets/darkpool-logo.png";
 import { NavLink } from "@/components/NavLink";
@@ -25,7 +27,9 @@ const navItems = [
   { title: "Dashboard", url: "/dashboard", icon: BarChart3 },
   { title: "Marketplace", url: "/marketplace", icon: ShoppingCart },
   { title: "Orders", url: "/orders", icon: ClipboardList },
+  { title: "Activity", url: "/activity", icon: Activity },
   { title: "Analytics", url: "/analytics", icon: LineChart },
+  { title: "Agent Mode", url: "/agent-dashboard", icon: Bot },
   { title: "Provider Panel", url: "/provider", icon: Monitor },
   { title: "API Docs", url: "/api-docs", icon: FileText },
   { title: "Settings", url: "/settings", icon: Settings },

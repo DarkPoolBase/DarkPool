@@ -22,6 +22,8 @@ import { MiniAppLayout } from "./miniapp/MiniAppLayout";
 import { MiniAppMarketplace } from "./miniapp/MiniAppMarketplace";
 import { MiniAppOrders } from "./miniapp/MiniAppOrders";
 import { MiniAppOrder } from "./miniapp/MiniAppOrder";
+import AgentDashboard from "./pages/AgentDashboard";
+import Activity from "./pages/Activity";
 
 const queryClient = new QueryClient();
 
@@ -45,6 +47,8 @@ const App = () => (
             <Route path="/sdk-docs" element={<SdkDocs />} />
             <Route path="/notifications" element={<Notifications />} />
             <Route path="/settings" element={<SettingsPage />} />
+            <Route path="/agent-dashboard" element={<AgentDashboard />} />
+            <Route path="/activity" element={<Activity />} />
           </Route>
 
           {/* Farcaster Mini App routes */}
